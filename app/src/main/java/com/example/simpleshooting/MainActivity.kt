@@ -7,6 +7,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //いかいか
+        val custom = findViewById<MyCustomView>(R.id.mycustom)
+        custom.post { custom.beginAnimation() }
+        //なんで        custom.post { custom.beginAnimation() }　って書くんですかね？
+        //custom.beginAnimation()　じゃないんだ。
+        //custom.post{ } って何？
     }
 }
