@@ -2,6 +2,7 @@ package com.example.simpleshooting
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,5 +13,12 @@ class MainActivity : AppCompatActivity() {
         //なんで        custom.post { custom.beginAnimation() }　って書くんですかね？
         //custom.beginAnimation()　じゃないんだ。
         //custom.post{ } って何？
+
+        findViewById<TextView>(R.id.textLabelX).text=custom.posX.toString()
+        findViewById<TextView>(R.id.textLabelY).text=custom.posY.toString()
+
+
+
+
     }
 }
