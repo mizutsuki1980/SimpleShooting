@@ -26,30 +26,37 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }else {
             pMyShikaku.color = Color.YELLOW
         }
-        //目チカチカすんで
 
 
+
+        val xlist = mutableListOf<Int>(0,0,0,0,0,0,0,0,0,0)
+        val ylist = mutableListOf<Int>(0,0,0,0,0,0,0,0,0,0)
+        var mmm = 0
+
+
+
+        //決めうちで、弾は１０発までしかでないものとする。
         if (frame % 10 ==1) {
-            pMyShikaku.color = Color.RED
-        }
-
-        //球をだす、、とは？？？
-        //一度だけ座標を覚えておいて、それをｙのみプラスしつづけていく
-        //だからtamaIchiの座標にposXを使い続けてはだめなんだろうなぁ
-
-        val tamaIchi = Rect(posX+45, posY-45, posX+10, posY-10)
-        val tamaPaint = Paint()
-        tamaPaint.color = Color.WHITE
-        if (frame % 10 ==1) {
-            tamaPaint.style = Paint.Style.FILL
+            xlist[mmm] = posX
+            ylist[mmm] = posY
+            val tamaPaint = Paint()
+            tamaPaint.color = Color.WHITE
+            for (num in 0..9) {
+                val tamaIchi = Rect(xlist[num], ylist[num]-num*10, xlist[num]+10, ylist[num]-10-(num*10))
+                canvas.drawRect(tamaIchi, tamaPaint)
+            }
+            mmm += 1
+            if(mmm==9){mmm=0}
         }else{
-            tamaPaint.style = Paint.Style.STROKE
-        }
-        //塗りをなしにして消えたように見せらんねー？と思ったが
+            val tamaPaint = Paint()
 
-        //見せたくないものは描画しなければいいのか
-        if (frame % 10 ==1) {
-            canvas.drawRect(tamaIchi, tamaPaint)
+
+            tamaPaint.color = Color.WHITE
+            for (num in 0..9) {
+                val tamaIchi = Rect(xlist[num], ylist[num]-num*10, xlist[num]+10, ylist[num]-10-(num*10))
+                canvas.drawRect(tamaIchi, tamaPaint)
+            }
+
         }
 
 
