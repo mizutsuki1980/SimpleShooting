@@ -27,43 +27,26 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             pMyShikaku.color = Color.YELLOW
         }
 
-
-
-        val xlist = mutableListOf<Int>(0,0,0,0,0,0,0,0,0,0)
-        val ylist = mutableListOf<Int>(0,0,0,0,0,0,0,0,0,0)
-        var mmm = 0
-
-
-
-        //決めうちで、弾は１０発までしかでないものとする。
-        if (frame % 10 ==1) {
-            xlist[mmm] = posX
-            ylist[mmm] = posY
-            val tamaPaint = Paint()
-            tamaPaint.color = Color.WHITE
-            for (num in 0..9) {
-                val tamaIchi = Rect(xlist[num], ylist[num]-num*10, xlist[num]+10, ylist[num]-10-(num*10))
-                canvas.drawRect(tamaIchi, tamaPaint)
-            }
-            mmm += 1
-            if(mmm==9){mmm=0}
-        }else{
-            val tamaPaint = Paint()
-
-
-            tamaPaint.color = Color.WHITE
-            for (num in 0..9) {
-                val tamaIchi = Rect(xlist[num], ylist[num]-num*10, xlist[num]+10, ylist[num]-10-(num*10))
-                canvas.drawRect(tamaIchi, tamaPaint)
-            }
-
-        }
-
-
         pMyShikaku.style = Paint.Style.FILL
         canvas.drawRect(rMyShikaku, pMyShikaku)
 
+        var xxx = 0
+        var yyy = 0
+
+        //まずは一発撃つ
+        if (frame % 10 ==1) {
+            val tamaPaint = Paint()
+            //o
+             xxx = posX
+             yyy = posY
+
+            tamaPaint.color = Color.WHITE
+            tamaPaint.style = Paint.Style.FILL
+            val tamaIchi = Rect(xxx+45, yyy-frame*10-90, xxx+frame+45, yyy-frame*10-45)
+                canvas.drawRect(tamaIchi, tamaPaint)
+
         }
+     }
 
 
     var frame = 0
