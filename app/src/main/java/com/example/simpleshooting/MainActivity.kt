@@ -14,9 +14,10 @@ class MainActivity : AppCompatActivity() {
         //custom.beginAnimation()　じゃないんだ。
         //custom.post{ } って何？
 
-        findViewById<TextView>(R.id.textLabelX).text=custom.posX.toString()
+//        findViewById<TextView>(R.id.textLabelX).text=custom.post {custom.posX}.toString()
         findViewById<TextView>(R.id.textLabelY).text=custom.posY.toString()
-
+        //ここは更新されてない気がする。だから最初の値のままなんじゃないかな。
+        //なんでここもhandlerを使えばいいんじゃないかな。
 
 
 

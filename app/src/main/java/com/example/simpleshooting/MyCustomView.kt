@@ -13,11 +13,17 @@ import android.widget.TextView
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var hueru = 0
     override fun onDraw(canvas: Canvas) {
+        //tsugiNoSyoriに置いても、onDrawに置いてもうごくのか
+        //どっちに置くのがいいのだろう？↓↓↓
+        frame += 1
+
         val r = Rect(100, 100, 200+hueru, 200+hueru)
         val p = Paint()
         p.color = Color.RED
         p.style = Paint.Style.FILL
         canvas.drawRect(r, p)
+        hueru += 5
+
         val rMyShikaku = Rect(posX, posY, posX+100, posY+100)
         val pMyShikaku = Paint()
 
@@ -36,14 +42,19 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //まずは一発撃つ
         if (frame % 10 ==1) {
             val tamaPaint = Paint()
-            //o
-             xxx = posX
-             yyy = posY
-
+            //弾一発だすのは成功。
             tamaPaint.color = Color.WHITE
             tamaPaint.style = Paint.Style.FILL
+
+            if (xxx == 0){
+            xxx = posX
+            yyy = posY
+            }
+
             val tamaIchi = Rect(xxx+40, yyy-frame*10-60, xxx+60, yyy-frame*10-40)
-                canvas.drawRect(tamaIchi, tamaPaint)
+            canvas.drawRect(tamaIchi, tamaPaint)
+            //じゃぁ2発は？
+
 
         }
      }
@@ -51,10 +62,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     var frame = 0
     fun tsugiNoSyori() {
-        frame += 1
         invalidate()
         handler.postDelayed( { tsugiNoSyori() }, 100)
-        hueru += 5
     }
 
     fun beginAnimation() {
