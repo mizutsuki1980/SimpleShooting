@@ -42,7 +42,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
             tamaPaint.color = Color.WHITE
             tamaPaint.style = Paint.Style.FILL
-            val tamaIchi = Rect(xxx+45, yyy-frame*10-90, xxx+frame+45, yyy-frame*10-45)
+            val tamaIchi = Rect(xxx+40, yyy-frame*10-60, xxx+60, yyy-frame*10-40)
                 canvas.drawRect(tamaIchi, tamaPaint)
 
         }
