@@ -14,7 +14,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tamaX = 0
     var tamaY = 0
     override fun onDraw(canvas: Canvas) {
-        frame += 1
         val r = Rect(100, 100, 200, 200)
         val p = Paint()
         p.color = Color.RED
@@ -42,18 +41,30 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if (tamaX == 0){
             tamaX = posX
             tamaY = posY
+            tamaFrame = 2
         }
-        val kasoku = frame*30
+        //じゃ繰り返し弾が出るようにしてみようか
+         kasoku = tamaFrame*70
         val tamaIchi = Rect(tamaX+tamaOokisa, tamaY-kasoku-(tamaOokisa+20), tamaX+tamaOokisa+20, tamaY-kasoku-tamaOokisa)
         canvas.drawRect(tamaIchi, tamaPaint)
+
+        tamaFrame += 1
+        if (tamaY-kasoku  < 1){
+            tamaX = 0
+        }
+
      }
 
-
+    var tamaFrame = 0
+    var kasoku = 0
     var frame = 0
+
     fun tsugiNoSyori() {
+        frame += 1
         invalidate()
         handler.postDelayed( { tsugiNoSyori() }, 100)
     }
+    //「var frame = 0 // tsugiNoSyoriでこのframeを更新する」 と書いてあるので、tsugiNoSyoriで行う
 
     fun beginAnimation() {
         tsugiNoSyori()
