@@ -33,21 +33,20 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(jikiIchi, jikiIro)
 
 
-        val tamaOokisa = 40
+        val tamaOokisa = 10
         val tamaPaint = Paint()
-        tamaPaint.color = Color.WHITE
+        tamaPaint.color = Color.RED
         tamaPaint.style = Paint.Style.FILL
 
         if (tamaX == 0){
             tamaX = posX
             tamaY = posY
-            tamaFrame = 2
+            tamaFrame = 1
         }
         //じゃ繰り返し弾が出るようにしてみようか
-         kasoku = tamaFrame*70
-        val tamaIchi = Rect(tamaX+tamaOokisa-50, tamaY-kasoku-(tamaOokisa+20), tamaX+tamaOokisa-30, tamaY-kasoku-tamaOokisa)
+         kasoku = tamaFrame*90
+        val tamaIchi = Rect(tamaX-tamaOokisa/2, tamaY-kasoku-(tamaOokisa/2), tamaX+tamaOokisa/2, tamaY-kasoku+tamaOokisa/2)
         canvas.drawRect(tamaIchi, tamaPaint)
-
         //画面外に出たらリセット
         tamaFrame += 1
         if (tamaY-kasoku  < 1){
@@ -60,6 +59,45 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var kasoku = 0
     var frame = 0
 
+
+    fun tsugiNoTama() {
+        //ｘ、ｙがきます
+        //それに対して？Ｒｅｃｔに必要な４つの値を返します
+        //経過している時間をしらべます、１、２，３、とか？
+        //で表示する時には
+        // repeat
+        //      kasoku ＝ 経過時間[１]
+        //      Ｒｅｃｔ（値A[１],値B[１]ーkasoku,値C[１],値D[１]ーkasoku+１０）
+        //      Paint（）
+        //      canvas.draw
+        //end repeat
+        //みたいな感じ？
+
+        val tamaOokisa = 10
+
+        if (tamaX == 0){
+            tamaX = posX
+            tamaY = posY
+            tamaFrame = 1
+        }
+        //じゃ繰り返し弾が出るようにしてみようか
+        kasoku = tamaFrame*90
+
+        //Rectもしない、座標だけ返せばいい
+        val tamaIchi = Rect(tamaX-tamaOokisa/2, tamaY-kasoku-(tamaOokisa/2), tamaX+tamaOokisa/2, tamaY-kasoku+tamaOokisa/2)
+
+        //        canvas.drawRect(tamaIchi, tamaPaint)
+        //canvsはできない
+
+        //画面外に出たらリセット
+        tamaFrame += 1
+        if (tamaY-kasoku  < 1){
+            tamaX = 0
+        }
+
+        //返さなきゃいけないのは、Rectに使う４つの値、加速したぶんのフレーム、posX、posY（最初に打った時の情報、でもこれRectの座標に含まれてない？）
+
+    }
     fun tsugiNoSyori() {
         frame += 1
         invalidate()
