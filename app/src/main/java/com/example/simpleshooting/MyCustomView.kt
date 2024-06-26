@@ -45,9 +45,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         //じゃ繰り返し弾が出るようにしてみようか
          kasoku = tamaFrame*70
-        val tamaIchi = Rect(tamaX+tamaOokisa, tamaY-kasoku-(tamaOokisa+20), tamaX+tamaOokisa+20, tamaY-kasoku-tamaOokisa)
+        val tamaIchi = Rect(tamaX+tamaOokisa-50, tamaY-kasoku-(tamaOokisa+20), tamaX+tamaOokisa-30, tamaY-kasoku-tamaOokisa)
         canvas.drawRect(tamaIchi, tamaPaint)
 
+        //画面外に出たらリセット
         tamaFrame += 1
         if (tamaY-kasoku  < 1){
             tamaX = 0
@@ -70,28 +71,22 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tsugiNoSyori()
     }
 
-    var posX = 150
-    var posY = 150
+    var posX = 500
+    var posY = 1500
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
-            tamaX = 0
-            tamaY = 0
             posX = event.x.toInt()
             posY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
         }
 
         if (event.action == MotionEvent.ACTION_UP) {
-            tamaX = 0
-            tamaY = 0
             posX = event.x.toInt()
             posY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
         }
 
         if (event.action == MotionEvent.ACTION_MOVE) {
-            tamaX = 0
-            tamaY = 0
             posX = event.x.toInt()
             posY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
