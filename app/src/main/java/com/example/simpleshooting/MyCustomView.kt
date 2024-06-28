@@ -22,36 +22,52 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val ookisa = 100
         val jikiIchi = Rect(posX-ookisa/2, posY-ookisa/2, posX+ookisa/2, posY+ookisa/2)
         val jikiIro = Paint()
-
         if (frame % 2 ==1) {
             jikiIro.color = Color.WHITE
         }else {
             jikiIro.color = Color.GRAY
         }
-
         jikiIro.style = Paint.Style.FILL
         canvas.drawRect(jikiIchi, jikiIro)
+        //これよる上は関係ない
 
 
         val tamaOokisa = 10
+        //弾の大きさは固定
+
         val tamaPaint = Paint()
         tamaPaint.color = Color.RED
         tamaPaint.style = Paint.Style.FILL
+        //弾の塗りもとりあえず固定
+
 
         if (tamaX == 0){
             tamaX = posX
             tamaY = posY
             tamaFrame = 1
         }
-        //じゃ繰り返し弾が出るようにしてみようか
-         kasoku = tamaFrame*90
+        //もしtamax==0 初期値なら、弾が発射される。
+
+
+
+        kasoku = tamaFrame*90
+        //加速は弾により違う。が、一定間隔で一緒の値
+
         val tamaIchi = Rect(tamaX-tamaOokisa/2, tamaY-kasoku-(tamaOokisa/2), tamaX+tamaOokisa/2, tamaY-kasoku+tamaOokisa/2)
+        //弾の位置を決める
+
         canvas.drawRect(tamaIchi, tamaPaint)
-        //画面外に出たらリセット
+        //弾を描画
+
         tamaFrame += 1
-        if (tamaY-kasoku  < 1){
+        //弾が進んだ処理をする。
+
+         if (tamaY-kasoku  < 1){
             tamaX = 0
         }
+        //ここで画面外にいたら、tamaXを初期値に戻す。
+
+
 
      }
 
@@ -59,6 +75,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var kasoku = 0
     var frame = 0
 
+
+    fun ippatuTama(){
+        tamaX = posX
+        tamaY = posY
+
+    }
 
     fun tsugiNoTama() {
         //ｘ、ｙがきます
@@ -98,6 +120,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //返さなきゃいけないのは、Rectに使う４つの値、加速したぶんのフレーム、posX、posY（最初に打った時の情報、でもこれRectの座標に含まれてない？）
 
     }
+
+
+
+
+
     fun tsugiNoSyori() {
         frame += 1
         invalidate()
