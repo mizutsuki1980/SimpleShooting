@@ -56,14 +56,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //加速は弾により違う。が、一定間隔で一緒の値
 
         val tamaIchi = Rect(xx, tamaY-kasoku-(tamaOokisa/2), xxx, tamaY-kasoku+tamaOokisa/2)
-        //弾の位置を決める
+        //弾①の位置を決める
 
         canvas.drawRect(tamaIchi, tamaPaint)
         //弾を描画
 
 
-        val tamaNi = Rect(xx, tamaY-kasoku-(tamaOokisa/2)-100, xxx, tamaY-kasoku+tamaOokisa/2-100)
-        //弾の位置を決める
+        val tamaNi = Rect(xx, tamaY-kasoku-(tamaOokisa/2)-300, xxx, tamaY-kasoku+tamaOokisa/2-300)
+        //弾②の位置を決める
 
         canvas.drawRect(tamaNi, tamaPaint)
         //弾を描画
@@ -77,7 +77,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         //ここで画面外にいたら、tamaXを初期値に戻す。
 
-
+        //ひとまず２個出すのは出来た。次は２発目はｘの軸を変えて出てくるようにしよう。
 
     }
 
@@ -92,44 +92,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     }
 
-    fun tsugiNoTama() {
-        //ｘ、ｙがきます
-        //それに対して？Ｒｅｃｔに必要な４つの値を返します
-        //経過している時間をしらべます、１、２，３、とか？
-        //で表示する時には
-        // repeat
-        //      kasoku ＝ 経過時間[１]
-        //      Ｒｅｃｔ（値A[１],値B[１]ーkasoku,値C[１],値D[１]ーkasoku+１０）
-        //      Paint（）
-        //      canvas.draw
-        //end repeat
-        //みたいな感じ？
-
-        val tamaOokisa = 10
-
-        if (tamaX == 0){
-            tamaX = posX
-            tamaY = posY
-            tamaFrame = 1
-        }
-        //じゃ繰り返し弾が出るようにしてみようか
-        kasoku = tamaFrame*90
-
-        //Rectもしない、座標だけ返せばいい
-        val tamaIchi = Rect(tamaX-tamaOokisa/2, tamaY-kasoku-(tamaOokisa/2), tamaX+tamaOokisa/2, tamaY-kasoku+tamaOokisa/2)
-
-        //        canvas.drawRect(tamaIchi, tamaPaint)
-        //canvsはできない
-
-        //画面外に出たらリセット
-        tamaFrame += 1
-        if (tamaY-kasoku  < 1){
-            tamaX = 0
-        }
-
-        //返さなきゃいけないのは、Rectに使う４つの値、加速したぶんのフレーム、posX、posY（最初に打った時の情報、でもこれRectの座標に含まれてない？）
-
-    }
 
 
 
