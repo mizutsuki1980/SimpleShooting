@@ -36,7 +36,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //弾の大きさは固定
 
         val tamaPaint = Paint()
-        tamaPaint.color = Color.RED
+        tamaPaint.color = Color.YELLOW
         tamaPaint.style = Paint.Style.FILL
         //弾の塗りもとりあえず固定
 
@@ -48,28 +48,38 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         //もしtamax==0 初期値なら、弾が発射される。
 
-
+        //ちゃんとtamaXを使う意味はあった。PosXにしたら弾が自機について行ってしまった。
+        val xx = tamaX-tamaOokisa/2
+        val xxx =tamaX+tamaOokisa/2
 
         kasoku = tamaFrame*90
         //加速は弾により違う。が、一定間隔で一緒の値
 
-        val tamaIchi = Rect(tamaX-tamaOokisa/2, tamaY-kasoku-(tamaOokisa/2), tamaX+tamaOokisa/2, tamaY-kasoku+tamaOokisa/2)
+        val tamaIchi = Rect(xx, tamaY-kasoku-(tamaOokisa/2), xxx, tamaY-kasoku+tamaOokisa/2)
         //弾の位置を決める
 
         canvas.drawRect(tamaIchi, tamaPaint)
         //弾を描画
 
+
+        val tamaNi = Rect(xx, tamaY-kasoku-(tamaOokisa/2)-100, xxx, tamaY-kasoku+tamaOokisa/2-100)
+        //弾の位置を決める
+
+        canvas.drawRect(tamaNi, tamaPaint)
+        //弾を描画
+
+
         tamaFrame += 1
         //弾が進んだ処理をする。
 
-         if (tamaY-kasoku  < 1){
+        if (tamaY-kasoku  < 1){
             tamaX = 0
         }
         //ここで画面外にいたら、tamaXを初期値に戻す。
 
 
 
-     }
+    }
 
     var tamaFrame = 0
     var kasoku = 0
