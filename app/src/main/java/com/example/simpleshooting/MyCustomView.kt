@@ -68,6 +68,17 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(tamaNi, tamaPaint)
         //弾を描画
 
+        val tamaSan = Rect(xx, tamaY-kasoku-(tamaOokisa/2)-600, xxx, tamaY-kasoku+tamaOokisa/2-600)
+        //弾3の位置を決める
+
+        canvas.drawRect(tamaSan, tamaPaint)
+        //弾を描画
+
+        val tamaYon = Rect(xx, tamaY-kasoku-(tamaOokisa/2)-900, xxx, tamaY-kasoku+tamaOokisa/2-900)
+        //弾4の位置を決める
+
+        canvas.drawRect(tamaYon, tamaPaint)
+        //弾を描画
 
         tamaFrame += 1
         //弾が進んだ処理をする。
