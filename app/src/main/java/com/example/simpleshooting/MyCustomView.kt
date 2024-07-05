@@ -30,14 +30,63 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jikiIro.style = Paint.Style.FILL
         canvas.drawRect(jikiIchi, jikiIro)
         //これよる上は関係ない
-        val tamaOokisa = 10
+         tamaOokisa = 10
         //弾の大きさは固定
         val tamaPaint = Paint()
         tamaPaint.color = Color.YELLOW
         tamaPaint.style = Paint.Style.FILL
         //弾の塗りもとりあえず固定
 
+        for (num in 1..4) {
+            //num ここで　numに処理する弾番号がはいるようにする。
 
+            //んで、以下を繰り返す。
+            //tamaSyori(num)
+            //とかやって、まず４回繰り返す設定でやってみる。
+            //で、もどってきた値を元に描画処理する。
+            //canvas.drawRect(tamaIchi, tamaPaint)
+            //みたいな。
+
+            if (tamaX == 0){
+                tamaX = posX
+                tamaY = posY
+                tamaFrame = 1
+            }
+            //もしtamax==0 初期値なら、弾が発射される。
+
+            susumu = tamaFrame*90
+            //進んだ距離は弾により違う。が、一定間隔で一緒の値
+
+            val xx = tamaX-tamaOokisa/2
+            val xxx =xx+tamaOokisa
+            val yy = tamaY-susumu-(tamaOokisa/2)
+            val yyy =yy+tamaOokisa
+            val tamaIchi = Rect(xx, yy, xxx, yyy)
+            //弾①の位置を決める
+            canvas.drawRect(tamaIchi, tamaPaint)
+            //弾を描画
+            tamaFrame += 1
+            //弾が進んだ処理をする。
+            if (tamaY-susumu  < 1){
+                tamaX = 0
+            }
+            //ここで画面外にいたら、tamaXを初期値に戻す。
+
+            //弾ひとつにつき使う変数はtamaX,tamaY,susumu,tamaFrameの四つ
+            //そのうちのtamaXとtamaYは初期値からは変わらない。
+
+
+        }
+
+    }
+
+    var tamaFrame = 0
+    var susumu = 0
+    var frame = 0
+    var tamaOokisa = 0
+
+
+    fun tamaSyori(){
         if (tamaX == 0){
             tamaX = posX
             tamaY = posY
@@ -52,38 +101,24 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val xxx =xx+tamaOokisa
         val yy = tamaY-susumu-(tamaOokisa/2)
         val yyy =yy+tamaOokisa
-
         val tamaIchi = Rect(xx, yy, xxx, yyy)
-        //弾①の位置を決める
 
-        canvas.drawRect(tamaIchi, tamaPaint)
-        //弾を描画
+        //描画はここでは行わない
+        //        canvas.drawRect(tamaIchi, tamaPaint)
 
 
         tamaFrame += 1
         //弾が進んだ処理をする。
-
         if (tamaY-susumu  < 1){
             tamaX = 0
         }
         //ここで画面外にいたら、tamaXを初期値に戻す。
 
-        //ひとまず２個出すのは出来た。次は２発目はｘの軸を変えて出てくるようにしよう。
+        //弾ひとつにつき使う変数はtamaX,tamaY,susumu,tamaFrameの四つ
+        //そのうちのtamaXとtamaYは初期値からは変わらない。
+
 
     }
-
-    var tamaFrame = 0
-    var susumu = 0
-    var frame = 0
-
-
-    fun ippatuTama(){
-        tamaX = posX
-        tamaY = posY
-
-    }
-
-
 
 
 
