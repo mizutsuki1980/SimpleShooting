@@ -54,6 +54,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             // んー、なんか実行したら、よくわからなくなってきたぞ
 
             val tamaList = mutableListOf(100,200,120,220)
+            val theList = tamaSyori()
 
             if (tamaX == 0){
                 tamaX = posX
@@ -69,7 +70,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             val xxx =xx+tamaOokisa
             val yy = tamaY-susumu-(tamaOokisa/2)
             val yyy =yy+tamaOokisa
-            val tamaIchi = Rect(xx, yy, xxx, yyy)
+
+            val tamaListTest = mutableListOf(xx,yy,xxx,yyy)
+
+
+
+            val tamaIchi = Rect(tamaListTest[0],tamaListTest[1],tamaListTest[2],tamaListTest[3])
             //弾①の位置を決める
             canvas.drawRect(tamaIchi, tamaPaint)
             //弾を描画
@@ -79,7 +85,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 tamaX = 0
             }
             //ここで画面外にいたら、tamaXを初期値に戻す。
-
             //弾ひとつにつき使う変数はtamaX,tamaY,susumu,tamaFrameの四つ
             //そのうちのtamaXとtamaYは初期値からは変わらない。
 
@@ -124,7 +129,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         //弾ひとつにつき使う変数はtamaX,tamaY,susumu,tamaFrameの四つ
         //そのうちのtamaXとtamaYは初期値からは変わらない。
-
+        val theList = mutableListOf(xx,yy,xxx,yyy)
+ //       return theList
 
     }
 
