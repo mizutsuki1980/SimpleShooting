@@ -37,7 +37,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tamaPaint.style = Paint.Style.FILL
         //弾の塗りもとりあえず固定
 
-        for (num in 1..4) {
+        for (num in 1..2) {
             //num ここで　numに処理する弾番号がはいるようにする。
 
             //んで、以下を繰り返す。
@@ -46,6 +46,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             //で、もどってきた値を元に描画処理する。
             //canvas.drawRect(tamaIchi, tamaPaint)
             //みたいな。
+            //戻り値とか使ってみようと思ったが、tamaIchiに相当するものって
+            //型がなんなのか？よくわかんない
+            //複数の戻り値を設定する、とかもできるんだろうか。あ、リストで渡したりすればいいのか。
+            //なるほど、まずリストから弾を作る的なものを作ってみよう
+
+            // んー、なんか実行したら、よくわからなくなってきたぞ
+
+            val tamaList = mutableListOf(100,200,120,220)
 
             if (tamaX == 0){
                 tamaX = posX
