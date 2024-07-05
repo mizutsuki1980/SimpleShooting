@@ -30,11 +30,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jikiIro.style = Paint.Style.FILL
         canvas.drawRect(jikiIchi, jikiIro)
         //これよる上は関係ない
-
-
         val tamaOokisa = 10
         //弾の大きさは固定
-
         val tamaPaint = Paint()
         tamaPaint.color = Color.YELLOW
         tamaPaint.style = Paint.Style.FILL
@@ -48,42 +45,25 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         //もしtamax==0 初期値なら、弾が発射される。
 
-        //ちゃんとtamaXを使う意味はあった。PosXにしたら弾が自機について行ってしまった。
+        susumu = tamaFrame*90
+        //進んだ距離は弾により違う。が、一定間隔で一緒の値
+
         val xx = tamaX-tamaOokisa/2
-        val xxx =tamaX+tamaOokisa/2
+        val xxx =xx+tamaOokisa
+        val yy = tamaY-susumu-(tamaOokisa/2)
+        val yyy =yy+tamaOokisa
 
-        kasoku = tamaFrame*90
-        //加速は弾により違う。が、一定間隔で一緒の値
-
-        val tamaIchi = Rect(xx, tamaY-kasoku-(tamaOokisa/2), xxx, tamaY-kasoku+tamaOokisa/2)
+        val tamaIchi = Rect(xx, yy, xxx, yyy)
         //弾①の位置を決める
 
         canvas.drawRect(tamaIchi, tamaPaint)
         //弾を描画
 
 
-        val tamaNi = Rect(xx, tamaY-kasoku-(tamaOokisa/2)-300, xxx, tamaY-kasoku+tamaOokisa/2-300)
-        //弾②の位置を決める
-
-        canvas.drawRect(tamaNi, tamaPaint)
-        //弾を描画
-
-        val tamaSan = Rect(xx, tamaY-kasoku-(tamaOokisa/2)-600, xxx, tamaY-kasoku+tamaOokisa/2-600)
-        //弾3の位置を決める
-
-        canvas.drawRect(tamaSan, tamaPaint)
-        //弾を描画
-
-        val tamaYon = Rect(xx, tamaY-kasoku-(tamaOokisa/2)-900, xxx, tamaY-kasoku+tamaOokisa/2-900)
-        //弾4の位置を決める
-
-        canvas.drawRect(tamaYon, tamaPaint)
-        //弾を描画
-
         tamaFrame += 1
         //弾が進んだ処理をする。
 
-        if (tamaY-kasoku  < 1){
+        if (tamaY-susumu  < 1){
             tamaX = 0
         }
         //ここで画面外にいたら、tamaXを初期値に戻す。
@@ -93,7 +73,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     var tamaFrame = 0
-    var kasoku = 0
+    var susumu = 0
     var frame = 0
 
 
@@ -113,7 +93,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         invalidate()
         handler.postDelayed( { tsugiNoSyori() }, 100)
     }
-    //「var frame = 0 // tsugiNoSyoriでこのframeを更新する」 と書いてあるので、tsugiNoSyoriで行う
 
     fun beginAnimation() {
         tsugiNoSyori()
