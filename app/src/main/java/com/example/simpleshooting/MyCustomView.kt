@@ -13,6 +13,7 @@ import android.widget.TextView
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var tamaX = 0
     var tamaY = 0
+    var tamaPaint = Paint()
     override fun onDraw(canvas: Canvas) {
         val r = Rect(100, 100, 200, 200)
         val p = Paint()
@@ -30,41 +31,39 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jikiIro.style = Paint.Style.FILL
         canvas.drawRect(jikiIchi, jikiIro)
         //これよる上は関係ない
-         tamaOokisa = 10
+         tamaOokisa = 30
         //弾の大きさは固定
-        val tamaPaint = Paint()
-        tamaPaint.color = Color.YELLOW
+
         tamaPaint.style = Paint.Style.FILL
+
+        val countFrame = frame % 30
+        if(countFrame > 10) {
+            tamaOokisa = 100
+        }
+
+        if (frame % 3 == 2) {
+            tamaPaint.color = Color.RED
+        }
+        if (frame % 3 == 1) {
+            tamaPaint.color = Color.GREEN
+        }
+        if (frame % 3 == 0) {
+            tamaPaint.color = Color.BLUE
+        }
+
+
+
         //弾の塗りもとりあえず固定
 
         for (num in 1..2) {
-            //num ここで　numに処理する弾番号がはいるようにする。
-
-            //んで、以下を繰り返す。
-            //tamaSyori(num)
-            //とかやって、まず４回繰り返す設定でやってみる。
-            //で、もどってきた値を元に描画処理する。
-            //canvas.drawRect(tamaIchi, tamaPaint)
-            //みたいな。
-            //戻り値とか使ってみようと思ったが、tamaIchiに相当するものって
-            //型がなんなのか？よくわかんない
-            //複数の戻り値を設定する、とかもできるんだろうか。あ、リストで渡したりすればいいのか。
-            //なるほど、まずリストから弾を作る的なものを作ってみよう
-
-            // んー、なんか実行したら、よくわからなくなってきたぞ
-
+            //ここでリピートするとフレームが動かないのか！？　たぶんそだね。
             val tamaList = mutableListOf(100,200,120,220)
-            val theList = tamaSyori()
-
             if (tamaX == 0){
                 tamaX = posX
                 tamaY = posY
                 tamaFrame = 1
             }
-            //もしtamax==0 初期値なら、弾が発射される。
-
-            susumu = tamaFrame*90
-            //進んだ距離は弾により違う。が、一定間隔で一緒の値
+            susumu = tamaFrame*30
 
             val xx = tamaX-tamaOokisa/2
             val xxx =xx+tamaOokisa
@@ -73,22 +72,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
             val tamaListTest = mutableListOf(xx,yy,xxx,yyy)
 
-
-
             val tamaIchi = Rect(tamaListTest[0],tamaListTest[1],tamaListTest[2],tamaListTest[3])
-            //弾①の位置を決める
             canvas.drawRect(tamaIchi, tamaPaint)
-            //弾を描画
+
             tamaFrame += 1
             //弾が進んだ処理をする。
             if (tamaY-susumu  < 1){
                 tamaX = 0
             }
-            //ここで画面外にいたら、tamaXを初期値に戻す。
-            //弾ひとつにつき使う変数はtamaX,tamaY,susumu,tamaFrameの四つ
-            //そのうちのtamaXとtamaYは初期値からは変わらない。
-
-
         }
 
     }
@@ -98,41 +89,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var frame = 0
     var tamaOokisa = 0
 
-
-    fun tamaSyori(){
-        if (tamaX == 0){
-            tamaX = posX
-            tamaY = posY
-            tamaFrame = 1
-        }
-        //もしtamax==0 初期値なら、弾が発射される。
-
-        susumu = tamaFrame*90
-        //進んだ距離は弾により違う。が、一定間隔で一緒の値
-
-        val xx = tamaX-tamaOokisa/2
-        val xxx =xx+tamaOokisa
-        val yy = tamaY-susumu-(tamaOokisa/2)
-        val yyy =yy+tamaOokisa
-        val tamaIchi = Rect(xx, yy, xxx, yyy)
-
-        //描画はここでは行わない
-        //        canvas.drawRect(tamaIchi, tamaPaint)
-
-
-        tamaFrame += 1
-        //弾が進んだ処理をする。
-        if (tamaY-susumu  < 1){
-            tamaX = 0
-        }
-        //ここで画面外にいたら、tamaXを初期値に戻す。
-
-        //弾ひとつにつき使う変数はtamaX,tamaY,susumu,tamaFrameの四つ
-        //そのうちのtamaXとtamaYは初期値からは変わらない。
-        val theList = mutableListOf(xx,yy,xxx,yyy)
- //       return theList
-
-    }
 
 
 
@@ -147,8 +103,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tsugiNoSyori()
     }
 
-    var posX = 500
-    var posY = 1500
+    var posX = 300
+    var posY = 300
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             posX = event.x.toInt()
