@@ -36,10 +36,17 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         tamaPaint.style = Paint.Style.FILL
 
-        val countFrame = frame % 30
-        if(countFrame > 10) {
+        val countFrame = frame % 100
+        if(countFrame > 25) {
+            tamaOokisa = 80
+        }
+        if(countFrame > 50) {
             tamaOokisa = 100
         }
+        if(countFrame > 75) {
+            tamaOokisa = 120
+        }
+        //一応できた　なんかもっとスマートにかけそうな気がする。1...10の間は、みたいな指定ができないのかな＝みたいな記号で
 
         if (frame % 3 == 2) {
             tamaPaint.color = Color.RED
