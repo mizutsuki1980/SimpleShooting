@@ -31,8 +31,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jikiIro.style = Paint.Style.FILL
         canvas.drawRect(jikiIchi, jikiIro)
         //これよる上は関係ない
-         tamaOokisa = 30
-        //弾の大きさは固定
 
         tamaPaint.style = Paint.Style.FILL
 
@@ -94,7 +92,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tamaFrame = 0
     var susumu = 0
     var frame = 0
-    var tamaOokisa = 0
+    var tamaOokisa = 10
 
 
 
@@ -102,6 +100,24 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun tsugiNoSyori() {
         frame += 1
+
+
+        val ccFrame = frame % 100
+        if(ccFrame <= 25) {
+            tamaOokisa = 20
+        }
+        if(ccFrame > 25) {
+            tamaOokisa = 80
+        }
+        if(ccFrame > 50) {
+            tamaOokisa = 100
+        }
+        if(ccFrame > 75) {
+            tamaOokisa = 120
+        }
+
+
+
         invalidate()
         handler.postDelayed( { tsugiNoSyori() }, 100)
     }
