@@ -14,6 +14,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tamaX = 0
     var tamaY = 0
     var tamaPaint = Paint()
+
+    //val thelist = mutableListOf([0,0],[2,2]) 配列って何だっけ、、、？となったので、ここでリストに値を入れるような形にしたい
+ 
     override fun onDraw(canvas: Canvas) {
         val r = Rect(100, 100, 200, 200)
         val p = Paint()
@@ -30,11 +33,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         jikiIro.style = Paint.Style.FILL
         canvas.drawRect(jikiIchi, jikiIro)
-        //これよる上は関係ない
-
         tamaPaint.style = Paint.Style.FILL
 
-        //一応できた　なんかもっとスマートにかけそうな気がする。1...10の間は、みたいな指定ができないのかな＝みたいな記号で
+
 
         if (frame % 3 == 2) {
             tamaPaint.color = Color.RED
@@ -64,11 +65,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             val xxx =xx+tamaOokisa
             val yy = tamaY-susumu-(tamaOokisa/2)
             val yyy =yy+tamaOokisa
-
             val tamaListTest = mutableListOf(xx,yy,xxx,yyy)
-
             val tamaIchi = Rect(tamaListTest[0],tamaListTest[1],tamaListTest[2],tamaListTest[3])
             canvas.drawRect(tamaIchi, tamaPaint)
+
+
+
 
             tamaFrame += 1
             //弾が進んだ処理をする。
