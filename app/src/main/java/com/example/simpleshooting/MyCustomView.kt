@@ -14,9 +14,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tamaX = 0
     var tamaY = 0
     var tamaPaint = Paint()
+    var tamaList = mutableListOf(0,0,0,0,1,1,1,1,2,2,2,2)
 
     //val thelist = mutableListOf([0,0],[2,2]) 配列って何だっけ、、、？となったので、ここでリストに値を入れるような形にしたい
- 
+
     override fun onDraw(canvas: Canvas) {
         val r = Rect(100, 100, 200, 200)
         val p = Paint()
@@ -46,39 +47,37 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if (frame % 3 == 0) {
             tamaPaint.color = Color.BLUE
         }
-
-
-
-        //弾の塗りもとりあえず固定
-
-        for (num in 1..2) {
-            //ここでリピートするとフレームが動かないのか！？　たぶんそだね。
-            val tamaList = mutableListOf(100,200,120,220)
-            if (tamaX == 0){
+        
+        if (tamaX == 0){
                 tamaX = posX
                 tamaY = posY
                 tamaFrame = 1
             }
             susumu = tamaFrame*30
-
             val xx = tamaX-tamaOokisa/2
             val xxx =xx+tamaOokisa
             val yy = tamaY-susumu-(tamaOokisa/2)
             val yyy =yy+tamaOokisa
+            tamaList[0] = xx
+            tamaList[1] = xxx
+            tamaList[2] = yy
+            tamaList[3] = yyy
             val tamaListTest = mutableListOf(xx,yy,xxx,yyy)
-            val tamaIchi = Rect(tamaListTest[0],tamaListTest[1],tamaListTest[2],tamaListTest[3])
+            val tamaIchi = Rect(tamaList[0],tamaList[2],tamaList[1],tamaList[3])
             canvas.drawRect(tamaIchi, tamaPaint)
-
-
-
-
             tamaFrame += 1
             //弾が進んだ処理をする。
             if (tamaY-susumu  < 1){
                 tamaX = 0
             }
-        }
 
+
+
+
+
+
+
+        
     }
 
     var tamaFrame = 0
