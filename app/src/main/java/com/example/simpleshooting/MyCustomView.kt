@@ -16,8 +16,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tamaPaint = Paint()
     var tamaList = mutableListOf(0,0,0,0,1,1,1,1,2,2,2,2)
 
-    //val thelist = mutableListOf([0,0],[2,2]) 配列って何だっけ、、、？となったので、ここでリストに値を入れるような形にしたい
-
     override fun onDraw(canvas: Canvas) {
         val r = Rect(100, 100, 200, 200)
         val p = Paint()
@@ -59,11 +57,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             val yy = tamaY-susumu-(tamaOokisa/2)
             val yyy =yy+tamaOokisa
             tamaList[0] = xx
-            tamaList[1] = xxx
-            tamaList[2] = yy
+            tamaList[1] = yy
+            tamaList[2] = xxx
             tamaList[3] = yyy
-            val tamaListTest = mutableListOf(xx,yy,xxx,yyy)
-            val tamaIchi = Rect(tamaList[0],tamaList[2],tamaList[1],tamaList[3])
+            val tamaIchi = Rect(tamaList[0],tamaList[1],tamaList[2],tamaList[3])
             canvas.drawRect(tamaIchi, tamaPaint)
             tamaFrame += 1
             //弾が進んだ処理をする。
@@ -71,6 +68,28 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 tamaX = 0
             }
 
+
+
+            if (tamaFrame>30){
+
+                val tamaX2 = posX
+                val tamaY2 = posY
+                tamaNiFrame = 1
+                susumuNi = tamaNiFrame*30
+
+                val xx2 = tamaX2-tamaOokisa/2
+                val xxx2 =xx2+tamaOokisa
+                val yy2 = tamaY2-susumuNi-(tamaOokisa/2)
+                val yyy2 =yy2+tamaOokisa
+                tamaList[4] = xx2
+                tamaList[5] = yy2
+                tamaList[6] = xxx2
+                tamaList[7] = yyy2
+                val tamaNi = Rect(tamaList[4],tamaList[5],tamaList[6],tamaList[7])
+                canvas.drawRect(tamaNi, tamaPaint)
+                tamaNiFrame += 1
+
+            }
 
 
 
@@ -81,10 +100,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     var tamaFrame = 0
+    var tamaNiFrame = 0
     var susumu = 0
     var frame = 0
     var tamaOokisa = 10
-
+    var susumuNi = 0
 
 
 
