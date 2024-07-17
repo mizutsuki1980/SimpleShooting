@@ -74,9 +74,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
                 val tamaX2 = posX
                 val tamaY2 = posY
-                tamaNiFrame = 1
                 susumuNi = tamaNiFrame*30
-
+//弾２が消えてしまうのを直したい
                 val xx2 = tamaX2-tamaOokisa/2
                 val xxx2 =xx2+tamaOokisa
                 val yy2 = tamaY2-susumuNi-(tamaOokisa/2)
