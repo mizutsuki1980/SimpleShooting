@@ -16,8 +16,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tamaPaint = Paint()
     var tamaList = mutableListOf(0,0,0,0,1,1,1,1,2,2,2,2)
 
-    //val thelist = mutableListOf([0,0],[2,2]) 配列って何だっけ、、、？となったので、ここでリストに値を入れるような形にしたい
-
     override fun onDraw(canvas: Canvas) {
         val r = Rect(100, 100, 200, 200)
         val p = Paint()
@@ -70,6 +68,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             if (tamaY-susumu  < 1){
                 tamaX = 0
             }
+
+
 
 
 
