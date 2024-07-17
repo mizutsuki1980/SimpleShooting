@@ -13,6 +13,9 @@ import android.widget.TextView
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var tamaX = 0
     var tamaY = 0
+    var tamaX2 = 0
+    var tamaY2 = 0
+
     var tamaPaint = Paint()
     var tamaList = mutableListOf(0,0,0,0,1,1,1,1,2,2,2,2)
 
@@ -79,8 +82,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
 
         if (tamaNiFrame>=1) {
-            val tamaX2 = posX
-            val tamaY2 = posY
+
+            if (tamaNiFrame==1){
+                tamaX2 = posX
+                tamaY2 = posY
+            }
+
             susumuNi = tamaNiFrame * 30
             //弾２が消えてしまうのを直したい
             val xx2 = tamaX2 - tamaOokisa / 2
