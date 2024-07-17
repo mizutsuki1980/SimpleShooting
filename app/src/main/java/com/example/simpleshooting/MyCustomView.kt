@@ -98,6 +98,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
         
     }
 
