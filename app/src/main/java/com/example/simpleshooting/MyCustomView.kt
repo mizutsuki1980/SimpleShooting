@@ -23,11 +23,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         p.style = Paint.Style.FILL
         canvas.drawRect(r, p)
         val ookisa = 100
-        val jikiIchi = Rect(posX-ookisa/2, posY-ookisa/2, posX+ookisa/2, posY+ookisa/2)
+        val jikiIchi =
+            Rect(posX - ookisa / 2, posY - ookisa / 2, posX + ookisa / 2, posY + ookisa / 2)
         val jikiIro = Paint()
-        if (frame % 2 ==1) {
+        if (frame % 2 == 1) {
             jikiIro.color = Color.WHITE
-        }else {
+        } else {
             jikiIro.color = Color.GRAY
         }
         jikiIro.style = Paint.Style.FILL
@@ -45,50 +46,56 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if (frame % 3 == 0) {
             tamaPaint.color = Color.BLUE
         }
-        
-        if (tamaX == 0){
-                tamaX = posX
-                tamaY = posY
-                tamaFrame = 1
+
+        if (tamaX == 0) {
+            tamaX = posX
+            tamaY = posY
+            tamaFrame = 1
+        }
+        susumu = tamaFrame * 30
+        val xx = tamaX - tamaOokisa / 2
+        val xxx = xx + tamaOokisa
+        val yy = tamaY - susumu - (tamaOokisa / 2)
+        val yyy = yy + tamaOokisa
+        tamaList[0] = xx
+        tamaList[1] = yy
+        tamaList[2] = xxx
+        tamaList[3] = yyy
+        val tamaIchi = Rect(tamaList[0], tamaList[1], tamaList[2], tamaList[3])
+        canvas.drawRect(tamaIchi, tamaPaint)
+        tamaFrame += 1
+        //弾が進んだ処理をする。
+        if (tamaY - susumu < 1) {
+            tamaX = 0
+        }
+
+
+
+        if (tamaFrame > 30) {
+            if(tamaNiFrame > 1){
+
+            }else{
+                tamaNiFrame = 1
             }
-            susumu = tamaFrame*30
-            val xx = tamaX-tamaOokisa/2
-            val xxx =xx+tamaOokisa
-            val yy = tamaY-susumu-(tamaOokisa/2)
-            val yyy =yy+tamaOokisa
-            tamaList[0] = xx
-            tamaList[1] = yy
-            tamaList[2] = xxx
-            tamaList[3] = yyy
-            val tamaIchi = Rect(tamaList[0],tamaList[1],tamaList[2],tamaList[3])
-            canvas.drawRect(tamaIchi, tamaPaint)
-            tamaFrame += 1
-            //弾が進んだ処理をする。
-            if (tamaY-susumu  < 1){
-                tamaX = 0
-            }
+        }
 
-
-
-            if (tamaFrame>30){
-
-                val tamaX2 = posX
-                val tamaY2 = posY
-                susumuNi = tamaNiFrame*30
-//弾２が消えてしまうのを直したい
-                val xx2 = tamaX2-tamaOokisa/2
-                val xxx2 =xx2+tamaOokisa
-                val yy2 = tamaY2-susumuNi-(tamaOokisa/2)
-                val yyy2 =yy2+tamaOokisa
-                tamaList[4] = xx2
-                tamaList[5] = yy2
-                tamaList[6] = xxx2
-                tamaList[7] = yyy2
-                val tamaNi = Rect(tamaList[4],tamaList[5],tamaList[6],tamaList[7])
-                canvas.drawRect(tamaNi, tamaPaint)
-                tamaNiFrame += 1
-
-            }
+        if (tamaNiFrame>1) {
+            val tamaX2 = posX
+            val tamaY2 = posY
+            susumuNi = tamaNiFrame * 30
+            //弾２が消えてしまうのを直したい
+            val xx2 = tamaX2 - tamaOokisa / 2
+            val xxx2 = xx2 + tamaOokisa
+            val yy2 = tamaY2 - susumuNi - (tamaOokisa / 2)
+            val yyy2 = yy2 + tamaOokisa
+            tamaList[4] = xx2
+            tamaList[5] = yy2
+            tamaList[6] = xxx2
+            tamaList[7] = yyy2
+            val tamaNi = Rect(tamaList[4], tamaList[5], tamaList[6], tamaList[7])
+            canvas.drawRect(tamaNi, tamaPaint)
+            tamaNiFrame += 1
+        }
 
 
 
