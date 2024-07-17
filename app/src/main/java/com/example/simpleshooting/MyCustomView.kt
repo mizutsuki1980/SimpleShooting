@@ -71,15 +71,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
 
-        if (tamaFrame > 30) {
-            if(tamaNiFrame > 1){
 
-            }else{
+        if (tamaFrame > 30) {
+            if (tamaNiFrame == 0) {
                 tamaNiFrame = 1
             }
         }
 
-        if (tamaNiFrame>1) {
+        if (tamaNiFrame>=1) {
             val tamaX2 = posX
             val tamaY2 = posY
             susumuNi = tamaNiFrame * 30
@@ -95,6 +94,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             val tamaNi = Rect(tamaList[4], tamaList[5], tamaList[6], tamaList[7])
             canvas.drawRect(tamaNi, tamaPaint)
             tamaNiFrame += 1
+
+            if (tamaY2 - susumuNi < 1) {
+                tamaNiFrame = 0
+            }
+
         }
 
 
