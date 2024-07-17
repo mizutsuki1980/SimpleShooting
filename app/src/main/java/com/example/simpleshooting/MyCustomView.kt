@@ -15,6 +15,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tamaY = 0
     var tamaX2 = 0
     var tamaY2 = 0
+    var tamasokudo = 80
 
     var tamaPaint = Paint()
     var tamaList = mutableListOf(0,0,0,0,1,1,1,1,2,2,2,2)
@@ -55,7 +56,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             tamaY = posY
             tamaFrame = 1
         }
-        susumu = tamaFrame * 30
+        susumu = tamaFrame * tamasokudo
         val xx = tamaX - tamaOokisa / 2
         val xxx = xx + tamaOokisa
         val yy = tamaY - susumu - (tamaOokisa / 2)
@@ -74,9 +75,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
 
+        //2発目のでるタイミング、なんかいいのないかなー
 
-        if (tamaFrame > 30) {
-            if (tamaNiFrame == 0) {
+        if (tamaNiFrame == 0) {
+            if (frame % 10 == 0) {
                 tamaNiFrame = 1
             }
         }
@@ -88,7 +90,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 tamaY2 = posY
             }
 
-            susumuNi = tamaNiFrame * 30
+            susumuNi = tamaNiFrame * tamasokudo
             //弾２が消えてしまうのを直したい
             val xx2 = tamaX2 - tamaOokisa / 2
             val xxx2 = xx2 + tamaOokisa
@@ -135,13 +137,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             tamaOokisa = 20
         }
         if(ccFrame > 25) {
-            tamaOokisa = 80
+            tamaOokisa = 40
         }
         if(ccFrame > 50) {
-            tamaOokisa = 200
+            tamaOokisa = 80
         }
         if(ccFrame > 75) {
-            tamaOokisa = 300
+            tamaOokisa = 120
         }
 
 
