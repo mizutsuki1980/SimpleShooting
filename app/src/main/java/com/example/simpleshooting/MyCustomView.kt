@@ -87,7 +87,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //2発目のでるタイミング、なんかいいのないかなー
 
         if (tamaNiFrame == 0) {
-            if (frame % 10 == 0) {
+            //frameじゃなくてtamaFrameにしたらどうだろう？
+            if (tamaFrame % 10 == 0) {
                 tamaNiFrame = 1
             }
         }
@@ -139,13 +140,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             tamaOokisa = 20
         }
         if(ccFrame > 25) {
-            tamaOokisa = 40
+            tamaOokisa = 30
         }
         if(ccFrame > 50) {
-            tamaOokisa = 80
+            tamaOokisa = 40
         }
         if(ccFrame > 75) {
-            tamaOokisa = 120
+            tamaOokisa = 60
         }
 
 
