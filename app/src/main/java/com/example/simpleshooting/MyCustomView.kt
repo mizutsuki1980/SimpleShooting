@@ -15,10 +15,19 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tamaY = 0
     var tamaX2 = 0
     var tamaY2 = 0
-    var tamasokudo = 80
+    var tamasokudo = 100
+
+    var tamaFrame = 0
+    var tamaNiFrame = 0
+    var susumu = 0
+    var frame = 0
+    var tamaOokisa = 10
+    var susumuNi = 0
 
     var tamaPaint = Paint()
     var tamaList = mutableListOf(0,0,0,0,1,1,1,1,2,2,2,2)
+
+    //なんか一定の間隔で出ていない気がするので、修正する。
 
     override fun onDraw(canvas: Canvas) {
         val r = Rect(100, 100, 200, 200)
@@ -117,13 +126,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         
     }
-
-    var tamaFrame = 0
-    var tamaNiFrame = 0
-    var susumu = 0
-    var frame = 0
-    var tamaOokisa = 10
-    var susumuNi = 0
 
 
 
