@@ -15,14 +15,22 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tamaY = 0
     var tamaX2 = 0
     var tamaY2 = 0
+    var tamaX3 = 0
+    var tamaY3 = 0
+
+
     var tamasokudo = 100
 
     var tamaFrame = 0
     var tamaNiFrame = 0
-    var susumu = 0
+    var tamaSanFrame = 0
     var frame = 0
     var tamaOokisa = 10
+
+    var susumu = 0
     var susumuNi = 0
+    var susumuSan = 0
+
 
     var tamaPaint = Paint()
     var tamaList = mutableListOf(0,0,0,0,1,1,1,1,2,2,2,2)
@@ -47,6 +55,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jikiIro.style = Paint.Style.FILL
         canvas.drawRect(jikiIchi, jikiIro)
         tamaPaint.style = Paint.Style.FILL
+
+        val tamaSanPaint = Paint()
+        tamaSanPaint.style = Paint.Style.FILL
+        tamaSanPaint.color = Color.WHITE
 
 
 
@@ -118,6 +130,38 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 tamaNiFrame = 0
             }
 
+            if (tamaSanFrame == 0) {
+                //frameじゃなくてtamaFrameにしたらどうだろう？
+                if (tamaNiFrame % 10 == 0) {
+                    tamaSanFrame = 1
+                }
+            }
+
+            if (tamaSanFrame>=1) {
+
+                if (tamaSanFrame == 1) {
+                    tamaX3 = posX
+                    tamaY3 = posY
+                }
+
+                susumuSan = tamaSanFrame * tamasokudo
+                //弾２が消えてしまうのを直したい
+                val xx3 = tamaX3 - tamaOokisa / 2
+                val xxx3 = xx3 + tamaOokisa
+                val yy3 = tamaY3 - susumuSan - (tamaOokisa / 2)
+                val yyy3 = yy3 + tamaOokisa
+                tamaList[8] = xx3
+                tamaList[9] = yy3
+                tamaList[10] = xxx3
+                tamaList[11] = yyy3
+                val tamaSan = Rect(tamaList[8], tamaList[9], tamaList[10], tamaList[11])
+                canvas.drawRect(tamaSan, tamaSanPaint)
+                tamaSanFrame += 1
+
+                if (tamaY3 - susumuSan < 1) {
+                    tamaSanFrame = 0
+                }
+            }
         }
 
 
