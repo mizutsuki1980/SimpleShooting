@@ -21,7 +21,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     var tamasokudo = 100
 
-    var tamaFrame = 0
+    var tamaFrame = 1
     var tamaNiFrame = 0
     var tamaSanFrame = 0
     var frame = 0
@@ -60,40 +60,42 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tamaSanPaint.style = Paint.Style.FILL
         tamaSanPaint.color = Color.WHITE
 
+        val tamaIchiPaint = Paint()
+        tamaIchiPaint.style = Paint.Style.FILL
+        tamaIchiPaint.color = Color.RED
+
+        val tamaNiPaint = Paint()
+        tamaNiPaint.style = Paint.Style.FILL
+        tamaNiPaint.color = Color.BLUE
 
 
-        if (frame % 3 == 2) {
-            tamaPaint.color = Color.RED
-        }
-        if (frame % 3 == 1) {
-            tamaPaint.color = Color.GREEN
-        }
-        if (frame % 3 == 0) {
-            tamaPaint.color = Color.BLUE
-        }
 
-        if (tamaX == 0) {
-            tamaX = posX
-            tamaY = posY
-            tamaFrame = 1
-        }
-        susumu = tamaFrame * tamasokudo
-        val xx = tamaX - tamaOokisa / 2
-        val xxx = xx + tamaOokisa
-        val yy = tamaY - susumu - (tamaOokisa / 2)
-        val yyy = yy + tamaOokisa
-        tamaList[0] = xx
-        tamaList[1] = yy
-        tamaList[2] = xxx
-        tamaList[3] = yyy
-        val tamaIchi = Rect(tamaList[0], tamaList[1], tamaList[2], tamaList[3])
-        canvas.drawRect(tamaIchi, tamaPaint)
-        tamaFrame += 1
-        //弾が進んだ処理をする。
-        if (tamaY - susumu < 1) {
-            tamaX = 0
-        }
 
+
+        if (tamaFrame>=1) {
+
+            if (tamaX == 0) {
+                tamaX = posX
+                tamaY = posY
+                tamaFrame = 1
+            }
+            susumu = tamaFrame * tamasokudo
+            val xx = tamaX - tamaOokisa / 2
+            val xxx = xx + tamaOokisa
+            val yy = tamaY - susumu - (tamaOokisa / 2)
+            val yyy = yy + tamaOokisa
+            tamaList[0] = xx
+            tamaList[1] = yy
+            tamaList[2] = xxx
+            tamaList[3] = yyy
+            val tamaIchi = Rect(tamaList[0], tamaList[1], tamaList[2], tamaList[3])
+            canvas.drawRect(tamaIchi, tamaIchiPaint)
+            tamaFrame += 1
+            //弾が進んだ処理をする。
+            if (tamaY - susumu < 1) {
+                tamaX = 0
+            }
+        }
 
 
         //2発目のでるタイミング、なんかいいのないかなー
@@ -123,22 +125,23 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             tamaList[6] = xxx2
             tamaList[7] = yyy2
             val tamaNi = Rect(tamaList[4], tamaList[5], tamaList[6], tamaList[7])
-            canvas.drawRect(tamaNi, tamaPaint)
+            canvas.drawRect(tamaNi, tamaNiPaint)
             tamaNiFrame += 1
 
             if (tamaY2 - susumuNi < 1) {
                 tamaNiFrame = 0
             }
 
+
+
+
             if (tamaSanFrame == 0) {
-                //frameじゃなくてtamaFrameにしたらどうだろう？
-                if (tamaNiFrame % 10 == 0) {
+                if (tamaNiFrame % 20 == 0) {
                     tamaSanFrame = 1
                 }
             }
 
             if (tamaSanFrame>=1) {
-
                 if (tamaSanFrame == 1) {
                     tamaX3 = posX
                     tamaY3 = posY
@@ -162,6 +165,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                     tamaSanFrame = 0
                 }
             }
+
+
+
         }
 
 
