@@ -133,7 +133,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
             //弾③の処理
             if (tamaSanFrame == 0) {
-                if (tamaNiFrame % 20 == 0) {
+                if (tamaNiFrame % 10 == 0) {
                     tamaSanFrame = 1
                 }
             }
