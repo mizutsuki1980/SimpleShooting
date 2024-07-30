@@ -56,9 +56,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(jikiIchi, jikiIro)
         tamaPaint.style = Paint.Style.FILL
 
-        val tamaSanPaint = Paint()
-        tamaSanPaint.style = Paint.Style.FILL
-        tamaSanPaint.color = Color.WHITE
 
         val tamaIchiPaint = Paint()
         tamaIchiPaint.style = Paint.Style.FILL
@@ -68,12 +65,19 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tamaNiPaint.style = Paint.Style.FILL
         tamaNiPaint.color = Color.BLUE
 
+        val tamaSanPaint = Paint()
+        tamaSanPaint.style = Paint.Style.FILL
+        tamaSanPaint.color = Color.WHITE
+
+        //白と青の間隔が極端に狭い
+        //というか、白が青と赤の間にめり込んでるのか。
+        //かならず青のちょっと前に白が来る。
+        //①赤　②青　③白　なので
+        //
 
 
-
-
+        //弾①の処理
         if (tamaFrame>=1) {
-
             if (tamaX == 0) {
                 tamaX = posX
                 tamaY = posY
@@ -94,28 +98,23 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             //弾が進んだ処理をする。
             if (tamaY - susumu < 1) {
                 tamaX = 0
+                tamaFrame = 0
             }
         }
 
-
-        //2発目のでるタイミング、なんかいいのないかなー
-
+        //弾②の処理
         if (tamaNiFrame == 0) {
             //frameじゃなくてtamaFrameにしたらどうだろう？
             if (tamaFrame % 10 == 0) {
                 tamaNiFrame = 1
             }
         }
-
         if (tamaNiFrame>=1) {
-
             if (tamaNiFrame==1){
                 tamaX2 = posX
                 tamaY2 = posY
             }
-
             susumuNi = tamaNiFrame * tamasokudo
-            //弾２が消えてしまうのを直したい
             val xx2 = tamaX2 - tamaOokisa / 2
             val xxx2 = xx2 + tamaOokisa
             val yy2 = tamaY2 - susumuNi - (tamaOokisa / 2)
@@ -132,9 +131,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 tamaNiFrame = 0
             }
 
-
-
-
+            //弾③の処理
             if (tamaSanFrame == 0) {
                 if (tamaNiFrame % 20 == 0) {
                     tamaSanFrame = 1
@@ -148,7 +145,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 }
 
                 susumuSan = tamaSanFrame * tamasokudo
-                //弾２が消えてしまうのを直したい
                 val xx3 = tamaX3 - tamaOokisa / 2
                 val xxx3 = xx3 + tamaOokisa
                 val yy3 = tamaY3 - susumuSan - (tamaOokisa / 2)
@@ -163,9 +159,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
                 if (tamaY3 - susumuSan < 1) {
                     tamaSanFrame = 0
+                    tamaFrame = 1
                 }
             }
 
+
+            //弾①～③の処理、終了
 
 
         }
