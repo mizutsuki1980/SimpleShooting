@@ -21,7 +21,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     var tamasokudo = 100
 
-    var tamaFrame = 1
+    var tamaFrame = 0
     var tamaNiFrame = 0
     var tamaSanFrame = 0
     var frame = 0
@@ -121,18 +121,21 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var posY = 300
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
+            if (tamaFrame==0){tamaFrame=1}
             posX = event.x.toInt()
             posY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
         }
 
         if (event.action == MotionEvent.ACTION_UP) {
+            if (tamaFrame==0){tamaFrame=1}
             posX = event.x.toInt()
             posY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
         }
 
         if (event.action == MotionEvent.ACTION_MOVE) {
+            if (tamaFrame==0){tamaFrame=1}
             posX = event.x.toInt()
             posY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
