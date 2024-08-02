@@ -18,6 +18,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tamaX3 = 0
     var tamaY3 = 0
 
+    var tamaLoopCout = 0
 
     var tamasokudo = 100
 
@@ -35,8 +36,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tamaPaint = Paint()
     var tamaList = mutableListOf(0,0,0,0,1,1,1,1,2,2,2,2)
 
-    //なんか一定の間隔で出ていない気がするので、修正する。
-
     override fun onDraw(canvas: Canvas) {
         val ookisa = 100
         val jikiIchi = Rect(posX - ookisa / 2, posY - ookisa / 2, posX + ookisa / 2, posY + ookisa / 2)
@@ -51,6 +50,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tamaIchiPaint.color = Color.RED
 
         //弾①の処理
+        if (tamaLoopCout == 100){
+            tamaLoopCout = 1
+        }else {
+            tamaLoopCout += 1
+        }
+
         if (tamaFrame>=1) {
             if (tamaX == 0) {
                 tamaX = posX
@@ -68,7 +73,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             tamaList[3] = yyy
             val tamaIchi = Rect(tamaList[0], tamaList[1], tamaList[2], tamaList[3])
             canvas.drawRect(tamaIchi, tamaIchiPaint)
+
             tamaFrame += 1
+            tamaLoopCout += 1
 
             if (tamaY - susumu < 1) {
                 tamaX = 0
@@ -76,6 +83,15 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             }
 
 
+
+
+
+
+            //ここでtamaframeは１に戻る。０になると動かない、止まる。
+            //二発、３発とでてきたら、tamaFrameは０にしとけばいいんじゃないかな。
+
+            // 弾１が出たら、１００フレーム後に必ず２がでて、２００フレーム後に弾３が出る。
+            //もし弾１が画面外近くで発射されても、リセットはされずに、弾３がでるまで弾１は出ないようにする
         }
 
 
