@@ -13,25 +13,16 @@ import android.widget.TextView
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var tamaX = 0
     var tamaY = 0
-    var tamaX2 = 0
-    var tamaY2 = 0
-    var tamaX3 = 0
-    var tamaY3 = 0
 
     var tamaLoopCout = 0
 
     var tamasokudo = 100
 
     var tamaFrame = 0
-    var tamaNiFrame = 0
-    var tamaSanFrame = 0
     var frame = 0
     var tamaOokisa = 10
 
     var susumu = 0
-    var susumuNi = 0
-    var susumuSan = 0
-
 
     var tamaPaint = Paint()
     var tamaList = mutableListOf(0,0,0,0,1,1,1,1,2,2,2,2)
@@ -92,17 +83,17 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
 
-    fun myCharacter(posX:Int,posY,Int){
-        if (tamaLoopCout == 100){
+    fun myCharacter(posXXX:Int,posYYY:Int) {
+        if (tamaLoopCout == 100) {
             tamaLoopCout = 1
-        }else {
+        } else {
             tamaLoopCout += 1
         }
 
-        if (tamaFrame>=1) {
+        if (tamaFrame >= 1) {
             if (tamaX == 0) {
-                tamaX = posX
-                tamaY = posY
+                tamaX = posXXX
+                tamaY = posYYY
                 tamaFrame = 1
             }
             susumu = tamaFrame * tamasokudo
@@ -127,6 +118,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
         }
+    }
 
     fun tsugiNoSyori() {
         frame += 1
