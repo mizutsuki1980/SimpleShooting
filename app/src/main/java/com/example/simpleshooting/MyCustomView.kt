@@ -81,17 +81,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 tamaX = 0
                 tamaFrame = 1
             }
-
-
-
-
-
-
-            //ここでtamaframeは１に戻る。０になると動かない、止まる。
-            //二発、３発とでてきたら、tamaFrameは０にしとけばいいんじゃないかな。
-
-            // 弾１が出たら、１００フレーム後に必ず２がでて、２００フレーム後に弾３が出る。
-            //もし弾１が画面外近くで発射されても、リセットはされずに、弾３がでるまで弾１は出ないようにする
         }
 
 
@@ -103,7 +92,41 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
 
+    fun myCharacter(posX:Int,posY,Int){
+        if (tamaLoopCout == 100){
+            tamaLoopCout = 1
+        }else {
+            tamaLoopCout += 1
+        }
 
+        if (tamaFrame>=1) {
+            if (tamaX == 0) {
+                tamaX = posX
+                tamaY = posY
+                tamaFrame = 1
+            }
+            susumu = tamaFrame * tamasokudo
+            val xx = tamaX - tamaOokisa / 2
+            val xxx = xx + tamaOokisa
+            val yy = tamaY - susumu - (tamaOokisa / 2)
+            val yyy = yy + tamaOokisa
+            tamaList[0] = xx
+            tamaList[1] = yy
+            tamaList[2] = xxx
+            tamaList[3] = yyy
+            val tamaIchi = Rect(tamaList[0], tamaList[1], tamaList[2], tamaList[3])
+            // canvas.drawRect(tamaIchi, tamaIchiPaint)
+
+            tamaFrame += 1
+            tamaLoopCout += 1
+
+            if (tamaY - susumu < 1) {
+                tamaX = 0
+                tamaFrame = 1
+            }
+
+
+        }
 
     fun tsugiNoSyori() {
         frame += 1
