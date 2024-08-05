@@ -13,24 +13,28 @@ import android.widget.TextView
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var tamaX = 0
     var tamaY = 0
-
-    var tamaLoopCout = 0
-
     var tamasokudo = 100
-
     var tamaFrame = 0
     var frame = 0
     var tamaOokisa = 10
-
     var susumu = 0
-
     var tamaPaint = Paint()
     var tamaList = mutableListOf(0,0,0,0,1,1,1,1,2,2,2,2)
 
+    fun myJiki(posXx:Int,posYy:Int,myookisa:Int):Int{
+        val myleft = posXx - myookisa / 2
+        return myleft
+    }
+
     override fun onDraw(canvas: Canvas) {
         val ookisa = 100
-        val jikiIchi = Rect(posX - ookisa / 2, posY - ookisa / 2, posX + ookisa / 2, posY + ookisa / 2)
+        val mmm = myJiki(posX,posY,ookisa)
+
+        val jikiIchi = Rect(mmm, posY - ookisa / 2, posX + ookisa / 2, posY + ookisa / 2)
         val jikiIro = Paint()
+
+
+
         jikiIro.style = Paint.Style.FILL
         jikiIro.color = Color.WHITE
         canvas.drawRect(jikiIchi, jikiIro)
@@ -41,11 +45,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tamaIchiPaint.color = Color.RED
 
         //弾①の処理
-        if (tamaLoopCout == 100){
-            tamaLoopCout = 1
-        }else {
-            tamaLoopCout += 1
-        }
+
 
         if (tamaFrame>=1) {
             if (tamaX == 0) {
@@ -66,59 +66,41 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             canvas.drawRect(tamaIchi, tamaIchiPaint)
 
             tamaFrame += 1
-            tamaLoopCout += 1
 
             if (tamaY - susumu < 1) {
                 tamaX = 0
                 tamaFrame = 1
             }
         }
-
-
-
-
-
-
-        
     }
 
 
-    fun myCharacter(posXXX:Int,posYYY:Int) {
-        if (tamaLoopCout == 100) {
-            tamaLoopCout = 1
-        } else {
-            tamaLoopCout += 1
+    fun myCharacter(posXXX:Int,posYYY:Int,myFrame:Int) {
+    //最初の一回の処理
+        if (tamaX == 0) {
+            tamaX = posXXX
+            tamaY = posYYY
+            tamaFrame = 1
         }
 
-        if (tamaFrame >= 1) {
-            if (tamaX == 0) {
-                tamaX = posXXX
-                tamaY = posYYY
-                tamaFrame = 1
-            }
-            susumu = tamaFrame * tamasokudo
-            val xx = tamaX - tamaOokisa / 2
-            val xxx = xx + tamaOokisa
-            val yy = tamaY - susumu - (tamaOokisa / 2)
-            val yyy = yy + tamaOokisa
-            tamaList[0] = xx
-            tamaList[1] = yy
-            tamaList[2] = xxx
-            tamaList[3] = yyy
-            val tamaIchi = Rect(tamaList[0], tamaList[1], tamaList[2], tamaList[3])
-            // canvas.drawRect(tamaIchi, tamaIchiPaint)
+        susumu = tamaFrame * tamasokudo
+        val xx = tamaX - tamaOokisa / 2
+        val xxx = xx + tamaOokisa
+        val yy = tamaY - susumu - (tamaOokisa / 2)
+        val yyy = yy + tamaOokisa
+        val tamaIchi = Rect(xx, yy, xxx, yyy)
 
-            tamaFrame += 1
-            tamaLoopCout += 1
+        tamaFrame += 1
 
-            if (tamaY - susumu < 1) {
-                tamaX = 0
-                tamaFrame = 1
-            }
-
-
+        //最後の処理、画面外に出たかどうか
+        if (tamaY - susumu < 1) {
+            tamaX = 0
+            tamaFrame = 1
         }
     }
+
+
+
 
     fun tsugiNoSyori() {
         frame += 1
