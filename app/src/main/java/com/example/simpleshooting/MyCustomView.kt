@@ -21,11 +21,16 @@ import android.widget.TextView
     class myTamanoUgoki(posXx:Int,posYy:Int,myTamaNoOkisa:Int,myFrame:Int,tamasokudo:Int,tamaFrame:Int){
         val tamaX = posXx
         val tamaY = posYy
+
         val susumu = tamaFrame * tamasokudo
+
         val xx = tamaX - myTamaNoOkisa / 2
         val xxx = xx + myTamaNoOkisa
         val yy = tamaY - susumu - (myTamaNoOkisa / 2)
         val yyy = yy + myTamaNoOkisa
+
+
+
     }
 
 
@@ -64,7 +69,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //tamaFrameはそのまま使って書いてみる
         if (tamaFrame>=1) {
             //posXx:Int,posYy:Int,myTamaNoOkisa:Int,myFrame:Int,tamasokudo:Int,tamaFrame:Int
-            var myTama = myTamanoUgoki(posX,posY,ookisa,frame,tamasokudo,tamaFrame)
+            if (tamaX == 0) {
+                tamaX = posX
+                tamaY = posY
+                tamaFrame = 1
+            }
+
+            var myTama = myTamanoUgoki(posX,posY,tamaOokisa,frame,tamasokudo,tamaFrame)
             susumu = myTama.susumu
             val tamaIchi = Rect(myTama.xx, myTama.yy, myTama.xxx, myTama.yyy)
             canvas.drawRect(tamaIchi, tamaIchiPaint)
