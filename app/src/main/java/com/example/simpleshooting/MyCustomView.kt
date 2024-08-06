@@ -10,6 +10,15 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
 
+//こっちはクラス
+class myJikinoUgoki(posXx:Int,posYy:Int,myookisa:Int){
+
+    val left = posXx - myookisa / 2
+    val top = posYy - myookisa / 2
+    val right = posXx + myookisa / 2
+    val bottom = posYy + myookisa / 2
+}
+
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var tamaX = 0
     var tamaY = 0
@@ -21,16 +30,20 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tamaPaint = Paint()
     var tamaList = mutableListOf(0,0,0,0,1,1,1,1,2,2,2,2)
 
+    //こっちは関数
     fun myJiki(posXx:Int,posYy:Int,myookisa:Int):Int{
         val myleft = posXx - myookisa / 2
         return myleft
+        val myTop = posY - myookisa / 2
     }
 
     override fun onDraw(canvas: Canvas) {
         val ookisa = 100
-        val mmm = myJiki(posX,posY,ookisa)
 
-        val jikiIchi = Rect(mmm, posY - ookisa / 2, posX + ookisa / 2, posY + ookisa / 2)
+        val mmm = myJiki(posX,posY,ookisa)
+        val mmmm = myJikinoUgoki(posX,posY,ookisa)
+
+        val jikiIchi = Rect(mmmm.left, mmmm.top, mmmm.right, mmmm.bottom)
         val jikiIro = Paint()
 
 
