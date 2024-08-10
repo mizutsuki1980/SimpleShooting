@@ -18,7 +18,7 @@ import android.widget.TextView
         val bottom = posYy + myookisa / 2
     }
 
-    class myTamanoUgoki(posXx:Int,posYy:Int,myTamaNoOkisa:Int,myFrame:Int,tamasokudo:Int,tamaFrame:Int){
+    class myTamanoUgoki(posXx:Int,posYy:Int,myTamaNoOkisa:Int,myFrame:Int,tamasokudo:Int,val tamaFrame:Int){
         val tamaX = posXx
         val tamaY = posYy
         val susumu = tamaFrame * tamasokudo
@@ -40,6 +40,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tamaOokisa = 10
     var susumu = 0
     var tamaPaint = Paint()
+    var myTama = myTamanoUgoki(0,0,tamaOokisa,frame,tamasokudo,tamaFrame)
 
     override fun onDraw(canvas: Canvas) {
         val ookisa = 100
@@ -60,15 +61,20 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //弾①の処理
 
         //tamaFrameはそのまま使って書いてみる
+        // 一回myTamaを作ったら、そのあとは消えるまでそのまま使いまわせばいいんじゃないか？
+
         if (tamaFrame>=1) {
             if (tamaX == 0) {
                 //最初の一回の情報はここで入ってる。myTamaじゃない
+                //ここでやってることもクラスに移動できないかな？
                 tamaX = posX
                 tamaY = posY
                 tamaFrame = 1
             }
 
-            var myTama = myTamanoUgoki(posX,posY,tamaOokisa,frame,tamasokudo,tamaFrame)
+            //うーん、ここで作ってしまうとtamaFrameを指定しないといけないなぁ、、、。
+            //ｘとかｙも決めなきゃいけないから、結局tamaFrame は埋め込めないのか。そうなのか。
+            myTama = myTamanoUgoki(posX,posY,tamaOokisa,frame,tamasokudo,tamaFrame)
             canvas.drawRect(myTama.tamaIchi, tamaIchiPaint)
 
 
