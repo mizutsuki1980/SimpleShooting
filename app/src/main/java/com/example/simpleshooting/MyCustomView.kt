@@ -21,16 +21,12 @@ import android.widget.TextView
     class myTamanoUgoki(posXx:Int,posYy:Int,myTamaNoOkisa:Int,myFrame:Int,tamasokudo:Int,tamaFrame:Int){
         val tamaX = posXx
         val tamaY = posYy
-
         val susumu = tamaFrame * tamasokudo
-
         val xx = tamaX - myTamaNoOkisa / 2
         val xxx = xx + myTamaNoOkisa
         val yy = tamaY - susumu - (myTamaNoOkisa / 2)
         val yyy = yy + myTamaNoOkisa
-
-
-
+        val tamaIchi = Rect(xx,yy,xxx,yyy)
     }
 
 
@@ -44,9 +40,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tamaOokisa = 10
     var susumu = 0
     var tamaPaint = Paint()
-    var tamaList = mutableListOf(0,0,0,0,1,1,1,1,2,2,2,2)
-
-
 
     override fun onDraw(canvas: Canvas) {
         val ookisa = 100
@@ -68,19 +61,19 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         //tamaFrameはそのまま使って書いてみる
         if (tamaFrame>=1) {
-            //posXx:Int,posYy:Int,myTamaNoOkisa:Int,myFrame:Int,tamasokudo:Int,tamaFrame:Int
             if (tamaX == 0) {
+                //最初の一回の情報はここで入ってる。myTamaじゃない
                 tamaX = posX
                 tamaY = posY
                 tamaFrame = 1
             }
 
             var myTama = myTamanoUgoki(posX,posY,tamaOokisa,frame,tamasokudo,tamaFrame)
-            susumu = myTama.susumu
-            val tamaIchi = Rect(myTama.xx, myTama.yy, myTama.xxx, myTama.yyy)
-            canvas.drawRect(tamaIchi, tamaIchiPaint)
+            canvas.drawRect(myTama.tamaIchi, tamaIchiPaint)
+
+
             tamaFrame += 1
-            if (tamaY - susumu < 1) {
+            if (tamaY - myTama.susumu < 1) {
                 tamaX = 0
                 tamaFrame = 1
             }
@@ -94,29 +87,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
 
-    fun myCharacter(posXXX:Int,posYYY:Int,myFrame:Int) {
-    //最初の一回の処理
-        if (tamaX == 0) {
-            tamaX = posXXX
-            tamaY = posYYY
-            tamaFrame = 1
-        }
-
-        susumu = tamaFrame * tamasokudo
-        val xx = tamaX - tamaOokisa / 2
-        val xxx = xx + tamaOokisa
-        val yy = tamaY - susumu - (tamaOokisa / 2)
-        val yyy = yy + tamaOokisa
-        val tamaIchi = Rect(xx, yy, xxx, yyy)
-
-        tamaFrame += 1
-
-        //最後の処理、画面外に出たかどうか
-        if (tamaY - susumu < 1) {
-            tamaX = 0
-            tamaFrame = 1
-        }
-    }
 
 
 
