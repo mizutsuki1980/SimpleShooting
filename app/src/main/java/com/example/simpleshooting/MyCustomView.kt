@@ -29,7 +29,7 @@ import android.widget.TextView
         val tamaIchi = Rect(xx,yy,xxx,yyy)
 
 
-        fun Hantei():Boolean{
+        fun hantei():Boolean{
             var seizon :Boolean
             if (tamaY - susumu < 1) {
                  seizon = true
@@ -90,7 +90,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             canvas.drawRect(myTama.tamaIchi, tamaIchiPaint)
 
             //お。できてるっぽい
-            val ttt = myTama.Hantei()
+            val ttt = myTama.hantei()
 
             tamaFrame += 1
             if (ttt){
