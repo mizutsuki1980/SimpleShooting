@@ -43,8 +43,7 @@ import android.widget.TextView
 
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
-    var tamaX = 0
-    var tamaY = 0
+
     var tamasokudo = 100
     var tamaFrame = 0
     var frame = 0
@@ -71,19 +70,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         //弾①の処理
         if (tamaFrame>=1) {
-            if (tamaX == 0) {
-                tamaX = posX
-                tamaY = posY
-                tamaFrame = 1
-            }
-
             myTama = myTamanoUgoki(posX,posY,tamaOokisa,frame,tamasokudo,tamaFrame)
             canvas.drawRect(myTama.tamaIchi, tamaIchiPaint)
-
-
             tamaFrame += 1
             if (myTama.hantei()){
-                tamaX = 0
                 tamaFrame = 1
             }
         }
