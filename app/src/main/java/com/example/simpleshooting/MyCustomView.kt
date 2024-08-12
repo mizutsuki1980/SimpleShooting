@@ -76,50 +76,21 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         if (tamaFrame>=1) {
             if (tamaX == 0) {
-                //最初の一回の情報はここで入ってる。myTamaじゃない
-                //ここでやってることもクラスに移動できないかな？
                 tamaX = posX
                 tamaY = posY
                 tamaFrame = 1
             }
 
-            //うーん、ここで作ってしまうとtamaFrameを指定しないといけないなぁ、、、。
-            //ｘとかｙも決めなきゃいけないから、結局tamaFrame は埋め込めないのか。そうなのか。
-
             myTama = myTamanoUgoki(posX,posY,tamaOokisa,frame,tamasokudo,tamaFrame)
             canvas.drawRect(myTama.tamaIchi, tamaIchiPaint)
 
-            //お。できてるっぽい
-            val ttt = myTama.hantei()
 
             tamaFrame += 1
-            if (ttt){
+            if (myTama.hantei()){
                 tamaX = 0
                 tamaFrame = 1
             }
-            ///んー、ここで下をコメントアウトすると弾の動きが止まる。
-            //なんでー？
-
-            //なにがしかの理解が間違っている。
-            //もしくは単純なミス。
-
-            // ん、単純ミスか？
-            //コンストラクタの関数のほうが間違っていた。trueとfalseの条件が逆だった。
-
-    //            tamaFrame += 1
-      //      if (tamaY - myTama.susumu < 1) {
-        //        tamaX = 0
-          //      tamaFrame = 1
-            //}
-
-
-
-
-
         }
-
-
-
     }
 
 
