@@ -19,19 +19,19 @@ import android.widget.TextView
     }
 
     class myTamanoUgoki(posXx:Int,posYy:Int,myTamaNoOkisa:Int,myFrame:Int,tamasokudo:Int,val tamaFrame:Int){
-        val tamaX = posXx
-        val tamaY = posYy
+        val myX = posXx
+        val myY = posYy
         val susumu = tamaFrame * tamasokudo
-        val xx = tamaX - myTamaNoOkisa / 2
+        val xx = myX - myTamaNoOkisa / 2
         val xxx = xx + myTamaNoOkisa
-        val yy = tamaY - susumu - (myTamaNoOkisa / 2)
+        val yy = myY - susumu - (myTamaNoOkisa / 2)
         val yyy = yy + myTamaNoOkisa
         val tamaIchi = Rect(xx,yy,xxx,yyy)
 
 
         fun hantei():Boolean{
             var seizon :Boolean
-            if (tamaY - susumu < 1) {
+            if (myY - susumu < 1) {
                  seizon = true
             }else{
                  seizon = false
@@ -70,10 +70,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
         //弾①の処理
-
-        //tamaFrameはそのまま使って書いてみる
-        // 一回myTamaを作ったら、そのあとは消えるまでそのまま使いまわせばいいんじゃないか？
-
         if (tamaFrame>=1) {
             if (tamaX == 0) {
                 tamaX = posX
