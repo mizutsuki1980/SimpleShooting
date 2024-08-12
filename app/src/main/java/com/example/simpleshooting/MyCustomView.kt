@@ -27,6 +27,17 @@ import android.widget.TextView
         val yy = tamaY - susumu - (myTamaNoOkisa / 2)
         val yyy = yy + myTamaNoOkisa
         val tamaIchi = Rect(xx,yy,xxx,yyy)
+
+
+        fun Hantei():Boolean{
+            var seizon :Boolean
+            if (tamaY - susumu < 1) {
+                 seizon = true
+            }else{
+                 seizon = false
+            }
+            return seizon
+        }
     }
 
 
@@ -74,15 +85,34 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
             //うーん、ここで作ってしまうとtamaFrameを指定しないといけないなぁ、、、。
             //ｘとかｙも決めなきゃいけないから、結局tamaFrame は埋め込めないのか。そうなのか。
+
             myTama = myTamanoUgoki(posX,posY,tamaOokisa,frame,tamasokudo,tamaFrame)
             canvas.drawRect(myTama.tamaIchi, tamaIchiPaint)
 
+            //お。できてるっぽい
+            val ttt = myTama.Hantei()
 
             tamaFrame += 1
-            if (tamaY - myTama.susumu < 1) {
+            if (ttt){
                 tamaX = 0
                 tamaFrame = 1
             }
+            ///んー、ここで下をコメントアウトすると弾の動きが止まる。
+            //なんでー？
+
+            //なにがしかの理解が間違っている。
+            //もしくは単純なミス。
+
+            // ん、単純ミスか？
+            //コンストラクタの関数のほうが間違っていた。trueとfalseの条件が逆だった。
+
+    //            tamaFrame += 1
+      //      if (tamaY - myTama.susumu < 1) {
+        //        tamaX = 0
+          //      tamaFrame = 1
+            //}
+
+
 
 
 
