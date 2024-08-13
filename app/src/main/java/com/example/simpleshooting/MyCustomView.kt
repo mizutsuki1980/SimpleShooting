@@ -82,7 +82,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         //弾①の処理
         if (tamaFrameIchi>=1) {
-            myTamaIchi = myTamanoUgoki(posX,posY,tamaOokisa,frame,tamasokudo,tamaFrameIchi)
+            if (tamaFrameIchi== 1){
+                myTamaIchi = myTamanoUgoki(posX,posY,tamaOokisa,frame,tamasokudo,tamaFrameIchi)
+            }else {
+                myTamaIchi = myTamanoUgoki(myTamaIchi.myX,myTamaIchi.myY,tamaOokisa,frame,tamasokudo,tamaFrameIchi)
+            }
             canvas.drawRect(myTamaIchi.tamaIchi, tamaIchiPaint)
             tamaFrameIchi += 1
             if (myTamaIchi.hantei()){
@@ -92,13 +96,17 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
         if (tamaFrameNi==0) {
-            if (tamaFrameIchi == 10) {
+            if (tamaFrameIchi == 5) {
                 tamaFrameNi = 1
             }
         }
 
         if (tamaFrameNi>=1) {
-            myTamaNi = myTamanoUgoki(posX,posY,tamaOokisa,frame,tamasokudo,tamaFrameNi)
+            if (tamaFrameNi== 1){
+               myTamaNi = myTamanoUgoki(posX,posY,tamaOokisa,frame,tamasokudo,tamaFrameNi)
+            }else {
+                myTamaNi = myTamanoUgoki(myTamaNi.myX,myTamaNi.myY,tamaOokisa,frame,tamasokudo,tamaFrameNi)
+            }
             canvas.drawRect(myTamaNi.tamaIchi, tamaNiPaint)
             tamaFrameNi += 1
             if (myTamaNi.hantei()){
@@ -106,6 +114,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             }
         }
 
+        // 二発にすることはできたが、弾が自機についてきてしまう
+        //一度発射されたら、そこから初期のｘｙは動かないようにする
+        //これはクラスを変更するのか？それとも、オブジェクトを加算するのか？
+        //あ、ifでtamaFrameを１の時だけ処理すればいいのかな
 
 
     }
