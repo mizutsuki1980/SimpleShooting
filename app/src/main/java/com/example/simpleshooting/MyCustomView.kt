@@ -43,14 +43,16 @@ import android.widget.TextView
 
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
-
     var tamasokudo = 100
-    var tamaFrame = 0
+    var tamaFrameIchi = 0
+    var tamaFrameNi = 0
+    var tamaFrameSan = 0
     var frame = 0
     var tamaOokisa = 10
-    var susumu = 0
     var tamaPaint = Paint()
-    var myTama = myTamanoUgoki(0,0,tamaOokisa,frame,tamasokudo,tamaFrame)
+    var myTamaIchi = myTamanoUgoki(0,0,tamaOokisa,frame,tamasokudo,tamaFrameIchi)
+    var myTamaNi = myTamanoUgoki(0,0,tamaOokisa,frame,tamasokudo,0)
+    var myTamaSan = myTamanoUgoki(0,0,tamaOokisa,frame,tamasokudo,0)
 
     override fun onDraw(canvas: Canvas) {
         val ookisa = 100
@@ -66,17 +68,46 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tamaIchiPaint.style = Paint.Style.FILL
         tamaIchiPaint.color = Color.RED
 
+        tamaPaint.style = Paint.Style.FILL
+        val tamaNiPaint = Paint()
+        tamaNiPaint.style = Paint.Style.FILL
+        tamaNiPaint.color = Color.BLUE
 
+
+
+        //弾の処理
+        //tamaFrameは最初は0、繰り返すときに1になる。
+        //画面外に出た場合は1になる。
+        //0にとどめておけば、たぶん出ない。
 
         //弾①の処理
-        if (tamaFrame>=1) {
-            myTama = myTamanoUgoki(posX,posY,tamaOokisa,frame,tamasokudo,tamaFrame)
-            canvas.drawRect(myTama.tamaIchi, tamaIchiPaint)
-            tamaFrame += 1
-            if (myTama.hantei()){
-                tamaFrame = 1
+        if (tamaFrameIchi>=1) {
+            myTamaIchi = myTamanoUgoki(posX,posY,tamaOokisa,frame,tamasokudo,tamaFrameIchi)
+            canvas.drawRect(myTamaIchi.tamaIchi, tamaIchiPaint)
+            tamaFrameIchi += 1
+            if (myTamaIchi.hantei()){
+                tamaFrameIchi = 1
             }
         }
+
+
+        if (tamaFrameNi==0) {
+            if (tamaFrameIchi == 10) {
+                tamaFrameNi = 1
+            }
+        }
+
+        if (tamaFrameNi>=1) {
+            myTamaNi = myTamanoUgoki(posX,posY,tamaOokisa,frame,tamasokudo,tamaFrameNi)
+            canvas.drawRect(myTamaNi.tamaIchi, tamaNiPaint)
+            tamaFrameNi += 1
+            if (myTamaNi.hantei()){
+                tamaFrameNi = 0
+            }
+        }
+
+
+
     }
 
 
@@ -116,21 +147,21 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var posY = 300
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
-            if (tamaFrame==0){tamaFrame=1}
+            if (tamaFrameIchi==0){tamaFrameIchi=1}
             posX = event.x.toInt()
             posY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
         }
 
         if (event.action == MotionEvent.ACTION_UP) {
-            if (tamaFrame==0){tamaFrame=1}
+            if (tamaFrameIchi==0){tamaFrameIchi=1}
             posX = event.x.toInt()
             posY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
         }
 
         if (event.action == MotionEvent.ACTION_MOVE) {
-            if (tamaFrame==0){tamaFrame=1}
+            if (tamaFrameIchi==0){tamaFrameIchi=1}
             posX = event.x.toInt()
             posY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
