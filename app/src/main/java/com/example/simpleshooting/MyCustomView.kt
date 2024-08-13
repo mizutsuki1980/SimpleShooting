@@ -72,15 +72,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val tamaNiPaint = Paint()
         tamaNiPaint.style = Paint.Style.FILL
         tamaNiPaint.color = Color.BLUE
-
-
-
-        //弾の処理
-        //tamaFrameは最初は0、繰り返すときに1になる。
-        //画面外に出た場合は1になる。
-        //0にとどめておけば、たぶん出ない。
-
-        //弾①の処理
         if (tamaFrameIchi>=1) {
             if (tamaFrameIchi== 1){
                 myTamaIchi = myTamanoUgoki(posX,posY,tamaOokisa,frame,tamasokudo,tamaFrameIchi)
@@ -113,13 +104,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 tamaFrameNi = 0
             }
         }
-
-        // 二発にすることはできたが、弾が自機についてきてしまう
-        //一度発射されたら、そこから初期のｘｙは動かないようにする
-        //これはクラスを変更するのか？それとも、オブジェクトを加算するのか？
-        //あ、ifでtamaFrameを１の時だけ処理すればいいのかな
-
-
     }
 
 
