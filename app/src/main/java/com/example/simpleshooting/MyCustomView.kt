@@ -40,21 +40,51 @@ import android.widget.TextView
         }
     }
 
+    class myEnemy(posXx:Int,posYy:Int,myEnemyNoOkisa:Int,myFrame:Int,enemySokudo:Int,val enemyFrame:Int){
+        //なんかすごく似たようなものを作ることになる。これが継承ってやつを使うポイントなのかも
+        val myX = posXx
+        val myY = posYy
+
+        val susumu = enemyFrame * enemySokudo
+
+        //ここでsusumuがどこにプラスされるか、マイナスされるか、でどう動くのか決まる
+        val xx = myX - (myEnemyNoOkisa / 2 ) + susumu
+        val xxx = xx + myEnemyNoOkisa
+        val yy = myY - (myEnemyNoOkisa / 2)
+        val yyy = yy + myEnemyNoOkisa
+        val enemyPosition = Rect(xx,yy,xxx,yyy)
+
+
+        fun hantei():Boolean{
+            var seizon :Boolean
+            if (myY - susumu < 1) {
+                seizon = true
+            }else{
+                seizon = false
+            }
+            return seizon
+        }
+    }
+
 
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var tamasokudo = 100
     var tamaFrameIchi = 0
+
+    var enemyFrameIchi = 0
+
     var tamaFrameNi = 0
     var tamaFrameSan = 0
     var frame = 0
     var tamaOokisa = 10
-    var tamaPaint = Paint()
+
     var myTamaIchi = myTamanoUgoki(0,0,tamaOokisa,frame,tamasokudo,tamaFrameIchi)
     var myTamaNi = myTamanoUgoki(0,0,tamaOokisa,frame,tamasokudo,0)
     var myTamaSan = myTamanoUgoki(0,0,tamaOokisa,frame,tamasokudo,0)
+    var myEnemey = myEnemy(0,0,100,frame,100,0)
 
-    override fun onDraw(canvas: Canvas) {
+        override fun onDraw(canvas: Canvas) {
         val ookisa = 100
         val myJiki = myJikinoUgoki(posX,posY,ookisa)
         val jikiIchi = Rect(myJiki.left, myJiki.top, myJiki.right, myJiki.bottom)
@@ -63,15 +93,30 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jikiIro.color = Color.WHITE
         canvas.drawRect(jikiIchi, jikiIro)
 
-        tamaPaint.style = Paint.Style.FILL
+
         val tamaIchiPaint = Paint()
         tamaIchiPaint.style = Paint.Style.FILL
         tamaIchiPaint.color = Color.RED
 
-        tamaPaint.style = Paint.Style.FILL
         val tamaNiPaint = Paint()
         tamaNiPaint.style = Paint.Style.FILL
         tamaNiPaint.color = Color.BLUE
+
+        val enemyPaint = Paint()
+        enemyPaint.style = Paint.Style.FILL
+        enemyPaint.color = Color.YELLOW
+
+
+        //敵処理
+        myEnemey = myEnemy(0, 0, 100, frame, 50, enemyFrameIchi)
+        canvas.drawRect(myEnemey.enemyPosition, enemyPaint)
+        enemyFrameIchi += 1
+        if(enemyFrameIchi > 18){
+            enemyFrameIchi = 0
+        }
+
+
+        //弾①処理
         if (tamaFrameIchi>=1) {
             if (tamaFrameIchi== 1){
                 myTamaIchi = myTamanoUgoki(posX,posY,tamaOokisa,frame,tamasokudo,tamaFrameIchi)
@@ -86,12 +131,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
 
 
+        //弾②処理
         if (tamaFrameNi==0) {
             if (tamaFrameIchi == 5) {
                 tamaFrameNi = 1
             }
         }
-
         if (tamaFrameNi>=1) {
             if (tamaFrameNi== 1){
                myTamaNi = myTamanoUgoki(posX,posY,tamaOokisa,frame,tamasokudo,tamaFrameNi)
