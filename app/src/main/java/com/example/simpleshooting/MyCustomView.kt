@@ -40,7 +40,7 @@ import android.widget.TextView
         }
     }
 
-    class myEnemy(posXx:Int,posYy:Int,myEnemyNoOkisa:Int,myFrame:Int,enemySokudo:Int,val enemyFrame:Int){
+    class myEnemy(posXx:Int,posYy:Int,val myEnemyNoOkisa:Int,myFrame:Int,enemySokudo:Int,val enemyFrame:Int){
         //なんかすごく似たようなものを作ることになる。これが継承ってやつを使うポイントなのかも
         val myX = posXx
         val myY = posYy
@@ -54,10 +54,18 @@ import android.widget.TextView
         val yyy = yy + myEnemyNoOkisa
         val enemyPosition = Rect(xx,yy,xxx,yyy)
 
+        //消える条件をつくる
 
-        fun hantei():Boolean{
+
+        //タイプを別けて動きを変える
+
+
+
+
+        //ちゃんといってるっぽい
+        fun enemyhantei():Boolean{
             var seizon :Boolean
-            if (myY - susumu < 1) {
+            if (myX + susumu > (800)) {
                 seizon = true
             }else{
                 seizon = false
@@ -111,7 +119,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         myEnemey = myEnemy(0, 0, 100, frame, 50, enemyFrameIchi)
         canvas.drawRect(myEnemey.enemyPosition, enemyPaint)
         enemyFrameIchi += 1
-        if(enemyFrameIchi > 18){
+
+
+//        if(enemyFrameIchi > 18){
+  //          enemyFrameIchi = 0
+    //    }
+
+        if (myEnemey.enemyhantei()){
             enemyFrameIchi = 0
         }
 
