@@ -120,15 +120,23 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(myEnemey.enemyPosition, enemyPaint)
         enemyFrameIchi += 1
 
-
-//        if(enemyFrameIchi > 18){
-  //          enemyFrameIchi = 0
-    //    }
-
         if (myEnemey.enemyhantei()){
             enemyFrameIchi = 0
         }
 
+            //ベクトル処理
+            val q = pointVec(myJiki.left,myJiki.top,myEnemey.xx,myEnemey.yy)
+            val vIchi = Rect(q[0], q[1], q[0]+10, q[1]+10)
+
+            val vIro = Paint()
+            vIro.style = Paint.Style.FILL
+            vIro.color = Color.WHITE
+            canvas.drawRect(vIchi, vIro)
+            //おかしいな、間に弾ができると思ったんだけどな。
+            //なにがちがうんだろう
+
+            //Pointで（ｘ、ｙ）と指定したら、あとは自動で入るようにしたいなー
+            //トップレフトボトムライトって設定するの面倒だし。
 
         //弾①処理
         if (tamaFrameIchi>=1) {
@@ -165,6 +173,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
+    fun pointVec(x:Int,y:Int,xx:Int,yy:Int):List<Int>{
+        val qx = x - xx
+        val qy = y - yy
+        val q = listOf(qx,qy)
+        return q
+    }
 
 
 
