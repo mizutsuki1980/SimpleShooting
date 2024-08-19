@@ -16,6 +16,15 @@ import android.widget.TextView
         val top = posYy - myookisa / 2
         val right = posXx + myookisa / 2
         val bottom = posYy + myookisa / 2
+
+        val jikiIchi = Rect(left, top, right,bottom)
+
+        //色は設定できないっぽいなぁ。
+                val jikiIro = Paint()
+        //jikiIro.style = Paint.Style.FILL
+        //jikiIro.color = Color.WHITE
+
+
     }
 
     class myTamanoUgoki(posXx:Int,posYy:Int,myTamaNoOkisa:Int,myFrame:Int,tamasokudo:Int,val tamaFrame:Int){
@@ -95,11 +104,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         override fun onDraw(canvas: Canvas) {
         val ookisa = 100
         val myJiki = myJikinoUgoki(posX,posY,ookisa)
-        val jikiIchi = Rect(myJiki.left, myJiki.top, myJiki.right, myJiki.bottom)
-        val jikiIro = Paint()
-        jikiIro.style = Paint.Style.FILL
-        jikiIro.color = Color.WHITE
-        canvas.drawRect(jikiIchi, jikiIro)
+        //これもクラスに移動できるのか？
+            val jikiIro = Paint()
+            jikiIro.style = Paint.Style.FILL
+            jikiIro.color = Color.WHITE
+        canvas.drawRect(myJiki.jikiIchi, jikiIro)
 
 
         val tamaIchiPaint = Paint()
@@ -123,20 +132,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if (myEnemey.enemyhantei()){
             enemyFrameIchi = 0
         }
-
-            //ベクトル処理
-            val q = pointVec(myJiki.left,myJiki.top,myEnemey.xx,myEnemey.yy)
-            val vIchi = Rect(q[0], q[1], q[0]+10, q[1]+10)
-
-            val vIro = Paint()
-            vIro.style = Paint.Style.FILL
-            vIro.color = Color.WHITE
-            canvas.drawRect(vIchi, vIro)
-            //おかしいな、間に弾ができると思ったんだけどな。
-            //なにがちがうんだろう
-
-            //Pointで（ｘ、ｙ）と指定したら、あとは自動で入るようにしたいなー
-            //トップレフトボトムライトって設定するの面倒だし。
 
         //弾①処理
         if (tamaFrameIchi>=1) {
