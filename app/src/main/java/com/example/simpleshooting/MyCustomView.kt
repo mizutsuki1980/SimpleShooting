@@ -51,21 +51,31 @@ import android.widget.TextView
         val mxxx = myJiki.right
         val myy = myJiki.top
         val myyy = myJiki.bottom
-
         //これで二つの座標が得られた
-
         val eOokisa = myEnemy.myEnemyNoOkisa
         val mOokisa = myJiki.myookisa
-
         //大きさも得られた」
-
-
-        val vx = exx + mxx
-        val vy = eyy + myy
-
-
-
+        var vx = exx + mxx
+        var vy = eyy + myy
         val enemyTamaPosition = Rect(vx,vy,vx+10,vy+10)
+
+        fun gamennai(vx:Int,vy:Int):Rect{
+            var vxx = vx
+            var vyy = vy
+
+            if (vx < 0){
+                vxx = 10
+            }
+            if (vx > 1000){
+                vxx = vx - 1000
+            }
+
+            if (vy < 0){
+                vyy = 10
+            }
+            val enemyTamaPosition = Rect(vxx,vyy,vxx+10,vyy+10)
+            return enemyTamaPosition
+        }
 
     }
 
@@ -174,7 +184,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         //んーこれはできてる。eTamaがだめ？
 
-        canvas.drawRect(eTama.enemyTamaPosition, jikiIro)
+        canvas.drawRect(eTama.gamennai(eTama.vx,eTama.vy), jikiIro)
         //んー、なんかできない
 
 
