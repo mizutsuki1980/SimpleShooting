@@ -11,7 +11,7 @@ import android.view.View
 import android.widget.TextView
 
 
-    class myJikinoUgoki(posXx:Int,posYy:Int,myookisa:Int){
+    class myJikinoUgoki(posXx:Int,posYy:Int,val myookisa:Int,){
         val left = posXx - myookisa / 2
         val top = posYy - myookisa / 2
         val right = posXx + myookisa / 2
@@ -41,20 +41,31 @@ import android.widget.TextView
         }
     }
 
-    class enemyTama(posXx:Int,posYy:Int,val myEnemyNoOkisa:Int,myFrame:Int,enemySokudo:Int,val enemyFrame:Int){
-        //敵の位置と、自機の位置を、最初に渡さないといけないのか
-        //めんどくさいなー
+    class enemyTama(myEnemy: myEnemy,myJiki: myJikinoUgoki){
+        val exx = myEnemy.xx
+        val exxx = myEnemy.xxx
+        val eyy = myEnemy.yy
+        val eyyy = myEnemy.yyy
 
-        val myX = posXx
-        val myY = posYy
-        val susumu = enemyFrame * enemySokudo
+        val mxx = myJiki.left
+        val mxxx = myJiki.right
+        val myy = myJiki.top
+        val myyy = myJiki.bottom
 
-        //ここでsusumuがどこにプラスされるか、マイナスされるか、でどう動くのか決まる
-        val xx = myX - (myEnemyNoOkisa / 2 ) + susumu
-        val xxx = xx + myEnemyNoOkisa
-        val yy = myY - (myEnemyNoOkisa / 2)
-        val yyy = yy + myEnemyNoOkisa
-        val enemyTamaPosition = Rect(xx,yy,xxx,yyy)
+        //これで二つの座標が得られた
+
+        val eOokisa = myEnemy.myEnemyNoOkisa
+        val mOokisa = myJiki.myookisa
+
+        //大きさも得られた」
+
+
+        val vx = exx + mxx
+        val vy = eyy + myy
+
+
+
+        val enemyTamaPosition = Rect(vx,vy,vx+10,vy+10)
 
     }
 
@@ -122,7 +133,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val jikiIro = Paint()
         jikiIro.style = Paint.Style.FILL
         jikiIro.color = Color.WHITE
-
         canvas.drawRect(myJiki.jikiIchi, jikiIro)
 
 
@@ -157,6 +167,15 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //ここでmyEnemeyには敵の情報が、myJikiには自機の情報が入っている。
         //なんかenemyTama（myEnemy、myJiki）みたいにして、関数の部分で取り出せないのか？
         //グローバル変数にすればいいのか？
+        //してみた
+        val eTama = enemyTama(myEnemey,myJiki)
+ //      val eetama = Rect(eTama.vx,eTama.vy,310,310)
+        //あーなんか画面外にできてる感じ？
+
+        //んーこれはできてる。eTamaがだめ？
+
+        canvas.drawRect(eTama.enemyTamaPosition, jikiIro)
+        //んー、なんかできない
 
 
         //弾①処理
