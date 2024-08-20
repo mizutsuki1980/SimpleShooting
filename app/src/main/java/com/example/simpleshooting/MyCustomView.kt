@@ -16,15 +16,7 @@ import android.widget.TextView
         val top = posYy - myookisa / 2
         val right = posXx + myookisa / 2
         val bottom = posYy + myookisa / 2
-
         val jikiIchi = Rect(left, top, right,bottom)
-
-        //色は設定できないっぽいなぁ。
-                val jikiIro = Paint()
-        //jikiIro.style = Paint.Style.FILL
-        //jikiIro.color = Color.WHITE
-
-
     }
 
     class myTamanoUgoki(posXx:Int,posYy:Int,myTamaNoOkisa:Int,myFrame:Int,tamasokudo:Int,val tamaFrame:Int){
@@ -49,7 +41,25 @@ import android.widget.TextView
         }
     }
 
-    class myEnemy(posXx:Int,posYy:Int,val myEnemyNoOkisa:Int,myFrame:Int,enemySokudo:Int,val enemyFrame:Int){
+    class enemyTama(posXx:Int,posYy:Int,val myEnemyNoOkisa:Int,myFrame:Int,enemySokudo:Int,val enemyFrame:Int){
+        //敵の位置と、自機の位置を、最初に渡さないといけないのか
+        //めんどくさいなー
+
+        val myX = posXx
+        val myY = posYy
+        val susumu = enemyFrame * enemySokudo
+
+        //ここでsusumuがどこにプラスされるか、マイナスされるか、でどう動くのか決まる
+        val xx = myX - (myEnemyNoOkisa / 2 ) + susumu
+        val xxx = xx + myEnemyNoOkisa
+        val yy = myY - (myEnemyNoOkisa / 2)
+        val yyy = yy + myEnemyNoOkisa
+        val enemyTamaPosition = Rect(xx,yy,xxx,yyy)
+
+    }
+
+
+class myEnemy(posXx:Int,posYy:Int,val myEnemyNoOkisa:Int,myFrame:Int,enemySokudo:Int,val enemyFrame:Int){
         //なんかすごく似たようなものを作ることになる。これが継承ってやつを使うポイントなのかも
         val myX = posXx
         val myY = posYy
@@ -101,13 +111,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var myTamaSan = myTamanoUgoki(0,0,tamaOokisa,frame,tamasokudo,0)
     var myEnemey = myEnemy(0,0,100,frame,100,0)
 
-        override fun onDraw(canvas: Canvas) {
-        val ookisa = 100
-        val myJiki = myJikinoUgoki(posX,posY,ookisa)
-        //これもクラスに移動できるのか？
-            val jikiIro = Paint()
-            jikiIro.style = Paint.Style.FILL
-            jikiIro.color = Color.WHITE
+    var posX = 300
+    var posY = 300
+
+    var ookisa = 100
+    var myJiki = myJikinoUgoki(posX,posY,ookisa)
+
+    override fun onDraw(canvas: Canvas) {
+        myJiki = myJikinoUgoki(posX,posY,ookisa)
+        val jikiIro = Paint()
+        jikiIro.style = Paint.Style.FILL
+        jikiIro.color = Color.WHITE
+
         canvas.drawRect(myJiki.jikiIchi, jikiIro)
 
 
@@ -128,10 +143,21 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         myEnemey = myEnemy(0, 0, 100, frame, 50, enemyFrameIchi)
         canvas.drawRect(myEnemey.enemyPosition, enemyPaint)
         enemyFrameIchi += 1
-
         if (myEnemey.enemyhantei()){
             enemyFrameIchi = 0
         }
+
+        if (enemyFrameIchi>=1) {
+            //弾を発射
+        }
+
+        //ん？エネミーが消えても弾は残るのか
+        //じゃぁエネミーフレームじゃなくてエネミーの弾のフレームで動かさなきゃいけないのか
+
+        //ここでmyEnemeyには敵の情報が、myJikiには自機の情報が入っている。
+        //なんかenemyTama（myEnemy、myJiki）みたいにして、関数の部分で取り出せないのか？
+        //グローバル変数にすればいいのか？
+
 
         //弾①処理
         if (tamaFrameIchi>=1) {
@@ -207,8 +233,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tsugiNoSyori()
     }
 
-    var posX = 300
-    var posY = 300
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             if (tamaFrameIchi==0){tamaFrameIchi=1}
