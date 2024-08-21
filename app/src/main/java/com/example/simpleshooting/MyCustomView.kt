@@ -41,6 +41,10 @@ import android.widget.TextView
         }
     }
 
+
+    //イメージとしては、敵と自機の間に弾がでる、だったが、なんか違うなぁ。
+    //あー、弾だから位置をセットしなおすとだめなのか。
+
     class enemyTama(myEnemy: myEnemy,myJiki: myJikinoUgoki){
         val exx = myEnemy.xx
         val exxx = myEnemy.xxx
@@ -119,6 +123,7 @@ class myEnemy(posXx:Int,posYy:Int,val myEnemyNoOkisa:Int,myFrame:Int,enemySokudo
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var tamasokudo = 100
     var tamaFrameIchi = 0
+    var enemyTamaFrame = 0
 
     var enemyFrameIchi = 0
 
@@ -137,6 +142,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     var ookisa = 100
     var myJiki = myJikinoUgoki(posX,posY,ookisa)
+    lateinit var eTama : enemyTama
 
     override fun onDraw(canvas: Canvas) {
         myJiki = myJikinoUgoki(posX,posY,ookisa)
@@ -168,24 +174,23 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
 
         if (enemyFrameIchi>=1) {
-            //弾を発射
+            //弾を発射とかの敵の何かを書く
         }
 
-        //ん？エネミーが消えても弾は残るのか
-        //じゃぁエネミーフレームじゃなくてエネミーの弾のフレームで動かさなきゃいけないのか
 
-        //ここでmyEnemeyには敵の情報が、myJikiには自機の情報が入っている。
-        //なんかenemyTama（myEnemy、myJiki）みたいにして、関数の部分で取り出せないのか？
-        //グローバル変数にすればいいのか？
-        //してみた
-        val eTama = enemyTama(myEnemey,myJiki)
- //      val eetama = Rect(eTama.vx,eTama.vy,310,310)
-        //あーなんか画面外にできてる感じ？
+        //弾が発射されたら、ｍｙＥｎｅｍｙとｍｙＪｉｋｉからポジションをとらないようにする。
+        //あれ、これじゃぁだめじゃん。クラス側でなんとしないと。ｍｙＥｎｅｍｙとｍｙＪｉｋｉの情報は変更できないから。
+        //うーむ
+        
+        if (tamaFrameIchi == 0){
+             eTama = enemyTama(myEnemey,myJiki)
+        }else{
+             eTama = enemyTama(myEnemey,myJiki)
+        }
 
-        //んーこれはできてる。eTamaがだめ？
 
         canvas.drawRect(eTama.gamennai(eTama.vx,eTama.vy), jikiIro)
-        //んー、なんかできない
+
 
 
         //弾①処理
