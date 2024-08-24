@@ -42,10 +42,46 @@ import android.widget.TextView
     }
 
 
-    //イメージとしては、敵と自機の間に弾がでる、だったが、なんか違うなぁ。
-    //あー、弾だから位置をセットしなおすとだめなのか。
 
-    class enemyTama(myEnemy: myEnemy,myJiki: myJikinoUgoki){
+class myEnemy(posXx:Int,posYy:Int,val myEnemyNoOkisa:Int,myFrame:Int,enemySokudo:Int,val enemyFrame:Int){
+    //なんかすごく似たようなものを作ることになる。これが継承ってやつを使うポイントなのかも
+    val myX = posXx
+    val myY = posYy
+
+    val susumu = enemyFrame * enemySokudo
+
+    //ここでsusumuがどこにプラスされるか、マイナスされるか、でどう動くのか決まる
+    val xx = myX - (myEnemyNoOkisa / 2 ) + susumu
+    val xxx = xx + myEnemyNoOkisa
+    val yy = myY - (myEnemyNoOkisa / 2)
+    val yyy = yy + myEnemyNoOkisa
+    val enemyPosition = Rect(xx,yy,xxx,yyy)
+
+    //消える条件をつくる
+
+
+    //タイプを別けて動きを変える
+
+
+
+
+    //ちゃんといってるっぽい
+    fun enemyhantei():Boolean{
+        var seizon :Boolean
+        if (myX + susumu > (800)) {
+            seizon = true
+        }else{
+            seizon = false
+        }
+        return seizon
+    }
+}
+
+class enemyTama(myEnemy: myEnemy,myJiki: myJikinoUgoki){
+        //イメージとしては、敵と自機の間に弾がでる、だったが、なんか違うなぁ。
+        //あー、弾だから位置をセットしなおすとだめなのか。
+
+
         val exx = myEnemy.xx
         val exxx = myEnemy.xxx
         val eyy = myEnemy.yy
@@ -63,10 +99,11 @@ import android.widget.TextView
         var vy = eyy + myy
         val enemyTamaPosition = Rect(vx,vy,vx+10,vy+10)
 
-        fun gamennai(vx:Int,vy:Int):Rect{
+        var alive = true
+
+    fun gamennai(vx:Int,vy:Int):Rect{
             var vxx = vx
             var vyy = vy
-
             if (vx < 0){
                 vxx = 10
             }
@@ -81,41 +118,6 @@ import android.widget.TextView
             return enemyTamaPosition
         }
 
-    }
-
-
-class myEnemy(posXx:Int,posYy:Int,val myEnemyNoOkisa:Int,myFrame:Int,enemySokudo:Int,val enemyFrame:Int){
-        //なんかすごく似たようなものを作ることになる。これが継承ってやつを使うポイントなのかも
-        val myX = posXx
-        val myY = posYy
-
-        val susumu = enemyFrame * enemySokudo
-
-        //ここでsusumuがどこにプラスされるか、マイナスされるか、でどう動くのか決まる
-        val xx = myX - (myEnemyNoOkisa / 2 ) + susumu
-        val xxx = xx + myEnemyNoOkisa
-        val yy = myY - (myEnemyNoOkisa / 2)
-        val yyy = yy + myEnemyNoOkisa
-        val enemyPosition = Rect(xx,yy,xxx,yyy)
-
-        //消える条件をつくる
-
-
-        //タイプを別けて動きを変える
-
-
-
-
-        //ちゃんといってるっぽい
-        fun enemyhantei():Boolean{
-            var seizon :Boolean
-            if (myX + susumu > (800)) {
-                seizon = true
-            }else{
-                seizon = false
-            }
-            return seizon
-        }
     }
 
 
@@ -182,10 +184,25 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //あれ、これじゃぁだめじゃん。クラス側でなんとしないと。ｍｙＥｎｅｍｙとｍｙＪｉｋｉの情報は変更できないから。
         //うーむ
         
-        if (tamaFrameIchi == 0){
+        if (enemyTamaFrame == 0){
              eTama = enemyTama(myEnemey,myJiki)
+            enemyTamaFrame += 1
         }else{
              eTama = enemyTama(myEnemey,myJiki)
+
+            //あーきえちゃうんだ。trueで上書きされるのか。
+            // なるほど、プロパティにしちゃだめなんだ。
+            //じゃぁグローバル変数ってこと？せっかくまとめたのに、めんどくせぇな。
+            //それか、ここでeTamaをenemyTamaで作り直すんじゃなくて、
+            //eTamaのプロパティを動かす、という風にすればいいんじゃないか？
+            //eTama.x ＋＝　１　みたいな。
+
+            if(eTama.alive){
+                enemyTamaFrame += 1
+
+            }else{
+                enemyTamaFrame = 0
+            }
         }
 
 
@@ -224,8 +241,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             tamaFrameNi += 1
             if (myTamaNi.hantei()){
                 tamaFrameNi = 0
+
+                //ためしに敵の弾を消してみる
+                eTama.alive = false
+                // 消えてんのか？これ
+
             }
         }
+
     }
 
     fun pointVec(x:Int,y:Int,xx:Int,yy:Int):List<Int>{
