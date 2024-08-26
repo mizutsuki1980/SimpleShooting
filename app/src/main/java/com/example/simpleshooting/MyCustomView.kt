@@ -11,46 +11,43 @@ import android.view.View
 import android.widget.TextView
 
 
-    class myJikinoUgoki(posXx:Int,posYy:Int,val myookisa:Int,){
-        val left = posXx - myookisa / 2
-        val top = posYy - myookisa / 2
-        val right = posXx + myookisa / 2
-        val bottom = posYy + myookisa / 2
-        val jikiIchi = Rect(left, top, right,bottom)
-    }
+class myJikinoUgoki(posXx:Int,posYy:Int,val myookisa:Int,){
+    val left = posXx - myookisa / 2
+    val top = posYy - myookisa / 2
+    val right = posXx + myookisa / 2
+    val bottom = posYy + myookisa / 2
+    val jikiIchi = Rect(left, top, right,bottom)
+}
 
-    class myTamanoUgoki(posXx:Int,posYy:Int,myTamaNoOkisa:Int,myFrame:Int,tamasokudo:Int,val tamaFrame:Int){
-        val myX = posXx
-        val myY = posYy
-        val susumu = tamaFrame * tamasokudo
-        val xx = myX - myTamaNoOkisa / 2
-        val xxx = xx + myTamaNoOkisa
-        val yy = myY - susumu - (myTamaNoOkisa / 2)
-        val yyy = yy + myTamaNoOkisa
-        val tamaIchi = Rect(xx,yy,xxx,yyy)
+class myTamanoUgoki(posXx:Int,posYy:Int,myTamaNoOkisa:Int,myFrame:Int,tamasokudo:Int,val tamaFrame:Int){
+    val myX = posXx
+    val myY = posYy
+    val susumu = tamaFrame * tamasokudo
+    val xx = myX - myTamaNoOkisa / 2
+    val xxx = xx + myTamaNoOkisa
+    val yy = myY - susumu - (myTamaNoOkisa / 2)
+    val yyy = yy + myTamaNoOkisa
+    val tamaIchi = Rect(xx,yy,xxx,yyy)
 
 
-        fun hantei():Boolean{
-            var seizon :Boolean
-            if (myY - susumu < 1) {
-                 seizon = true
-            }else{
-                 seizon = false
-            }
-            return seizon
+    fun hantei():Boolean{
+        var seizon :Boolean
+        if (myY - susumu < 1) {
+            seizon = true
+        }else{
+            seizon = false
         }
+        return seizon
     }
+}
 
 
 
 class myEnemy(posXx:Int,posYy:Int,val myEnemyNoOkisa:Int,myFrame:Int,enemySokudo:Int,val enemyFrame:Int){
-    //なんかすごく似たようなものを作ることになる。これが継承ってやつを使うポイントなのかも
     val myX = posXx
     val myY = posYy
-
     val susumu = enemyFrame * enemySokudo
 
-    //ここでsusumuがどこにプラスされるか、マイナスされるか、でどう動くのか決まる
     val xx = myX - (myEnemyNoOkisa / 2 ) + susumu
     val xxx = xx + myEnemyNoOkisa
     val yy = myY - (myEnemyNoOkisa / 2)
@@ -63,9 +60,6 @@ class myEnemy(posXx:Int,posYy:Int,val myEnemyNoOkisa:Int,myFrame:Int,enemySokudo
     //タイプを別けて動きを変える
 
 
-
-
-    //ちゃんといってるっぽい
     fun enemyhantei():Boolean{
         var seizon :Boolean
         if (myX + susumu > (800)) {
@@ -78,11 +72,11 @@ class myEnemy(posXx:Int,posYy:Int,val myEnemyNoOkisa:Int,myFrame:Int,enemySokudo
 }
 
 class enemyTama(myEnemy: myEnemy,myJiki: myJikinoUgoki){
-        //イメージとしては、敵と自機の間に弾がでる、だったが、なんか違うなぁ。
-        //あー、弾だから位置をセットしなおすとだめなのか。
+    //敵の弾は、発生した時の座標をもったままにしないといけないので、自分の位置を覚えておく
+    //この修正をこんどする
 
 
-        val exx = myEnemy.xx
+    val exx = myEnemy.xx
         val exxx = myEnemy.xxx
         val eyy = myEnemy.yy
         val eyyy = myEnemy.yyy
@@ -183,19 +177,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //弾が発射されたら、ｍｙＥｎｅｍｙとｍｙＪｉｋｉからポジションをとらないようにする。
         //あれ、これじゃぁだめじゃん。クラス側でなんとしないと。ｍｙＥｎｅｍｙとｍｙＪｉｋｉの情報は変更できないから。
         //うーむ
-        
+
+
+//        eTama.alive = false
+
+
         if (enemyTamaFrame == 0){
              eTama = enemyTama(myEnemey,myJiki)
             enemyTamaFrame += 1
         }else{
-             eTama = enemyTama(myEnemey,myJiki)
-
-            //あーきえちゃうんだ。trueで上書きされるのか。
-            // なるほど、プロパティにしちゃだめなんだ。
-            //じゃぁグローバル変数ってこと？せっかくまとめたのに、めんどくせぇな。
-            //それか、ここでeTamaをenemyTamaで作り直すんじゃなくて、
-            //eTamaのプロパティを動かす、という風にすればいいんじゃないか？
-            //eTama.x ＋＝　１　みたいな。
+//             eTama = enemyTama(myEnemey,myJiki)
+            eTama.vx +=20
+            eTama.vy +=20
 
             if(eTama.alive){
                 enemyTamaFrame += 1
@@ -241,11 +234,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             tamaFrameNi += 1
             if (myTamaNi.hantei()){
                 tamaFrameNi = 0
-
-                //ためしに敵の弾を消してみる
                 eTama.alive = false
-                // 消えてんのか？これ
-
             }
         }
 
