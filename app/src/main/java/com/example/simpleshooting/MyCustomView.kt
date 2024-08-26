@@ -182,6 +182,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }else{
 
             //ここで弾の変化をつける
+            //ここで敵の弾が自機に近づくようにできないものか
+            
             eTama.vx +=20
             eTama.vy +=20
 
