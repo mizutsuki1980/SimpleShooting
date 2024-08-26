@@ -174,19 +174,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
 
 
-        //弾が発射されたら、ｍｙＥｎｅｍｙとｍｙＪｉｋｉからポジションをとらないようにする。
-        //あれ、これじゃぁだめじゃん。クラス側でなんとしないと。ｍｙＥｎｅｍｙとｍｙＪｉｋｉの情報は変更できないから。
-        //うーむ
-
-
-//        eTama.alive = false
-
-
         if (enemyTamaFrame == 0){
              eTama = enemyTama(myEnemey,myJiki)
+                eTama.vx = myEnemey.myX + 20
+                eTama.vy = myEnemey.myY + 20
             enemyTamaFrame += 1
         }else{
-//             eTama = enemyTama(myEnemey,myJiki)
+
+            //ここで弾の変化をつける
             eTama.vx +=20
             eTama.vy +=20
 
@@ -196,6 +191,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             }else{
                 enemyTamaFrame = 0
             }
+
+
+            if (enemyTamaFrame == 50) {
+                eTama.alive = false
+                enemyTamaFrame = 0
+            }
+
         }
 
 
@@ -234,7 +236,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             tamaFrameNi += 1
             if (myTamaNi.hantei()){
                 tamaFrameNi = 0
-                eTama.alive = false
             }
         }
 
