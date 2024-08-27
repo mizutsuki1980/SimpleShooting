@@ -72,42 +72,27 @@ class myEnemy(posXx:Int,posYy:Int,val myEnemyNoOkisa:Int,myFrame:Int,enemySokudo
 }
 
 class enemyTama(myEnemy: myEnemy,myJiki: myJikinoUgoki){
-    //敵の弾は、発生した時の座標をもったままにしないといけないので、自分の位置を覚えておく
-    //この修正をこんどする
-
-
+    //敵
     val exx = myEnemy.xx
-        val exxx = myEnemy.xxx
-        val eyy = myEnemy.yy
-        val eyyy = myEnemy.yyy
+    val eyy = myEnemy.yy
+    //自機
+    val mxx = myJiki.left
+    val myy = myJiki.top
 
-        val mxx = myJiki.left
-        val mxxx = myJiki.right
-        val myy = myJiki.top
-        val myyy = myJiki.bottom
-        //これで二つの座標が得られた
-        val eOokisa = myEnemy.myEnemyNoOkisa
-        val mOokisa = myJiki.myookisa
-        //大きさも得られた」
-        var vx = exx + mxx
-        var vy = eyy + myy
-        val enemyTamaPosition = Rect(vx,vy,vx+10,vy+10)
+    val eOokisa = myEnemy.myEnemyNoOkisa
+    val mOokisa = myJiki.myookisa
+    //大きさも得られた」
 
-        var alive = true
+
+    var vx = (exx-(eOokisa/2))//+ mxx
+    var vy = eyy + eOokisa + (eOokisa/2)
+    var alive = true
+
 
     fun gamennai(vx:Int,vy:Int):Rect{
             var vxx = vx
             var vyy = vy
-            if (vx < 0){
-                vxx = 10
-            }
-            if (vx > 1000){
-                vxx = vx - 1000
-            }
 
-            if (vy < 0){
-                vyy = 10
-            }
             val enemyTamaPosition = Rect(vxx,vyy,vxx+10,vyy+10)
             return enemyTamaPosition
         }
@@ -175,32 +160,28 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
         if (enemyTamaFrame == 0){
-             eTama = enemyTama(myEnemey,myJiki)
-                eTama.vx = myEnemey.myX + 20
-                eTama.vy = myEnemey.myY + 20
-            enemyTamaFrame += 1
+            eTama = enemyTama(myEnemey,myJiki)
+            eTama.vx = myEnemey.myX + 10
+            eTama.vy = myEnemey.myY + 20
+            enemyTamaFrame = 1
         }else{
-
             //ここで弾の変化をつける
             //ここで敵の弾が自機に近づくようにできないものか
-            
-            eTama.vx +=20
+            eTama.vx +=10
             eTama.vy +=20
-
-            if(eTama.alive){
-                enemyTamaFrame += 1
-
-            }else{
-                enemyTamaFrame = 0
-            }
-
-
-            if (enemyTamaFrame == 50) {
-                eTama.alive = false
-                enemyTamaFrame = 0
-            }
-
         }
+
+        if (enemyTamaFrame == 35) {
+            eTama.alive = false
+        }
+
+        if(eTama.alive){
+            enemyTamaFrame += 1
+        }else{
+            enemyTamaFrame = 0
+        }
+
+
 
 
         canvas.drawRect(eTama.gamennai(eTama.vx,eTama.vy), jikiIro)
