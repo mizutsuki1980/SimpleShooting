@@ -161,8 +161,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         if (enemyTamaFrame == 0){
             eTama = enemyTama(myEnemey,myJiki)
-            eTama.vx = myEnemey.myX + 10
-            eTama.vy = myEnemey.myY + 20
+            //eTama.vx = myEnemey.myX + 10
+           // eTama.vy = myEnemey.myY + 20
             enemyTamaFrame = 1
         }else{
             //ここで弾の変化をつける
