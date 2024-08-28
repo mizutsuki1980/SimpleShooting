@@ -42,13 +42,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //座標が違ったら、比較して移動させる。ただ、ワープのような移動はしない。
         val saX = jikiX - clickX
 
-        //try kotlinでここだけつくったら出来たよ。たぶん
-        //if (saX >= -5 && saX <= 5){
-        //    jikiX = 1111111111
-        //}
 
         //-5より大きくて、5より小さい誤差なら
-        if (saX >= -5 && saX <= 5){
+        if (saX >= -10 && saX <= 10){
             jikiX = clickX
         }else {
             if (saX > 0) {
