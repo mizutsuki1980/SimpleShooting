@@ -41,9 +41,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         //座標が違ったら、比較して移動させる。ただ、ワープのような移動はしない。
         val saX = jikiX - clickX
+        val saY = jikiY - clickY
 
-
-        //-5より大きくて、5より小さい誤差なら
         if (saX >= -10 && saX <= 10){
             jikiX = clickX
         }else {
@@ -53,8 +52,21 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             if (saX < 0) {
                 jikiX += 20
             }
-            myJiki = myUgoki(jikiX, jikiY, ookisa)
         }
+
+        if (saY >= -10 && saY <= 10){
+            jikiY = clickY
+        }else {
+            if (saY > 0) {
+                jikiY -= 20
+            }
+            if (saY < 0) {
+                jikiY += 20
+            }
+        }
+
+
+
     }
 
     fun tsugiNoSyori() {
