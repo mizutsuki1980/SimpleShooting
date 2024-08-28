@@ -16,8 +16,8 @@ class MainActivity : AppCompatActivity() {
         custom.post { custom.beginAnimation() }
         xxx = custom
         findViewById<Button>(R.id.setButton).setOnClickListener {
-            findViewById<TextView>(R.id.textLabelX).text=custom.posX.toString()
-            findViewById<TextView>(R.id.textLabelY).text=custom.posY.toString()
+            findViewById<TextView>(R.id.textLabelX).text=custom.clickX.toString()
+            findViewById<TextView>(R.id.textLabelY).text=custom.clickY.toString()
         }
         mainTsugiNoSyori()
 
@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun mainTsugiNoSyori() {
-        findViewById<TextView>(R.id.textLabelX).text=xxx.posX.toString()
-        findViewById<TextView>(R.id.textLabelY).text=xxx.posY.toString()
+        findViewById<TextView>(R.id.textLabelX).text=xxx.clickX.toString()
+        findViewById<TextView>(R.id.textLabelY).text=xxx.clickY.toString()
         handler.postDelayed( { mainTsugiNoSyori() }, 100)
     }
 
