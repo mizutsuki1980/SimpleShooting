@@ -11,7 +11,7 @@ import android.view.View
 import android.widget.TextView
 
 
-class myJikinoUgoki(posXx:Int,posYy:Int,val myookisa:Int,){
+class myUgoki(posXx:Int,posYy:Int,val myookisa:Int,){
     val left = posXx - myookisa / 2
     val top = posYy - myookisa / 2
     val right = posXx + myookisa / 2
@@ -29,11 +29,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickX = jikiX
     var clickY = jikiY
     var ookisa = 100
-    var myJiki = myJikinoUgoki(jikiX,jikiY,ookisa)
+    var myJiki = myUgoki(jikiX,jikiY,ookisa)
 
     override fun onDraw(canvas: Canvas) {
         //まず、座標と大きさをしていると描画する
-        myJiki = myJikinoUgoki(jikiX,jikiY,ookisa)
+        myJiki = myUgoki(jikiX,jikiY,ookisa)
         myJiki.jikiIro.style = Paint.Style.FILL
         myJiki.jikiIro.color = Color.WHITE
         canvas.drawRect(myJiki.jikiIchi, myJiki.jikiIro)
@@ -41,10 +41,19 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         //座標が違ったら、比較して移動させる。ただ、ワープのような移動はしない。
         val saX = jikiX - clickX
-        if (saX == 0){
-            myJiki = myJikinoUgoki(jikiX,jikiY,ookisa)
-        }
 
+        if (saX<=-5 && saX >= 5){
+
+        }else {
+            if (saX > 0) {
+                jikiX -= 20
+                myJiki = myUgoki(jikiX, jikiY, ookisa)
+            }
+            if (saX < 0) {
+                jikiX += 20
+                myJiki = myUgoki(jikiX, jikiY, ookisa)
+            }
+        }
     }
 
     fun tsugiNoSyori() {
