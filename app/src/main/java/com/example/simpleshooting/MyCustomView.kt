@@ -62,20 +62,51 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var myJiki = myUgoki(jikiX,jikiY,ookisa)
 
     override fun onDraw(canvas: Canvas) {
-        //まず、座標と大きさをしていると描画する
+        //まず、座標と大きさを指定して描画する
         myJiki = myUgoki(jikiX,jikiY,ookisa)
         myJiki.jikiIro.style = Paint.Style.FILL
         myJiki.jikiIro.color = Color.WHITE
         canvas.drawRect(myJiki.jikiIchi, myJiki.jikiIro)
-        //座標が違ったら、比較して移動させる。ただ、ワープのような移動はしない。
-        val z = myJiki.clickIchiNiIdou(jikiX,jikiY,clickX,clickY)
-        jikiX = z[0]
-        jikiY = z[1]
+        clickShitaBshoNiIdou()
+        //val z = myJiki.clickIchiNiIdou(jikiX,jikiY,clickX,clickY)
+        //jikiX = z[0]
+        //jikiY = z[1]
         //うーん、このなんか微妙な二行がどうにかしたいよね。
-
+        //グローバル変数にして、クラスの関数にしないで、ここの第二区画に書けばいいのでは？とも思ってきた。
+        //１行にできるなら、そうした方がいいよなぁ。
 
 
     }
+    fun clickShitaBshoNiIdou(){
+        val saX = jikiX - clickX
+        val saY = jikiY - clickY
+        var x = jikiX
+        var y = jikiY
+        if (saX >= -10 && saX <= 10){
+            x = clickX
+        }else {
+            if (saX > 0) {
+                x -= 20
+            }
+            if (saX < 0) {
+                x += 20
+            }
+        }
+        if (saY >= -10 && saY <= 10){
+            y = clickY
+        }else {
+            if (saY > 0) {
+                y -= 20
+            }
+            if (saY < 0) {
+                y += 20
+            }
+        }
+        val z = listOf(x,y)
+    jikiX = x
+    jikiY = y
+    }
+
 
     fun tsugiNoSyori() {
         frame += 1
