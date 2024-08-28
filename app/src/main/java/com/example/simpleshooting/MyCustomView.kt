@@ -18,6 +18,36 @@ class myUgoki(posXx:Int,posYy:Int,val myookisa:Int,){
     val bottom = posYy + myookisa / 2
     val jikiIchi = Rect(left, top, right,bottom)
     val jikiIro = Paint()
+
+    fun clickIchiNiIdou(jikiX:Int,jikiY:Int,clickX:Int,clickY:Int):List<Int>{
+        val saX = jikiX - clickX
+        val saY = jikiY - clickY
+        var x = jikiX
+        var y = jikiY
+        if (saX >= -10 && saX <= 10){
+            x = clickX
+        }else {
+            if (saX > 0) {
+                x -= 20
+            }
+            if (saX < 0) {
+                x += 20
+            }
+        }
+
+        if (saY >= -10 && saY <= 10){
+            y = clickY
+        }else {
+            if (saY > 0) {
+                y -= 20
+            }
+            if (saY < 0) {
+                y += 20
+            }
+        }
+        val z = listOf(x,y)
+        return z
+    }
 }
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
@@ -37,33 +67,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         myJiki.jikiIro.style = Paint.Style.FILL
         myJiki.jikiIro.color = Color.WHITE
         canvas.drawRect(myJiki.jikiIchi, myJiki.jikiIro)
-
-
         //座標が違ったら、比較して移動させる。ただ、ワープのような移動はしない。
-        val saX = jikiX - clickX
-        val saY = jikiY - clickY
-
-        if (saX >= -10 && saX <= 10){
-            jikiX = clickX
-        }else {
-            if (saX > 0) {
-                jikiX -= 20
-            }
-            if (saX < 0) {
-                jikiX += 20
-            }
-        }
-
-        if (saY >= -10 && saY <= 10){
-            jikiY = clickY
-        }else {
-            if (saY > 0) {
-                jikiY -= 20
-            }
-            if (saY < 0) {
-                jikiY += 20
-            }
-        }
+        val z = myJiki.clickIchiNiIdou(jikiX,jikiY,clickX,clickY)
+        jikiX = z[0]
+        jikiY = z[1]
+        //うーん、このなんか微妙な二行がどうにかしたいよね。
 
 
 
