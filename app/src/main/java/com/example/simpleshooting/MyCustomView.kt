@@ -18,65 +18,71 @@ class myUgoki(posXx:Int,posYy:Int,val myookisa:Int,){
     val bottom = posYy + myookisa / 2
     val jikiIchi = Rect(left, top, right,bottom)
     val jikiIro = Paint()
-
-    fun clickIchiNiIdou(jikiX:Int,jikiY:Int,clickX:Int,clickY:Int):List<Int>{
-        val saX = jikiX - clickX
-        val saY = jikiY - clickY
-        var x = jikiX
-        var y = jikiY
-        if (saX >= -10 && saX <= 10){
-            x = clickX
-        }else {
-            if (saX > 0) {
-                x -= 20
-            }
-            if (saX < 0) {
-                x += 20
-            }
-        }
-
-        if (saY >= -10 && saY <= 10){
-            y = clickY
-        }else {
-            if (saY > 0) {
-                y -= 20
-            }
-            if (saY < 0) {
-                y += 20
-            }
-        }
-        val z = listOf(x,y)
-        return z
-    }
 }
+
+class myTama(jikiX:Int,jikiY:Int,jikiOokisa:Int,tamaOokisa:Int,var alive:Boolean){
+    var x = jikiX
+    var y = jikiY
+
+    val left = x + jikiOokisa/2 - tamaOokisa / 2
+    val top = y - tamaOokisa - tamaOokisa / 2
+    val right = x + jikiOokisa/2 + tamaOokisa / 2
+    val bottom = y -tamaOokisa + tamaOokisa / 2
+    val tamaIchi = Rect(left, top, right,bottom)
+    val tamaIro = Paint()
+
+    fun tamaRect(left:Int, top:Int, right:Int,bottom:Int): Rect {
+        return  Rect(left, top, right,bottom)
+    }
+
+}
+
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var tamaFrameIchi = 0
     var frame = 0
     var tamaOokisa = 10
-    var jikiX = 550
-    var jikiY = 1500
+    var jikiX = 550 //初期位置
+    var jikiY = 1500 //初期位置
     var clickX = jikiX
     var clickY = jikiY
-    var ookisa = 100
-    var myJiki = myUgoki(jikiX,jikiY,ookisa)
+    var jikiOokisa = 100
+    var myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
+    var myTama = myTama(jikiX,jikiY,jikiOokisa,tamaOokisa,false)
 
     override fun onDraw(canvas: Canvas) {
         //まず、座標と大きさを指定して描画する
-        myJiki = myUgoki(jikiX,jikiY,ookisa)
+        myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
         myJiki.jikiIro.style = Paint.Style.FILL
         myJiki.jikiIro.color = Color.WHITE
+
+        myTama.tamaIro.style = Paint.Style.FILL
+        myTama.tamaIro.color = Color.GREEN
+
         canvas.drawRect(myJiki.jikiIchi, myJiki.jikiIro)
         clickShitaBshoNiIdou()
-        //val z = myJiki.clickIchiNiIdou(jikiX,jikiY,clickX,clickY)
-        //jikiX = z[0]
-        //jikiY = z[1]
-        //うーん、このなんか微妙な二行がどうにかしたいよね。
-        //グローバル変数にして、クラスの関数にしないで、ここの第二区画に書けばいいのでは？とも思ってきた。
-        //１行にできるなら、そうした方がいいよなぁ。
+        shootingShot()
+        canvas.drawRect(myTama.tamaRect(myTama.left,myTama.top,myTama.right,myTama.bottom), myTama.tamaIro)
 
 
     }
+
+    fun shootingShot(){
+        if (tamaFrameIchi == 0) {
+            tamaFrameIchi = 1
+        }
+        if (tamaFrameIchi > 0) {
+            myTama.y -= 10
+        }
+
+        tamaFrameIchi += 1
+
+        if (tamaFrameIchi > 20){
+            tamaFrameIchi = 1
+        }
+}
+
+
     fun clickShitaBshoNiIdou(){
         val saX = jikiX - clickX
         val saY = jikiY - clickY
