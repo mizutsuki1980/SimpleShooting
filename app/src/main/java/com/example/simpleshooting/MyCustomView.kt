@@ -161,14 +161,27 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         if (enemyTamaFrame == 0){
             eTama = enemyTama(myEnemey,myJiki)
-            //eTama.vx = myEnemey.myX + 10
-           // eTama.vy = myEnemey.myY + 20
             enemyTamaFrame = 1
         }else{
             //ここで弾の変化をつける
             //ここで敵の弾が自機に近づくようにできないものか
-            eTama.vx +=10
-            eTama.vy +=20
+
+            //まぁ、やってみるか、ここで。
+            val tx = myEnemey.myX - myJiki.left
+
+            //自機のｘ
+            val vecX = eTama.mxx - eTama.vx
+            val vecY = eTama.myy - eTama.vy
+            val vecxx = vecX.toDouble()
+            val vecyy = vecY.toDouble()
+            val vecVV = vecxx * vecxx + vecyy * vecyy
+            val vecVP = Math.sqrt(vecVV)
+            val vvv = vecVP.toInt()
+            //ふーむなんか違う、それはわかる。
+
+            
+            eTama.vx +=vvv/10
+            eTama.vy +=vvv/10
         }
 
         if (enemyTamaFrame == 35) {
