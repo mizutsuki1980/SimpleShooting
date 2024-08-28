@@ -44,15 +44,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         if (saX<=-5 && saX >= 5){
 
+            //ここがなんか変？
+            jikiX = clickX
+
+
         }else {
             if (saX > 0) {
                 jikiX -= 20
-                myJiki = myUgoki(jikiX, jikiY, ookisa)
             }
             if (saX < 0) {
                 jikiX += 20
-                myJiki = myUgoki(jikiX, jikiY, ookisa)
             }
+            myJiki = myUgoki(jikiX, jikiY, ookisa)
         }
     }
 
