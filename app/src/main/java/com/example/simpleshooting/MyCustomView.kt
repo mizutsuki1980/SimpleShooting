@@ -135,6 +135,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun clickShitaBshoNiIdou(){
+        //ななめ移動のとき、ｘもｙも移動してると２倍のスピードで動いてるように見えるなぁ。
+
         val saX = jikiX - clickX
         val saY = jikiY - clickY
         var x = jikiX
@@ -152,14 +154,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 x += myPlus
             }
         }
-        if (saY >= -10 && saY <= 10){
+        if (saY >= -myPlus && saY <= myPlus){
             y = clickY
         }else {
             if (saY > 0) {
-                y -= 20
+                y -= myPlus
             }
             if (saY < 0) {
-                y += 20
+                y += myPlus
             }
         }
         jikiX = x
