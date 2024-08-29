@@ -23,11 +23,12 @@ class myUgoki(posXx:Int,posYy:Int,val myookisa:Int,){
 class myTama(jikiX:Int,jikiY:Int,jikiOokisa:Int,tamaOokisa:Int,var alive:Boolean){
     var x = jikiX
     var y = jikiY
-
-    val left = x + jikiOokisa/2 - tamaOokisa / 2
-    val top = y - tamaOokisa - tamaOokisa / 2
-    val right = x + jikiOokisa/2 + tamaOokisa / 2
-    val bottom = y -tamaOokisa + tamaOokisa / 2
+    //なんか何もしなくても真ん中からでてるっぽい
+    //var left = x -jikiOokisa/2 + jikiOokisa/2 - tamaOokisa / 2
+    var left = x  - tamaOokisa / 2
+    var top = y - tamaOokisa - tamaOokisa / 2 - jikiOokisa/2
+    var right = x  + tamaOokisa / 2
+    var bottom = y -tamaOokisa + tamaOokisa / 2 - jikiOokisa/2
     val tamaIchi = Rect(left, top, right,bottom)
     val tamaIro = Paint()
 
@@ -72,13 +73,15 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             tamaFrameIchi = 1
         }
         if (tamaFrameIchi > 0) {
-            myTama.y -= 10
+            myTama.top -= 10
+            myTama.bottom -= 10
         }
 
         tamaFrameIchi += 1
 
-        if (tamaFrameIchi > 20){
-            tamaFrameIchi = 1
+        if (tamaFrameIchi == 40){
+            tamaFrameIchi = 0
+            myTama = myTama(jikiX,jikiY,jikiOokisa,tamaOokisa,false)
         }
 }
 
