@@ -22,20 +22,39 @@ class myUgoki(jikiX:Int,jikiY:Int,val jikiOokisa:Int,){
 }
 
 class myTama(jikiX:Int,jikiY:Int,jikiOokisa:Int,tamaOokisa:Int,var alive:Boolean){
-    //弾のｘ軸はこれでいい
     var left = jikiX  - tamaOokisa / 2
     var right = jikiX  + tamaOokisa / 2
-
     var top = jikiY  - (tamaOokisa)
     var bottom = jikiY
-
-    val tamaIchi = Rect(left, top, right,bottom)
     val tamaIro = Paint()
-
     fun tamaRect(left:Int, top:Int, right:Int,bottom:Int): Rect {
         return  Rect(left, top, right,bottom)
     }
+}
 
+
+
+class enemyUgoki(var x:Int,var y: Int,val enemyOokisa:Int,) {
+    val enemyIro = Paint()
+    fun enemyIchi(x:Int,y:Int,enemyOokisa:Int): Rect {
+        val left = x - enemyOokisa / 2
+        val right = x + enemyOokisa / 2
+        val top = y - enemyOokisa / 2
+        val bottom = y + enemyOokisa / 2
+        val enemyIchi = Rect(left, top, right, bottom)
+        return enemyIchi
+    }
+}
+
+class enemyTama(jikiX:Int,jikiY:Int,jikiOokisa:Int,tamaOokisa:Int,var alive:Boolean){
+    var left = jikiX  - tamaOokisa / 2
+    var right = jikiX  + tamaOokisa / 2
+    var top = jikiY  - (tamaOokisa)
+    var bottom = jikiY
+    val tamaIro = Paint()
+    fun tamaRect(left:Int, top:Int, right:Int,bottom:Int): Rect {
+        return  Rect(left, top, right,bottom)
+    }
 }
 
 
@@ -49,6 +68,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickY = jikiY
     var jikiOokisa = 100
     var myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
+    var myEnemy = enemyUgoki(150,150,100)
     var myTama = myTama(jikiX,jikiY,jikiOokisa,tamaOokisa,false)
 
     override fun onDraw(canvas: Canvas) {
@@ -56,22 +76,34 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
         myJiki.jikiIro.style = Paint.Style.FILL
         myJiki.jikiIro.color = Color.WHITE
-
-
-
         myTama.tamaIro.style = Paint.Style.FILL
         myTama.tamaIro.color = Color.GREEN
+        myEnemy.enemyIro.style = Paint.Style.FILL
+        myEnemy.enemyIro.color = Color.BLUE
+
+        canvas.drawRect(myEnemy.enemyIchi(myEnemy.x,myEnemy.y,myEnemy.enemyOokisa), myEnemy.enemyIro)
+        tekiUgokasu()
 
         canvas.drawRect(myJiki.jikiIchi, myJiki.jikiIro)
         clickShitaBshoNiIdou()
 
         canvas.drawRect(myTama.tamaRect(myTama.left,myTama.top,myTama.right,myTama.bottom), myTama.tamaIro)
-        shootingShot()
+        tamaSyori()
 
 
     }
 
-    fun shootingShot(){
+    fun tekiUgokasu(){
+        if(myEnemy.x<1100){
+            myEnemy.x += 50
+        }
+        if(myEnemy.x >= 1100) {
+            myEnemy.x = -100
+        }
+    }
+
+
+    fun tamaSyori(){
         //tamaSpeedはDouble型
         val tamaSpeed = 9.0
         val tamaPlus = 10 * tamaSpeed .toInt()
@@ -98,22 +130,24 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
 
         tamaFrameIchi += 1
-}
-
+    }
 
     fun clickShitaBshoNiIdou(){
         val saX = jikiX - clickX
         val saY = jikiY - clickY
         var x = jikiX
         var y = jikiY
-        if (saX >= -10 && saX <= 10){
+        val mySpeed = 9.0
+        val myPlus = 10 * mySpeed .toInt()
+
+        if (saX >= -(myPlus) && saX <= myPlus){
             x = clickX
         }else {
             if (saX > 0) {
-                x -= 20
+                x -= myPlus
             }
             if (saX < 0) {
-                x += 20
+                x += myPlus
             }
         }
         if (saY >= -10 && saY <= 10){
