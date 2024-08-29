@@ -46,13 +46,14 @@ class enemyUgoki(var x:Int,var y: Int,val enemyOokisa:Int,) {
     }
 }
 
-class enemyTama(jikiX:Int,jikiY:Int,jikiOokisa:Int,tamaOokisa:Int,var alive:Boolean){
-    var left = jikiX  - tamaOokisa / 2
-    var right = jikiX  + tamaOokisa / 2
-    var top = jikiY  - (tamaOokisa)
-    var bottom = jikiY
-    val tamaIro = Paint()
-    fun tamaRect(left:Int, top:Int, right:Int,bottom:Int): Rect {
+class enemyTama(x:Int,y:Int,enemyOokisa:Int,enemyTamaOokisa:Int,var alive:Boolean){
+    var left = x  - enemyTamaOokisa / 2
+    var right = x  + enemyTamaOokisa / 2
+    var top = y  - (enemyTamaOokisa)
+    var bottom = y
+    val enemyTamaIro = Paint()
+
+    fun enemyTamaRect(left:Int, top:Int, right:Int,bottom:Int): Rect {
         return  Rect(left, top, right,bottom)
     }
 }
@@ -70,6 +71,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
     var myEnemy = enemyUgoki(150,150,100)
     var myTama = myTama(jikiX,jikiY,jikiOokisa,tamaOokisa,false)
+    var enemyTama = enemyTama(150,150,100,10,false)
 
     override fun onDraw(canvas: Canvas) {
         //まず、座標と大きさを指定して描画する
