@@ -11,24 +11,24 @@ import android.view.View
 import android.widget.TextView
 
 
-class myUgoki(posXx:Int,posYy:Int,val myookisa:Int,){
-    val left = posXx - myookisa / 2
-    val top = posYy - myookisa / 2
-    val right = posXx + myookisa / 2
-    val bottom = posYy + myookisa / 2
+class myUgoki(jikiX:Int,jikiY:Int,val jikiOokisa:Int,){
+    //クリックしたポイントを中心に自機ができる
+    val left = jikiX - jikiOokisa / 2
+    val right = jikiX + jikiOokisa / 2
+    val top = jikiY - jikiOokisa / 2
+    val bottom = jikiY + jikiOokisa / 2
     val jikiIchi = Rect(left, top, right,bottom)
     val jikiIro = Paint()
 }
 
 class myTama(jikiX:Int,jikiY:Int,jikiOokisa:Int,tamaOokisa:Int,var alive:Boolean){
-    var x = jikiX
-    var y = jikiY
-    //なんか何もしなくても真ん中からでてるっぽい
-    //var left = x -jikiOokisa/2 + jikiOokisa/2 - tamaOokisa / 2
-    var left = x  - tamaOokisa / 2
-    var top = y - tamaOokisa - tamaOokisa / 2 - jikiOokisa/2
-    var right = x  + tamaOokisa / 2
-    var bottom = y -tamaOokisa + tamaOokisa / 2 - jikiOokisa/2
+    //弾のｘ軸はこれでいい
+    var left = jikiX  - tamaOokisa / 2
+    var right = jikiX  + tamaOokisa / 2
+
+    var top = jikiY  - (tamaOokisa)
+    var bottom = jikiY
+
     val tamaIchi = Rect(left, top, right,bottom)
     val tamaIro = Paint()
 
@@ -57,32 +57,47 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         myJiki.jikiIro.style = Paint.Style.FILL
         myJiki.jikiIro.color = Color.WHITE
 
+
+
         myTama.tamaIro.style = Paint.Style.FILL
         myTama.tamaIro.color = Color.GREEN
 
         canvas.drawRect(myJiki.jikiIchi, myJiki.jikiIro)
         clickShitaBshoNiIdou()
-        shootingShot()
+
         canvas.drawRect(myTama.tamaRect(myTama.left,myTama.top,myTama.right,myTama.bottom), myTama.tamaIro)
+        shootingShot()
 
 
     }
 
     fun shootingShot(){
-        if (tamaFrameIchi == 0) {
-            tamaFrameIchi = 1
-        }
-        if (tamaFrameIchi > 0) {
-            myTama.top -= 10
-            myTama.bottom -= 10
-        }
+        //tamaSpeedはDouble型
+        val tamaSpeed = 9.0
+        val tamaPlus = 10 * tamaSpeed .toInt()
 
-        tamaFrameIchi += 1
 
-        if (tamaFrameIchi == 40){
+        if(myTama.top < 5){
             tamaFrameIchi = 0
             myTama = myTama(jikiX,jikiY,jikiOokisa,tamaOokisa,false)
         }
+
+        if (tamaFrameIchi == 100){
+            tamaFrameIchi = 0
+            myTama = myTama(jikiX,jikiY,jikiOokisa,tamaOokisa,false)
+        }
+
+
+        if (tamaFrameIchi == 0) {
+            tamaFrameIchi = 1
+        }
+
+        if (tamaFrameIchi > 0) {
+            myTama.top -= tamaPlus
+            myTama.bottom -= tamaPlus
+        }
+
+        tamaFrameIchi += 1
 }
 
 
@@ -111,9 +126,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 y += 20
             }
         }
-        val z = listOf(x,y)
-    jikiX = x
-    jikiY = y
+        jikiX = x
+        jikiY = y
     }
 
 
