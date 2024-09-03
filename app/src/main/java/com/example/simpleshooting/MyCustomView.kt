@@ -46,7 +46,7 @@ class enemyUgoki(var x:Int,var y: Int,val enemyOokisa:Int,) {
     }
 }
 
-class enemyTama(x:Int,y:Int,enemyOokisa:Int,enemyTamaOokisa:Int,var alive:Boolean){
+class enemyTama(var x:Int,var y:Int,enemyOokisa:Int,var enemyTamaOokisa:Int,var alive:Boolean){
     var left = x  - enemyTamaOokisa / 2
     var right = x  + enemyTamaOokisa / 2
     var top = y  - (enemyTamaOokisa)
@@ -82,9 +82,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         myTama.tamaIro.color = Color.GREEN
         myEnemy.enemyIro.style = Paint.Style.FILL
         myEnemy.enemyIro.color = Color.BLUE
+        enemyTama.enemyTamaIro.style = Paint.Style.FILL
+        enemyTama.enemyTamaIro.color = Color.RED
 
         canvas.drawRect(myEnemy.enemyIchi(myEnemy.x,myEnemy.y,myEnemy.enemyOokisa), myEnemy.enemyIro)
         tekiUgokasu()
+
+        canvas.drawRect(enemyTama.enemyTamaRect(enemyTama.left,enemyTama.top,enemyTama.right,enemyTama.bottom), enemyTama.enemyTamaIro)
+        enemyTamaSyori()
 
         canvas.drawRect(myJiki.jikiIchi, myJiki.jikiIro)
         clickShitaBshoNiIdou()
@@ -94,7 +99,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     }
+    fun enemyTamaSyori(){
+        enemyTama.left += 10
+        enemyTama.right += 10
+        enemyTama.top += 10
+        enemyTama.bottom += 10
 
+    }
     fun tekiUgokasu(){
         if(myEnemy.x<1100){
             myEnemy.x += 50
