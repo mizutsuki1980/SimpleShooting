@@ -46,7 +46,7 @@ class enemyUgoki(var x:Int,var y: Int,val enemyOokisa:Int,) {
     }
 }
 
-class enemyTama(var x:Int,var y:Int,enemyOokisa:Int,var enemyTamaOokisa:Int,var alive:Boolean){
+class enemyTama(var x:Int,var y:Int,enemyOokisa:Int,var enemyTamaOokisa:Int,var enemyTamaSpeed:Double,var alive:Boolean){
     var left = x  - enemyTamaOokisa / 2
     var right = x  + enemyTamaOokisa / 2
     var top = y  - (enemyTamaOokisa)
@@ -63,6 +63,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tamaFrameIchi = 0
     var frame = 0
     var tamaOokisa = 10
+    var enemyTamaSpeed = 7.5
     var jikiX = 550 //初期位置
     var jikiY = 1500 //初期位置
     var clickX = jikiX
@@ -71,7 +72,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
     var myEnemy = enemyUgoki(150,150,100)
     var myTama = myTama(jikiX,jikiY,jikiOokisa,tamaOokisa,false)
-    var enemyTama = enemyTama(150,150,100,10,false)
+    var enemyTama = enemyTama(150,150,100,10,enemyTamaSpeed,false)
 
     override fun onDraw(canvas: Canvas) {
         //まず、座標と大きさを指定して描画する
@@ -96,9 +97,34 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         canvas.drawRect(myTama.tamaRect(myTama.left,myTama.top,myTama.right,myTama.bottom), myTama.tamaIro)
         tamaSyori()
+
+        //敵の弾が自機の近くにあったらリセット
+        enemyTamaAtatta()
     }
 
+    fun enemyTamaAtatta(){
+        val ex = enemyTama.left
+        val ey = enemyTama.top
 
+        val jx = myJiki.left
+        val jy = myJiki.top
+
+        val saX = jx - ex
+        val saY = jy - ey
+        if (saX > -20 && saX < 20){
+            if (saY > -20 && saY < 20) {
+                enemyTama.x = myEnemy.x
+                enemyTama.y = myEnemy.y
+                enemyTama.left = myEnemy.x  - enemyTama.enemyTamaOokisa / 2
+                enemyTama.right = myEnemy.x  + enemyTama.enemyTamaOokisa / 2
+                enemyTama.top = myEnemy.y  - (enemyTama.enemyTamaOokisa)
+                enemyTama.bottom = myEnemy.y
+                //enemyTama = enemyTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,false)
+
+            }
+        }
+
+    }
     fun enemyTamaSyori(){
         val ex = enemyTama.left
         val ey = enemyTama.top
@@ -108,8 +134,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val vy = jy - ey
         val vv = (vx * vx) + (vy * vy) .toDouble()
         val vvv = Math.sqrt(vv)
-        val vvx = (vx / vvv)*10
-        val vvy = (vy / vvv)*10
+        val vvx = (vx / vvv)*10 * enemyTama.enemyTamaSpeed
+        val vvy = (vy / vvv)*10 * enemyTama.enemyTamaSpeed
         //ここにベクトルをいれたい
         enemyTama.left += vvx.toInt()
         enemyTama.right += vvx.toInt()
@@ -265,3 +291,4 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         return super.onTouchEvent(event)
     }
 }
+
