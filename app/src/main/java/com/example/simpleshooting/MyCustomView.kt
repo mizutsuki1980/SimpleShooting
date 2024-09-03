@@ -83,7 +83,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         myEnemy.enemyIro.style = Paint.Style.FILL
         myEnemy.enemyIro.color = Color.BLUE
         enemyTama.enemyTamaIro.style = Paint.Style.FILL
-        enemyTama.enemyTamaIro.color = Color.RED
+        enemyTama.enemyTamaIro.color = Color.WHITE
 
         canvas.drawRect(myEnemy.enemyIchi(myEnemy.x,myEnemy.y,myEnemy.enemyOokisa), myEnemy.enemyIro)
         tekiUgokasu()
@@ -96,16 +96,54 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         canvas.drawRect(myTama.tamaRect(myTama.left,myTama.top,myTama.right,myTama.bottom), myTama.tamaIro)
         tamaSyori()
-
-
     }
+
+
     fun enemyTamaSyori(){
-        enemyTama.left += 10
-        enemyTama.right += 10
-        enemyTama.top += 10
-        enemyTama.bottom += 10
+        val ex = enemyTama.left
+        val ey = enemyTama.top
+        val jx = myJiki.left
+        val jy = myJiki.top
+        val vx = jx - ex
+        val vy = jy - ey
+        val vv = (vx * vx) + (vy * vy) .toDouble()
+        val vvv = Math.sqrt(vv)
+        val vvx = (vx / vvv)*10
+        val vvy = (vy / vvv)*10
+        //ここにベクトルをいれたい
+        enemyTama.left += vvx.toInt()
+        enemyTama.right += vvx.toInt()
+        enemyTama.top += vvy.toInt()
+        enemyTama.bottom += vvy.toInt()
+    }
+
+
+    fun vectorKeisan() {
+        val ex = enemyTama.left
+        val ey = enemyTama.top
+        val jx = myJiki.left
+        val jy = myJiki.top
+        val vx = ex - jx
+        val vy = ey - jy
+        val vv = (vx * vx) + (vy * vy) .toDouble()
+        val vvv = Math.sqrt(vv)
+        //(vx,vy)がベクトルの方向
+        //vvvが力
+
+        val vvx = vx / vvv
+        val vvy = vy / vvv
+        //(vvx,vvy)がベクトルの正規化した結果　（0.6，0.8）とかになっているはず
+
+        enemyTama.left += (vvx*10).toInt()
+        enemyTama.right += (vvx*10).toInt()
+        enemyTama.top += (vvy*10).toInt()
+        enemyTama.bottom += (vvy*10).toInt()
 
     }
+
+
+
+
     fun tekiUgokasu(){
         if(myEnemy.x<1100){
             myEnemy.x += 50
