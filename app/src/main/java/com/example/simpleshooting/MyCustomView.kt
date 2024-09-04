@@ -11,6 +11,11 @@ import android.view.View
 import android.widget.TextView
 
 
+
+//なんか今って、毎回left,right,top,bottomをそれぞれ+してるんだよなぁ。
+//これを関数にしてx,yみたいなので出すようにしたい。
+//また、自機のxyから当たり判定みたいなのをだして計算したいなー
+
 class myUgoki(jikiX:Int,jikiY:Int,val jikiOokisa:Int,){
     //クリックしたポイントを中心に自機ができる
     val left = jikiX - jikiOokisa / 2
