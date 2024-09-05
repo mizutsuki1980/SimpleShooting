@@ -27,25 +27,6 @@ class myUgoki(jikiX:Int,jikiY:Int,val jikiOokisa:Int,){
 }
 
 
-//自機敵機共通のクラスをつくってみたらいいんじゃないかな？
-class myUgokiXY(x:Int,y:Int,Ookisa:Int){
-    var left = x  - Ookisa / 2
-    var right = x  + Ookisa / 2
-    var top = y  - Ookisa / 2
-    var bottom = y + Ookisa / 2
-    var xyList = mutableListOf<Int>(left,right,top,bottom)
-
-
-
-    fun saikeisan(x:Int,y:Int,Ookisa:Int):MutableList<Int>{
-         left = x  - Ookisa / 2
-         right = x  + Ookisa / 2
-         top = y  - Ookisa / 2
-         bottom = y + Ookisa / 2
-         xyList = mutableListOf<Int>(left,right,top,bottom)
-        return xyList
-    }
-}
 
 class myTama(jikiX:Int,jikiY:Int,jikiOokisa:Int,tamaOokisa:Int,var alive:Boolean){
     var left = jikiX  - tamaOokisa / 2
@@ -84,6 +65,25 @@ class enemyTama(var x:Int,var y:Int,enemyOokisa:Int,var enemyTamaOokisa:Int,var 
     }
 }
 
+//自機敵機共通のクラスをつくってみたらいいんじゃないかな？
+class myUgokiXY(x:Int,y:Int,Ookisa:Int){
+    var left = x  - Ookisa / 2
+    var right = x  + Ookisa / 2
+    var top = y  - Ookisa / 2
+    var bottom = y + Ookisa / 2
+    var xyList = mutableListOf<Int>(left,right,top,bottom)
+
+
+
+    fun saikeisan(x:Int,y:Int,Ookisa:Int):MutableList<Int>{
+        left = x  - Ookisa / 2
+        right = x  + Ookisa / 2
+        top = y  - Ookisa / 2
+        bottom = y + Ookisa / 2
+        xyList = mutableListOf<Int>(left,right,top,bottom)
+        return xyList
+    }
+}
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var tamaFrameIchi = 0
