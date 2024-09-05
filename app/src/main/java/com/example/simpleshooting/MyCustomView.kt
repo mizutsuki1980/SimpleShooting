@@ -66,14 +66,12 @@ class enemyTama(var x:Int,var y:Int,enemyOokisa:Int,var enemyTamaOokisa:Int,var 
 }
 
 //自機敵機共通のクラスをつくってみたらいいんじゃないかな？
-class myUgokiXY(x:Int,y:Int,Ookisa:Int){
+class myUgoXY(var x:Int,var y:Int,var Ookisa:Int){
     var left = x  - Ookisa / 2
     var right = x  + Ookisa / 2
     var top = y  - Ookisa / 2
     var bottom = y + Ookisa / 2
     var xyList = mutableListOf<Int>(left,right,top,bottom)
-
-
 
     fun saikeisan(x:Int,y:Int,Ookisa:Int):MutableList<Int>{
         left = x  - Ookisa / 2
@@ -82,6 +80,9 @@ class myUgokiXY(x:Int,y:Int,Ookisa:Int){
         bottom = y + Ookisa / 2
         xyList = mutableListOf<Int>(left,right,top,bottom)
         return xyList
+    }
+    fun myRect(xyList:List<Int>):Rect{
+        return Rect(xyList[0],xyList[1],xyList[2],xyList[3])
     }
 }
 
@@ -99,7 +100,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var myEnemy = enemyUgoki(150,150,100)
     var myTama = myTama(jikiX,jikiY,jikiOokisa,tamaOokisa,false)
     var enemyTama = enemyTama(150,150,100,10,enemyTamaSpeed,false)
-
+    var myJ = myUgoXY(jikiX+200,jikiY+200,jikiOokisa)
     override fun onDraw(canvas: Canvas) {
         //まず、座標と大きさを指定して描画する
         myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
@@ -111,6 +112,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         myEnemy.enemyIro.color = Color.BLUE
         enemyTama.enemyTamaIro.style = Paint.Style.FILL
         enemyTama.enemyTamaIro.color = Color.WHITE
+        myJ.xyList = myJ.saikeisan(myJ.x,myJ.y,myJ.Ookisa)
+        canvas.drawRect(myJ.myRect(myJ.xyList), myJiki.jikiIro)
 
         canvas.drawRect(myEnemy.enemyIchi(myEnemy.x,myEnemy.y,myEnemy.enemyOokisa), myEnemy.enemyIro)
         tekiUgokasu()
