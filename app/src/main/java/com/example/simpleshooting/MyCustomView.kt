@@ -16,9 +16,6 @@ import android.widget.TextView
 //これを関数にしてx,yみたいなので出すようにしたい。
 //また、自機のxyから当たり判定みたいなのをだして計算したいなー
 
-//敵の弾が自機の斜め上でひっかかるようにしてとどまっている。多分ｘもｙも既定の値に届かないから？
-//でもとどまるってなんで？
-
 class myUgoki(jikiX:Int,jikiY:Int,val jikiOokisa:Int,){
     //クリックしたポイントを中心に自機ができる
     val left = jikiX - jikiOokisa / 2
