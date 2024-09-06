@@ -78,7 +78,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tamaFrameIchi = 0
     var frame = 0
     var tamaOokisa = 10
-    var enemyTamaSpeed = 7.5
+    var enemyTamaSpeed = 3.5
     var jikiX = 550 //初期位置
     var jikiY = 1500 //初期位置
     var clickX = jikiX  //自機の位置は覚えておかないといけないので必要
@@ -123,48 +123,46 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(eTama.eTRectXY(eTama.x,eTama.y,eTama.enemyTamaOokisa), eTama.eTamaIro)
         eTamaIdoSyori()
 
-
-
-
-
         //敵の弾が自機の近くにあったらリセット
         enemyTamaAtatta()
     }
+    fun eTamaIdoSyori(){
+        val ex = eTama.x
+        val ey = eTama.y
+
+        val jx = myJiki.x
+        val jy = myJiki.y
+
+        val vx = jx - ex
+        val vy = jy - ey
+
+        val vv = (vx * vx) + (vy * vy) .toDouble()
+        val vvv = Math.sqrt(vv)
+
+        val vvx = (vx / vvv)*10 * eTama.enemyTamaSpeed
+        val vvy = (vy / vvv)*10 * eTama.enemyTamaSpeed
+
+        //なんかよくわからんけど、ここでベクトルっぽい動きになっているっぽい
+        eTama.x += vvx.toInt()
+        eTama.y += vvy.toInt()
+    }
+
 
 
 
     fun enemyTamaAtatta(){
         val ex = eTama.x
         val ey = eTama.y
-
         val jx = myJiki.x
         val jy = myJiki.y
-
         val saX = jx - ex
         val saY = jy - ey
         if (saX > -20 && saX < 20){
             if (saY > -20 && saY < 20) {
-                //ここはあたった、ということでいいのかな？
                 eTama.x = myEnemy.x
                 eTama.y = myEnemy.y
             }
         }
-    }
-
-    fun eTamaIdoSyori(){
-        val ex = eTama.x
-        val ey = eTama.y
-        val jx = myJiki.x
-        val jy = myJiki.y
-        val vx = jx - ex
-        val vy = jy - ey
-        val vv = (vx * vx) + (vy * vy) .toDouble()
-        val vvv = Math.sqrt(vv)
-        val vvx = (vx / vvv)*10 * eTama.enemyTamaSpeed
-        val vvy = (vy / vvv)*10 * eTama.enemyTamaSpeed
-        //なんかよくわからんけど、ここでベクトルっぽい動きになっているっぽい
-        eTama.x += vvx.toInt()
-        eTama.y += vvx.toInt()
     }
 
     fun tekiUgokasu(){
