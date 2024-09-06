@@ -10,16 +10,26 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
 
-class myTama(jikiX:Int,jikiY:Int,jikiOokisa:Int,tamaOokisa:Int,var alive:Boolean){
-    var left = jikiX  - tamaOokisa / 2
-    var right = jikiX  + tamaOokisa / 2
-    var top = jikiY  - (tamaOokisa)
-    var bottom = jikiY
+class myTama(var x:Int,var y:Int,jikiOokisa:Int,tamaOokisa:Int,var alive:Boolean){
+    var left = x  - tamaOokisa / 2
+    var right = x  + tamaOokisa / 2
+    var top = y  - (tamaOokisa)
+    var bottom = y
     val tamaIro = Paint()
 
     fun tamaRect(left:Int, top:Int, right:Int,bottom:Int): Rect {
         return  Rect(left, top, right,bottom)
     }
+
+    fun mTRectXY(x:Int,y:Int,Ookisa:Int):Rect{
+        left = x  - Ookisa / 2
+        right = x  + Ookisa / 2
+        top = y  - Ookisa
+        bottom = y
+        val m = Rect(left, top, right,bottom)
+        return m
+    }
+
 }
 
 class enemyUgoki(var x:Int,var y: Int,val enemyOokisa:Int,) {
