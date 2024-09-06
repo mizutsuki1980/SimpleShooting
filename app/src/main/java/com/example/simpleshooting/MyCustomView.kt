@@ -10,7 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
 
-class myTama(var x:Int,var y:Int,jikiOokisa:Int,tamaOokisa:Int,var alive:Boolean){
+class myTama(var x:Int,var y:Int,jikiOokisa:Int,val tamaOokisa:Int,var alive:Boolean){
     var left = x  - tamaOokisa / 2
     var right = x  + tamaOokisa / 2
     var top = y  - (tamaOokisa)
@@ -121,7 +121,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         myTama.tamaIro.color = Color.GREEN
 
         //自機の弾　処理
-        canvas.drawRect(myTama.tamaRect(myTama.left,myTama.top,myTama.right,myTama.bottom), myTama.tamaIro)
+        canvas.drawRect(myTama.mTRectXY(myTama.x,myTama.y,myTama.tamaOokisa), myTama.tamaIro)
         tamaSyori()
 
 
@@ -206,7 +206,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val tamaPlus = 10 * tamaSpeed .toInt()
 
 
-        if(myTama.top < 5){
+        if(myTama.y < 5){
             tamaFrameIchi = 0
             myTama = myTama(jikiX,jikiY,jikiOokisa,tamaOokisa,false)
         }
@@ -222,8 +222,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
 
         if (tamaFrameIchi > 0) {
-            myTama.top -= tamaPlus
-            myTama.bottom -= tamaPlus
+            myTama.y-= tamaPlus
         }
 
         tamaFrameIchi += 1
