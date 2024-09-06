@@ -137,10 +137,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //敵の弾　処理
         eTama.enemyTamaIro.style = Paint.Style.FILL
         eTama.enemyTamaIro.color = Color.WHITE
-        canvas.drawRect(eTama.eTRect(eTama.left,eTama.top,eTama.right,eTama.bottom), eTama.enemyTamaIro)
-
-
-        enemyTamaIdoSyori()
+        canvas.drawRect(eTama.eTRectXY(eTama.x,eTama.y,eTama.enemyTamaOokisa), eTama.enemyTamaIro)
+        eTamaIdoSyori()
 
 
 
@@ -175,11 +173,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
-    fun enemyTamaIdoSyori(){
-        val ex = eTama.left
-        val ey = eTama.top
-        val jx = myJiki.left
-        val jy = myJiki.top
+    fun eTamaIdoSyori(){
+        val ex = eTama.x
+        val ey = eTama.y
+        val jx = myJiki.x
+        val jy = myJiki.y
         val vx = jx - ex
         val vy = jy - ey
         val vv = (vx * vx) + (vy * vy) .toDouble()
@@ -187,10 +185,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val vvx = (vx / vvv)*10 * eTama.enemyTamaSpeed
         val vvy = (vy / vvv)*10 * eTama.enemyTamaSpeed
         //なんかよくわからんけど、ここでベクトルっぽい動きになっているっぽい
-        eTama.left += vvx.toInt()
-        eTama.right += vvx.toInt()
-        eTama.top += vvy.toInt()
-        eTama.bottom += vvy.toInt()
+        eTama.x += vvx.toInt()
+        eTama.y += vvx.toInt()
     }
 
     fun tekiUgokasu(){
