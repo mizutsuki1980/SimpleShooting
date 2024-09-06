@@ -69,24 +69,26 @@ class enemyTama(var x:Int,var y:Int,enemyOokisa:Int,var enemyTamaOokisa:Int,var 
 
 }
 
-class myUgoki(var x:Int,var y:Int,val jikiOokisa:Int,){
+class myUgoki(var x:Int,var y:Int,val Ookisa:Int,){
     //クリックしたポイントを中心に自機ができる
-    val left = x - jikiOokisa / 2
-    val right = x + jikiOokisa / 2
-    val top = y - jikiOokisa / 2
-    val bottom = y + jikiOokisa / 2
+    val left = x - Ookisa / 2
+    val right = x + Ookisa / 2
+    val top = y - Ookisa / 2
+    val bottom = y + Ookisa / 2
     val jikiIchi = Rect(left, top, right,bottom)
     val jikiIro = Paint()
+
+    fun myRect(x:Int,y:Int,Ookisa:Int):Rect{
+        val left = x - Ookisa / 2
+        val right = x + Ookisa / 2
+        val top = y - Ookisa / 2
+        val bottom = y + Ookisa / 2
+        val jikiIchi = Rect(left, top, right,bottom)
+        return jikiIchi
+    }
+
 }
 
-class myUgokiET(var x :Int,var y :Int,var tamaOokisa:Int){
-    val left = x - tamaOokisa / 2
-    val right = x + tamaOokisa / 2
-    val top = y - tamaOokisa / 2
-    val bottom = y + tamaOokisa / 2
-    val tamaIchi = Rect(left, top, right,bottom)
-    val tamaIro = Paint()
-}
 
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
@@ -96,8 +98,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var enemyTamaSpeed = 7.5
     var jikiX = 550 //初期位置
     var jikiY = 1500 //初期位置
-    var clickX = jikiX
-    var clickY = jikiY
+    var clickX = jikiX  //自機の位置は覚えておかないといけないので必要
+    var clickY = jikiY  //自機の位置は覚えておかないといけないので必要
     var jikiOokisa = 100
     var myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
     var myEnemy = enemyUgoki(150,150,100)
@@ -108,10 +110,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     override fun onDraw(canvas: Canvas) {
         //まず、座標と大きさを指定して描画する
         myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
+        //jikiX,jikiYをセットしなおしているので、自機オブジェクトのｘｙはここで更新されている。
 
         myJiki.jikiIro.style = Paint.Style.FILL
         myJiki.jikiIro.color = Color.WHITE
-        canvas.drawRect(myJiki.jikiIchi, myJiki.jikiIro)
+        canvas.drawRect(myJiki.myRect(myJiki.x,myJiki.y,myJiki.Ookisa), myJiki.jikiIro)
         clickShitaBshoNiIdou()
 
         //まずは動いているというところで成功か
