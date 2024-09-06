@@ -16,11 +16,6 @@ class myTama(var x:Int,var y:Int,jikiOokisa:Int,val tamaOokisa:Int,var alive:Boo
     var top = y  - (tamaOokisa)
     var bottom = y
     val tamaIro = Paint()
-
-    fun tamaRect(left:Int, top:Int, right:Int,bottom:Int): Rect {
-        return  Rect(left, top, right,bottom)
-    }
-
     fun mTRectXY(x:Int,y:Int,Ookisa:Int):Rect{
         left = x  - Ookisa / 2
         right = x  + Ookisa / 2
@@ -29,7 +24,6 @@ class myTama(var x:Int,var y:Int,jikiOokisa:Int,val tamaOokisa:Int,var alive:Boo
         val m = Rect(left, top, right,bottom)
         return m
     }
-
 }
 
 class enemyUgoki(var x:Int,var y: Int,val enemyOokisa:Int,) {
@@ -50,14 +44,7 @@ class enemyTama(var x:Int,var y:Int,enemyOokisa:Int,var enemyTamaOokisa:Int,var 
     var right = x  + enemyTamaOokisa / 2
     var top = y  - (enemyTamaOokisa)
     var bottom = y
-    val enemyTamaIro = Paint()
-
-//ここにｘｙ渡すとＲｅｃｔ返す関数でも作ればいいんじゃねーの
-    fun eTRect(left:Int, top:Int, right:Int,bottom:Int): Rect {
-        return  Rect(left, top, right,bottom)
-    }
-
-
+    val eTamaIro = Paint()
     fun eTRectXY(x:Int,y:Int,Ookisa:Int):Rect{
          left = x  - Ookisa / 2
          right = x  + Ookisa / 2
@@ -70,14 +57,11 @@ class enemyTama(var x:Int,var y:Int,enemyOokisa:Int,var enemyTamaOokisa:Int,var 
 }
 
 class myUgoki(var x:Int,var y:Int,val Ookisa:Int,){
-    //クリックしたポイントを中心に自機ができる
     val left = x - Ookisa / 2
     val right = x + Ookisa / 2
     val top = y - Ookisa / 2
     val bottom = y + Ookisa / 2
-    val jikiIchi = Rect(left, top, right,bottom)
     val jikiIro = Paint()
-
     fun myRect(x:Int,y:Int,Ookisa:Int):Rect{
         val left = x - Ookisa / 2
         val right = x + Ookisa / 2
@@ -86,7 +70,6 @@ class myUgoki(var x:Int,var y:Int,val Ookisa:Int,){
         val jikiIchi = Rect(left, top, right,bottom)
         return jikiIchi
     }
-
 }
 
 
@@ -135,9 +118,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tekiUgokasu()
 
         //敵の弾　処理
-        eTama.enemyTamaIro.style = Paint.Style.FILL
-        eTama.enemyTamaIro.color = Color.WHITE
-        canvas.drawRect(eTama.eTRectXY(eTama.x,eTama.y,eTama.enemyTamaOokisa), eTama.enemyTamaIro)
+        eTama.eTamaIro.style = Paint.Style.FILL
+        eTama.eTamaIro.color = Color.WHITE
+        canvas.drawRect(eTama.eTRectXY(eTama.x,eTama.y,eTama.enemyTamaOokisa), eTama.eTamaIro)
         eTamaIdoSyori()
 
 
@@ -151,8 +134,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun enemyTamaAtatta(){
-        val ex = eTama.left
-        val ey = eTama.top
+        val ex = eTama.x
+        val ey = eTama.y
 
         val jx = myJiki.x
         val jy = myJiki.y
@@ -164,11 +147,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 //ここはあたった、ということでいいのかな？
                 eTama.x = myEnemy.x
                 eTama.y = myEnemy.y
-                eTama.left = myEnemy.x  - eTama.enemyTamaOokisa / 2
-                eTama.right = myEnemy.x  + eTama.enemyTamaOokisa / 2
-                eTama.top = myEnemy.y  - (eTama.enemyTamaOokisa)
-                eTama.bottom = myEnemy.y
-                //enemyTama = enemyTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,false)
             }
         }
     }
