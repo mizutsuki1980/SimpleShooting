@@ -16,6 +16,7 @@ class myTama(jikiX:Int,jikiY:Int,jikiOokisa:Int,tamaOokisa:Int,var alive:Boolean
     var top = jikiY  - (tamaOokisa)
     var bottom = jikiY
     val tamaIro = Paint()
+
     fun tamaRect(left:Int, top:Int, right:Int,bottom:Int): Rect {
         return  Rect(left, top, right,bottom)
     }
@@ -33,15 +34,29 @@ class enemyUgoki(var x:Int,var y: Int,val enemyOokisa:Int,) {
     }
 }
 
+
 class enemyTama(var x:Int,var y:Int,enemyOokisa:Int,var enemyTamaOokisa:Int,var enemyTamaSpeed:Double,var alive:Boolean){
     var left = x  - enemyTamaOokisa / 2
     var right = x  + enemyTamaOokisa / 2
     var top = y  - (enemyTamaOokisa)
     var bottom = y
     val enemyTamaIro = Paint()
-    fun enemyTamaRect(left:Int, top:Int, right:Int,bottom:Int): Rect {
+
+//ここにｘｙ渡すとＲｅｃｔ返す関数でも作ればいいんじゃねーの
+    fun eTRect(left:Int, top:Int, right:Int,bottom:Int): Rect {
         return  Rect(left, top, right,bottom)
     }
+
+
+    fun eTRectXY(x:Int,y:Int,Ookisa:Int):Rect{
+         left = x  - Ookisa / 2
+         right = x  + Ookisa / 2
+         top = y  - Ookisa
+         bottom = y
+        val m = Rect(left, top, right,bottom)
+        return m
+    }
+
 }
 
 class myUgoki(var x:Int,var y:Int,val jikiOokisa:Int,){
@@ -53,6 +68,16 @@ class myUgoki(var x:Int,var y:Int,val jikiOokisa:Int,){
     val jikiIchi = Rect(left, top, right,bottom)
     val jikiIro = Paint()
 }
+
+class myUgokiET(var x :Int,var y :Int,var tamaOokisa:Int){
+    val left = x - tamaOokisa / 2
+    val right = x + tamaOokisa / 2
+    val top = y - tamaOokisa / 2
+    val bottom = y + tamaOokisa / 2
+    val tamaIchi = Rect(left, top, right,bottom)
+    val tamaIro = Paint()
+}
+
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var tamaFrameIchi = 0
@@ -67,7 +92,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
     var myEnemy = enemyUgoki(150,150,100)
     var myTama = myTama(jikiX,jikiY,jikiOokisa,tamaOokisa,false)
-    var enemyTama = enemyTama(150,150,100,10,enemyTamaSpeed,false)
+    var eTama = enemyTama(150,150,100,10,enemyTamaSpeed,false)
 
 
     override fun onDraw(canvas: Canvas) {
@@ -84,29 +109,39 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         myTama.tamaIro.style = Paint.Style.FILL
         myTama.tamaIro.color = Color.GREEN
+
+        //自機の弾　処理
+        canvas.drawRect(myTama.tamaRect(myTama.left,myTama.top,myTama.right,myTama.bottom), myTama.tamaIro)
+        tamaSyori()
+
+
+        //敵の処理
         myEnemy.enemyIro.style = Paint.Style.FILL
         myEnemy.enemyIro.color = Color.BLUE
-        enemyTama.enemyTamaIro.style = Paint.Style.FILL
-        enemyTama.enemyTamaIro.color = Color.WHITE
-
-
         canvas.drawRect(myEnemy.enemyIchi(myEnemy.x,myEnemy.y,myEnemy.enemyOokisa), myEnemy.enemyIro)
         tekiUgokasu()
 
-        canvas.drawRect(enemyTama.enemyTamaRect(enemyTama.left,enemyTama.top,enemyTama.right,enemyTama.bottom), enemyTama.enemyTamaIro)
-        enemyTamaSyori()
+        //敵の弾　処理
+        eTama.enemyTamaIro.style = Paint.Style.FILL
+        eTama.enemyTamaIro.color = Color.WHITE
+        canvas.drawRect(eTama.eTRect(eTama.left,eTama.top,eTama.right,eTama.bottom), eTama.enemyTamaIro)
 
 
-        canvas.drawRect(myTama.tamaRect(myTama.left,myTama.top,myTama.right,myTama.bottom), myTama.tamaIro)
-        tamaSyori()
+        enemyTamaIdoSyori()
+
+
+
+
 
         //敵の弾が自機の近くにあったらリセット
         enemyTamaAtatta()
     }
 
+
+
     fun enemyTamaAtatta(){
-        val ex = enemyTama.left
-        val ey = enemyTama.top
+        val ex = eTama.left
+        val ey = eTama.top
 
         val jx = myJiki.x
         val jy = myJiki.y
@@ -115,62 +150,35 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val saY = jy - ey
         if (saX > -20 && saX < 20){
             if (saY > -20 && saY < 20) {
-                enemyTama.x = myEnemy.x
-                enemyTama.y = myEnemy.y
-                enemyTama.left = myEnemy.x  - enemyTama.enemyTamaOokisa / 2
-                enemyTama.right = myEnemy.x  + enemyTama.enemyTamaOokisa / 2
-                enemyTama.top = myEnemy.y  - (enemyTama.enemyTamaOokisa)
-                enemyTama.bottom = myEnemy.y
+                //ここはあたった、ということでいいのかな？
+                eTama.x = myEnemy.x
+                eTama.y = myEnemy.y
+                eTama.left = myEnemy.x  - eTama.enemyTamaOokisa / 2
+                eTama.right = myEnemy.x  + eTama.enemyTamaOokisa / 2
+                eTama.top = myEnemy.y  - (eTama.enemyTamaOokisa)
+                eTama.bottom = myEnemy.y
                 //enemyTama = enemyTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,false)
-
             }
         }
-
     }
-    fun enemyTamaSyori(){
-        val ex = enemyTama.left
-        val ey = enemyTama.top
+
+    fun enemyTamaIdoSyori(){
+        val ex = eTama.left
+        val ey = eTama.top
         val jx = myJiki.left
         val jy = myJiki.top
         val vx = jx - ex
         val vy = jy - ey
         val vv = (vx * vx) + (vy * vy) .toDouble()
         val vvv = Math.sqrt(vv)
-        val vvx = (vx / vvv)*10 * enemyTama.enemyTamaSpeed
-        val vvy = (vy / vvv)*10 * enemyTama.enemyTamaSpeed
-        //ここにベクトルをいれたい
-        enemyTama.left += vvx.toInt()
-        enemyTama.right += vvx.toInt()
-        enemyTama.top += vvy.toInt()
-        enemyTama.bottom += vvy.toInt()
+        val vvx = (vx / vvv)*10 * eTama.enemyTamaSpeed
+        val vvy = (vy / vvv)*10 * eTama.enemyTamaSpeed
+        //なんかよくわからんけど、ここでベクトルっぽい動きになっているっぽい
+        eTama.left += vvx.toInt()
+        eTama.right += vvx.toInt()
+        eTama.top += vvy.toInt()
+        eTama.bottom += vvy.toInt()
     }
-
-
-    fun vectorKeisan() {
-        val ex = enemyTama.left
-        val ey = enemyTama.top
-        val jx = myJiki.left
-        val jy = myJiki.top
-        val vx = ex - jx
-        val vy = ey - jy
-        val vv = (vx * vx) + (vy * vy) .toDouble()
-        val vvv = Math.sqrt(vv)
-        //(vx,vy)がベクトルの方向
-        //vvvが力
-
-        val vvx = vx / vvv
-        val vvy = vy / vvv
-        //(vvx,vvy)がベクトルの正規化した結果　（0.6，0.8）とかになっているはず
-
-        enemyTama.left += (vvx*10).toInt()
-        enemyTama.right += (vvx*10).toInt()
-        enemyTama.top += (vvy*10).toInt()
-        enemyTama.bottom += (vvy*10).toInt()
-
-    }
-
-
-
 
     fun tekiUgokasu(){
         if(myEnemy.x<1100){
