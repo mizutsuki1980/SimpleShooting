@@ -10,9 +10,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
 
-
-
-
 class myTama(jikiX:Int,jikiY:Int,jikiOokisa:Int,tamaOokisa:Int,var alive:Boolean){
     var left = jikiX  - tamaOokisa / 2
     var right = jikiX  + tamaOokisa / 2
@@ -23,8 +20,6 @@ class myTama(jikiX:Int,jikiY:Int,jikiOokisa:Int,tamaOokisa:Int,var alive:Boolean
         return  Rect(left, top, right,bottom)
     }
 }
-
-
 
 class enemyUgoki(var x:Int,var y: Int,val enemyOokisa:Int,) {
     val enemyIro = Paint()
@@ -49,12 +44,12 @@ class enemyTama(var x:Int,var y:Int,enemyOokisa:Int,var enemyTamaOokisa:Int,var 
     }
 }
 
-class myUgoki(jikiX:Int,jikiY:Int,val jikiOokisa:Int,){
+class myUgoki(var x:Int,var y:Int,val jikiOokisa:Int,){
     //クリックしたポイントを中心に自機ができる
-    val left = jikiX - jikiOokisa / 2
-    val right = jikiX + jikiOokisa / 2
-    val top = jikiY - jikiOokisa / 2
-    val bottom = jikiY + jikiOokisa / 2
+    val left = x - jikiOokisa / 2
+    val right = x + jikiOokisa / 2
+    val top = y - jikiOokisa / 2
+    val bottom = y + jikiOokisa / 2
     val jikiIchi = Rect(left, top, right,bottom)
     val jikiIro = Paint()
 }
@@ -73,12 +68,20 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var myEnemy = enemyUgoki(150,150,100)
     var myTama = myTama(jikiX,jikiY,jikiOokisa,tamaOokisa,false)
     var enemyTama = enemyTama(150,150,100,10,enemyTamaSpeed,false)
+
+
     override fun onDraw(canvas: Canvas) {
         //まず、座標と大きさを指定して描画する
         myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
 
         myJiki.jikiIro.style = Paint.Style.FILL
         myJiki.jikiIro.color = Color.WHITE
+        canvas.drawRect(myJiki.jikiIchi, myJiki.jikiIro)
+        clickShitaBshoNiIdou()
+
+        //まずは動いているというところで成功か
+        //敵の弾関連でどういう動きになるのかなぁ？
+
         myTama.tamaIro.style = Paint.Style.FILL
         myTama.tamaIro.color = Color.GREEN
         myEnemy.enemyIro.style = Paint.Style.FILL
@@ -93,8 +96,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(enemyTama.enemyTamaRect(enemyTama.left,enemyTama.top,enemyTama.right,enemyTama.bottom), enemyTama.enemyTamaIro)
         enemyTamaSyori()
 
-        canvas.drawRect(myJiki.jikiIchi, myJiki.jikiIro)
-        clickShitaBshoNiIdou()
 
         canvas.drawRect(myTama.tamaRect(myTama.left,myTama.top,myTama.right,myTama.bottom), myTama.tamaIro)
         tamaSyori()
@@ -107,8 +108,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val ex = enemyTama.left
         val ey = enemyTama.top
 
-        val jx = myJiki.left
-        val jy = myJiki.top
+        val jx = myJiki.x
+        val jy = myJiki.y
 
         val saX = jx - ex
         val saY = jy - ey
