@@ -91,6 +91,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     override fun onDraw(canvas: Canvas) {
+
+
+
+
         //まず、座標と大きさを指定して描画する
         myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
         //jikiX,jikiYをセットしなおしているので、自機オブジェクトのｘｙはここで更新されている。

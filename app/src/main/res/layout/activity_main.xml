@@ -31,6 +31,20 @@
             android:layout_weight="1"
             android:text="TextView" />
 
+        <TextView
+            android:id="@+id/textLabelGamenX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="GamenX" />
+
+        <TextView
+            android:id="@+id/textLabelGamenY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="GamenY" />
+
     </LinearLayout>
 
     <Button
