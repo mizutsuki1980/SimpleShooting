@@ -72,40 +72,26 @@ class myUgoki(var x:Int,var y:Int,val Ookisa:Int,){
     }
 }
 
-
-
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var tamaFrameIchi = 0
     var frame = 0
     var tamaOokisa = 10
-    var enemyTamaSpeed = 3.5
-    var jikiX = 550 //初期位置
-    var jikiY = 1500 //初期位置
+    var enemyTamaSpeed = 2.0
+    var jikiX = 300 //初期位置
+    var jikiY = 800 //初期位置
     var clickX = jikiX  //自機の位置は覚えておかないといけないので必要
     var clickY = jikiY  //自機の位置は覚えておかないといけないので必要
-    var jikiOokisa = 100
+    var jikiOokisa = 40
     var myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
     var myEnemy = enemyUgoki(150,150,100)
     var myTama = myTama(jikiX,jikiY,jikiOokisa,tamaOokisa,false)
     var eTama = enemyTama(150,150,100,10,enemyTamaSpeed,false)
-
-
     override fun onDraw(canvas: Canvas) {
-
-
-
-
-        //まず、座標と大きさを指定して描画する
         myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
-        //jikiX,jikiYをセットしなおしているので、自機オブジェクトのｘｙはここで更新されている。
-
         myJiki.jikiIro.style = Paint.Style.FILL
         myJiki.jikiIro.color = Color.WHITE
         canvas.drawRect(myJiki.myRect(myJiki.x,myJiki.y,myJiki.Ookisa), myJiki.jikiIro)
         clickShitaBshoNiIdou()
-
-        //まずは動いているというところで成功か
-        //敵の弾関連でどういう動きになるのかなぁ？
 
         myTama.tamaIro.style = Paint.Style.FILL
         myTama.tamaIro.color = Color.GREEN
@@ -125,6 +111,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         eTama.eTamaIro.style = Paint.Style.FILL
         eTama.eTamaIro.color = Color.WHITE
         canvas.drawRect(eTama.eTRectXY(eTama.x,eTama.y,eTama.enemyTamaOokisa), eTama.eTamaIro)
+
+        //ここであんまり近くに来すぎたら、ホーミングをオフにする。じゃないとよけられない。
         eTamaIdoSyori()
 
         //敵の弾が自機の近くにあったらリセット
@@ -170,10 +158,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun tekiUgokasu(){
-        if(myEnemy.x<1100){
+        if(myEnemy.x<900){
             myEnemy.x += 50
         }
-        if(myEnemy.x >= 1100) {
+        if(myEnemy.x >= 900) {
             myEnemy.x = -100
         }
     }
