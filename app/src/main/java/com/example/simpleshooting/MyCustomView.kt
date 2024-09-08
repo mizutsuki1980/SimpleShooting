@@ -39,7 +39,7 @@ class enemyUgoki(var x:Int,var y: Int,val enemyOokisa:Int,) {
 }
 
 
-class eTama(var x:Int,var y:Int,enemyOokisa:Int,var enemyTamaOokisa:Int,var enemyTamaSpeed:Double,var zenkaiVect:List<Int>,var alive:Boolean){
+class eTama(var x:Int,var y:Int,enemyOokisa:Int,var enemyTamaOokisa:Int,var enemyTamaSpeed:Double,var zenkaiVect:List<Int>,var alive:Boolean,var homing:Boolean){
     var left = x  - enemyTamaOokisa / 2
     var right = x  + enemyTamaOokisa / 2
     var top = y  - (enemyTamaOokisa)
@@ -86,7 +86,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var myEnemy = enemyUgoki(150,150,100)
     var myTama = myTama(jikiX,jikiY,jikiOokisa,tamaOokisa,false)
     var vec = listOf(0,0)
-    var eTama = eTama(150,150,100,10,enemyTamaSpeed,vec,false)
+    var eTama = eTama(150,150,100,10,enemyTamaSpeed,vec,false,true)
 
 
     override fun onDraw(canvas: Canvas) {
@@ -131,10 +131,23 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val jy = myJiki.y
 
         //ここで「自機に近づきすぎてる」っていう必要な条件を達成していたら、前回のvx,vyを流用するように変化させる。
-        val vx = jx - ex
-        val vy = jy - ey
+        var vx = jx - ex
+        var vy = jy - ey
         //たぶん、保存しとく必要があるのはvxとvyなんだろうなぁ
 
+        if(vx<100 && vx > -100){
+            if(vy<100 && vy > -100) {
+                eTama.homing = false
+            }
+        }
+
+        if (eTama.homing) {
+
+        }else{
+            vx = eTama.zenkaiVect[0]
+            vy = eTama.zenkaiVect[1]
+
+        }
 
 
         val vv = (vx * vx) + (vy * vy) .toDouble()
@@ -166,10 +179,20 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val saY = jy - ey
         if (saX > -20 && saX < 20){
             if (saY > -20 && saY < 20) {
-                eTama.x = myEnemy.x
-                eTama.y = myEnemy.y
+                //敵の弾のリセット
+                 eTama = eTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,vec,false,true)
             }
         }
+        if (ex > 1000){
+            //敵の弾のリセット
+            eTama = eTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,vec,false,true)
+        }
+
+        if (ey > 1500){
+            //敵の弾のリセット
+            eTama = eTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,vec,false,true)
+        }
+
     }
 
     fun tekiUgokasu(){
