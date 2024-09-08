@@ -135,8 +135,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         var vy = jy - ey
         //たぶん、保存しとく必要があるのはvxとvyなんだろうなぁ
 
-        if(vx<100 && vx > -100){
-            if(vy<100 && vy > -100) {
+        var hmingkyori = 70
+
+        if(vx<hmingkyori && vx > -hmingkyori){
+            if(vy<hmingkyori && vy > -hmingkyori) {
                 eTama.homing = false
             }
         }
@@ -183,18 +185,17 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                  eTama = eTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,vec,false,true)
             }
         }
-        if (ex > 1000){
+
+        if (ex > 700 || ex < 0){
             //敵の弾のリセット
             eTama = eTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,vec,false,true)
         }
 
-        if (ey > 1500){
+        if (ey > 1300 || ey < 0){
             //敵の弾のリセット
             eTama = eTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,vec,false,true)
         }
-
     }
-
     fun tekiUgokasu(){
         if(myEnemy.x<900){
             myEnemy.x += 50
