@@ -39,7 +39,7 @@ class enemyUgoki(var x:Int,var y: Int,val enemyOokisa:Int,) {
 }
 
 
-class enemyTama(var x:Int,var y:Int,enemyOokisa:Int,var enemyTamaOokisa:Int,var enemyTamaSpeed:Double,var alive:Boolean){
+class eTama(var x:Int,var y:Int,enemyOokisa:Int,var enemyTamaOokisa:Int,var enemyTamaSpeed:Double,var zenkaiVect:List<Int>,var alive:Boolean){
     var left = x  - enemyTamaOokisa / 2
     var right = x  + enemyTamaOokisa / 2
     var top = y  - (enemyTamaOokisa)
@@ -85,7 +85,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
     var myEnemy = enemyUgoki(150,150,100)
     var myTama = myTama(jikiX,jikiY,jikiOokisa,tamaOokisa,false)
-    var eTama = enemyTama(150,150,100,10,enemyTamaSpeed,false)
+    var vec = listOf(0,0)
+    var eTama = eTama(150,150,100,10,enemyTamaSpeed,vec,false)
+
+
     override fun onDraw(canvas: Canvas) {
         myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
         myJiki.jikiIro.style = Paint.Style.FILL
@@ -112,21 +115,27 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         eTama.eTamaIro.color = Color.WHITE
         canvas.drawRect(eTama.eTRectXY(eTama.x,eTama.y,eTama.enemyTamaOokisa), eTama.eTamaIro)
 
-        //ここであんまり近くに来すぎたら、ホーミングをオフにする。じゃないとよけられない。
-        eTamaIdoSyori()
+       //ここであんまり近くに来すぎたら、ホーミングをオフにする。じゃないとよけられない。
+       //eTamaにはベクトルの情報も保存しておかないといけないのかな？
+        eTama.zenkaiVect = eTamaIdoSyori()
 
         //敵の弾が自機の近くにあったらリセット
         enemyTamaAtatta()
     }
-    fun eTamaIdoSyori(){
+
+    fun eTamaIdoSyori():List<Int>{
         val ex = eTama.x
         val ey = eTama.y
 
         val jx = myJiki.x
         val jy = myJiki.y
 
+        //ここで「自機に近づきすぎてる」っていう必要な条件を達成していたら、前回のvx,vyを流用するように変化させる。
         val vx = jx - ex
         val vy = jy - ey
+        //たぶん、保存しとく必要があるのはvxとvyなんだろうなぁ
+
+
 
         val vv = (vx * vx) + (vy * vy) .toDouble()
         val vvv = Math.sqrt(vv)
@@ -134,9 +143,15 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val vvx = (vx / vvv)*10 * eTama.enemyTamaSpeed
         val vvy = (vy / vvv)*10 * eTama.enemyTamaSpeed
 
+
+
         //なんかよくわからんけど、ここでベクトルっぽい動きになっているっぽい
         eTama.x += vvx.toInt()
         eTama.y += vvy.toInt()
+
+
+        return listOf(vx,vy)
+
     }
 
 
