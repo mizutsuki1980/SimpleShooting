@@ -8,7 +8,6 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.widget.TextView
 
 class myTama(var x:Int,var y:Int,jikiOokisa:Int,val tamaOokisa:Int,var alive:Boolean){
     var left = x  - tamaOokisa / 2
@@ -26,7 +25,7 @@ class myTama(var x:Int,var y:Int,jikiOokisa:Int,val tamaOokisa:Int,var alive:Boo
     }
 }
 
-class enemyUgoki(var x:Int,var y: Int,val enemyOokisa:Int,) {
+class enemyUgoki(var x: Int, var y: Int, val enemyOokisa: Int) {
     val enemyIro = Paint()
     fun enemyIchi(x:Int,y:Int,enemyOokisa:Int): Rect {
         val left = x - enemyOokisa / 2
@@ -46,17 +45,17 @@ class eTama(var x:Int,var y:Int,enemyOokisa:Int,var enemyTamaOokisa:Int,var enem
     var bottom = y
     val eTamaIro = Paint()
     fun eTRectXY(x:Int,y:Int,Ookisa:Int):Rect{
-         left = x  - Ookisa / 2
-         right = x  + Ookisa / 2
-         top = y  - Ookisa
-         bottom = y
+        left = x  - Ookisa / 2
+        right = x  + Ookisa / 2
+        top = y  - Ookisa
+        bottom = y
         val m = Rect(left, top, right,bottom)
         return m
     }
 
 }
 
-class myUgoki(var x:Int,var y:Int,val Ookisa:Int,){
+class myUgoki(var x: Int, var y: Int, val Ookisa: Int){
     val left = x - Ookisa / 2
     val right = x + Ookisa / 2
     val top = y - Ookisa / 2
@@ -79,15 +78,15 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var enemyTamaSpeed = 2.0
     var jikiX = 300 //初期位置
     var jikiY = 800 //初期位置
-    var clickX = jikiX  //自機の位置は覚えておかないといけないので必要
-    var clickY = jikiY  //自機の位置は覚えておかないといけないので必要
+    var clickX = jikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
+    var clickY = jikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var jikiOokisa = 40
     var myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
-    var myEnemy = enemyUgoki(150,150,100)
+    var myEnemy = enemyUgoki(150,150,50)
     var myTama = myTama(jikiX,jikiY,jikiOokisa,tamaOokisa,false)
     var vec = listOf(0,0)
     var eTama = eTama(150,150,100,10,enemyTamaSpeed,vec,false,true)
-
+    var gameZokkouStats = true
 
     override fun onDraw(canvas: Canvas) {
         myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
@@ -115,13 +114,59 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         eTama.eTamaIro.color = Color.WHITE
         canvas.drawRect(eTama.eTRectXY(eTama.x,eTama.y,eTama.enemyTamaOokisa), eTama.eTamaIro)
 
-       //ここであんまり近くに来すぎたら、ホーミングをオフにする。じゃないとよけられない。
-       //eTamaにはベクトルの情報も保存しておかないといけないのかな？
+        //ここであんまり近くに来すぎたら、ホーミングをオフにする。じゃないとよけられない。
+        //eTamaにはベクトルの情報も保存しておかないといけないのかな？
         eTama.zenkaiVect = eTamaIdoSyori()
 
         //敵の弾が自機の近くにあったらリセット
         enemyTamaAtatta()
+        val paint = Paint()
+
+        //文字サイズを50に設定
+        paint.textSize = 50f
+        paint.strokeWidth = 5f
+        paint.color = Color.WHITE
+
+        //[x:100,y:100]から描画する。
+        canvas.drawText("GAME OVER", 100F, 100F, paint)
+
+        //ここで敵の弾に当たったら？判定を行い、当たったら終了
+        //enemyTamaAtatta()　//というか、これがまさにそう？
     }
+
+    fun textHyouzi(){
+
+    }
+
+
+    fun enemyTamaAtatta(){
+        val ex = eTama.x
+        val ey = eTama.y
+        val jx = myJiki.x
+        val jy = myJiki.y
+        val saX = jx - ex
+        val saY = jy - ey
+
+        if (saX > -20 && saX < 20){
+            if (saY > -20 && saY < 20) {
+                //敵の弾のリセット
+                eTama = eTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,vec,false,true)
+                gameZokkouStats = false
+            }
+        }
+
+        if (ex > 700 || ex < 0){
+            //敵の弾のリセット
+            eTama = eTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,vec,false,true)
+        }
+
+        if (ey > 1300 || ey < 0){
+            //敵の弾のリセット
+            eTama = eTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,vec,false,true)
+        }
+
+    }
+
 
     fun eTamaIdoSyori():List<Int>{
         val ex = eTama.x
@@ -135,32 +180,31 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         var vy = jy - ey
         //たぶん、保存しとく必要があるのはvxとvyなんだろうなぁ
 
-        var hmingkyori = 70
+        var resetKyori = 70
 
-        if(vx<hmingkyori && vx > -hmingkyori){
-            if(vy<hmingkyori && vy > -hmingkyori) {
+
+        if(vx<resetKyori && vx > -resetKyori){
+            if(vy<resetKyori && vy > -resetKyori) {
                 eTama.homing = false
             }
         }
 
         if (eTama.homing) {
-
         }else{
             vx = eTama.zenkaiVect[0]
             vy = eTama.zenkaiVect[1]
-
         }
 
 
         val vv = (vx * vx) + (vy * vy) .toDouble()
         val vvv = Math.sqrt(vv)
-
         val vvx = (vx / vvv)*10 * eTama.enemyTamaSpeed
         val vvy = (vy / vvv)*10 * eTama.enemyTamaSpeed
 
+        //横方向だけ動きすぎるとなんか気持ち悪くて、
+        //縦方向はマイナスに動くとなんか変だよなぁ。シューティングゲーム的に。そういう弾もあるけどさ。
+        //発射された後、何秒後かに方向きめて突っ込んでくる、とか？ミサイルみたいな。
 
-
-        //なんかよくわからんけど、ここでベクトルっぽい動きになっているっぽい
         eTama.x += vvx.toInt()
         eTama.y += vvy.toInt()
 
@@ -172,30 +216,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
 
-    fun enemyTamaAtatta(){
-        val ex = eTama.x
-        val ey = eTama.y
-        val jx = myJiki.x
-        val jy = myJiki.y
-        val saX = jx - ex
-        val saY = jy - ey
-        if (saX > -20 && saX < 20){
-            if (saY > -20 && saY < 20) {
-                //敵の弾のリセット
-                 eTama = eTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,vec,false,true)
-            }
-        }
-
-        if (ex > 700 || ex < 0){
-            //敵の弾のリセット
-            eTama = eTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,vec,false,true)
-        }
-
-        if (ey > 1300 || ey < 0){
-            //敵の弾のリセット
-            eTama = eTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,vec,false,true)
-        }
-    }
     fun tekiUgokasu(){
         if(myEnemy.x<900){
             myEnemy.x += 50
@@ -241,7 +261,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val saY = jikiY - clickY
         var x = jikiX
         var y = jikiY
-        val mySpeed = 9.0
+        val mySpeed = 2.0
         val myPlus = 10 * mySpeed .toInt()
 
         if (saX >= -(myPlus) && saX <= myPlus){
@@ -284,8 +304,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(ccFrame > 75) {
             tamaOokisa = 60
         }
-        invalidate()
-        handler.postDelayed( { tsugiNoSyori() }, 100)
+
+
+        if (gameZokkouStats) {
+            //くらったら止まる
+            invalidate()
+            handler.postDelayed({ tsugiNoSyori() }, 100)
+        }
     }
 
     fun beginAnimation() {
