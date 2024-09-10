@@ -127,9 +127,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         paint.strokeWidth = 5f
         paint.color = Color.WHITE
 
-        //[x:100,y:100]から描画する。
-        canvas.drawText("GAME OVER", 100F, 100F, paint)
-
+        if (gameZokkouStats) {
+        }else{
+                canvas.drawText("GAME OVER", 200F, 300F, paint)
+        }
         //ここで敵の弾に当たったら？判定を行い、当たったら終了
         //enemyTamaAtatta()　//というか、これがまさにそう？
     }
