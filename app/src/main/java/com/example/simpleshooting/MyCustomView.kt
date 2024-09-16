@@ -8,7 +8,7 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-
+//とりあえず保存
 class myTama(var x:Int,var y:Int,jikiOokisa:Int,val tamaOokisa:Int,var alive:Boolean){
     var left = x  - tamaOokisa / 2
     var right = x  + tamaOokisa / 2
