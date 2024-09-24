@@ -130,6 +130,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if (gameZokkouStats) {
         }else{
             //なんか当たった判定できてね？これをlengthでやるのか。
+        //敵の弾の座標ｘ、ｙ　と　自機の座標ｘ、ｙ　から　ベクトル座標ｘ、ｙ　を計算する。
+            //ベクトル座標ｘを二乗　、　ベクトル座標ｙを二乗して　＋する。　それをルートでだす。
+            //それがいわゆるＬｅｎｇｔｈになる。実際の長さ。距離。
+            //これが１とかを下回ったら、あたったという判定にする。これでどうだ？
+
                 canvas.drawText("GAME OVER", 200F, 300F, paint)
         }
         //ここで敵の弾に当たったら？判定を行い、当たったら終了
