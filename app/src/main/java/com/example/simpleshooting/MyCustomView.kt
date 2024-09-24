@@ -129,6 +129,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         if (gameZokkouStats) {
         }else{
+            //なんか当たった判定できてね？これをlengthでやるのか。
                 canvas.drawText("GAME OVER", 200F, 300F, paint)
         }
         //ここで敵の弾に当たったら？判定を行い、当たったら終了
