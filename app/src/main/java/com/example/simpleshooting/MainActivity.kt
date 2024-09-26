@@ -31,6 +31,12 @@ class MainActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textLabelX).text=custom.clickX.toString()
             findViewById<TextView>(R.id.textLabelY).text=custom.clickY.toString()
         }
+
+        findViewById<Button>(R.id.setButton).setOnClickListener {
+            mainTsugiNoSyori()
+        }
+
+
         mainTsugiNoSyori()
 
 
