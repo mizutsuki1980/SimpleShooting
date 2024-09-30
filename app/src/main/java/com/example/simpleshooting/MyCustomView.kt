@@ -317,7 +317,29 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             //くらったら止まる
             invalidate()
             handler.postDelayed({ tsugiNoSyori() }, 100)
+        }else{
+
+            //勝手に繰り返す
+            reStart()
+            gameZokkouStats = true
+            handler.postDelayed({ tsugiNoSyori() }, 1500)
+            //invalidate()を消すことで、いい感じに止まる
+
+
         }
+    }
+
+
+    fun reStart(){
+        var tamaFrameIchi = 0
+        var frame = 0
+        var myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
+        var myEnemy = enemyUgoki(150,150,50)
+        var myTama = myTama(jikiX,jikiY,jikiOokisa,tamaOokisa,false)
+        var vec = listOf(0,0)
+        var eTama = eTama(150,150,100,10,enemyTamaSpeed,vec,false,true)
+        var gameZokkouStats = true
+
     }
 
     fun beginAnimation() {
