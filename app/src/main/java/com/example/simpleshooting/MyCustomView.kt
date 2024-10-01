@@ -126,6 +126,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         paint.strokeWidth = 5f
         paint.color = Color.WHITE
 
+
+        //弾をすり抜けることがあった。なんで？一回目だけとか？
+        //なるほど、上から下に移動するときに弾が自機の下の方を通るとすり抜けるな。
+        
         if (gameZokkouStats) {
         }else{
             //なんか当たった判定できてね？これをlengthでやるのか。
