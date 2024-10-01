@@ -8,7 +8,6 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-//とりあえず保存
 class myTama(var x:Int,var y:Int,jikiOokisa:Int,val tamaOokisa:Int,var alive:Boolean){
     var left = x  - tamaOokisa / 2
     var right = x  + tamaOokisa / 2
@@ -182,13 +181,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val jx = myJiki.x
         val jy = myJiki.y
 
-        //ここで「自機に近づきすぎてる」っていう必要な条件を達成していたら、前回のvx,vyを流用するように変化させる。
         var vx = jx - ex
         var vy = jy - ey
-        //たぶん、保存しとく必要があるのはvxとvyなんだろうなぁ
 
         var resetKyori = 70
-
 
         if(vx<resetKyori && vx > -resetKyori){
             if(vy<resetKyori && vy > -resetKyori) {
@@ -208,13 +204,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val vvx = (vx / vvv)*10 * eTama.enemyTamaSpeed
         val vvy = (vy / vvv)*10 * eTama.enemyTamaSpeed
 
-        //横方向だけ動きすぎるとなんか気持ち悪くて、
-        //縦方向はマイナスに動くとなんか変だよなぁ。シューティングゲーム的に。そういう弾もあるけどさ。
-        //発射された後、何秒後かに方向きめて突っ込んでくる、とか？ミサイルみたいな。
-
         eTama.x += vvx.toInt()
         eTama.y += vvy.toInt()
-
 
         return listOf(vx,vy)
 
@@ -262,7 +253,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun clickShitaBshoNiIdou(){
-        //ななめ移動のとき、ｘもｙも移動してると２倍のスピードで動いてるように見えるなぁ。
 
         val saX = jikiX - clickX
         val saY = jikiY - clickY
