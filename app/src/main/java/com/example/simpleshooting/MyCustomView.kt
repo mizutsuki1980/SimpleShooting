@@ -129,23 +129,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         //弾をすり抜けることがあった。なんで？一回目だけとか？
         //なるほど、上から下に移動するときに弾が自機の下の方を通るとすり抜けるな。
-        
+
+        //４回すり抜けて、５回目で当たった。
+        //これはなんだ？どいうこと？
+
         if (gameZokkouStats) {
         }else{
-            //なんか当たった判定できてね？これをlengthでやるのか。
-        //敵の弾の座標ｘ、ｙ　と　自機の座標ｘ、ｙ　から　ベクトル座標ｘ、ｙ　を計算する。
-            //ベクトル座標ｘを二乗　、　ベクトル座標ｙを二乗して　＋する。　それをルートでだす。
-            //それがいわゆるＬｅｎｇｔｈになる。実際の長さ。距離。
-            //これが１とかを下回ったら、あたったという判定にする。これでどうだ？
-
                 canvas.drawText("GAME OVER", 200F, 300F, paint)
         }
-        //ここで敵の弾に当たったら？判定を行い、当たったら終了
-        //enemyTamaAtatta()　//というか、これがまさにそう？
-    }
-
-    fun textHyouzi(){
-
     }
 
 
@@ -157,13 +148,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val saX = jx - ex
         val saY = jy - ey
 
-        if (saX > -20 && saX < 20){
-            if (saY > -20 && saY < 20) {
-                //敵の弾のリセット
-                eTama = eTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,vec,false,true)
-                gameZokkouStats = false
-            }
+        val len = (saX*saX) + (saY*saY)
+        val kurauHanni =  eTama.enemyTamaOokisa/2 + myJiki.Ookisa/2
+        if (len < kurauHanni){
+            eTama = eTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,vec,false,true)
+            gameZokkouStats = false
         }
+        //うごいてない時は、ちゃんとゲームオーバーになる。
+        //うごくと判定が消えている？どうもそうっぽい。
+
+
 
         if (ex > 700 || ex < 0){
             //敵の弾のリセット
@@ -315,7 +309,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
             //勝手に繰り返す
             reStart()
-            gameZokkouStats = true
             handler.postDelayed({ tsugiNoSyori() }, 1500)
             //invalidate()を消すことで、いい感じに止まる
 
