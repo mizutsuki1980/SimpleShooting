@@ -116,28 +116,22 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(eTama.eTRectXY(eTama.x,eTama.y,eTama.enemyTamaOokisa), eTama.eTamaIro)
 
         //ここであんまり近くに来すぎたら、ホーミングをオフにする。じゃないとよけられない。
-        //eTamaにはベクトルの情報も保存しておかないといけないのかな？
         eTama.zenkaiVect = eTamaIdoSyori()
 
         //敵の弾が自機の近くにあったらリセット
         enemyTamaAtatta()
-        val paint = Paint()
 
         //文字サイズを50に設定
-        paint.textSize = 50f
-        paint.strokeWidth = 5f
-        paint.color = Color.WHITE
+        val textPaint = Paint()
+        textPaint.textSize = 50f
+        textPaint.strokeWidth = 5f
+        textPaint.color = Color.WHITE
 
         if (gameZokkouStats) {
         }else{
-                canvas.drawText("GAME OVER", 200F, 300F, paint)
+                canvas.drawText("GAME OVER", 200F, 300F, textPaint)
         }
     }
-
-    fun textHyouzi(){
-
-    }
-
 
     fun enemyTamaAtatta(){
         val ex = eTama.x
