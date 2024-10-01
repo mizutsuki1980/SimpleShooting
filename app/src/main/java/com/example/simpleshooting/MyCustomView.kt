@@ -91,7 +91,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
         myJiki.jikiIro.style = Paint.Style.FILL
         myJiki.jikiIro.color = Color.WHITE
-        canvas.drawRect(myJiki.myRect(myJiki.x,myJiki.y,myJiki.Ookisa), myJiki.jikiIro)
+        //canvas.drawRect(myJiki.myRect(myJiki.x,myJiki.y,myJiki.Ookisa), myJiki.jikiIro)
+        canvas.drawCircle(myJiki.x.toFloat(),myJiki.y.toFloat(),(myJiki.Ookisa/2).toFloat(), myJiki.jikiIro)
+
         clickShitaBshoNiIdou()
 
         myTama.tamaIro.style = Paint.Style.FILL
@@ -128,16 +130,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         if (gameZokkouStats) {
         }else{
-            //なんか当たった判定できてね？これをlengthでやるのか。
-        //敵の弾の座標ｘ、ｙ　と　自機の座標ｘ、ｙ　から　ベクトル座標ｘ、ｙ　を計算する。
-            //ベクトル座標ｘを二乗　、　ベクトル座標ｙを二乗して　＋する。　それをルートでだす。
-            //それがいわゆるＬｅｎｇｔｈになる。実際の長さ。距離。
-            //これが１とかを下回ったら、あたったという判定にする。これでどうだ？
-
                 canvas.drawText("GAME OVER", 200F, 300F, paint)
         }
-        //ここで敵の弾に当たったら？判定を行い、当たったら終了
-        //enemyTamaAtatta()　//というか、これがまさにそう？
     }
 
     fun textHyouzi(){
@@ -153,13 +147,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val saX = jx - ex
         val saY = jy - ey
 
-        if (saX > -20 && saX < 20){
-            if (saY > -20 && saY < 20) {
-                //敵の弾のリセット
-                eTama = eTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,vec,false,true)
-                gameZokkouStats = false
-            }
+
+        val len = (saX*saX) + (saY*saY)
+        val kurauHanni =  eTama.enemyTamaOokisa/2 + myJiki.Ookisa/2
+        if (len < kurauHanni){
+            eTama = eTama(myEnemy.x,myEnemy.y,100,10,enemyTamaSpeed,vec,false,true)
+            gameZokkouStats = false
         }
+
 
         if (ex > 700 || ex < 0){
             //敵の弾のリセット
