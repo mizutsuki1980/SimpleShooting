@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     val handler = android.os.Handler()
     lateinit var xxx : MyCustomView
     @SuppressLint("MissingInflatedId")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val custom = findViewById<MyCustomView>(R.id.mycustom)
-//        custom.post { custom.beginAnimation() }
+        custom.post { custom.beginAnimation() }
         xxx = custom
         findViewById<Button>(R.id.setButton).setOnClickListener {
             findViewById<TextView>(R.id.textLabelX).text=custom.clickX.toString()
@@ -35,11 +36,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.setButton).setOnClickListener {
             mainTsugiNoSyori()
         }
-
-
         mainTsugiNoSyori()
-
-
     }
 
 

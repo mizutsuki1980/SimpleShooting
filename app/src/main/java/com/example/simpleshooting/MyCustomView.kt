@@ -19,7 +19,27 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickX = jikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = jikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
+    class myPosition(var x:Int,var y:Int,jOokisa:Int,val tamaOokisa:Int,var alive:Boolean){
+        //xとyには中心とする座標が入る。大きさを計算して左右上下の４点を決める。弾の大きさはいるのか？って感じ。アライブは一応つける。
+        var left = x  - jOokisa / 2
+        var right = x  + jOokisa / 2
+        var top = y  - (jOokisa)
+        var bottom = y
+        var jIro = Paint()
+        fun myRectXY(x:Int,y:Int,Ookisa:Int):Rect{
+            left = x  - Ookisa / 2
+            right = x  + Ookisa / 2
+            top = y  - Ookisa
+            bottom = y
+            val m = Rect(left, top, right,bottom)
+            return m
+        }
+    }
+
+
     override fun onDraw(canvas: Canvas) {
+
+
     }
 
 
