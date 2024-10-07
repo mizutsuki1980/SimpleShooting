@@ -91,7 +91,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         myJiki = myUgoki(jikiX,jikiY,jikiOokisa)
         myJiki.jikiIro.style = Paint.Style.FILL
         myJiki.jikiIro.color = Color.WHITE
-        canvas.drawRect(myJiki.myRect(myJiki.x,myJiki.y,myJiki.Ookisa), myJiki.jikiIro)
+        //canvas.drawRect(myJiki.myRect(myJiki.x,myJiki.y,myJiki.Ookisa), myJiki.jikiIro)
+        canvas.drawCircle(myJiki.x.toFloat(),myJiki.y.toFloat(),(myJiki.Ookisa/2).toFloat(), myJiki.jikiIro)
+
         clickShitaBshoNiIdou()
 
         myTama.tamaIro.style = Paint.Style.FILL
@@ -114,17 +116,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(eTama.eTRectXY(eTama.x,eTama.y,eTama.enemyTamaOokisa), eTama.eTamaIro)
 
         //ここであんまり近くに来すぎたら、ホーミングをオフにする。じゃないとよけられない。
-        //eTamaにはベクトルの情報も保存しておかないといけないのかな？
         eTama.zenkaiVect = eTamaIdoSyori()
 
         //敵の弾が自機の近くにあったらリセット
         enemyTamaAtatta()
-        val paint = Paint()
 
         //文字サイズを50に設定
-        paint.textSize = 50f
-        paint.strokeWidth = 5f
-        paint.color = Color.WHITE
+        val textPaint = Paint()
+        textPaint.textSize = 50f
+        textPaint.strokeWidth = 5f
+        textPaint.color = Color.WHITE
 
 
         //弾をすり抜けることがあった。なんで？一回目だけとか？
@@ -135,11 +136,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         if (gameZokkouStats) {
         }else{
+<<<<<<< HEAD
                 canvas.drawText("GAME OVER", 200F, 300F, paint)
         }
     }
 
 
+=======
+                canvas.drawText("GAME OVER", 200F, 300F, textPaint)
+        }
+    }
+
+>>>>>>> mainCCC
     fun enemyTamaAtatta(){
         val ex = eTama.x
         val ey = eTama.y
@@ -148,6 +156,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val saX = jx - ex
         val saY = jy - ey
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> mainCCC
         val len = (saX*saX) + (saY*saY)
         val kurauHanni =  eTama.enemyTamaOokisa/2 + myJiki.Ookisa/2
         if (len < kurauHanni){
@@ -156,6 +168,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         //うごいてない時は、ちゃんとゲームオーバーになる。
         //うごくと判定が消えている？どうもそうっぽい。
+
 
 
 
