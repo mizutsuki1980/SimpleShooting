@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val custom = findViewById<MyCustomView>(R.id.mycustom)
-        custom.post { custom.beginAnimation() }
+//        custom.post { custom.beginAnimation() }
         xxx = custom
         findViewById<Button>(R.id.setButton).setOnClickListener {
             findViewById<TextView>(R.id.textLabelX).text=custom.clickX.toString()
@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+
 
     fun mainTsugiNoSyori() {
         findViewById<TextView>(R.id.textLabelX).text=xxx.clickX.toString()
