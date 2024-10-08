@@ -19,14 +19,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickX = jikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = jikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
-    class myPosition(var x:Int,var y:Int,jOokisa:Int,val tamaOokisa:Int,var alive:Boolean){
-        //xとyには中心とする座標が入る。大きさを計算して左右上下の４点を決める。弾の大きさはいるのか？って感じ。アライブは一応つける。
+    class myPosition(var x:Int,var y:Int,jOokisa:Int,val tamaOokisa:Int){
+        //xとyには中心とする座標が入る。大きさを計算して左右上下の４点を決める。弾の大きさはいるのか？って感じ。生存フラグは一応つける。
+        var alive = true
         var left = x  - jOokisa / 2
         var right = x  + jOokisa / 2
         var top = y  - (jOokisa)
         var bottom = y
-        var jIro = Paint()
-        fun myRectXY(x:Int,y:Int,Ookisa:Int):Rect{
+        var iro = Paint()
+
+
+        //x,yから四角を描画する時に利用
+        fun myShikakuRectXY(x:Int,y:Int,Ookisa:Int):Rect{
             left = x  - Ookisa / 2
             right = x  + Ookisa / 2
             top = y  - Ookisa
@@ -34,15 +38,35 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             val m = Rect(left, top, right,bottom)
             return m
         }
+
+
+        //x,yから円形を描画する時に利用
+        fun myCircleRectXY(x:Int,y:Int,Ookisa:Int){
+
+        }
+
     }
+
+
 
 
     override fun onDraw(canvas: Canvas) {
+//色だけの設定は外に出すことができるようんだ。
+        val m = myPosition(500,500,30,30)
+        m.iro = nuriGreen(m)
+        canvas.drawRect(m.myShikakuRectXY(m.x,m.y,m.tamaOokisa), m.iro)
+
+
 
 
     }
 
 
+    fun nuriGreen(m:myPosition):Paint{
+        m.iro.style = Paint.Style.FILL
+        m.iro.color = Color.GREEN
+        return m.iro
+    }
 
 
 
