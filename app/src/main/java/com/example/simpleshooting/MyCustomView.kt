@@ -49,30 +49,85 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
 
-
+    var m = jiki()
+    var t = teki()
     override fun onDraw(canvas: Canvas) {
-        val m = objGreen()
-        //なるほど！これで出来るのか。メンバ変数、onDrawの中身を減らすことが出来そうだ。
         canvas.drawRect(m.myShikakuRectXY(m.x,m.y,m.tamaOokisa), m.iro)
+        clickShitaBshoNiIdou()
 
-
-
+        canvas.drawRect(t.myShikakuRectXY(t.x,t.y,t.tamaOokisa), t.iro)
+        t.x = tekiUgki(t.x)
 
     }
 
-    fun objGreen():myPosition{
-        val m = myPosition(500,500,30,30)
+    fun startSetUp(){
+        m.x = jikiX
+        m.y = jikiY
+    }
+
+    fun clickShitaBshoNiIdou(){
+        val saX = m.x - clickX
+        val saY = m.y - clickY
+        var x = m.x
+        var y = m.y
+        val mySpeed = 2.0
+        val myPlus = 10 * mySpeed .toInt()
+
+        if (saX >= -(myPlus) && saX <= myPlus){
+            x = clickX
+        }else {
+            if (saX > 0) {
+                x -= myPlus
+            }
+            if (saX < 0) {
+                x += myPlus
+            }
+        }
+        if (saY >= -myPlus && saY <= myPlus){
+            y = clickY
+        }else {
+            if (saY > 0) {
+                y -= myPlus
+            }
+            if (saY < 0) {
+                y += myPlus
+            }
+        }
+        jikiX = x
+        jikiY = y
+        m.x = x
+        m.y = y
+    }
+
+
+    fun jiki():myPosition{
+        val m = myPosition(jikiX,jikiY,30,30)
         m.iro.style = Paint.Style.FILL
-        m.iro.color = Color.GREEN
+        m.iro.color = Color.LTGRAY
         return m
     }
 
-    fun nuriGreen(m:myPosition):Paint{
-        m.iro.style = Paint.Style.FILL
-        m.iro.color = Color.GREEN
-        return m.iro
+    fun teki():myPosition{
+        val t = myPosition(20,50,30,30)
+        t.iro.style = Paint.Style.FILL
+        t.iro.color = Color.CYAN
+        return t
     }
 
+
+    fun tekiUgki(x:Int):Int{
+        //ｘだけで作れなかったのが気持ち悪い。
+        //なぜか引数のところにvarとかつけると赤線になる。なんなん？
+        //ｘのかわりにｘｘを使ったらできたけど、なんかきもい。
+        var xx = x
+        if(xx<800){
+            xx += 50
+        }
+        if(xx >= 800) {
+            xx = -100
+        }
+        return xx
+    }
 
 
 
@@ -102,10 +157,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun beginAnimation() {
+        startSetUp()
         tsugiNoSyori()
     }
 
     fun tsugiNoSyori() {
+        frame += 1
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
     }
