@@ -51,9 +51,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     override fun onDraw(canvas: Canvas) {
-//色だけの設定は外に出すことができるようんだ。
-        val m = myPosition(500,500,30,30)
-        m.iro = nuriGreen(m)
+        val m = objGreen()
+        //なるほど！これで出来るのか。メンバ変数、onDrawの中身を減らすことが出来そうだ。
         canvas.drawRect(m.myShikakuRectXY(m.x,m.y,m.tamaOokisa), m.iro)
 
 
@@ -61,6 +60,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     }
 
+    fun objGreen():myPosition{
+        val m = myPosition(500,500,30,30)
+        m.iro.style = Paint.Style.FILL
+        m.iro.color = Color.GREEN
+        return m
+    }
 
     fun nuriGreen(m:myPosition):Paint{
         m.iro.style = Paint.Style.FILL
