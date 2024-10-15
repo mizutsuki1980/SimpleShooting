@@ -19,7 +19,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickX = jikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = jikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
-    class myPosition(var x:Int,var y:Int,jOokisa:Int,val tamaOokisa:Int){
+    class myPosition(var x:Int,var y:Int,var jOokisa:Int,val tamaOokisa:Int){
         //xとyには中心とする座標が入る。大きさを計算して左右上下の４点を決める。弾の大きさはいるのか？って感じ。生存フラグは一応つける。
         var alive = true
         var left = x  - jOokisa / 2
@@ -52,10 +52,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var m = jiki()
     var t = teki()
     override fun onDraw(canvas: Canvas) {
-        canvas.drawRect(m.myShikakuRectXY(m.x,m.y,m.tamaOokisa), m.iro)
+        canvas.drawRect(m.myShikakuRectXY(m.x,m.y,m.jOokisa), m.iro)
         clickShitaBshoNiIdou()
 
-        canvas.drawRect(t.myShikakuRectXY(t.x,t.y,t.tamaOokisa), t.iro)
+        canvas.drawRect(t.myShikakuRectXY(t.x,t.y,t.jOokisa), t.iro)
         t.x = tekiUgki(t.x)
 
     }
@@ -65,12 +65,42 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         m.y = jikiY
     }
 
+
+
+    fun jiki():myPosition{
+        val m = myPosition(jikiX,jikiY,30,30)
+        m.iro.style = Paint.Style.FILL
+        m.iro.color = Color.LTGRAY
+        return m
+    }
+
+    fun teki():myPosition{
+        val t = myPosition(20,100,70,30)
+        t.iro.style = Paint.Style.FILL
+        t.iro.color = Color.CYAN
+        return t
+    }
+
+
+    fun tekiUgki(x:Int):Int{
+        //ｘだけで作れなかったのが気持ち悪い。
+        //なぜか引数のところにvarとかつけると赤線になる。なんなん？
+        //ｘのかわりにｘｘを使ったらできたけど、なんかきもい。
+        var xx = x
+        if(xx<800){
+            xx += 50
+        }
+        if(xx >= 800) {
+            xx = -100
+        }
+        return xx
+    }
     fun clickShitaBshoNiIdou(){
         val saX = m.x - clickX
         val saY = m.y - clickY
         var x = m.x
         var y = m.y
-        val mySpeed = 2.0
+        val mySpeed = 2.5
         val myPlus = 10 * mySpeed .toInt()
 
         if (saX >= -(myPlus) && saX <= myPlus){
@@ -97,36 +127,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jikiY = y
         m.x = x
         m.y = y
-    }
-
-
-    fun jiki():myPosition{
-        val m = myPosition(jikiX,jikiY,30,30)
-        m.iro.style = Paint.Style.FILL
-        m.iro.color = Color.LTGRAY
-        return m
-    }
-
-    fun teki():myPosition{
-        val t = myPosition(20,50,30,30)
-        t.iro.style = Paint.Style.FILL
-        t.iro.color = Color.CYAN
-        return t
-    }
-
-
-    fun tekiUgki(x:Int):Int{
-        //ｘだけで作れなかったのが気持ち悪い。
-        //なぜか引数のところにvarとかつけると赤線になる。なんなん？
-        //ｘのかわりにｘｘを使ったらできたけど、なんかきもい。
-        var xx = x
-        if(xx<800){
-            xx += 50
-        }
-        if(xx >= 800) {
-            xx = -100
-        }
-        return xx
     }
 
 
@@ -166,6 +166,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
     }
+
+
 
 }
 
