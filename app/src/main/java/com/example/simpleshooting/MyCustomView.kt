@@ -27,8 +27,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         var top = y  - (Ookisa)
         var bottom = y
         var iro = Paint()
-
-
         //x,yから四角を描画する時に利用
         fun myShikakuRectXY(x:Int,y:Int,Ookisa:Int):Rect{
             left = x  - Ookisa / 2
@@ -38,27 +36,73 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             val m = Rect(left, top, right,bottom)
             return m
         }
-
-
-        //x,yから円形を描画する時に利用
-        fun myCircleRectXY(x:Int,y:Int,Ookisa:Int){
-
-        }
-
     }
 
+//弾ってのはPositionでもいいんじゃないのか？
+    class mTama(var x:Int,var y:Int,val tamaOokisa:Int,var alive:Boolean){
+        var left = x  - tamaOokisa / 2
+        var right = x  + tamaOokisa / 2
+        var top = y  - (tamaOokisa)
+        var bottom = y
+        val tamaIro = Paint()
+        fun mTRectXY(x:Int,y:Int,Ookisa:Int):Rect{
+            left = x  - Ookisa / 2
+            right = x  + Ookisa / 2
+            top = y  - Ookisa
+            bottom = y
+            val m = Rect(left, top, right,bottom)
+            return m
+        }
+    }
 
 
     var m = jiki()
     var t = teki()
+    private var myTama = mTama(jikiX,jikiY,tamaOokisa,false)
+
     override fun onDraw(canvas: Canvas) {
-//        canvas.drawRect(m.myShikakuRectXY(m.x,m.y,m.Ookisa), m.iro)
+        //CircleはとにかくFloat型
         canvas.drawCircle(m.x.toFloat(),m.y.toFloat(),(m.Ookisa/2).toFloat(),m.iro)
         clickShitaBshoNiIdou()
 
         canvas.drawRect(t.myShikakuRectXY(t.x,t.y,t.Ookisa), t.iro)
         t.x = tekiUgki(t.x)
 
+        //自機の弾　処理
+        canvas.drawRect(myTama.mTRectXY(myTama.x,myTama.y,myTama.tamaOokisa), myTama.tamaIro)
+        //弾の処理についても、ちょっと簡単にできるんじゃないのかな？
+        tamaSyori()
+
+
+    }
+    fun tamaSyori(){
+        //tamaSpeedはDouble型
+        val tamaSpeed = 9.0
+        val tamaPlus = 10 * tamaSpeed .toInt()
+
+
+        if(myTama.y < 5){
+            tamaFrameIchi = 0
+            myTama = mTama(jikiX,jikiY,tamaOokisa,false)
+        }
+
+        if (tamaFrameIchi == 100){
+            tamaFrameIchi = 0
+            myTama = mTama(jikiX,jikiY,tamaOokisa,false)
+        }
+
+
+        if (tamaFrameIchi == 0) {
+            tamaFrameIchi = 1
+        }
+
+        if (tamaFrameIchi > 0) {
+            myTama.y-= tamaPlus
+        }
+        m.iro.style = Paint.Style.FILL
+        m.iro.color = Color.LTGRAY
+
+        tamaFrameIchi += 1
     }
 
     fun startSetUp(){
