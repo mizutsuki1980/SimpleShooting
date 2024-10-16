@@ -18,6 +18,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jikiY = 800 //初期位置
     var clickX = jikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = jikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
+    var m = jiki()
+    var t = teki()
+    var jt = jTama()
+
 
     class myPosition(var x:Int,var y:Int,var Ookisa:Int,val tamaOokisa:Int){
         var alive = true
@@ -37,10 +41,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
 
-    var m = jiki()
-    var t = teki()
-    var jt = jTama()
-
     override fun onDraw(canvas: Canvas) {
         //CircleはとにかくFloat型
         canvas.drawCircle(m.x.toFloat(),m.y.toFloat(),(m.Ookisa/2).toFloat(),m.iro)
@@ -50,8 +50,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         t.x = tekiUgki(t.x)
 
         //自機の弾　処理
-        tamaSyori()
         canvas.drawRect(jt.myShikakuRectXY(jt.x,jt.y,jt.Ookisa), jt.iro)
+        tamaSyori()
+        //ここはたぶん、繰り返してる。だけど二発目が出ないのはなんでー？
+        //おそらくだけど、出来てるんだと思う。それが、ずーーーと上の方とかにある。
+        //２０フレームでリピートするところがうまくいってないとか？
+        //値が変化してないとかかなぁ。
     }
 
     fun jTama():myPosition{
@@ -62,19 +66,19 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun tamaSyori(){
-        val tamaSpeed = 9.0
+        val tamaSpeed = 6.0
         val tamaPlus = 10 * tamaSpeed .toInt()
 
         //画面の上部で消える
         if(jt.y < 5){
             tamaFrameIchi = 0
-            jt = myPosition(jikiX,jikiY,jt.Ookisa,jt.tamaOokisa)
+            jTama()
         }
 
         //100フレームでリセット
-        if (tamaFrameIchi == 100){
+        if (tamaFrameIchi == 20){
             tamaFrameIchi = 0
-            jt = myPosition(jikiX,jikiY,jt.Ookisa,jt.tamaOokisa)
+            jTama()
         }
 
         if (tamaFrameIchi == 0) {
