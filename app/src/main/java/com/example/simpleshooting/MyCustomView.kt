@@ -20,32 +20,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickY = jikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
     class myPosition(var x:Int,var y:Int,var Ookisa:Int,val tamaOokisa:Int){
-        //xとyには中心とする座標が入る。大きさを計算して左右上下の４点を決める。弾の大きさはいるのか？って感じ。生存フラグは一応つける。
         var alive = true
         var left = x  - Ookisa / 2
         var right = x  + Ookisa / 2
         var top = y  - (Ookisa)
         var bottom = y
         var iro = Paint()
-        //x,yから四角を描画する時に利用
         fun myShikakuRectXY(x:Int,y:Int,Ookisa:Int):Rect{
-            left = x  - Ookisa / 2
-            right = x  + Ookisa / 2
-            top = y  - Ookisa
-            bottom = y
-            val m = Rect(left, top, right,bottom)
-            return m
-        }
-    }
-
-//弾ってのはPositionでもいいんじゃないのか？
-    class mTama(var x:Int,var y:Int,val tamaOokisa:Int,var alive:Boolean){
-        var left = x  - tamaOokisa / 2
-        var right = x  + tamaOokisa / 2
-        var top = y  - (tamaOokisa)
-        var bottom = y
-        val tamaIro = Paint()
-        fun mTRectXY(x:Int,y:Int,Ookisa:Int):Rect{
             left = x  - Ookisa / 2
             right = x  + Ookisa / 2
             top = y  - Ookisa
@@ -58,7 +39,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     var m = jiki()
     var t = teki()
-    private var myTama = mTama(jikiX,jikiY,tamaOokisa,false)
+    var jt = jTama()
 
     override fun onDraw(canvas: Canvas) {
         //CircleはとにかくFloat型
@@ -69,39 +50,40 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         t.x = tekiUgki(t.x)
 
         //自機の弾　処理
-        canvas.drawRect(myTama.mTRectXY(myTama.x,myTama.y,myTama.tamaOokisa), myTama.tamaIro)
-        //弾の処理についても、ちょっと簡単にできるんじゃないのかな？
         tamaSyori()
-
-
+        canvas.drawRect(jt.myShikakuRectXY(jt.x,jt.y,jt.Ookisa), jt.iro)
     }
+
+    fun jTama():myPosition{
+        val m = myPosition(jikiX,jikiY,10,10)
+        m.iro.style = Paint.Style.FILL
+        m.iro.color = Color.GREEN
+        return m
+    }
+
     fun tamaSyori(){
-        //tamaSpeedはDouble型
         val tamaSpeed = 9.0
         val tamaPlus = 10 * tamaSpeed .toInt()
 
-
-        if(myTama.y < 5){
+        //画面の上部で消える
+        if(jt.y < 5){
             tamaFrameIchi = 0
-            myTama = mTama(jikiX,jikiY,tamaOokisa,false)
+            jt = myPosition(jikiX,jikiY,jt.Ookisa,jt.tamaOokisa)
         }
 
+        //100フレームでリセット
         if (tamaFrameIchi == 100){
             tamaFrameIchi = 0
-            myTama = mTama(jikiX,jikiY,tamaOokisa,false)
+            jt = myPosition(jikiX,jikiY,jt.Ookisa,jt.tamaOokisa)
         }
-
 
         if (tamaFrameIchi == 0) {
             tamaFrameIchi = 1
         }
 
         if (tamaFrameIchi > 0) {
-            myTama.y-= tamaPlus
+            jt.y-= tamaPlus
         }
-        m.iro.style = Paint.Style.FILL
-        m.iro.color = Color.LTGRAY
-
         tamaFrameIchi += 1
     }
 
@@ -128,9 +110,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun tekiUgki(x:Int):Int{
-        //ｘだけで作れなかったのが気持ち悪い。
-        //なぜか引数のところにvarとかつけると赤線になる。なんなん？
-        //ｘのかわりにｘｘを使ったらできたけど、なんかきもい。
         var xx = x
         if(xx<800){
             xx += 50
