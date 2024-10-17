@@ -42,39 +42,28 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     override fun onDraw(canvas: Canvas) {
-        canvas.drawCircle(m.x.toFloat(),m.y.toFloat(),(m.Ookisa/2).toFloat(),m.iro)
-        clickShitaBshoNiIdou()
+        canvas.drawCircle(m.x.toFloat(),m.y.toFloat(),(m.Ookisa/2).toFloat(),m.iro) //自機は丸にした
+        clickShitaBshoNiIdou()        //自機の移動　処理
+
 
         canvas.drawRect(t.myShikakuRectXY(t.x,t.y,t.Ookisa), t.iro)
-        t.x = tekiUgki(t.x)
+        t.x = tekiUgki(t.x)        //敵の移動　処理
 
-        //自機の弾　処理
+
         canvas.drawRect(jt.myShikakuRectXY(jt.x,jt.y,jt.Ookisa), jt.iro)
-        tamaSyori()
+        tamaSyori()        //自機の弾　処理
+
     }
 
 
     fun tamaSyori(){
         val tamaSpeed = 6.0
         val tamaPlus = 10 * tamaSpeed .toInt()
-
         tamaFrameIchi += 1
         jt.y-= tamaPlus
-
-
-        //画面の上部で消える
-        if(jt.y < 5){
-            tamaFrameIchi = 0
-            jt = jTama()
-        }
-
-        //100フレームでリセット
-        if (tamaFrameIchi == 20){
-            tamaFrameIchi = 0
-            jt = jTama()
-        }
-
-
+        if(jt.y<5){tamaFrameIchi=0}        //画面の上部で消える
+        if(tamaFrameIchi==20){tamaFrameIchi=0}        //20フレームでリセット
+        if(tamaFrameIchi==0){jt=jTama()}
     }
 
     fun jTama():myPosition{
