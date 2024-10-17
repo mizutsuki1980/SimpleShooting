@@ -42,7 +42,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     override fun onDraw(canvas: Canvas) {
-        //CircleはとにかくFloat型
         canvas.drawCircle(m.x.toFloat(),m.y.toFloat(),(m.Ookisa/2).toFloat(),m.iro)
         clickShitaBshoNiIdou()
 
@@ -52,10 +51,30 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //自機の弾　処理
         canvas.drawRect(jt.myShikakuRectXY(jt.x,jt.y,jt.Ookisa), jt.iro)
         tamaSyori()
-        //ここはたぶん、繰り返してる。だけど二発目が出ないのはなんでー？
-        //おそらくだけど、出来てるんだと思う。それが、ずーーーと上の方とかにある。
-        //２０フレームでリピートするところがうまくいってないとか？
-        //値が変化してないとかかなぁ。
+    }
+
+
+    fun tamaSyori(){
+        val tamaSpeed = 6.0
+        val tamaPlus = 10 * tamaSpeed .toInt()
+
+        tamaFrameIchi += 1
+        jt.y-= tamaPlus
+
+
+        //画面の上部で消える
+        if(jt.y < 5){
+            tamaFrameIchi = 0
+            jt = jTama()
+        }
+
+        //100フレームでリセット
+        if (tamaFrameIchi == 20){
+            tamaFrameIchi = 0
+            jt = jTama()
+        }
+
+
     }
 
     fun jTama():myPosition{
@@ -65,31 +84,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         return m
     }
 
-    fun tamaSyori(){
-        val tamaSpeed = 6.0
-        val tamaPlus = 10 * tamaSpeed .toInt()
-
-        //画面の上部で消える
-        if(jt.y < 5){
-            tamaFrameIchi = 0
-            jTama()
-        }
-
-        //100フレームでリセット
-        if (tamaFrameIchi == 20){
-            tamaFrameIchi = 0
-            jTama()
-        }
-
-        if (tamaFrameIchi == 0) {
-            tamaFrameIchi = 1
-        }
-
-        if (tamaFrameIchi > 0) {
-            jt.y-= tamaPlus
-        }
-        tamaFrameIchi += 1
-    }
 
     fun startSetUp(){
         m.x = jikiX
