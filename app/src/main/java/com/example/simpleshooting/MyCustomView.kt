@@ -21,15 +21,21 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var m = jiki()
     var t = teki()
     var jt = jTama()
+    var et = eTama()
 
 
     class myPosition(var x:Int,var y:Int,var Ookisa:Int,val tamaOokisa:Int){
-        var alive = true
+        var alive = true    //念のため　使うのかわからないけど
+        var homing = true   //敵の弾が自機を捕まえに来るのに使う
+        var zenkaiVect = mutableListOf<Int>(0,0)    //敵の弾が自機を捕まえに来るのに使う
+
         var left = x  - Ookisa / 2
         var right = x  + Ookisa / 2
         var top = y  - (Ookisa)
         var bottom = y
         var iro = Paint()
+
+
         fun myShikakuRectXY(x:Int,y:Int,Ookisa:Int):Rect{
             left = x  - Ookisa / 2
             right = x  + Ookisa / 2
@@ -53,6 +59,57 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(jt.myShikakuRectXY(jt.x,jt.y,jt.Ookisa), jt.iro)
         tamaSyori()        //自機の弾　処理
 
+
+        //敵の弾　処理
+        canvas.drawRect(et.myShikakuRectXY(et.x,et.y,et.Ookisa), et.iro)
+        eTamaIdoSyori()
+        //やっぱり二回目でしっぱいした
+    }
+
+    fun eTamaIdoSyori() {
+        val enemyTamaSpeed = 2.0
+
+        val ex = et.x
+        val ey = et.y
+
+        val jx = m.x
+        val jy = m.y
+
+        var vx = jx - ex
+        var vy = jy - ey
+
+        var resetKyori = 70
+
+        if(vx<resetKyori && vx > -resetKyori){
+            if(vy<resetKyori && vy > -resetKyori) {
+                et.homing = false
+            }
+        }
+
+        if (et.homing) {
+        }else{
+            vx = et.zenkaiVect[0]
+            vy = et.zenkaiVect[1]
+        }
+        et.zenkaiVect[0] = vx
+        et.zenkaiVect[1] = vy
+
+
+        val vv = (vx * vx) + (vy * vy) .toDouble()
+        val vvv = Math.sqrt(vv)
+        val vvx = (vx / vvv)*10 * enemyTamaSpeed
+        val vvy = (vy / vvv)*10 * enemyTamaSpeed
+
+        et.x += vvx.toInt()
+        et.y += vvy.toInt()
+
+        //0だったらリセットする。これ、弾フレーム使わなくても、座標だけでいけんじゃねぇの？
+        //たぶん衝突判定もここにはさむ
+
+        if(et.y>1050){et = eTama()}        //画面の下部で消える
+        if(et.x>690){et = eTama()}        //画面の下部で消える
+        if(et.x<1){et = eTama()}        //画面の下部で消える
+
     }
 
 
@@ -64,6 +121,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(jt.y<5){tamaFrameIchi=0}        //画面の上部で消える
         if(tamaFrameIchi==20){tamaFrameIchi=0}        //20フレームでリセット
         if(tamaFrameIchi==0){jt=jTama()}
+    }
+
+    fun eTama():myPosition{
+        val m = myPosition(t.x,t.y,10,10)
+        m.iro.style = Paint.Style.FILL
+        m.iro.color = Color.MAGENTA
+        return m
     }
 
     fun jTama():myPosition{
@@ -84,7 +148,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun jiki():myPosition{
         val m = myPosition(jikiX,jikiY,50,30)
         m.iro.style = Paint.Style.FILL
-        m.iro.color = Color.LTGRAY
+        m.iro.color = Color.RED
         return m
     }
 
@@ -98,12 +162,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun tekiUgki(x:Int):Int{
         var xx = x
-        if(xx<800){
-            xx += 50
-        }
-        if(xx >= 800) {
-            xx = -100
-        }
+        if(xx<800){ xx += 50 }
+        if(xx >= 800) { xx = -100 }
         return xx
     }
     fun clickShitaBshoNiIdou(){
