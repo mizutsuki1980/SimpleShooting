@@ -63,8 +63,30 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //敵の弾　処理
         canvas.drawRect(et.myShikakuRectXY(et.x,et.y,et.Ookisa), et.iro)
         eTamaIdoSyori()
-        //やっぱり二回目でしっぱいした
+
+        enemyTamaAtatta()
+
+
     }
+    fun enemyTamaAtatta(){
+        val saX = m.x - et.x
+        val saY = m.y - et.y
+        val length = (saX*saX) + (saY*saY)
+        val kurauHanni =  et.tamaOokisa/2 + m.Ookisa/2
+        if (length < kurauHanni){
+              //弾のリセット処理をここにかく
+        }
+
+
+        if (et.x > 700 || et.x < 0){
+            //敵の弾のリセット
+        }
+
+        if (et.y > 1300 || et.y < 0){
+            //敵の弾のリセット
+        }
+    }
+
 
     fun eTamaIdoSyori() {
         val enemyTamaSpeed = 2.0
@@ -107,8 +129,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //たぶん衝突判定もここにはさむ
 
         if(et.y>1050){et = eTama()}        //画面の下部で消える
-        if(et.x>690){et = eTama()}        //画面の下部で消える
-        if(et.x<1){et = eTama()}        //画面の下部で消える
+        if(et.x>690){et = eTama()}        //画面の右部で消える
+        if(et.x<1){et = eTama()}        //画面の左部で消える
 
     }
 
@@ -146,6 +168,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun jiki():myPosition{
+
         val m = myPosition(jikiX,jikiY,50,30)
         m.iro.style = Paint.Style.FILL
         m.iro.color = Color.RED
