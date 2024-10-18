@@ -71,14 +71,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         var vx = m.x - et.x
         var vy = m.y - et.y
         var resetKyori = 70
-
-        //ある一定の範囲に入ったら、ホーミングしなくなる。じゃないと絶対当たる。
-        if(vx<resetKyori && vx > -resetKyori){
-            if(vy<resetKyori && vy > -resetKyori) {
-                et.homing = false
-            }
-        }
-
+        if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){et.homing = false }
         if (et.homing) {
         }else{
             vx = et.zenkaiVect[0]
@@ -89,16 +82,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         et.zenkaiVect[1] = vy
 
         val vector = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
-
         et.x += ((vx / vector)*10 * enemyTamaSpeed).toInt()
         et.y += ((vy / vector)*10 * enemyTamaSpeed).toInt()
 
-
-        //あーここのVXは直されちゃってるから、これではだめだなぁ。
+        //以下、あたったら消えるという事をやりたい
         val length = ((m.x - et.x)*(m.x - et.x)) + ((m.y - et.y)*(m.y - et.y))
         val kurauHanni =  et.tamaOokisa/2 + m.Ookisa/2
+        //距離の中に入っていたら、弾が消える
         if (length < kurauHanni){
-            et = eTama()
+    //        et = eTama()
+            et.iro.color = Color.DKGRAY
         }       //被弾した判定、リセット処理をここにかく
 
         if (et.x > 690 || et.x < 0 || et.y > 1050 || et.y < 0){et = eTama()}    //画面外で敵の弾のリセット
