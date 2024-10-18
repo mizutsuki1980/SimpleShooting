@@ -62,46 +62,17 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         //敵の弾　処理
         canvas.drawRect(et.myShikakuRectXY(et.x,et.y,et.Ookisa), et.iro)
-        eTamaIdoSyori()
-
         enemyTamaAtatta()
 
-
     }
+
     fun enemyTamaAtatta(){
-        val saX = m.x - et.x
-        val saY = m.y - et.y
-        val length = (saX*saX) + (saY*saY)
-        val kurauHanni =  et.tamaOokisa/2 + m.Ookisa/2
-        if (length < kurauHanni){
-              //弾のリセット処理をここにかく
-        }
-
-
-        if (et.x > 700 || et.x < 0){
-            //敵の弾のリセット
-        }
-
-        if (et.y > 1300 || et.y < 0){
-            //敵の弾のリセット
-        }
-    }
-
-
-    fun eTamaIdoSyori() {
         val enemyTamaSpeed = 2.0
-
-        val ex = et.x
-        val ey = et.y
-
-        val jx = m.x
-        val jy = m.y
-
-        var vx = jx - ex
-        var vy = jy - ey
-
+        var vx = m.x - et.x
+        var vy = m.y - et.y
         var resetKyori = 70
 
+        //ある一定の範囲に入ったら、ホーミングしなくなる。じゃないと絶対当たる。
         if(vx<resetKyori && vx > -resetKyori){
             if(vy<resetKyori && vy > -resetKyori) {
                 et.homing = false
@@ -113,26 +84,27 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             vx = et.zenkaiVect[0]
             vy = et.zenkaiVect[1]
         }
+
         et.zenkaiVect[0] = vx
         et.zenkaiVect[1] = vy
 
+        val vector = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
 
-        val vv = (vx * vx) + (vy * vy) .toDouble()
-        val vvv = Math.sqrt(vv)
-        val vvx = (vx / vvv)*10 * enemyTamaSpeed
-        val vvy = (vy / vvv)*10 * enemyTamaSpeed
+        et.x += ((vx / vector)*10 * enemyTamaSpeed).toInt()
+        et.y += ((vy / vector)*10 * enemyTamaSpeed).toInt()
 
-        et.x += vvx.toInt()
-        et.y += vvy.toInt()
 
-        //0だったらリセットする。これ、弾フレーム使わなくても、座標だけでいけんじゃねぇの？
-        //たぶん衝突判定もここにはさむ
+        //あーここのVXは直されちゃってるから、これではだめだなぁ。
+        val length = ((m.x - et.x)*(m.x - et.x)) + ((m.y - et.y)*(m.y - et.y))
+        val kurauHanni =  et.tamaOokisa/2 + m.Ookisa/2
+        if (length < kurauHanni){
+            et = eTama()
+        }       //被弾した判定、リセット処理をここにかく
 
-        if(et.y>1050){et = eTama()}        //画面の下部で消える
-        if(et.x>690){et = eTama()}        //画面の右部で消える
-        if(et.x<1){et = eTama()}        //画面の左部で消える
-
+        if (et.x > 690 || et.x < 0 || et.y > 1050 || et.y < 0){et = eTama()}    //画面外で敵の弾のリセット
     }
+
+
 
 
     fun tamaSyori(){
