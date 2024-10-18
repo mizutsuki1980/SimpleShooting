@@ -85,14 +85,24 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         et.x += ((vx / vector)*10 * enemyTamaSpeed).toInt()
         et.y += ((vy / vector)*10 * enemyTamaSpeed).toInt()
 
+
+
         //以下、あたったら消えるという事をやりたい
         val length = ((m.x - et.x)*(m.x - et.x)) + ((m.y - et.y)*(m.y - et.y))
         val kurauHanni =  et.tamaOokisa/2 + m.Ookisa/2
-        //距離の中に入っていたら、弾が消える
+
+        //距離の中に入っていたら、弾が消える lengthには距離が入っているんでしょう。ここには２点の合計がすでに入っている。
+        //lengthがくらい範囲の中に入っていたら、色を変える、当たったという判定になる。
+        //という感じで作っているはず。
+        //何がいけないんだろうか？
+        //まず、初期位置で動かないと、かならず当たる。これは何回も繰り返しているが同じ。
+        //そして、一度どこかに移動する。すると一回目だけ当たる。二回目以降は当たらない。
+       //そうするともう二度と当たらなくなっているもよう。
+        //これは移動すると当たらなくなっている、ということか？
+
         if (length < kurauHanni){
-    //        et = eTama()
             et.iro.color = Color.DKGRAY
-        }       //被弾した判定、リセット処理をここにかく
+        }
 
         if (et.x > 690 || et.x < 0 || et.y > 1050 || et.y < 0){et = eTama()}    //画面外で敵の弾のリセット
     }
