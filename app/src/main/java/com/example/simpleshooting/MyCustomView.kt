@@ -62,9 +62,37 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         //敵の弾　処理
         canvas.drawRect(et.myShikakuRectXY(et.x,et.y,et.Ookisa), et.iro)
-        enemyTamaAtatta()
+        enemyTama()
 
     }
+
+    fun enemyTama(){
+        var resetKyori = 90
+        var vx = m.x - et.x
+        var vy = m.y - et.y
+
+        if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ et.homing = false }
+        //ここでホーミングをfalseにしているが、もしもこの条件から外れたとしても、ホーミングfalseは継続しなければいけない
+        if (et.homing == false) { //ホーミングfalse中はずっと前回ベクトルを使う
+            vx = et.zenkaiVect[0]
+            vy = et.zenkaiVect[1]
+        }
+        et.zenkaiVect[0] = vx
+        et.zenkaiVect[1] = vy
+
+        //敵の弾の移動
+        val vector = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+        et.x += ((vx / vector)*10 * enemyTamaSpeed).toInt()
+        et.y += ((vy / vector)*10 * enemyTamaSpeed).toInt()
+
+        var ataruKyori = 90
+        if(vx<ataruKyori && vx > -ataruKyori && vy<ataruKyori && vy > -ataruKyori){m.iro.color = Color.DKGRAY}
+        //予定だと自機に当たった弾は濃いグレーに色が変わるはずだが、全然ならない。
+
+        if (et.x > 690 || et.x < 0 || et.y > 1050 || et.y < 0){et = eTama()}    //画面外で敵の弾のリセット
+
+    }
+
 
     fun enemyTamaAtatta(){
         val enemyTamaSpeed = 2.0
