@@ -73,6 +73,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         var resetKyori = 90 //よけ始める距離
         if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ et.homing = false }
 
+
+        if(et.Ookisa == 30){et = eTama()}
         val atariKyori = 20 //当たり判定の距離
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             et.iro.color = Color.DKGRAY
