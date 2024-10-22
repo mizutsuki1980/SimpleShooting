@@ -67,12 +67,20 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun enemyTama(){
-        var resetKyori = 90
         var vx = m.x - et.x
         var vy = m.y - et.y
+
+        var resetKyori = 90 //よけ始める距離
         if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ et.homing = false }
-        //ここでホーミングをfalseにしているが、もしもこの条件から外れたとしても、ホーミングfalseは継続しなければいけない
-        if (et.homing == false) { //ホーミングfalse中はずっと前回ベクトルを使う
+
+        val atariKyori = 20 //当たり判定の距離
+        if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
+            et.iro.color = Color.DKGRAY
+            et.Ookisa = 30
+        }
+
+
+        if (et.homing == false) {
             vx = et.zenkaiVect[0]
             vy = et.zenkaiVect[1]
         }
@@ -83,11 +91,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         et.x += ((vx / v)*10 * enemyTamaSpeed).toInt()
         et.y += ((vy / v)*10 * enemyTamaSpeed).toInt()
 
-        //ここでetとmのxyを比較してみては？
-        //前段でやってることとまったく一緒かー
-
-
-        //予定だと自機に当たった弾は濃いグレーに色が変わるはずだが、全然ならない。
         if (et.x > 690 || et.x < 0 || et.y > 1050 || et.y < 0){et = eTama()}    //画面外で敵の弾のリセット
 
 
