@@ -70,7 +70,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         var resetKyori = 90
         var vx = m.x - et.x
         var vy = m.y - et.y
-
         if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ et.homing = false }
         //ここでホーミングをfalseにしているが、もしもこの条件から外れたとしても、ホーミングfalseは継続しなければいけない
         if (et.homing == false) { //ホーミングfalse中はずっと前回ベクトルを使う
@@ -79,62 +78,20 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         et.zenkaiVect[0] = vx
         et.zenkaiVect[1] = vy
-
         //敵の弾の移動
-        val vector = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
-        et.x += ((vx / vector)*10 * enemyTamaSpeed).toInt()
-        et.y += ((vy / vector)*10 * enemyTamaSpeed).toInt()
+        val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+        et.x += ((vx / v)*10 * enemyTamaSpeed).toInt()
+        et.y += ((vy / v)*10 * enemyTamaSpeed).toInt()
 
-        var ataruKyori = 90
-        if(vx<ataruKyori && vx > -ataruKyori && vy<ataruKyori && vy > -ataruKyori){m.iro.color = Color.DKGRAY}
+        //ここでetとmのxyを比較してみては？
+        //前段でやってることとまったく一緒かー
+
+
         //予定だと自機に当たった弾は濃いグレーに色が変わるはずだが、全然ならない。
-
         if (et.x > 690 || et.x < 0 || et.y > 1050 || et.y < 0){et = eTama()}    //画面外で敵の弾のリセット
 
+
     }
-
-
-    fun enemyTamaAtatta(){
-        val enemyTamaSpeed = 2.0
-        var vx = m.x - et.x
-        var vy = m.y - et.y
-        var resetKyori = 70
-        if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){et.homing = false }
-        if (et.homing) {
-        }else{
-            vx = et.zenkaiVect[0]
-            vy = et.zenkaiVect[1]
-        }
-
-        et.zenkaiVect[0] = vx
-        et.zenkaiVect[1] = vy
-
-        val vector = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
-        et.x += ((vx / vector)*10 * enemyTamaSpeed).toInt()
-        et.y += ((vy / vector)*10 * enemyTamaSpeed).toInt()
-
-
-
-        //以下、あたったら消えるという事をやりたい
-        val length = ((m.x - et.x)*(m.x - et.x)) + ((m.y - et.y)*(m.y - et.y))
-        val kurauHanni =  et.tamaOokisa/2 + m.Ookisa/2
-
-        //距離の中に入っていたら、弾が消える lengthには距離が入っているんでしょう。ここには２点の合計がすでに入っている。
-        //lengthがくらい範囲の中に入っていたら、色を変える、当たったという判定になる。
-        //という感じで作っているはず。
-        //何がいけないんだろうか？
-        //まず、初期位置で動かないと、かならず当たる。これは何回も繰り返しているが同じ。
-        //そして、一度どこかに移動する。すると一回目だけ当たる。二回目以降は当たらない。
-       //そうするともう二度と当たらなくなっているもよう。
-        //これは移動すると当たらなくなっている、ということか？
-
-        if (length < kurauHanni){
-            et.iro.color = Color.DKGRAY
-        }
-
-        if (et.x > 690 || et.x < 0 || et.y > 1050 || et.y < 0){et = eTama()}    //画面外で敵の弾のリセット
-    }
-
 
 
 

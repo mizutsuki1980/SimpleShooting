@@ -31,6 +31,10 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.setButton).setOnClickListener {
             findViewById<TextView>(R.id.textLabelX).text=custom.clickX.toString()
             findViewById<TextView>(R.id.textLabelY).text=custom.clickY.toString()
+
+            //findViewById<TextView>(R.id.textLabelVec).text=custom.et.tamaOokisa.toString()
+            //これはなぜかダメ、なんで？
+
         }
 
         findViewById<Button>(R.id.setButton).setOnClickListener {
