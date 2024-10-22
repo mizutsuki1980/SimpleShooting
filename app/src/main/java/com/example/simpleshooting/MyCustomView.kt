@@ -51,53 +51,31 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawCircle(m.x.toFloat(),m.y.toFloat(),(m.Ookisa/2).toFloat(),m.iro) //自機は丸にした
         clickShitaBshoNiIdou()        //自機の移動　処理
 
-
         canvas.drawRect(t.myShikakuRectXY(t.x,t.y,t.Ookisa), t.iro)
         t.x = tekiUgki(t.x)        //敵の移動　処理
 
-
         canvas.drawRect(jt.myShikakuRectXY(jt.x,jt.y,jt.Ookisa), jt.iro)
         tamaSyori()        //自機の弾　処理
+        tamaAtatta()        //自機の弾が当たったら、相手が消える処理をする
 
-
-        //敵の弾　処理
         canvas.drawRect(et.myShikakuRectXY(et.x,et.y,et.Ookisa), et.iro)
-        enemyTama()
+        enemyTama()        //敵の弾　処理
 
     }
 
-    fun enemyTama(){
-        var vx = m.x - et.x
-        var vy = m.y - et.y
+    fun tamaAtatta(){
+        val vx = t.x - jt.x
+        val vy = t.y - jt.y
 
-        var resetKyori = 90 //よけ始める距離
-        if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ et.homing = false }
+        if(t.Ookisa == 30){t = teki()}
 
-
-        if(et.Ookisa == 30){et = eTama()}
-        val atariKyori = 20 //当たり判定の距離
+        val atariKyori = 10 //当たり判定の距離
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
-            et.iro.color = Color.DKGRAY
-            et.Ookisa = 30
+            t.iro.color = Color.DKGRAY
+            t.Ookisa = 30
         }
-
-
-        if (et.homing == false) {
-            vx = et.zenkaiVect[0]
-            vy = et.zenkaiVect[1]
-        }
-        et.zenkaiVect[0] = vx
-        et.zenkaiVect[1] = vy
-        //敵の弾の移動
-        val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
-        et.x += ((vx / v)*10 * enemyTamaSpeed).toInt()
-        et.y += ((vy / v)*10 * enemyTamaSpeed).toInt()
-
-        if (et.x > 690 || et.x < 0 || et.y > 1050 || et.y < 0){et = eTama()}    //画面外で敵の弾のリセット
-
 
     }
-
 
 
     fun tamaSyori(){
@@ -109,6 +87,36 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(tamaFrameIchi==20){tamaFrameIchi=0}        //20フレームでリセット
         if(tamaFrameIchi==0){jt=jTama()}
     }
+
+
+
+    fun enemyTama(){
+        var vx = m.x - et.x
+        var vy = m.y - et.y
+
+        var resetKyori = 90 //よけ始める距離
+        if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ et.homing = false }
+        if(et.Ookisa == 30){et = eTama()}
+        val atariKyori = 20 //当たり判定の距離
+        if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
+            et.iro.color = Color.DKGRAY
+            et.Ookisa = 30
+        }
+        if (et.homing == false) {
+            vx = et.zenkaiVect[0]
+            vy = et.zenkaiVect[1]
+        }
+        et.zenkaiVect[0] = vx
+        et.zenkaiVect[1] = vy
+        //敵の弾の移動
+        val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+        et.x += ((vx / v)*10 * enemyTamaSpeed).toInt()
+        et.y += ((vy / v)*10 * enemyTamaSpeed).toInt()
+        if (et.x > 690 || et.x < 0 || et.y > 1050 || et.y < 0){et = eTama()}    //画面外で敵の弾のリセット
+    }
+
+
+
 
     fun eTama():myPosition{
         val m = myPosition(t.x,t.y,10,10)
