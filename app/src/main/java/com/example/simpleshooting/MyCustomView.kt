@@ -56,24 +56,53 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         canvas.drawRect(jt.myShikakuRectXY(jt.x,jt.y,jt.Ookisa), jt.iro)
         tamaSyori()        //自機の弾　処理
-        tamaJikiAtatta()    //自機の弾が当たったら、相手が消える処理をする
+        tamaJikiSyori()
+        //tamaJikiAtatta()
+
+        // tamaJikiAtatta()    //自機の弾が当たったら、相手が消える処理をする
+        //上ふたつをコメントアウトしたらでなくなった現象
+        //ふーむ、tamaSyori()をはさむと、敵機が消える。なんでだ。
 
         canvas.drawRect(et.myShikakuRectXY(et.x,et.y,et.Ookisa), et.iro)
         enemyTama()        //敵の弾　処理
         enemyTamaAtatta()        //敵の弾が当たったら消滅する
 
     }
+    fun tamaJikiSyori(){
+        val tamaSpeed = 5.0
+        val tamaPlus = 10 * tamaSpeed .toInt()
+        tamaFrameIchi += 1
+        jt.y-= tamaPlus
+        if(jt.y<5){tamaFrameIchi=0}        //画面の上部で消える
+        if(tamaFrameIchi==20){tamaFrameIchi=0}        //20フレームでリセット
+        if(tamaFrameIchi==0){jt=jTama()}
+
+    }
+
+    fun tamaSyori(){
+        val tamaSpeed = 5.0
+        val tamaPlus = 10 * tamaSpeed .toInt()
+        tamaFrameIchi += 1
+        jt.y-= tamaPlus
+        if(jt.y<5){tamaFrameIchi=0}        //画面の上部で消える
+        if(tamaFrameIchi==20){tamaFrameIchi=0}        //20フレームでリセット
+        if(tamaFrameIchi==0){jt=jTama()}
+    }
 
     fun tamaJikiAtatta(){
         val vx = jt.x - e.x
         val vy = jt.y - e.y
 
-        if(jt.Ookisa == 30){jt = jTama()}
+        if(jt.Ookisa == 30){
+            jt = jTama()
+            e.iro.color = Color.GRAY
+        }
 
         val atariKyori = 10 //当たり判定の距離
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             jt.iro.color = Color.DKGRAY
             jt.Ookisa = 30
+
         }
     }
 
@@ -92,15 +121,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
 
-    fun tamaSyori(){
-        val tamaSpeed = 5.0
-        val tamaPlus = 10 * tamaSpeed .toInt()
-        tamaFrameIchi += 1
-        jt.y-= tamaPlus
-        if(jt.y<5){tamaFrameIchi=0}        //画面の上部で消える
-        if(tamaFrameIchi==20){tamaFrameIchi=0}        //20フレームでリセット
-        if(tamaFrameIchi==0){jt=jTama()}
-    }
 
 
 
@@ -163,10 +183,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun teki():myPosition{
-        val t = myPosition(20,100,70,30)
-        t.iro.style = Paint.Style.FILL
-        t.iro.color = Color.CYAN
-        return t
+        val e = myPosition(20,100,70,10)
+        e.iro.style = Paint.Style.FILL
+        e.iro.color = Color.CYAN
+        return e
     }
 
 
