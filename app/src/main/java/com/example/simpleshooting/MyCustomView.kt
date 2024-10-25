@@ -19,7 +19,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickX = jikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = jikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var m = jiki()
-    var t = teki()
+    var e = teki()
     var jt = jTama()
     var et = eTama()
 
@@ -51,35 +51,49 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawCircle(m.x.toFloat(),m.y.toFloat(),(m.Ookisa/2).toFloat(),m.iro) //自機は丸にした
         clickShitaBshoNiIdou()        //自機の移動　処理
 
-        canvas.drawRect(t.myShikakuRectXY(t.x,t.y,t.Ookisa), t.iro)
-        t.x = tekiUgki(t.x)        //敵の移動　処理
+        canvas.drawRect(e.myShikakuRectXY(e.x,e.y,e.Ookisa), e.iro)
+        e.x = tekiUgki(e.x)        //敵の移動　処理
 
         canvas.drawRect(jt.myShikakuRectXY(jt.x,jt.y,jt.Ookisa), jt.iro)
         tamaSyori()        //自機の弾　処理
-        tamaAtatta()        //自機の弾が当たったら、相手が消える処理をする
+        tamaJikiAtatta()    //自機の弾が当たったら、相手が消える処理をする
 
         canvas.drawRect(et.myShikakuRectXY(et.x,et.y,et.Ookisa), et.iro)
         enemyTama()        //敵の弾　処理
+        enemyTamaAtatta()        //敵の弾が当たったら消滅する
 
     }
 
-    fun tamaAtatta(){
-        val vx = t.x - jt.x
-        val vy = t.y - jt.y
+    fun tamaJikiAtatta(){
+        val vx = jt.x - e.x
+        val vy = jt.y - e.y
 
-        if(t.Ookisa == 30){t = teki()}
+        if(jt.Ookisa == 30){jt = jTama()}
 
         val atariKyori = 10 //当たり判定の距離
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
-            t.iro.color = Color.DKGRAY
-            t.Ookisa = 30
+            jt.iro.color = Color.DKGRAY
+            jt.Ookisa = 30
         }
+    }
 
+
+    fun enemyTamaAtatta(){
+        val vx = e.x - jt.x
+        val vy = e.y - jt.y
+
+        if(e.Ookisa == 30){e = teki()}
+
+        val atariKyori = 10 //当たり判定の距離
+        if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
+            e.iro.color = Color.DKGRAY
+            e.Ookisa = 30
+        }
     }
 
 
     fun tamaSyori(){
-        val tamaSpeed = 6.0
+        val tamaSpeed = 5.0
         val tamaPlus = 10 * tamaSpeed .toInt()
         tamaFrameIchi += 1
         jt.y-= tamaPlus
@@ -119,7 +133,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun eTama():myPosition{
-        val m = myPosition(t.x,t.y,10,10)
+        val m = myPosition(e.x,e.y,10,10)
         m.iro.style = Paint.Style.FILL
         m.iro.color = Color.MAGENTA
         return m
@@ -157,8 +171,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun tekiUgki(x:Int):Int{
+        val tekiSpeed = 20
         var xx = x
-        if(xx<800){ xx += 50 }
+        if(xx<800){ xx += tekiSpeed }
         if(xx >= 800) { xx = -100 }
         return xx
     }
