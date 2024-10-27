@@ -56,8 +56,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         canvas.drawRect(jt.myShikakuRectXY(jt.x,jt.y,jt.Ookisa), jt.iro)
         tamaSyori()        //自機の弾　処理
-        tamaJikiSyori()
-        //tamaJikiAtatta()
+        tamaJikiSyori()     //自機の弾が当たったら、相手が消える処理をする
+
+
+        //考えてもわからんので、気にしてもしょうがない
+        // tamaJikiAtatta()
 
         // tamaJikiAtatta()    //自機の弾が当たったら、相手が消える処理をする
         //上ふたつをコメントアウトしたらでなくなった現象
@@ -68,15 +71,17 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         enemyTamaAtatta()        //敵の弾が当たったら消滅する
 
     }
-    fun tamaJikiSyori(){
-        val tamaSpeed = 5.0
-        val tamaPlus = 10 * tamaSpeed .toInt()
-        tamaFrameIchi += 1
-        jt.y-= tamaPlus
-        if(jt.y<5){tamaFrameIchi=0}        //画面の上部で消える
-        if(tamaFrameIchi==20){tamaFrameIchi=0}        //20フレームでリセット
-        if(tamaFrameIchi==0){jt=jTama()}
 
+
+    // この関数でも「最初の一発が敵に当たると、敵が消える」現象が起きる。なんで？消すなんて作ってないのに。
+    fun tamaJikiSyori(){
+        if(jt.Ookisa == 30){
+            jt.Ookisa = 10
+            jt.iro.color = Color.GRAY
+        }else{
+            jt.iro.color = Color.DKGRAY
+            jt.Ookisa = 30
+        }
     }
 
     fun tamaSyori(){
