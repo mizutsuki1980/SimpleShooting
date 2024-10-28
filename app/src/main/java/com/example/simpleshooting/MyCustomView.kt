@@ -72,6 +72,21 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     }
 
+//ここで処理するのは敵の弾では？敵が処理されているよな気がする。
+    fun enemyTamaAtatta(){
+        val vx = e.x - jt.x
+        val vy = e.y - jt.y
+
+        //ここで消えてるっぽい。
+        if(e.Ookisa == 30){e = teki()}
+
+        val atariKyori = 10 //当たり判定の距離
+        if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
+            e.iro.color = Color.DKGRAY
+            e.Ookisa = 30
+        }
+    }
+
 
     // この関数でも「最初の一発が敵に当たると、敵が消える」現象が起きる。なんで？消すなんて作ってないのに。
     fun tamaJikiSyori(){
@@ -94,36 +109,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(tamaFrameIchi==0){jt=jTama()}
     }
 
-    fun tamaJikiAtatta(){
-        val vx = jt.x - e.x
-        val vy = jt.y - e.y
-
-        if(jt.Ookisa == 30){
-            jt = jTama()
-            e.iro.color = Color.GRAY
-        }
-
-        val atariKyori = 10 //当たり判定の距離
-        if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
-            jt.iro.color = Color.DKGRAY
-            jt.Ookisa = 30
-
-        }
-    }
-
-
-    fun enemyTamaAtatta(){
-        val vx = e.x - jt.x
-        val vy = e.y - jt.y
-
-        if(e.Ookisa == 30){e = teki()}
-
-        val atariKyori = 10 //当たり判定の距離
-        if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
-            e.iro.color = Color.DKGRAY
-            e.Ookisa = 30
-        }
-    }
 
 
 
