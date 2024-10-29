@@ -74,16 +74,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 //ここで処理するのは敵の弾では？敵が処理されているよな気がする。
     fun enemyTamaAtatta(){
-        val vx = e.x - jt.x
-        val vy = e.y - jt.y
+        val vx = et.x - m.x
+        val vy = et.y - m.y
 
         //ここで消えてるっぽい。
-        if(e.Ookisa == 30){e = teki()}
+        if(et.Ookisa == 30){et = eTama()}
 
         val atariKyori = 10 //当たり判定の距離
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
-            e.iro.color = Color.DKGRAY
-            e.Ookisa = 30
+            et.iro.color = Color.DKGRAY
+            et.Ookisa = 30
         }
     }
 
