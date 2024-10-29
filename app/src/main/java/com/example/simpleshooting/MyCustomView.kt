@@ -59,27 +59,33 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tamaJikiSyori()     //自機の弾が当たったら、相手が消える処理をする
 
 
-        //考えてもわからんので、気にしてもしょうがない
-        // tamaJikiAtatta()
-
-        // tamaJikiAtatta()    //自機の弾が当たったら、相手が消える処理をする
-        //上ふたつをコメントアウトしたらでなくなった現象
-        //ふーむ、tamaSyori()をはさむと、敵機が消える。なんでだ。
-
         canvas.drawRect(et.myShikakuRectXY(et.x,et.y,et.Ookisa), et.iro)
         enemyTama()        //敵の弾　処理
-        enemyTamaAtatta()        //敵の弾が当たったら消滅する
+        enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
 
     }
 
-//ここで処理するのは敵の弾では？敵が処理されているよな気がする。
+    //一発目は成功したが、二発目以降があたらない。なんで？
+    fun tamaJikiSyori(){
+        val vx = jt.x - e.x
+        val vy = jt.y - e.y
+        if(jt.Ookisa == 30){
+            // 敵リセット
+            e = teki()
+            //自機の弾もリセット
+            jt = jTama()
+        }
+        val atariKyori = 10 //当たり判定の距離
+        if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
+            jt.iro.color = Color.WHITE
+            jt.Ookisa = 30
+        }
+    }
+
     fun enemyTamaAtatta(){
         val vx = et.x - m.x
         val vy = et.y - m.y
-
-        //ここで消えてるっぽい。
         if(et.Ookisa == 30){et = eTama()}
-
         val atariKyori = 10 //当たり判定の距離
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             et.iro.color = Color.DKGRAY
@@ -88,16 +94,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
 
-    // この関数でも「最初の一発が敵に当たると、敵が消える」現象が起きる。なんで？消すなんて作ってないのに。
-    fun tamaJikiSyori(){
-        if(jt.Ookisa == 30){
-            jt.Ookisa = 10
-            jt.iro.color = Color.GRAY
-        }else{
-            jt.iro.color = Color.DKGRAY
-            jt.Ookisa = 30
-        }
-    }
 
     fun tamaSyori(){
         val tamaSpeed = 5.0
