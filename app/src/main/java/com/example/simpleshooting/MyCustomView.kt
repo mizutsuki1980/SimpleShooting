@@ -67,15 +67,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     //一発目は成功したが、二発目以降があたらない。なんで？
     fun tamaJikiSyori(){
-        val vx = jt.x - e.x
-        val vy = jt.y - e.y
+
         if(jt.Ookisa == 30){
             // 敵リセット
             e = teki()
             //自機の弾もリセット
             jt = jTama()
         }
+
+        val vx = jt.x - e.x
+        val vy = jt.y - e.y
         val atariKyori = 10 //当たり判定の距離
+
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             jt.iro.color = Color.WHITE
             jt.Ookisa = 30
