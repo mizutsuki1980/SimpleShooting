@@ -54,30 +54,29 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(e.myShikakuRectXY(e.x,e.y,e.Ookisa), e.iro)
         e.x = tekiUgki(e.x)        //敵の移動　処理
 
+
+        // 一発目は消えた。
         canvas.drawRect(jt.myShikakuRectXY(jt.x,jt.y,jt.Ookisa), jt.iro)
         tamaSyori()        //自機の弾　処理
         tamaJikiSyori()     //自機の弾が当たったら、相手が消える処理をする
 
 
-        canvas.drawRect(et.myShikakuRectXY(et.x,et.y,et.Ookisa), et.iro)
-        enemyTama()        //敵の弾　処理
-        enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
+        //ひとまず消す↓
+        //canvas.drawRect(et.myShikakuRectXY(et.x,et.y,et.Ookisa), et.iro)
+        //enemyTama()        //敵の弾　処理
+        //enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
 
     }
 
-    //一発目は成功したが、二発目以降があたらない。なんで？
     fun tamaJikiSyori(){
-
         if(jt.Ookisa == 30){
-            // 敵リセット
             e = teki()
-            //自機の弾もリセット
             jt = jTama()
         }
 
         val vx = jt.x - e.x
         val vy = jt.y - e.y
-        val atariKyori = 10 //当たり判定の距離
+        val atariKyori = 30 //当たり判定の距離
 
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             jt.iro.color = Color.WHITE
