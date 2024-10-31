@@ -52,8 +52,9 @@ class MainActivity : AppCompatActivity() {
 
         //ここに追加すればcustomから値を取り出せる。でも本当にｘｘｘを経由しないとダメなんか？なんかできないのかなぁ。
         //まぁでも出来る。数値は取り出せる。
-        findViewById<TextView>(R.id.textLabelTokuten).text=xxx.scoreCount.toString()
-        findViewById<TextView>(R.id.textLabelDamage).text=xxx.dgCount.toString()
+        findViewById<TextView>(R.id.textLabelTokuten).text="倒した敵の数 ${(xxx.scoreCount)}".toString()
+        findViewById<TextView>(R.id.textLabelDamage).text="被弾した数 ${(xxx.dgCount)}".toString()
+        findViewById<TextView>(R.id.textLabelTimer).text="フレーム数 ${(xxx.frame)}".toString()
 
         handler.postDelayed( { mainTsugiNoSyori() }, 100)
     }
