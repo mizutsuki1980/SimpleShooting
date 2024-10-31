@@ -25,16 +25,17 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.textLabelGamenY).text="画面サイズ縦 ${(point.y)}".toString()
 
 
+
         val custom = findViewById<MyCustomView>(R.id.mycustom)
         custom.post { custom.beginAnimation() }
         xxx = custom
+
+
         findViewById<Button>(R.id.setButton).setOnClickListener {
             findViewById<TextView>(R.id.textLabelX).text=custom.clickX.toString()
             findViewById<TextView>(R.id.textLabelY).text=custom.clickY.toString()
-
             //findViewById<TextView>(R.id.textLabelVec).text=custom.et.tamaOokisa.toString()
             //これはなぜかダメ、なんで？
-
         }
 
         findViewById<Button>(R.id.setButton).setOnClickListener {
@@ -48,6 +49,12 @@ class MainActivity : AppCompatActivity() {
     fun mainTsugiNoSyori() {
         findViewById<TextView>(R.id.textLabelX).text=xxx.clickX.toString()
         findViewById<TextView>(R.id.textLabelY).text=xxx.clickY.toString()
+
+        //ここに追加すればcustomから値を取り出せる。でも本当にｘｘｘを経由しないとダメなんか？なんかできないのかなぁ。
+        //まぁでも出来る。数値は取り出せる。
+        findViewById<TextView>(R.id.textLabelTokuten).text=xxx.scoreCount.toString()
+        findViewById<TextView>(R.id.textLabelDamage).text=xxx.dgCount.toString()
+
         handler.postDelayed( { mainTsugiNoSyori() }, 100)
     }
 

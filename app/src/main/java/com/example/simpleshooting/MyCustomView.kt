@@ -22,7 +22,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var e = teki()
     var jt = jTama()
     var et = eTama()
-
+    var timeCount = 0
+    var dgCount = 0
+    var scoreCount = 0
 
     class myPosition(var x:Int,var y:Int,var Ookisa:Int,val tamaOokisa:Int){
         var alive = true    //念のため　使うのかわからないけど
@@ -55,7 +57,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         e.x = tekiUgki(e.x)        //敵の移動　処理
 
 
-        // 一発目は消えた。
         canvas.drawRect(jt.myShikakuRectXY(jt.x,jt.y,jt.Ookisa), jt.iro)
         tamaSyori()        //自機の弾　処理
         tamaJikiSyori()     //自機の弾が当たったら、相手が消える処理をする
@@ -65,23 +66,26 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         enemyTama()        //敵の弾　処理
         enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
 
+        //だいたいの処理が出来た。スコアでもつけてみるか。
+
+
     }
+
+
 
     fun tamaJikiSyori(){
         if(jt.Ookisa == 30){
             jt = jTama()    //弾のエフェクトだけちょっとだしたい。
         }
-
         val vx = jt.x - e.x
         val vy = jt.y - e.y
         val atariKyori = 40 //当たり判定の距離
-
-
         //弾が白くなってるのに敵がリセットされていないことがあるなぁ。
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             jt.iro.color = Color.WHITE
             jt.Ookisa = 30
             e = teki()
+            scoreCount += 1
         }
     }
 
@@ -91,11 +95,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(et.Ookisa == 30){
             et = eTama()
         }
-
         val atariKyori = 10 //当たり判定の距離
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             et.iro.color = Color.DKGRAY
             et.Ookisa = 30
+            dgCount += 1
         }
     }
 
