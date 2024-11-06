@@ -60,7 +60,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(jt.myShikakuRectXY(jt.x,jt.y,jt.Ookisa), jt.iro)
         tamaSyori()        //自機の弾　処理
         tamaJikiSyori()     //自機の弾が当たったら、相手が消える処理をする
-
+        //canvas.drawPicture()とか
+        //canvas.drawBitmap()　あやしいのあるなー
 
         canvas.drawRect(et.myShikakuRectXY(et.x,et.y,et.Ookisa), et.iro)
         enemyTama()        //敵の弾　処理
