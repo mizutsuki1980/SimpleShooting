@@ -94,12 +94,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val vy = et.y - m.y
         if(et.Ookisa == 30){
             et = eTama()
+            dgCount += 1
         }
-        val atariKyori = 10 //当たり判定の距離
+        val atariKyori = 20 //当たり判定の距離
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             et.iro.color = Color.DKGRAY
             et.Ookisa = 30
-            dgCount += 1
         }
     }
 
@@ -126,12 +126,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         var resetKyori = 90 //よけ始める距離
         if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ et.homing = false }
-        if(et.Ookisa == 30){et = eTama()}
-        val atariKyori = 20 //当たり判定の距離
-        if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
-            et.iro.color = Color.DKGRAY
-            et.Ookisa = 30
-        }
         if (et.homing == false) {
             vx = et.zenkaiVect[0]
             vy = et.zenkaiVect[1]
