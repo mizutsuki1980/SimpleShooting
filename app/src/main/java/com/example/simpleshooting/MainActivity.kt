@@ -31,15 +31,11 @@ class MainActivity : AppCompatActivity() {
         val custom = findViewById<MyCustomView>(R.id.mycustom)
         custom.post { custom.beginAnimation() }
         xxx = custom
-        custom.jikiOkisa = hyper
+        //あ、なんかカスタムもコピーされてきた変数みたいなもんなのか。ここの値をいじっても意味ないのかな？
+        //        custom.jikiOkisa = hyper
+        findViewById<MyCustomView>(R.id.mycustom).jikiOkisa = hyper
 
 
-        findViewById<Button>(R.id.setButton).setOnClickListener {
-            findViewById<TextView>(R.id.textLabelX).text=custom.clickX.toString()
-            findViewById<TextView>(R.id.textLabelY).text=custom.clickY.toString()
-            //findViewById<TextView>(R.id.textLabelVec).text=custom.et.tamaOokisa.toString()
-            //これはなぜかダメ、なんで？
-        }
 
         findViewById<Button>(R.id.HyperButton).setOnClickListener {
             hyper = 180
@@ -55,10 +51,13 @@ class MainActivity : AppCompatActivity() {
 
 
     fun mainTsugiNoSyori() {
+        //あーこれはCustomViewとは関係なる、MainActivityでずっと動き続けて、その都度Customの値をセットしなおしてるわけだ。
+        //だから当然、ここになんか書いてもCustomの値はいじれない、だろう
+
         findViewById<TextView>(R.id.textLabelX).text=xxx.clickX.toString()
         findViewById<TextView>(R.id.textLabelY).text=xxx.clickY.toString()
 
-
+        //ここに書けば、CustomView内で設定したプロパティは取り出せる。じゃぁ逆はどーすんの？となる。
         //ここに追加すればcustomから値を取り出せる。でも本当にｘｘｘを経由しないとダメなんか？なんかできないのかなぁ。
         //まぁでも出来る。数値は取り出せる。
         findViewById<TextView>(R.id.textLabelTokuten).text="倒した敵の数 ${(xxx.scoreCount)}".toString()
