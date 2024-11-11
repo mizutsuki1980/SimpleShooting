@@ -12,6 +12,8 @@ import android.view.View
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var frame = 0
     var tamaOokisa = 10
+        var jikiOkisa = 50
+        var tekiOkisa = 70
     var tamaFrameIchi = 0
     var enemyTamaSpeed = 2.0
     var jikiX = 300 //初期位置
@@ -168,14 +170,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun jiki():myPosition{
 
-        val m = myPosition(jikiX,jikiY,50,30)
+        val m = myPosition(jikiX,jikiY,jikiOkisa,30)
         m.iro.style = Paint.Style.FILL
         m.iro.color = Color.RED
         return m
     }
 
     fun teki():myPosition{
-        val e = myPosition(20,100,70,10)
+        val e = myPosition(20,100,tekiOkisa,10)
         e.iro.style = Paint.Style.FILL
         e.iro.color = Color.CYAN
         return e

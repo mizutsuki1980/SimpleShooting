@@ -11,6 +11,8 @@ import java.util.logging.Handler
 
 class MainActivity : AppCompatActivity() {
     val handler = android.os.Handler()
+    var hyper = 50
+
     lateinit var xxx : MyCustomView
     @SuppressLint("MissingInflatedId")
 
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         val custom = findViewById<MyCustomView>(R.id.mycustom)
         custom.post { custom.beginAnimation() }
         xxx = custom
+        custom.jikiOkisa = hyper
 
 
         findViewById<Button>(R.id.setButton).setOnClickListener {
@@ -38,6 +41,11 @@ class MainActivity : AppCompatActivity() {
             //これはなぜかダメ、なんで？
         }
 
+        findViewById<Button>(R.id.HyperButton).setOnClickListener {
+            hyper = 180
+            //これもだめ？だめかー
+
+        }
         findViewById<Button>(R.id.setButton).setOnClickListener {
             mainTsugiNoSyori()
         }
@@ -49,6 +57,7 @@ class MainActivity : AppCompatActivity() {
     fun mainTsugiNoSyori() {
         findViewById<TextView>(R.id.textLabelX).text=xxx.clickX.toString()
         findViewById<TextView>(R.id.textLabelY).text=xxx.clickY.toString()
+
 
         //ここに追加すればcustomから値を取り出せる。でも本当にｘｘｘを経由しないとダメなんか？なんかできないのかなぁ。
         //まぁでも出来る。数値は取り出せる。

@@ -10,7 +10,7 @@
     <com.example.simpleshooting.MyCustomView
         android:id="@+id/mycustom"
         android:layout_width="match_parent"
-        android:layout_height="644dp" />
+        android:layout_height="590dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,7 +62,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="18dp"
         android:orientation="horizontal">
 
         <TextView
@@ -85,6 +85,44 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="TextView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/HyperButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ハイパー化"
+            android:textSize="8sp" />
+
+        <Button
+            android:id="@+id/HyperShotButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ハイパーショット"
+            android:textSize="8sp" />
+
+        <Button
+            android:id="@+id/tekiHyperButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="敵もハイパー"
+            android:textSize="8sp" />
+
+        <Button
+            android:id="@+id/tekiHyperShotButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="敵もハイパーショット"
+            android:textSize="8sp" />
     </LinearLayout>
 
 </LinearLayout>
