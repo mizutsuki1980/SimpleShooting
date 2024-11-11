@@ -62,13 +62,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tamaJikiSyori()     //自機の弾が当たったら、相手が消える処理をする
         //canvas.drawPicture()とか
         //canvas.drawBitmap()　あやしいのあるなー
+        //ここはまぁいいや
 
         canvas.drawRect(et.myShikakuRectXY(et.x,et.y,et.Ookisa), et.iro)
         enemyTama()        //敵の弾　処理
         enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
 
         //だいたいの処理が出来た。スコアでもつけてみるか。
-
+        //そとからボタンで操作できるようにしたい
 
     }
 
