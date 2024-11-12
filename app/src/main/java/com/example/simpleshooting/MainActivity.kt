@@ -35,6 +35,11 @@ class MainActivity : AppCompatActivity() {
             //これはダメでした　hyper = 180
             //これもだめ？だめかー
         //}
+        findViewById<Button>(R.id.hyperButton).setOnClickListener {
+            val custom = findViewById<MyCustomView>(R.id.mycustom)
+            custom.post { custom.hyperPowerUp() }//リセットボタンっぽく出来た
+            mainTsugiNoSyori()
+        }
 
         findViewById<Button>(R.id.setButton).setOnClickListener {
             val custom = findViewById<MyCustomView>(R.id.mycustom)

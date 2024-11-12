@@ -123,7 +123,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/HyperButton"
+            android:id="@+id/hyperButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -131,7 +131,7 @@
             android:textSize="8sp" />
 
         <Button
-            android:id="@+id/HyperShotButton"
+            android:id="@+id/hyperShotButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
