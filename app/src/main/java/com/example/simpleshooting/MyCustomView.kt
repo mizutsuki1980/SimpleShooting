@@ -12,8 +12,8 @@ import android.view.View
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var frame = 0
     var tamaOokisa = 10
-        var jikiOkisa = 50
-        var tekiOkisa = 70
+    var jikiOkisa = 50
+    var tekiOkisa = 70
     var tamaFrameIchi = 0
     var enemyTamaSpeed = 2.0
     var jikiX = 300 //初期位置
@@ -97,8 +97,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val vx = et.x - m.x
         val vy = et.y - m.y
         if(et.Ookisa == 30){
-            et = eTama()
             dgCount += 1
+            et = eTama()
         }
         val atariKyori = 20 //当たり判定の距離
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
