@@ -37,7 +37,10 @@ class MainActivity : AppCompatActivity() {
         //}
 
         findViewById<Button>(R.id.setButton).setOnClickListener {
+            val custom = findViewById<MyCustomView>(R.id.mycustom)
+            custom.post { custom.beginAnimation() }
             mainTsugiNoSyori()  //これは再起動的な動きでいるのかな？
+            // なんか知らんけど、めっちゃゲームが早くなって面白い。なにこれ。
         }
 
 
