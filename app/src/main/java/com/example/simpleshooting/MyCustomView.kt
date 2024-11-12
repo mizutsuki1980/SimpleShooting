@@ -11,7 +11,6 @@ import android.view.View
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var frame = 0
-    var tamaOokisa = 10
     var jikiOkisa = 50
     var tekiOkisa = 70
     var tamaFrameIchi = 0
@@ -20,13 +19,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jikiY = 800 //初期位置
     var clickX = jikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = jikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
+    var dgCount = 0
+    var scoreCount = 0
+
     var m = jiki()
     var e = teki()
     var jt = jTama()
     var et = eTama()
-    var timeCount = 0
-    var dgCount = 0
-    var scoreCount = 0
 
     class myPosition(var x:Int,var y:Int,var Ookisa:Int,val tamaOokisa:Int){
         var alive = true    //念のため　使うのかわからないけど
@@ -165,6 +164,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun startSetUp(){
         m.x = jikiX
         m.y = jikiY
+         m = jiki()
+         e = teki()
+         jt = jTama()
+         et = eTama()
+
+
     }
 
 
@@ -254,7 +259,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun beginAnimation() {
-        startSetUp()
         tsugiNoSyori()
     }
 
