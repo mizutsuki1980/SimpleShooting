@@ -97,11 +97,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val vx = et.x - m.x
         val vy = et.y - m.y
         if(et.Ookisa == 30){
-            dgCount += 1
             et = eTama()
         }
         val atariKyori = 20 //当たり判定の距離
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
+            if(et.Ookisa != 30) { dgCount += 1 }
+
             et.iro.color = Color.DKGRAY
             et.Ookisa = 30
         }
