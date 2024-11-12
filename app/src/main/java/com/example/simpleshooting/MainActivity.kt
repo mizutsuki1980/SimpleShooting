@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.setButton).setOnClickListener {
             val custom = findViewById<MyCustomView>(R.id.mycustom)
-            custom.post { custom.beginAnimation() }
+            custom.post { custom.startSetUp() }//リセットボタンっぽく出来た
             mainTsugiNoSyori()  //これは再起動的な動きでいるのかな？
             // なんか知らんけど、めっちゃゲームが早くなって面白い。なにこれ。
             //ん、ということは、ボタンからcustomviewの中に何かを作用させられた、ということか。
