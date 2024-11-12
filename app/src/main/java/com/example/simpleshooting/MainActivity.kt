@@ -41,6 +41,11 @@ class MainActivity : AppCompatActivity() {
             custom.post { custom.beginAnimation() }
             mainTsugiNoSyori()  //これは再起動的な動きでいるのかな？
             // なんか知らんけど、めっちゃゲームが早くなって面白い。なにこれ。
+            //ん、ということは、ボタンからcustomviewの中に何かを作用させられた、ということか。
+            //これでボタンを押せば何か、的な操作ができそう。
+            //custom.post { custom.beginAnimation() }　これは多分、beginAnimation()を呼んでるんだよな。
+            //MyCustomViewのほうで関数を用意してやれば、外側からそれを呼び出せるってことか。なるほどー
+
         }
 
 
