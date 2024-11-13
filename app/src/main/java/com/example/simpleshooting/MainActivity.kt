@@ -11,11 +11,7 @@ import java.util.logging.Handler
 
 class MainActivity : AppCompatActivity() {
     val handler = android.os.Handler()
-    //var hyper = 50
-
-//    lateinit var xxx : MyCustomView
     lateinit var custom : MyCustomView
-    //customってメンバ変数にできるんだ、へー
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,31 +25,13 @@ class MainActivity : AppCompatActivity() {
 
         custom = findViewById<MyCustomView>(R.id.mycustom)
         custom.post { custom.beginAnimation() }
-        //xxx = custom
-        //あ、なんかカスタムもコピーされてきた変数みたいなもんなのか。ここの値をいじっても意味ないのかな？
-        //        custom.jikiOkisa = hyper
-        //これはダメでした　findViewById<MyCustomView>(R.id.mycustom).jikiOkisa = hyper
 
-        //findViewById<Button>(R.id.HyperButton).setOnClickListener {
-            //これはダメでした　hyper = 180
-            //これもだめ？だめかー
-        //}
         findViewById<Button>(R.id.hyperButton).setOnClickListener {
-            //val custom = findViewById<MyCustomView>(R.id.mycustom)
-            custom.post { custom.hyperPowerUp() }//リセットボタンっぽく出来た
-            mainTsugiNoSyori()
+            custom.post { custom.hyperPowerUp() }
         }
 
         findViewById<Button>(R.id.setButton).setOnClickListener {
-            //val custom = findViewById<MyCustomView>(R.id.mycustom)
-            custom.post { custom.startSetUp() }//リセットボタンっぽく出来た
-            mainTsugiNoSyori()  //これは再起動的な動きでいるのかな？
-            // なんか知らんけど、めっちゃゲームが早くなって面白い。なにこれ。
-            //ん、ということは、ボタンからcustomviewの中に何かを作用させられた、ということか。
-            //これでボタンを押せば何か、的な操作ができそう。
-            //custom.post { custom.beginAnimation() }　これは多分、beginAnimation()を呼んでるんだよな。
-            //MyCustomViewのほうで関数を用意してやれば、外側からそれを呼び出せるってことか。なるほどー
-
+            custom.post { custom.startSetUp() }
         }
 
 
