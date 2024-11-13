@@ -13,7 +13,10 @@ class MainActivity : AppCompatActivity() {
     val handler = android.os.Handler()
     //var hyper = 50
 
-    lateinit var xxx : MyCustomView
+//    lateinit var xxx : MyCustomView
+    lateinit var custom : MyCustomView
+    //customってメンバ変数にできるんだ、へー
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,9 +27,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.textLabelGamenX).text="画面サイズ横 ${(point.x)}".toString()
         findViewById<TextView>(R.id.textLabelGamenY).text="画面サイズ縦 ${(point.y)}".toString()
 
-        val custom = findViewById<MyCustomView>(R.id.mycustom)
+        custom = findViewById<MyCustomView>(R.id.mycustom)
         custom.post { custom.beginAnimation() }
-        xxx = custom
+        //xxx = custom
         //あ、なんかカスタムもコピーされてきた変数みたいなもんなのか。ここの値をいじっても意味ないのかな？
         //        custom.jikiOkisa = hyper
         //これはダメでした　findViewById<MyCustomView>(R.id.mycustom).jikiOkisa = hyper
@@ -36,13 +39,13 @@ class MainActivity : AppCompatActivity() {
             //これもだめ？だめかー
         //}
         findViewById<Button>(R.id.hyperButton).setOnClickListener {
-            val custom = findViewById<MyCustomView>(R.id.mycustom)
+            //val custom = findViewById<MyCustomView>(R.id.mycustom)
             custom.post { custom.hyperPowerUp() }//リセットボタンっぽく出来た
             mainTsugiNoSyori()
         }
 
         findViewById<Button>(R.id.setButton).setOnClickListener {
-            val custom = findViewById<MyCustomView>(R.id.mycustom)
+            //val custom = findViewById<MyCustomView>(R.id.mycustom)
             custom.post { custom.startSetUp() }//リセットボタンっぽく出来た
             mainTsugiNoSyori()  //これは再起動的な動きでいるのかな？
             // なんか知らんけど、めっちゃゲームが早くなって面白い。なにこれ。
@@ -63,18 +66,18 @@ class MainActivity : AppCompatActivity() {
         //あーこれはCustomViewとは関係なる、MainActivityでずっと動き続けて、その都度Customの値をセットしなおしてるわけだ。
         //だから当然、ここになんか書いてもCustomの値はいじれない、だろう
 
-        findViewById<TextView>(R.id.textLabelX).text=xxx.clickX.toString()
-        findViewById<TextView>(R.id.textLabelY).text=xxx.clickY.toString()
+        findViewById<TextView>(R.id.textLabelX).text=custom.clickX.toString()
+        findViewById<TextView>(R.id.textLabelY).text=custom.clickY.toString()
 
         //ここに書けば、CustomView内で設定したプロパティは取り出せる。じゃぁ逆はどーすんの？となる。
         //ここに追加すればcustomから値を取り出せる。でも本当にｘｘｘを経由しないとダメなんか？なんかできないのかなぁ。
         //まぁでも出来る。数値は取り出せる。
-        findViewById<TextView>(R.id.textLabelTokuten).text="倒した敵の数 ${(xxx.scoreCount)}".toString()
-        findViewById<TextView>(R.id.scoreTextLabel).text=xxx.scoreCount.toString()
-        findViewById<TextView>(R.id.damageTextLabel).text=xxx.dgCount.toString()
-        findViewById<TextView>(R.id.timeTextLabel).text=xxx.frame.toString()
-        findViewById<TextView>(R.id.textLabelDamage).text="被弾した数 ${(xxx.dgCount)}".toString()
-        findViewById<TextView>(R.id.textLabelTimer).text="フレーム数 ${(xxx.frame)}".toString()
+        findViewById<TextView>(R.id.textLabelTokuten).text="倒した敵の数 ${(custom.scoreCount)}".toString()
+        findViewById<TextView>(R.id.scoreTextLabel).text=custom.scoreCount.toString()
+        findViewById<TextView>(R.id.damageTextLabel).text=custom.dgCount.toString()
+        findViewById<TextView>(R.id.timeTextLabel).text=custom.frame.toString()
+        findViewById<TextView>(R.id.textLabelDamage).text="被弾した数 ${(custom.dgCount)}".toString()
+        findViewById<TextView>(R.id.textLabelTimer).text="フレーム数 ${(custom.frame)}".toString()
 
         handler.postDelayed( { mainTsugiNoSyori() }, 100)
     }

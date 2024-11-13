@@ -98,7 +98,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(et.Ookisa == 30){
             et = eTama()
         }
-        val atariKyori = 15 //当たり判定の距離
+        var atariKyori = 5 + m.Ookisa/2 //当たり判定の距離
+        if(m.Ookisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
+
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             if(et.Ookisa != 30) { dgCount += 1 }
 
