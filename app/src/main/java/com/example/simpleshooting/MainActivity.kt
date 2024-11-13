@@ -33,6 +33,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.hyperButton).setOnClickListener {
             custom.post { custom.hyperPowerUp() }
         }
+        findViewById<Button>(R.id.hyperShotButton).setOnClickListener {
+            custom.post { custom.hyperShotPowerUp() }
+        }
 
         findViewById<Button>(R.id.setButton).setOnClickListener {
             custom.post { custom.startSetUp() }

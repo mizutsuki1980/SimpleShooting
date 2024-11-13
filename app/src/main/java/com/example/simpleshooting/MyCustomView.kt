@@ -172,6 +172,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
          et = eTama()
 
     }
+    fun hyperShotPowerUp(){
+        if (m.Ookisa==200){
+            m.Ookisa = 50
+        }else{
+            m.Ookisa = 200
+        }
+    }
 
     fun hyperPowerUp(){
         if (m.Ookisa==200){
