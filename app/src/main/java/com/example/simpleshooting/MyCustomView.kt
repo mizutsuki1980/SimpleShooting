@@ -171,7 +171,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
          jt = jTama()
          et = eTama()
 
-
     }
 
     fun hyperPowerUp(){
@@ -182,6 +181,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
+    fun tekiHyperPowerUp(){
+        if (e.Ookisa==140){
+            e.Ookisa = 70
+        }else{
+            e.Ookisa = 140
+        }
+    }
 
     fun jiki():myPosition{
 

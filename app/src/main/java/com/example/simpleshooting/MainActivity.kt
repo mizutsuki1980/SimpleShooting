@@ -26,6 +26,10 @@ class MainActivity : AppCompatActivity() {
         custom = findViewById<MyCustomView>(R.id.mycustom)
         custom.post { custom.beginAnimation() }
 
+        findViewById<Button>(R.id.tekiHyperButton).setOnClickListener {
+            custom.post { custom.tekiHyperPowerUp() }
+        }
+
         findViewById<Button>(R.id.hyperButton).setOnClickListener {
             custom.post { custom.hyperPowerUp() }
         }
