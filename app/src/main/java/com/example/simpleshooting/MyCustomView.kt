@@ -71,15 +71,32 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //なんでか二回あたっている。なんでだ？
 
         canvas.drawRect(et2.myShikakuRectXY(et2.x,et2.y,et2.Ookisa), et2.iro)
-        et2.iro.color = Color.GREEN
+        et2.iro.color = Color.BLUE
         enemyTama2()        //敵の弾　処理
-
+        enemyTamaAtatta2()
     }
 
+    fun enemyTamaAtatta2(){
+        val vx = et2.x - m.x
+        val vy = et2.y - m.y
+        if(et2.Ookisa == 30){
+            dgCount += 1
+            et2 = eTama()
+        }else{
+            var atariKyori = 5 + m.Ookisa/2 //当たり判定の距離
+            if(m.Ookisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
+            if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
+                et2.iro.color = Color.DKGRAY
+                et2.Ookisa = 30
+            }
+
+        }
+    }
     fun enemyTama2(){
     //ここでmySpeedっていうのを設定している。他の弾にはない
         var mySpeed = 3.5
-
+        var xhanai =650
+        var yHani = 900
         var vx = m.x - et2.x
         var vy = m.y - et2.y
 
@@ -96,9 +113,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
         et2.x += ((vx / v)*10 * mySpeed).toInt()
         et2.y += ((vy / v)*10 * mySpeed).toInt()
-        if (et2.x > 690 || et2.x < 0 || et2.y > 1050 || et2.y < 0){
-            et2 = eTama()
-        } //画面外で敵の弾のリセット
+        if (et2.x > xhanai || et2.x < 0){et2.zenkaiVect[0] = -vx }
+        if (et2.y > yHani || et2.y < 0){et2.zenkaiVect[1] = -vy}
     }
 
 
