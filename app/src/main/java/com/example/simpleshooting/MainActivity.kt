@@ -48,21 +48,12 @@ class MainActivity : AppCompatActivity() {
 
 
     fun mainTsugiNoSyori() {
-        //あーこれはCustomViewとは関係なる、MainActivityでずっと動き続けて、その都度Customの値をセットしなおしてるわけだ。
-        //だから当然、ここになんか書いてもCustomの値はいじれない、だろう
-
         findViewById<TextView>(R.id.textLabelX).text=custom.clickX.toString()
         findViewById<TextView>(R.id.textLabelY).text=custom.clickY.toString()
 
-        //ここに書けば、CustomView内で設定したプロパティは取り出せる。じゃぁ逆はどーすんの？となる。
-        //ここに追加すればcustomから値を取り出せる。でも本当にｘｘｘを経由しないとダメなんか？なんかできないのかなぁ。
-        //まぁでも出来る。数値は取り出せる。
-        findViewById<TextView>(R.id.textLabelTokuten).text="倒した敵の数 ${(custom.scoreCount)}".toString()
         findViewById<TextView>(R.id.scoreTextLabel).text=custom.scoreCount.toString()
         findViewById<TextView>(R.id.damageTextLabel).text=custom.dgCount.toString()
         findViewById<TextView>(R.id.timeTextLabel).text=custom.frame.toString()
-        findViewById<TextView>(R.id.textLabelDamage).text="被弾した数 ${(custom.dgCount)}".toString()
-        findViewById<TextView>(R.id.textLabelTimer).text="フレーム数 ${(custom.frame)}".toString()
 
         handler.postDelayed( { mainTsugiNoSyori() }, 100)
     }

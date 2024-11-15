@@ -68,9 +68,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(et.myShikakuRectXY(et.x,et.y,et.Ookisa), et.iro)
         enemyTama()        //敵の弾　処理
         enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
-
-        //だいたいの処理が出来た。スコアでもつけてみるか。
-        //そとからボタンで操作できるようにしたい
+        //なんでか二回あたっている。なんでだ？
 
     }
 
@@ -102,7 +100,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(m.Ookisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
 
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
-            if(et.Ookisa != 30) { dgCount += 1 }
+            if(et.alive) {
+                dgCount += 1
+            }
+            et.alive = false
 
             et.iro.color = Color.DKGRAY
             et.Ookisa = 30
