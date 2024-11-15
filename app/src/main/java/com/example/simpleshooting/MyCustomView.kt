@@ -16,7 +16,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jikiOkisa = 50
     var tekiOkisa = 70
     var tamaFrameIchi = 0
-    var enemyTamaSpeed = 2.0
+    var enemyTamaSpeed = 2.0    //デフォはこれにしといて、変えれるようにしよう
     var jikiX = 300 //初期位置
     var jikiY = 800 //初期位置
     var clickX = jikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
@@ -26,7 +26,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var e = teki()
     var jt = jTama()
     var et = eTama()
-
+    var et2 = eTama()
     class myPosition(var x:Int,var y:Int,var Ookisa:Int,val tamaOokisa:Int){
         var alive = true    //念のため　使うのかわからないけど
         var homing = true   //敵の弾が自機を捕まえに来るのに使う
@@ -70,8 +70,36 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
         //なんでか二回あたっている。なんでだ？
 
+        canvas.drawRect(et2.myShikakuRectXY(et2.x,et2.y,et2.Ookisa), et2.iro)
+        et2.iro.color = Color.GREEN
+        enemyTama2()        //敵の弾　処理
+
     }
 
+    fun enemyTama2(){
+    //ここでmySpeedっていうのを設定している。他の弾にはない
+        var mySpeed = 3.5
+
+        var vx = m.x - et2.x
+        var vy = m.y - et2.y
+
+        var resetKyori = 500 //よけ始める距離
+
+        if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ et2.homing = false }
+        if (et2.homing == false) {
+            vx = et2.zenkaiVect[0]
+            vy = et2.zenkaiVect[1]
+        }
+        et2.zenkaiVect[0] = vx
+        et2.zenkaiVect[1] = vy
+        //敵の弾の移動
+        val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+        et2.x += ((vx / v)*10 * mySpeed).toInt()
+        et2.y += ((vy / v)*10 * mySpeed).toInt()
+        if (et2.x > 690 || et2.x < 0 || et2.y > 1050 || et2.y < 0){
+            et2 = eTama()
+        } //画面外で敵の弾のリセット
+    }
 
 
     fun tamaJikiSyori(){
@@ -106,7 +134,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         }
     }
-
 
 
     fun tamaSyori(){
