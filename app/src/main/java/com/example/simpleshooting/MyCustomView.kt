@@ -82,8 +82,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         val vx = jt.x - e.x
         val vy = jt.y - e.y
-        val atariKyori = 40 //当たり判定の距離
-        //弾が白くなってるのに敵がリセットされていないことがあるなぁ。
+        val atariKyori = 5 + e.Ookisa / 2 //当たり判定の距離 //敵はちょっとだけ当たり判定が大きい
+
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             jt.iro.color = Color.WHITE
             jt.Ookisa = 30
