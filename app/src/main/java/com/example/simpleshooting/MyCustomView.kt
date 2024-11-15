@@ -11,6 +11,8 @@ import android.view.View
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var frame = 0
+    var dgCount = 0
+    var scoreCount = 0
     var jikiOkisa = 50
     var tekiOkisa = 70
     var tamaFrameIchi = 0
@@ -19,8 +21,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jikiY = 800 //初期位置
     var clickX = jikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = jikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
-    var dgCount = 0
-    var scoreCount = 0
 
     var m = jiki()
     var e = teki()
@@ -34,16 +34,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         var left = x  - Ookisa / 2
         var right = x  + Ookisa / 2
-        var top = y  - (Ookisa)
-        var bottom = y
+        var top = y  - (Ookisa) /2
+        var bottom = y + (Ookisa) /2
         var iro = Paint()
 
 
         fun myShikakuRectXY(x:Int,y:Int,Ookisa:Int):Rect{
             left = x  - Ookisa / 2
             right = x  + Ookisa / 2
-            top = y  - Ookisa
-            bottom = y
+            top = y  - Ookisa / 2
+            bottom = y + Ookisa / 2
             val m = Rect(left, top, right,bottom)
             return m
         }
@@ -166,12 +166,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun startSetUp(){
         m.x = jikiX
         m.y = jikiY
-         m = jiki()
-         e = teki()
-         jt = jTama()
-         et = eTama()
+        m = jiki()
+        e = teki()
+        jt = jTama()
+        et = eTama()
+        frame = 0
+        dgCount = 0
+        scoreCount = 0
+        jikiOkisa = 50
 
     }
+
+
     fun hyperShotPowerUp(){
         if (m.Ookisa==200){
             m.Ookisa = 50
