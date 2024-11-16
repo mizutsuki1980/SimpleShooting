@@ -68,12 +68,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(et.myShikakuRectXY(et.x,et.y,et.Ookisa), et.iro)
         enemyTama()        //敵の弾　処理
         enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
-        //なんでか二回あたっている。なんでだ？
 
         canvas.drawRect(et2.myShikakuRectXY(et2.x,et2.y,et2.Ookisa), et2.iro)
         et2.iro.color = Color.BLUE
         enemyTama2()        //敵の弾　処理
         enemyTamaAtatta2()
+        //いっかいあたると止まってるっぽくね？
+
     }
 
     fun enemyTamaAtatta2(){
@@ -211,6 +212,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         e = teki()
         jt = jTama()
         et = eTama()
+        et2 = eTama()
         frame = 0
         dgCount = 0
         scoreCount = 0
