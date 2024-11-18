@@ -74,7 +74,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         enemyTama2()        //敵の弾　処理
         enemyTamaAtatta2()
         //いっかいあたると止まってるっぽくね？
-
+        //自機が初期値から動いた状態で弾２にあたると、停止する
     }
 
     fun enemyTamaAtatta2(){
