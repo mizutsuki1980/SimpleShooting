@@ -75,6 +75,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         enemyTamaAtatta2()
         //いっかいあたると止まってるっぽくね？
         //自機が初期値から動いた状態で弾２にあたると、停止する
+        //というか、動いている途中にあたるいととまるのか？
     }
     fun enemyTama2(){
         //ここでmySpeedっていうのを設定している。他の弾にはない
@@ -106,9 +107,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val vy = et2.y - m.y
         if(et2.Ookisa == 30){
             dgCount += 1
+
+            //弾２情報をリセット
             et2 = eTama()
-            et2.x = 100
-            et2.y = 200
+            //以下２行を追加したら動いた。//なんかet2の値を取り出そうとするとエラーが起きてる？
+            et2.zenkaiVect[0] = e.x - m.x //- et2.x
+            et2.zenkaiVect[1] = e.y - m.y //- et2.y
+
+
 
         }else{
             var atariKyori = 5 + m.Ookisa/2 //当たり判定の距離
