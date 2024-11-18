@@ -69,32 +69,15 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         enemyTama()        //敵の弾　処理
         enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
 
-        canvas.drawRect(et2.myShikakuRectXY(et2.x,et2.y,et2.Ookisa), et2.iro)
         et2.iro.color = Color.BLUE
+        canvas.drawRect(et2.myShikakuRectXY(et2.x,et2.y,et2.Ookisa), et2.iro)
         enemyTama2()        //敵の弾　処理
         enemyTamaAtatta2()
         //いっかいあたると止まってるっぽくね？
         //自機が初期値から動いた状態で弾２にあたると、停止する
     }
-
-    fun enemyTamaAtatta2(){
-        val vx = et2.x - m.x
-        val vy = et2.y - m.y
-        if(et2.Ookisa == 30){
-            dgCount += 1
-            et2 = eTama()
-        }else{
-            var atariKyori = 5 + m.Ookisa/2 //当たり判定の距離
-            if(m.Ookisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
-            if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
-                et2.iro.color = Color.DKGRAY
-                et2.Ookisa = 30
-            }
-
-        }
-    }
     fun enemyTama2(){
-    //ここでmySpeedっていうのを設定している。他の弾にはない
+        //ここでmySpeedっていうのを設定している。他の弾にはない
         var mySpeed = 3.5
         var xhanai =650
         var yHani = 900
@@ -116,6 +99,26 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         et2.y += ((vy / v)*10 * mySpeed).toInt()
         if (et2.x > xhanai || et2.x < 0){et2.zenkaiVect[0] = -vx }
         if (et2.y > yHani || et2.y < 0){et2.zenkaiVect[1] = -vy}
+    }
+
+    fun enemyTamaAtatta2(){
+        val vx = et2.x - m.x
+        val vy = et2.y - m.y
+        if(et2.Ookisa == 30){
+            dgCount += 1
+            et2 = eTama()
+            et2.x = 100
+            et2.y = 200
+
+        }else{
+            var atariKyori = 5 + m.Ookisa/2 //当たり判定の距離
+            if(m.Ookisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
+            if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
+                et2.iro.color = Color.DKGRAY
+                et2.Ookisa = 30
+            }
+
+        }
     }
 
 
