@@ -73,10 +73,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(et2.myShikakuRectXY(et2.x,et2.y,et2.Ookisa), et2.iro)
         enemyTama2()        //敵の弾　処理
         enemyTamaAtatta2()
-        //いっかいあたると止まってるっぽくね？
-        //自機が初期値から動いた状態で弾２にあたると、停止する
-        //というか、動いている途中にあたるいととまるのか？
+
+
     }
+
     fun enemyTama2(){
         //ここでmySpeedっていうのを設定している。他の弾にはない
         var mySpeed = 3.5
@@ -86,7 +86,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         var vy = m.y - et2.y
 
         var resetKyori = 500 //よけ始める距離
-
         if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ et2.homing = false }
         if (et2.homing == false) {
             vx = et2.zenkaiVect[0]
@@ -110,12 +109,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
             //弾２情報をリセット
             et2 = eTama()
-            //以下２行を追加したら動いた。//なんかet2の値を取り出そうとするとエラーが起きてる？
+            //以下２行を追加したら動いた。//なんかet2の値を取出でエラーが起きてる？//et2を作り直したらzenkaiVectだけでも設定してないとダメ
             et2.zenkaiVect[0] = e.x - m.x //- et2.x
             et2.zenkaiVect[1] = e.y - m.y //- et2.y
-
-
-
         }else{
             var atariKyori = 5 + m.Ookisa/2 //当たり判定の距離
             if(m.Ookisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
@@ -123,7 +119,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 et2.iro.color = Color.DKGRAY
                 et2.Ookisa = 30
             }
-
         }
     }
 
