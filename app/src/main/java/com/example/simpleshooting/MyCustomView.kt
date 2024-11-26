@@ -27,7 +27,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jt = jTama()
     var et = eTama()
     var et2 = eTama()
-    class MyPosition(var x:Int, var y:Int, var Ookisa:Int, val tamaOokisa:Int){
+    class IchiJoho(var x:Int, var y:Int, var Ookisa:Int, val tamaOokisa:Int){
         var alive = true    //念のため　使うのかわからないけど
         var homing = true   //敵の弾が自機を捕まえに来るのに使う
         var zenkaiVect = mutableListOf<Int>(0,0)    //敵の弾が自機を捕まえに来るのに使う
@@ -196,15 +196,15 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
 
-    fun eTama():MyPosition{
-        val m = MyPosition(e.x,e.y,10,10)
+    fun eTama():IchiJoho{
+        val m = IchiJoho(e.x,e.y,10,10)
         m.iro.style = Paint.Style.FILL
         m.iro.color = Color.MAGENTA
         return m
     }
 
-    fun jTama():MyPosition{
-        val m = MyPosition(jikiX,jikiY,10,10)
+    fun jTama():IchiJoho{
+        val m = IchiJoho(jikiX,jikiY,10,10)
         m.iro.style = Paint.Style.FILL
         m.iro.color = Color.GREEN
         return m
@@ -251,16 +251,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
-    fun jiki():MyPosition{
+    fun jiki():IchiJoho{
 
-        val m = MyPosition(jikiX,jikiY,jikiOkisa,30)
+        val m = IchiJoho(jikiX,jikiY,jikiOkisa,30)
         m.iro.style = Paint.Style.FILL
         m.iro.color = Color.RED
         return m
     }
 
-    fun teki():MyPosition{
-        val e = MyPosition(20,100,tekiOkisa,10)
+    fun teki():IchiJoho{
+        val e = IchiJoho(20,100,tekiOkisa,10)
         e.iro.style = Paint.Style.FILL
         e.iro.color = Color.CYAN
         return e
