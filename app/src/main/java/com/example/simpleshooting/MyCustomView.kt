@@ -39,7 +39,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         var iro = Paint()
 
 
-        fun myShikakuRectXY(x:Int,y:Int,Ookisa:Int):Rect{
+        fun shikakuRectXY(x:Int,y:Int,Ookisa:Int):Rect{
             left = x  - Ookisa / 2
             right = x  + Ookisa / 2
             top = y  - Ookisa / 2
@@ -54,23 +54,23 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawCircle(m.x.toFloat(),m.y.toFloat(),(m.Ookisa/2).toFloat(),m.iro) //自機は丸にした
         clickShitaBshoNiIdou()        //自機の移動　処理
 
-        canvas.drawRect(e.myShikakuRectXY(e.x,e.y,e.Ookisa), e.iro)
+        canvas.drawRect(e.shikakuRectXY(e.x,e.y,e.Ookisa), e.iro)
         e.x = tekiUgki(e.x)        //敵の移動　処理
 
 
-        canvas.drawRect(jt.myShikakuRectXY(jt.x,jt.y,jt.Ookisa), jt.iro)
+        canvas.drawRect(jt.shikakuRectXY(jt.x,jt.y,jt.Ookisa), jt.iro)
         tamaSyori()        //自機の弾　処理
         tamaJikiSyori()     //自機の弾が当たったら、相手が消える処理をする
         //canvas.drawPicture()とか
         //canvas.drawBitmap()　あやしいのあるなー
         //ここはまぁいいや
 
-        canvas.drawRect(et.myShikakuRectXY(et.x,et.y,et.Ookisa), et.iro)
+        canvas.drawRect(et.shikakuRectXY(et.x,et.y,et.Ookisa), et.iro)
         enemyTama()        //敵の弾　処理
         enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
 
         et2.iro.color = Color.BLUE
-        canvas.drawRect(et2.myShikakuRectXY(et2.x,et2.y,et2.Ookisa), et2.iro)
+        canvas.drawRect(et2.shikakuRectXY(et2.x,et2.y,et2.Ookisa), et2.iro)
         enemyTama2()        //敵の弾　処理
         enemyTamaAtatta2()
 
@@ -78,8 +78,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun enemyTama2(){
-        //ここでmySpeedっていうのを設定している。他の弾にはない
-        var mySpeed = 3.5
+        //ここでtamaSpeedっていうのを設定している。他の弾にはない
+        var tamaSpeed = 3.5
         var xhanai =650
         var yHani = 900
         var vx = m.x - et2.x
@@ -95,8 +95,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         et2.zenkaiVect[1] = vy
         //敵の弾の移動
         val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
-        et2.x += ((vx / v)*10 * mySpeed).toInt()
-        et2.y += ((vy / v)*10 * mySpeed).toInt()
+        et2.x += ((vx / v)*10 * tamaSpeed).toInt()
+        et2.y += ((vy / v)*10 * tamaSpeed).toInt()
         if (et2.x > xhanai || et2.x < 0){et2.zenkaiVect[0] = -vx }
         if (et2.y > yHani || et2.y < 0){et2.zenkaiVect[1] = -vy}
     }
@@ -279,27 +279,27 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val saY = m.y - clickY
         var x = m.x
         var y = m.y
-        val mySpeed = 2.5
-        val myPlus = 10 * mySpeed .toInt()
+        val speed = 2.5
+        val plus = 10 * speed .toInt()
 
-        if (saX >= -(myPlus) && saX <= myPlus){
+        if (saX >= -(plus) && saX <= plus){
             x = clickX
         }else {
             if (saX > 0) {
-                x -= myPlus
+                x -= plus
             }
             if (saX < 0) {
-                x += myPlus
+                x += plus
             }
         }
-        if (saY >= -myPlus && saY <= myPlus){
+        if (saY >= -plus && saY <= plus){
             y = clickY
         }else {
             if (saY > 0) {
-                y -= myPlus
+                y -= plus
             }
             if (saY < 0) {
-                y += myPlus
+                y += plus
             }
         }
         jikiX = x
