@@ -27,6 +27,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jt = jTama()
     var et = eTama()
     var et2 = eTama()
+
+
     class IchiJoho(var x:Int, var y:Int, var Ookisa:Int, val tamaOokisa:Int){
         var alive = true    //念のため　使うのかわからないけど
         var homing = true   //敵の弾が自機を捕まえに来るのに使う
