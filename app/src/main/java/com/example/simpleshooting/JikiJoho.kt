@@ -1,5 +1,6 @@
 package com.example.simpleshooting
 
+<<<<<<< HEAD
 import android.graphics.Color
 import android.graphics.Paint
 
@@ -55,3 +56,7 @@ class JikiJoho(var jikiX:Int, var jikiY:Int, var jikiOokisa:Int, var m: IchiJoho
         //my = y
     }
 }
+=======
+class JikiJoho {
+}
+>>>>>>> FFF
