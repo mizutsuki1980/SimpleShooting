@@ -27,7 +27,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jt = jTama()
     var et = eTama()
     var et2 = eTama()
-
+    lateinit var jiki:JikiJoho
 
 
 
@@ -37,13 +37,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
         //ここに自機の処理を書き始めるとする。まずいるのはなに？
-        var jiki = JikiJoho(300,800,50,null)
+        jiki = JikiJoho(300,800,50,null)
         jiki.m = jiki.jikiSettei()
         //動かないけど表示された、あってるっぽい。
 
         canvas.drawCircle(jiki.jikiX.toFloat(),jiki.jikiY.toFloat(),(jiki.jikiOokisa/2).toFloat(),
             jiki.m!!.iro) //自機は丸にした
-        //jiki.clickShitaBshoNiIdou(clickX,clickY)　//みたいな感じか？
+        //jiki.clickShitaBshoNiIdou(clickX,clickY,jiki.jikiX,jiki.jikiY)　//みたいな感じか？
 
         clickShitaBshoNiIdou()        //自機の移動　処理
 
@@ -272,10 +272,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         return xx
     }
     fun clickShitaBshoNiIdou(){
-        val saX = m.x - clickX
-        val saY = m.y - clickY
-        var x = m.x
-        var y = m.y
+        val saX = jiki.jikiX - clickX
+        val saY = jiki.jikiY - clickY
+        var x = jiki.jikiX
+        var y = jiki.jikiY
         val speed = 2.5
         val plus = 10 * speed .toInt()
 
@@ -301,8 +301,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         jikiX = x
         jikiY = y
-        m.x = x
-        m.y = y
+        jiki.jikiX = x
+        jiki.jikiY = y
     }
 
 
