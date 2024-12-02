@@ -1,10 +1,10 @@
 package com.example.simpleshooting
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -27,29 +27,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jt = jTama()
     var et = eTama()
     var et2 = eTama()
-    lateinit var jiki:JikiJoho
 
 
 
 
-
-
-    @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
-        //ここに自機の処理を書き始めるとする。まずいるのはなに？
-        jiki = JikiJoho(300,800,50,null)
-        jiki.m = jiki.jikiSettei()
-        //動かないけど表示された、あってるっぽい。
-
-        canvas.drawCircle(jiki.jikiX.toFloat(),jiki.jikiY.toFloat(),(jiki.jikiOokisa/2).toFloat(),
-            jiki.m!!.iro) //自機は丸にした
-        //jiki.clickShitaBshoNiIdou(clickX,clickY,jiki.jikiX,jiki.jikiY)　//みたいな感じか？
-
+        canvas.drawCircle(m.x.toFloat(),m.y.toFloat(),(m.Ookisa/2).toFloat(),m.iro) //自機は丸にした
         clickShitaBshoNiIdou()        //自機の移動　処理
-
-
-
-
 
         canvas.drawRect(e.shikakuRectXY(e.x,e.y,e.Ookisa), e.iro)
         e.x = tekiUgki(e.x)        //敵の移動　処理
@@ -206,20 +190,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         m.iro.color = Color.GREEN
         return m
     }
-    fun jiki():IchiJoho{
-
-        val m = IchiJoho(jikiX,jikiY,jikiOkisa,30)
-        m.iro.style = Paint.Style.FILL
-        m.iro.color = Color.RED
-        return m
-    }
-
-    fun teki():IchiJoho{
-        val e = IchiJoho(20,100,tekiOkisa,10)
-        e.iro.style = Paint.Style.FILL
-        e.iro.color = Color.CYAN
-        return e
-    }
 
 
     fun startSetUp(){
@@ -262,6 +232,20 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
+    fun jiki():IchiJoho{
+
+        val m = IchiJoho(jikiX,jikiY,jikiOkisa,30)
+        m.iro.style = Paint.Style.FILL
+        m.iro.color = Color.RED
+        return m
+    }
+
+    fun teki():IchiJoho{
+        val e = IchiJoho(20,100,tekiOkisa,10)
+        e.iro.style = Paint.Style.FILL
+        e.iro.color = Color.CYAN
+        return e
+    }
 
 
     fun tekiUgki(x:Int):Int{
@@ -272,10 +256,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         return xx
     }
     fun clickShitaBshoNiIdou(){
-        val saX = jiki.jikiX - clickX
-        val saY = jiki.jikiY - clickY
-        var x = jiki.jikiX
-        var y = jiki.jikiY
+        val saX = m.x - clickX
+        val saY = m.y - clickY
+        var x = m.x
+        var y = m.y
         val speed = 2.5
         val plus = 10 * speed .toInt()
 
@@ -301,8 +285,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         jikiX = x
         jikiY = y
-        jiki.jikiX = x
-        jiki.jikiY = y
+        m.x = x
+        m.y = y
     }
 
 
