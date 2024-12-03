@@ -28,7 +28,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var et = eTama()
     var et2 = eTama()
 
-
+    var jikijoho = JikiJoho(jikiOkisa,jikiX,jikiY,jiki())
 
 
     override fun onDraw(canvas: Canvas) {
