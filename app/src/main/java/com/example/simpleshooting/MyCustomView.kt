@@ -188,7 +188,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun jTama():IchiJoho{
-        val m = IchiJoho(jk.m.x,jk.m.y,10,10)
+        val m = IchiJoho(m.x,m.y,10,10)
         m.iro.style = Paint.Style.FILL
         m.iro.color = Color.GREEN
         return m
@@ -259,10 +259,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         return xx
     }
     fun clickShitaBshoNiIdou(){
-        val saX = m.x - clickX
-        val saY = m.y - clickY
-        var x = m.x
-        var y = m.y
+        val saX = jk.m.x - clickX
+        val saY = jk.m.y - clickY
+        var x = jk.m.x
+        var y = jk.m.y
         val speed = 2.5
         val plus = 10 * speed .toInt()
 
@@ -287,8 +287,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             }
         }
 
-        m.x = x
-        m.y = y
+        jk.m.x = x
+        jk.m.y = y
     }
 
 
