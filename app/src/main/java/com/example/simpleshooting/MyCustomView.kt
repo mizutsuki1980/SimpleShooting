@@ -24,14 +24,15 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
+    var jk =JikiJoho(jikiOokisa,initialJikiX, initialJikiY,jiki())
+    //jkにはjk.mという自機の位置情報が入っている。いままでm.で使っていたものを置き換える。
+
     var m = jiki()
     var e = teki()
     var jt = jTama()
     var et = eTama()
     var et2 = eTama()
 
-    var jk =JikiJoho(jikiOokisa,initialJikiX, initialJikiY,jiki())
-    //jkにはjk.mという自機の位置情報が入っている。いままでm.で使っていたものを置き換える。
 
 
     override fun onDraw(canvas: Canvas) {
@@ -200,7 +201,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun jTama():IchiJoho{
        //弾をリセットする。最初の状態にする。
-        val f = jk.jikiX
+        val f = "0" + 123 + m.x + jk.m.x.toString()
         val z = IchiJoho(m.x,m.y,10,10)
         //val y = IchiJoho(jk.m.x,10,10,10,)
         //val mmm =IchiJoho(jk.m.x,jk.m.y,10,10)
