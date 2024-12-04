@@ -18,18 +18,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tamaFrameIchi = 0
     var enemyTamaSpeed = 2.0    //デフォはこれにしといて、変えれるようにしよう
 
-    val jikiX = 300 //初期位置
-    val jikiY = 800 //初期位置
+    val initialJikiX = 300 //初期位置
+    val initialJikiY = 800 //初期位置
 
-    var clickX = jikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
-    var clickY = jikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
+    var clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
+    var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
     var m = jiki()
     var e = teki()
     var jt = jTama()
     var et = eTama()
     var et2 = eTama()
-    var jk =JikiJoho(jikiOokisa,jikiX, jikiY,jiki())
+    var jk =JikiJoho(jikiOokisa,initialJikiX, initialJikiY,jiki())
 
 
 
@@ -187,7 +187,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun jTama():IchiJoho{
-        val m = IchiJoho(jikiX,jikiY,10,10)
+        val m = IchiJoho(initialJikiX,initialJikiY,10,10)
         m.iro.style = Paint.Style.FILL
         m.iro.color = Color.GREEN
         return m
@@ -195,8 +195,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun startSetUp(){
-        m.x = jikiX
-        m.y = jikiY
+        m.x = initialJikiX
+        m.y = initialJikiY
         m = jiki()
         e = teki()
         jt = jTama()
@@ -236,7 +236,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun jiki():IchiJoho{
 
-        val m = IchiJoho(jikiX,jikiY,jikiOkisa,30)
+        val m = IchiJoho(initialJikiX,initialJikiY,jikiOokisa,30)
         m.iro.style = Paint.Style.FILL
         m.iro.color = Color.RED
         return m
