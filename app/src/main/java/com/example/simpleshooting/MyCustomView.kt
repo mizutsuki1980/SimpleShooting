@@ -13,7 +13,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var frame = 0
     var dgCount = 0
     var scoreCount = 0
-    var jikiOkisa = 50
+    var jikiOokisa = 50
     var tekiOkisa = 70
     var tamaFrameIchi = 0
     var enemyTamaSpeed = 2.0    //デフォはこれにしといて、変えれるようにしよう
@@ -29,7 +29,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jt = jTama()
     var et = eTama()
     var et2 = eTama()
-
+    var jk =JikiJoho(jikiOokisa,jikiX, jikiY,jiki())
 
 
 
@@ -205,7 +205,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         frame = 0
         dgCount = 0
         scoreCount = 0
-        jikiOkisa = 50
+        jikiOokisa = 50
 
     }
 
