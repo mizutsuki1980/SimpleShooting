@@ -29,8 +29,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jt = jTama()
     var et = eTama()
     var et2 = eTama()
-    var jk =JikiJoho(jikiOokisa,initialJikiX, initialJikiY,jiki())
 
+    var jk =JikiJoho(jikiOokisa,initialJikiX, initialJikiY,jiki())
+    //jkにはjk.mという自機の位置情報が入っている。いままでm.で使っていたものを置き換える。
 
 
     override fun onDraw(canvas: Canvas) {
