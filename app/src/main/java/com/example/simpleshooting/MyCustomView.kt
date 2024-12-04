@@ -28,13 +28,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var et = eTama()
     var et2 = eTama()
 
-    var jiki = JikiJoho(jikiOkisa,jikiX,jikiY,jiki())
+
 
 
     override fun onDraw(canvas: Canvas) {
-//        canvas.drawCircle(m.x.toFloat(),m.y.toFloat(),(m.Ookisa/2).toFloat(),m.iro) //自機は丸にした
-        canvas.drawCircle(jiki.jikiX.toFloat(),jiki.jikiY.toFloat(),(jiki.jikiOokisa/2).toFloat(),jiki.m.iro) //自機は丸にした
-
+        canvas.drawCircle(m.x.toFloat(),m.y.toFloat(),(m.Ookisa/2).toFloat(),m.iro) //自機は丸にした
         clickShitaBshoNiIdou()        //自機の移動　処理
 
         canvas.drawRect(e.shikakuRectXY(e.x,e.y,e.Ookisa), e.iro)
@@ -65,8 +63,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         var tamaSpeed = 3.5
         var xhanai =650
         var yHani = 900
-        var vx = jiki.jikiX - et2.x
-        var vy = jiki.jikiY - et2.y
+        var vx = m.x - et2.x
+        var vy = m.y - et2.y
 
         var resetKyori = 500 //よけ始める距離
         if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ et2.homing = false }
@@ -85,19 +83,19 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun enemyTamaAtatta2(){
-        val vx = et2.x - jiki.jikiX
-        val vy = et2.y - jiki.jikiY
+        val vx = et2.x - m.x
+        val vy = et2.y - m.y
         if(et2.Ookisa == 30){
             dgCount += 1
 
             //弾２情報をリセット
             et2 = eTama()
             //以下２行を追加したら動いた。//なんかet2の値を取出でエラーが起きてる？//et2を作り直したらzenkaiVectだけでも設定してないとダメ
-            et2.zenkaiVect[0] = e.x - jiki.jikiX //- et2.x
-            et2.zenkaiVect[1] = e.y - jiki.jikiY //- et2.y
+            et2.zenkaiVect[0] = e.x - m.x //- et2.x
+            et2.zenkaiVect[1] = e.y - m.y //- et2.y
         }else{
-            var atariKyori = 5 + jiki.jikiOokisa/2 //当たり判定の距離
-            if(jiki.jikiOokisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
+            var atariKyori = 5 + m.Ookisa/2 //当たり判定の距離
+            if(m.Ookisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
             //なるほど、こういう弾を調節する処理をすると、弾①弾②と、弾の数だけ変更しなきゃいけないのか。
             if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
                 et2.iro.color = Color.DKGRAY
@@ -114,7 +112,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val vx = jt.x - e.x
         val vy = jt.y - e.y
         var atariKyori = 5 + e.Ookisa / 2 //当たり判定の距離 //敵はちょっとだけ当たり判定が大きい
-        if(jiki.jikiOokisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
+        if(m.Ookisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
 
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             jt.iro.color = Color.WHITE
@@ -125,14 +123,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun enemyTamaAtatta(){
-        val vx = et.x - jiki.jikiX
-        val vy = et.y - jiki.jikiY
+        val vx = et.x - m.x
+        val vy = et.y - m.y
         if(et.Ookisa == 30){
             dgCount += 1
             et = eTama()
             }else{
-            var atariKyori = 5 + jiki.jikiOokisa/2 //当たり判定の距離
-            if(jiki.jikiOokisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
+            var atariKyori = 5 + m.Ookisa/2 //当たり判定の距離
+            if(m.Ookisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
             if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
                 et.iro.color = Color.DKGRAY
                 et.Ookisa = 30
@@ -158,8 +156,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun enemyTama(){
-        var vx = jiki.jikiX - et.x
-        var vy = jiki.jikiY - et.y
+        var vx = m.x - et.x
+        var vy = m.y - et.y
 
         var resetKyori = 90 //よけ始める距離
         if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ et.homing = false }
@@ -195,8 +193,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun startSetUp(){
-        jiki.jikiX = jikiX
-        jiki.jikiY = jikiY
+        m.x = jikiX
+        m.y = jikiY
         m = jiki()
         e = teki()
         jt = jTama()
@@ -206,23 +204,23 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         dgCount = 0
         scoreCount = 0
         jikiOkisa = 50
-        jiki = JikiJoho(jikiOkisa,jikiX,jikiY,jiki())
+
     }
 
 
     fun hyperShotPowerUp(){
-        if (jiki.jikiOokisa==200){
-            jiki.jikiOokisa = 50
+        if (m.Ookisa==200){
+            m.Ookisa = 50
         }else{
-            jiki.jikiOokisa = 200
+            m.Ookisa = 200
         }
     }
 
     fun hyperPowerUp(){
-        if (jiki.jikiOokisa==200){
-            jiki.jikiOokisa = 50
+        if (m.Ookisa==200){
+            m.Ookisa = 50
         }else{
-            jiki.jikiOokisa = 200
+            m.Ookisa = 200
         }
     }
 
@@ -258,10 +256,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         return xx
     }
     fun clickShitaBshoNiIdou(){
-        val saX = jiki.jikiX - clickX
-        val saY = jiki.jikiY - clickY
-        var x = jiki.jikiX
-        var y = jiki.jikiY
+        val saX = m.x - clickX
+        val saY = m.y - clickY
+        var x = m.x
+        var y = m.y
         val speed = 2.5
         val plus = 10 * speed .toInt()
 
@@ -287,8 +285,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         jikiX = x
         jikiY = y
-        jiki.jikiX = x
-        jiki.jikiY = y
+        m.x = x
+        m.y = y
     }
 
 
