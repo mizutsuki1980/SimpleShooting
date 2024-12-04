@@ -66,8 +66,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         var tamaSpeed = 3.5
         var xhanai =650
         var yHani = 900
-        var vx = m.x - et2.x
-        var vy = m.y - et2.y
+        var vx = jk.m.x - et2.x
+        var vy = jk.m.y - et2.y
 
         var resetKyori = 500 //よけ始める距離
         if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ et2.homing = false }
