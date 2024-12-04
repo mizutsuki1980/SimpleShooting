@@ -188,7 +188,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun jTama():IchiJoho{
-        val m = IchiJoho(m.x,m.y,10,10)
+        val m = IchiJoho(jk.m.x,jk.m.y,10,10)
         m.iro.style = Paint.Style.FILL
         m.iro.color = Color.GREEN
         return m
