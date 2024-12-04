@@ -86,19 +86,19 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun enemyTamaAtatta2(){
-        val vx = et2.x - m.x
-        val vy = et2.y - m.y
+        val vx = et2.x - jk.m.x
+        val vy = et2.y - jk.m.y
         if(et2.Ookisa == 30){
             dgCount += 1
 
             //弾２情報をリセット
             et2 = eTama()
             //以下２行を追加したら動いた。//なんかet2の値を取出でエラーが起きてる？//et2を作り直したらzenkaiVectだけでも設定してないとダメ
-            et2.zenkaiVect[0] = e.x - m.x //- et2.x
-            et2.zenkaiVect[1] = e.y - m.y //- et2.y
+            et2.zenkaiVect[0] = e.x - jk.m.x //- et2.x
+            et2.zenkaiVect[1] = e.y - jk.m.y //- et2.y
         }else{
-            var atariKyori = 5 + m.Ookisa/2 //当たり判定の距離
-            if(m.Ookisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
+            var atariKyori = 5 + jk.m.Ookisa/2 //当たり判定の距離
+            if(jk.m.Ookisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
             //なるほど、こういう弾を調節する処理をすると、弾①弾②と、弾の数だけ変更しなきゃいけないのか。
             if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
                 et2.iro.color = Color.DKGRAY
