@@ -115,7 +115,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val vx = jt.x - e.x
         val vy = jt.y - e.y
         var atariKyori = 5 + e.Ookisa / 2 //当たり判定の距離 //敵はちょっとだけ当たり判定が大きい
-        if(m.Ookisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
+        if(jk.m.Ookisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
 
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             jt.iro.color = Color.WHITE
