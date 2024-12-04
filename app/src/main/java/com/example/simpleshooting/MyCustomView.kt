@@ -35,7 +35,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     override fun onDraw(canvas: Canvas) {
-        canvas.drawCircle(m.x.toFloat(),m.y.toFloat(),(m.Ookisa/2).toFloat(),m.iro) //自機は丸にした
+        canvas.drawCircle(jk.m.x.toFloat(),jk.m.y.toFloat(),(jk.m.Ookisa/2).toFloat(),jk.m.iro) //自機は丸にした
         clickShitaBshoNiIdou()        //自機の移動　処理
 
         canvas.drawRect(e.shikakuRectXY(e.x,e.y,e.Ookisa), e.iro)
