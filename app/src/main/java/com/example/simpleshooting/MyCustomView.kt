@@ -126,14 +126,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun enemyTamaAtatta(){
-        val vx = et.x - m.x
-        val vy = et.y - m.y
+        val vx = et.x - jk.m.x
+        val vy = et.y - jk.m.y
         if(et.Ookisa == 30){
             dgCount += 1
             et = eTama()
             }else{
-            var atariKyori = 5 + m.Ookisa/2 //当たり判定の距離
-            if(m.Ookisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
+            var atariKyori = 5 + jk.m.Ookisa/2 //当たり判定の距離
+            if(jk.m.Ookisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
             if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
                 et.iro.color = Color.DKGRAY
                 et.Ookisa = 30
