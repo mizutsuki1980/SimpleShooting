@@ -115,7 +115,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val vx = jt.x - e.x
         val vy = jt.y - e.y
         var atariKyori = 5 + e.Ookisa / 2 //当たり判定の距離 //敵はちょっとだけ当たり判定が大きい
-        if(jk.m.Ookisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
+        if(jk.m.Ookisa==200){
+            atariKyori -= 5
+        }//大きいときは、ちょっと当たり判定をマイナスする
 
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             jt.iro.color = Color.WHITE
@@ -148,9 +150,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val tamaPlus = 10 * tamaSpeed .toInt()
         tamaFrameIchi += 1
         jt.y-= tamaPlus
-        if(jt.y<5){tamaFrameIchi=0}        //画面の上部で消える
-        if(tamaFrameIchi==20){tamaFrameIchi=0}        //20フレームでリセット
-        if(tamaFrameIchi==0){jt=jTama()}
+
+        if(jt.y<5){
+            tamaFrameIchi=0
+        }        //画面の上部で消える
+
+        if(tamaFrameIchi==20){
+            tamaFrameIchi=0
+        }        //20フレームでリセット
+
+        if(tamaFrameIchi==0){
+            jt=jTama()
+        }
     }
 
 
@@ -190,12 +201,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun jTama():IchiJoho{
        //弾をリセットする。最初の状態にする。
 
-        val m = IchiJoho(m.x,m.y,10,10)
-        val y = IchiJoho(jk.m.x,10,10,10,)
+        val z = IchiJoho(m.x,m.y,10,10)
+        //val y = IchiJoho(jk.m.x,10,10,10,)
         //val mmm =IchiJoho(jk.m.x,jk.m.y,10,10)
-        m.iro.style = Paint.Style.FILL
-        m.iro.color = Color.GREEN
-        return m
+        z.iro.style = Paint.Style.FILL
+        z.iro.color = Color.GREEN
+        return z
     }
 
 
