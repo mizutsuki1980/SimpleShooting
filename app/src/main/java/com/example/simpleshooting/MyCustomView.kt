@@ -201,10 +201,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun jTama():IchiJoho{
        //弾をリセットする。最初の状態にする。
-        val f = "0" + 123 + m.x + jk.m.x.toString()
-        val z = IchiJoho(m.x,m.y,10,10)
-        //val y = IchiJoho(jk.m.x,10,10,10,)
-        //val mmm =IchiJoho(jk.m.x,jk.m.y,10,10)
+        val z = IchiJoho(jk.m.x,jk.m.y,10,10)
         z.iro.style = Paint.Style.FILL
         z.iro.color = Color.GREEN
         return z
@@ -212,9 +209,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun startSetUp(){
-        m.x = initialJikiX
-        m.y = initialJikiY
-        m = jiki()
+        jk.m = jiki()
+        jk.m.x = initialJikiX
+        jk.m.y = initialJikiY
         e = teki()
         jt = jTama()
         et = eTama()
@@ -228,18 +225,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun hyperShotPowerUp(){
-        if (m.Ookisa==200){
-            m.Ookisa = 50
+        if (jk.m.Ookisa==200){
+            jk.m.Ookisa = 50
         }else{
-            m.Ookisa = 200
+            jk.m.Ookisa = 200
         }
     }
 
     fun hyperPowerUp(){
-        if (m.Ookisa==200){
-            m.Ookisa = 50
+        if (jk.m.Ookisa==200){
+            jk.m.Ookisa = 50
         }else{
-            m.Ookisa = 200
+            jk.m.Ookisa = 200
         }
     }
 
