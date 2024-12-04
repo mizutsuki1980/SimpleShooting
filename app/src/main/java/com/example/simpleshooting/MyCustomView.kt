@@ -17,8 +17,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tekiOkisa = 70
     var tamaFrameIchi = 0
     var enemyTamaSpeed = 2.0    //デフォはこれにしといて、変えれるようにしよう
-    var jikiX = 300 //初期位置
-    var jikiY = 800 //初期位置
+
+    val jikiX = 300 //初期位置
+    val jikiY = 800 //初期位置
+
     var clickX = jikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = jikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
@@ -283,8 +285,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 y += plus
             }
         }
-        jikiX = x
-        jikiY = y
+
         m.x = x
         m.y = y
     }
