@@ -159,8 +159,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun enemyTama(){
-        var vx = m.x - et.x
-        var vy = m.y - et.y
+        var vx = jk.m.x - et.x
+        var vy = jk.m.y - et.y
 
         var resetKyori = 90 //よけ始める距離
         if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ et.homing = false }
