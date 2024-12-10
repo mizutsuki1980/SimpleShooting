@@ -37,7 +37,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     override fun onDraw(canvas: Canvas) {
         if (frame == 0) {
             jk.m = jk.jikiSet(initialJikiX, initialJikiY, jikiOokisa, tamaOkisa)
-            //ここにこれを書いてしまうと、ずっとここにいることになる。
+            //ここにこれを書いてしまうと、ずっとここにいることになる。なのでframe == 0　の時だけ
         }
 
 
