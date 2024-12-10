@@ -15,6 +15,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var scoreCount = 0
     var jikiOokisa = 50
     var tekiOkisa = 70
+    var tamaOkisa = 30
     var tamaFrameIchi = 0
     var enemyTamaSpeed = 2.0    //デフォはこれにしといて、変えれるようにしよう
 
@@ -24,8 +25,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
-    var jk =JikiJoho(jikiOokisa,initialJikiX, initialJikiY,jiki())
-    
+    var jk =JikiJoho(jikiOokisa,initialJikiX, initialJikiY, IchiJoho(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa))
 
     var e = teki()
     var jt = jTama()
@@ -35,6 +35,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     override fun onDraw(canvas: Canvas) {
+        jk.m = jk.jikiSet(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa)
+
         canvas.drawCircle(jk.m.x.toFloat(),jk.m.y.toFloat(),(jk.m.Ookisa/2).toFloat(),jk.m.iro) //自機は丸にした
         clickShitaBshoNiIdou()        //自機の移動　処理
 
