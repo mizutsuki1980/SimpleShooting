@@ -10,8 +10,12 @@ class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var m :IchiJoho ) 
     // var jikiY
     // var m :IchiJoho //(IchiJouhouのjiki())
 
-    fun jikiSet(initialJikiX:Int,initialJikiY:Int,jikiOokisa:Int,tamaOkisa:Int):IchiJoho{
+    init {
+        println("最初の初期化ブロックによる $jikiOokisa のプリント")
+    }
 
+
+    fun jikiSet(initialJikiX:Int,initialJikiY:Int,jikiOokisa:Int,tamaOkisa:Int):IchiJoho{
         val m = IchiJoho(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa)
         m.iro.style = Paint.Style.FILL
         m.iro.color = Color.RED
