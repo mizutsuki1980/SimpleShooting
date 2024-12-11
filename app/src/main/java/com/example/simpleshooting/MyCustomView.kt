@@ -26,7 +26,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
     var jk =JikiJoho(jikiOokisa,initialJikiX, initialJikiY, IchiJoho(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa))
-
+    var jkk =JikiJoho(100,10,10,IchiJoho(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa))
 
 
     var e = teki()
@@ -42,7 +42,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
         //ここにこれを書いてしまうと、ずっとここにいることになる。
 
-        canvas.drawCircle(jk.m.x.toFloat(),jk.m.y.toFloat(),(jk.m.Ookisa/2).toFloat(),jk.m.iro) //自機は丸にした
+        canvas.drawCircle(jkk.x.toFloat(),jkk.y.toFloat(),(jk.m.Ookisa/2).toFloat(),jk.m.iro) //自機は丸にした
         clickShitaBshoNiIdou()        //自機の移動　処理
 
         canvas.drawRect(e.shikakuRectXY(e.x,e.y,e.Ookisa), e.iro)

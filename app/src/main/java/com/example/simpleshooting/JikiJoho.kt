@@ -9,9 +9,18 @@ class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var m :IchiJoho ) 
     // var jikiX
     // var jikiY
     // var m :IchiJoho //(IchiJouhouのjiki())
+    var x :Int
+    var y : Int
 
+    //なんとなくわかった、最初の数値をinitで決めれるのか。それがオブジェクトに入る。それをプロパティで取り出して使う、と。
+    //あとから変更も可能、と。
     init {
         val m = IchiJoho(0,0,50,10)
+         x  =250
+         y  =250
+        jikiOokisa = 50
+
+
         m.iro.style = Paint.Style.FILL
         m.iro.color = Color.RED
         //ここで、書いたものは、いったいどういう動きをするんだろうか？
