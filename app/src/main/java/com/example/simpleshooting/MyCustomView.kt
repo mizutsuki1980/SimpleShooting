@@ -35,11 +35,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     override fun onDraw(canvas: Canvas) {
-        if (frame == 0) {
-            jk.m = jk.jikiSet(initialJikiX, initialJikiY, jikiOokisa, tamaOkisa)
-            //ここにこれを書いてしまうと、ずっとここにいることになる。なのでframe == 0　の時だけ
-        }
-
+        jk.m = jk.jikiSet(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa)
+        //ここにこれを書いてしまうと、ずっとここにいることになる。
 
         canvas.drawCircle(jk.m.x.toFloat(),jk.m.y.toFloat(),(jk.m.Ookisa/2).toFloat(),jk.m.iro) //自機は丸にした
         clickShitaBshoNiIdou()        //自機の移動　処理
