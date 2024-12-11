@@ -42,7 +42,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
         //ここにこれを書いてしまうと、ずっとここにいることになる。
 
-        canvas.drawCircle(jkk.x.toFloat(),jkk.y.toFloat(),(jk.m.Ookisa/2).toFloat(),jk.m.iro) //自機は丸にした
+        canvas.drawCircle(jk.m.x.toFloat(),jk.m.y.toFloat(),(jk.m.Ookisa/2).toFloat(),jk.iro) //自機は丸にした
         clickShitaBshoNiIdou()        //自機の移動　処理
 
         canvas.drawRect(e.shikakuRectXY(e.x,e.y,e.Ookisa), e.iro)
