@@ -26,7 +26,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
     var jk =JikiJoho(jikiOokisa,initialJikiX, initialJikiY, IchiJoho(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa))
-    var jkk =JikiJoho(100,10,10,IchiJoho(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa))
 
 
     var e = teki()
