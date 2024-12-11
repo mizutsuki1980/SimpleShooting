@@ -11,7 +11,13 @@ class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var m :IchiJoho ) 
     // var m :IchiJoho //(IchiJouhouのjiki())
 
     init {
-        println("最初の初期化ブロックによる $jikiOokisa のプリント")
+        val m = IchiJoho(0,0,50,10)
+        m.iro.style = Paint.Style.FILL
+        m.iro.color = Color.RED
+        //ここで、書いたものは、いったいどういう動きをするんだろうか？
+        //return とか使えないよな。どこにどう格納されんだよ。
+        //        println("最初の初期化ブロックによる $jikiOokisa のプリント")
+
     }
 
 
