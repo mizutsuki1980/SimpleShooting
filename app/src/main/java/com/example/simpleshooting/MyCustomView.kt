@@ -32,13 +32,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jt = jTama()
     var et = eTama()
     var et2 = eTama()
-
+    init{
+        jk.m = jk.jikiSet(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa)
+    }
 
 
     override fun onDraw(canvas: Canvas) {
-    if(frame==0){
-        jk.m = jk.jikiSet(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa)
-    }
         //ここにこれを書いてしまうと、ずっとここにいることになる。
 
         canvas.drawCircle(jk.m.x.toFloat(),jk.m.y.toFloat(),(jk.m.Ookisa/2).toFloat(),jk.iro) //自機は丸にした
