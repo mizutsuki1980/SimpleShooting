@@ -25,7 +25,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
-    var jk =JikiJoho(jikiOokisa,initialJikiX, initialJikiY)
+    var jk =JikiJoho(jikiOokisa,initialJikiX, initialJikiY,tamaOkisa)
 
 
     var e = teki()
@@ -217,7 +217,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun startSetUp(){
 
-        jk = JikiJoho(initialJikiX,initialJikiY,jikiOokisa)
+        jk = JikiJoho(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa)
         jk.x = initialJikiX
         jk.y = initialJikiY
         e = teki()
