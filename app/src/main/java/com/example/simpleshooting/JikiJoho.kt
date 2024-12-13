@@ -20,7 +20,6 @@ class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var m :IchiJoho ) 
     init {
         iro.style = Paint.Style.FILL
         iro.color = Color.RED
-
         val m = IchiJoho(0,0,50,10)
          x  =250
          y  =250
@@ -36,7 +35,7 @@ class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var m :IchiJoho ) 
     }
 
 
-    fun jikiSet(initialJikiX:Int,initialJikiY:Int,jikiOokisa:Int,tamaOkisa:Int):IchiJoho{
+    fun jiki(initialJikiX:Int,initialJikiY:Int,jikiOokisa:Int,tamaOkisa:Int):IchiJoho{
         val m = IchiJoho(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa)
         m.iro.style = Paint.Style.FILL
         m.iro.color = Color.RED

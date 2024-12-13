@@ -32,13 +32,15 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jt = jTama()
     var et = eTama()
     var et2 = eTama()
+
+
+
     init{
-        jk.m = jk.jikiSet(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa)
+        jk.m = jk.jiki(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa)
     }
 
 
     override fun onDraw(canvas: Canvas) {
-        //ここにこれを書いてしまうと、ずっとここにいることになる。
 
         canvas.drawCircle(jk.m.x.toFloat(),jk.m.y.toFloat(),(jk.m.Ookisa/2).toFloat(),jk.iro) //自機は丸にした
         clickShitaBshoNiIdou()        //自機の移動　処理
@@ -62,8 +64,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(et2.shikakuRectXY(et2.x,et2.y,et2.Ookisa), et2.iro)
         enemyTama2()        //敵の弾　処理
         enemyTamaAtatta2()
-
-
     }
 
     fun enemyTama2(){
@@ -213,7 +213,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun startSetUp(){
-        jk.m = jiki()
+
+        jk.m = jk.jiki(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa,)
         jk.m.x = initialJikiX
         jk.m.y = initialJikiY
         e = teki()
@@ -250,14 +251,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }else{
             e.Ookisa = 140
         }
-    }
-
-    fun jiki():IchiJoho{
-
-        val m = IchiJoho(initialJikiX,initialJikiY,jikiOokisa,30)
-        m.iro.style = Paint.Style.FILL
-        m.iro.color = Color.RED
-        return m
     }
 
     fun teki():IchiJoho{
