@@ -39,31 +39,34 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jk.m = jk.jiki(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa)
     }
 
+    fun beginAnimation() {
+        tsugiNoSyori()  //最初に一回だけ呼ばれる
+    }
 
-    override fun onDraw(canvas: Canvas) {
+    fun tsugiNoSyori() {
+        frame += 1  //繰り返し処理はここでやってる
+        invalidate()
 
-        canvas.drawCircle(jk.m.x.toFloat(),jk.m.y.toFloat(),(jk.m.Ookisa/2).toFloat(),jk.iro) //自機は丸にした
         clickShitaBshoNiIdou()        //自機の移動　処理
-
-        canvas.drawRect(e.shikakuRectXY(e.x,e.y,e.Ookisa), e.iro)
         e.x = tekiUgki(e.x)        //敵の移動　処理
-
-
-        canvas.drawRect(jt.shikakuRectXY(jt.x,jt.y,jt.Ookisa), jt.iro)
         tamaSyori()        //自機の弾　処理
         tamaJikiSyori()     //自機の弾が当たったら、相手が消える処理をする
-        //canvas.drawPicture()とか
-        //canvas.drawBitmap()　あやしいのあるなー
-        //ここはまぁいいや
-
-        canvas.drawRect(et.shikakuRectXY(et.x,et.y,et.Ookisa), et.iro)
         enemyTama()        //敵の弾　処理
         enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
-
         et2.iro.color = Color.BLUE
-        canvas.drawRect(et2.shikakuRectXY(et2.x,et2.y,et2.Ookisa), et2.iro)
         enemyTama2()        //敵の弾　処理
         enemyTamaAtatta2()
+
+
+        handler.postDelayed({ tsugiNoSyori() }, 100)
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        canvas.drawCircle(jk.m.x.toFloat(),jk.m.y.toFloat(),(jk.m.Ookisa/2).toFloat(),jk.iro) //自機の移動　処理
+        canvas.drawRect(e.shikakuRectXY(e.x,e.y,e.Ookisa), e.iro)   //敵の移動　処理
+        canvas.drawRect(jt.shikakuRectXY(jt.x,jt.y,jt.Ookisa), jt.iro)  //自機の弾　処理   //自機の弾が当て相手が消え処理
+        canvas.drawRect(et.shikakuRectXY(et.x,et.y,et.Ookisa), et.iro)  //敵の弾　処理    //敵の弾が当たったら、敵の弾は消滅する
+        canvas.drawRect(et2.shikakuRectXY(et2.x,et2.y,et2.Ookisa), et2.iro) //敵の弾　処理
     }
 
     fun enemyTama2(){
@@ -328,15 +331,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         return super.onTouchEvent(event)
     }
 
-    fun beginAnimation() {
-        tsugiNoSyori()
-    }
-
-    fun tsugiNoSyori() {
-        frame += 1
-        invalidate()
-        handler.postDelayed({ tsugiNoSyori() }, 100)
-    }
 
 
 
