@@ -3,7 +3,7 @@ package com.example.simpleshooting
 import android.graphics.Color
 import android.graphics.Paint
 
-class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var m :IchiJoho ) {
+class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int) {
     //色情報はJikiJohoに入れることにする　iro
     //m.ってやつを調べていたら、eTamaというのを修正しなければいけないのでは？と思った。
     //IchiJohoで作っちゃったのは、今全部m.に色が入ってるのか。面倒くさいっぽい。
