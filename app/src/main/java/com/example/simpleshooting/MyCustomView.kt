@@ -208,7 +208,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun jTama():IchiJoho{
        //弾をリセットする。最初の状態にする。
-        val z = IchiJoho(jk.x,jk.y,10,10)
+        val z = IchiJoho(jk.x,jk.y,10,jk.tamaOkisa)
         z.iro.style = Paint.Style.FILL
         z.iro.color = Color.GREEN
         return z
