@@ -31,5 +31,12 @@ class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var tamaOkisa:Int)
         m.iro.color = Color.RED
         return m
     }
+    fun atariKyori(Ookisa:Int):Int{
+        var atariKyori = 5 + Ookisa/2 //当たり判定の距離
+        if(Ookisa==200){
+            atariKyori -= 5
+        }//大きいときは、ちょっと当たり判定をマイナスする
+        return atariKyori
+    }
 
 }

@@ -21,4 +21,5 @@ class IchiJoho(var x:Int, var y:Int, var Ookisa:Int, val tamaOokisa:Int){
         val m = Rect(left, top, right,bottom)
         return m
     }
+
 }
