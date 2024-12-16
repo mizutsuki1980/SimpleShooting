@@ -105,9 +105,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             et2.zenkaiVect[0] = e.x - jk.x //- et2.x
             et2.zenkaiVect[1] = e.y - jk.y //- et2.y
         }else{
-            var atariKyori = 5 + jk.jikiOokisa/2 //当たり判定の距離
-            if(jk.jikiOokisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
-            //なるほど、こういう弾を調節する処理をすると、弾①弾②と、弾の数だけ変更しなきゃいけないのか。
+            val atariKyori = jk.atariKyori(jk.jikiOokisa)
             if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
                 et2.iro.color = Color.DKGRAY
                 et2.Ookisa = 30
@@ -122,10 +120,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         val vx = jt.x - e.x
         val vy = jt.y - e.y
-        var atariKyori = 5 + e.Ookisa / 2 //当たり判定の距離 //敵はちょっとだけ当たり判定が大きい
-        if(jk.jikiOokisa==200){
-            atariKyori -= 5
-        }//大きいときは、ちょっと当たり判定をマイナスする
+        val atariKyori = jk.atariKyori(jk.jikiOokisa)
 
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             jt.iro.color = Color.WHITE
@@ -143,8 +138,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             et = eTama()
             }else{
             val atariKyori = jk.atariKyori(jk.jikiOokisa)
-            //var atariKyori = 5 + jk.jikiOokisa/2 //当たり判定の距離
-            //if(jk.jikiOokisa==200){atariKyori -= 5}//大きいときは、ちょっと当たり判定をマイナスする
 
 
             if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
