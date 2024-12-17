@@ -105,7 +105,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             et2.zenkaiVect[0] = e.x - jk.x //- et2.x
             et2.zenkaiVect[1] = e.y - jk.y //- et2.y
         }else{
-            val atariKyori = jk.atariKyori(jk.jikiOokisa)
+            val atariKyori = jk.atariKyori()
             if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
                 et2.iro.color = Color.DKGRAY
                 et2.Ookisa = 30
@@ -120,7 +120,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         val vx = jt.x - e.x
         val vy = jt.y - e.y
-        val atariKyori = jk.atariKyori(jk.jikiOokisa)
+        val atariKyori = jk.atariKyori()
 
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             jt.iro.color = Color.WHITE
@@ -137,7 +137,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             dgCount += 1
             et = eTama()
             }else{
-            val atariKyori = jk.atariKyori(jk.jikiOokisa)
+            val atariKyori = jk.atariKyori()
 
 
             if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
