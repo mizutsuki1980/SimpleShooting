@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.hyperButton).setOnClickListener {
-            custom.post { custom.hyperPowerUp() }
+            custom.post { custom.jk.hyperKaPowerUp() }
         }
         findViewById<Button>(R.id.hyperShotButton).setOnClickListener {
             custom.post { custom.hyperShotPowerUp() }
