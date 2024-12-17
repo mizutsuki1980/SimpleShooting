@@ -63,10 +63,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     override fun onDraw(canvas: Canvas) {
         canvas.drawCircle(jk.x.toFloat(),jk.y.toFloat(),(jk.jikiOokisa/2).toFloat(),jk.iro) //自機の移動　処理
-        canvas.drawRect(e.shikakuRectXY(e.x,e.y,e.Ookisa), e.iro)   //敵の移動　処理
-        canvas.drawRect(jt.shikakuRectXY(jt.x,jt.y,jt.Ookisa), jt.iro)  //自機の弾　処理   //自機の弾が当て相手が消え処理
-        canvas.drawRect(et.shikakuRectXY(et.x,et.y,et.Ookisa), et.iro)  //敵の弾　処理    //敵の弾が当たったら、敵の弾は消滅する
-        canvas.drawRect(et2.shikakuRectXY(et2.x,et2.y,et2.Ookisa), et2.iro) //敵の弾　処理
+        canvas.drawRect(e.shikakuRectXY(e.x,e.y,e.ookisa), e.iro)   //敵の移動　処理
+        canvas.drawRect(jt.shikakuRectXY(jt.x,jt.y,jt.ookisa), jt.iro)  //自機の弾　処理   //自機の弾が当て相手が消え処理
+        canvas.drawRect(et.shikakuRectXY(et.x,et.y,et.ookisa), et.iro)  //敵の弾　処理    //敵の弾が当たったら、敵の弾は消滅する
+        canvas.drawRect(et2.shikakuRectXY(et2.x,et2.y,et2.ookisa), et2.iro) //敵の弾　処理
     }
 
     fun enemyTama2(){
@@ -96,7 +96,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun enemyTamaAtatta2(){
         val vx = et2.x - jk.x
         val vy = et2.y - jk.y
-        if(et2.Ookisa == 30){
+        if(et2.ookisa == 30){
             dgCount += 1
 
             //弾２情報をリセット
@@ -108,14 +108,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             val atariKyori = jk.atariKyori()
             if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
                 et2.iro.color = Color.DKGRAY
-                et2.Ookisa = 30
+                et2.ookisa = 30
             }
         }
     }
 
 
     fun tamaJikiSyori(){
-        if(jt.Ookisa == 30){
+        if(jt.ookisa == 30){
             jt = jTama()    //弾のエフェクトだけちょっとだしたい。
         }
         val vx = jt.x - e.x
@@ -124,7 +124,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             jt.iro.color = Color.WHITE
-            jt.Ookisa = 30
+            jt.ookisa = 30
             e = teki()
             scoreCount += 1
         }
@@ -133,7 +133,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun enemyTamaAtatta(){
         val vx = et.x - jk.x
         val vy = et.y - jk.y
-        if(et.Ookisa == 30){
+        if(et.ookisa == 30){
             dgCount += 1
             et = eTama()
             }else{
@@ -142,7 +142,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
             if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
                 et.iro.color = Color.DKGRAY
-                et.Ookisa = 30
+                et.ookisa = 30
             }
 
         }
@@ -245,10 +245,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun tekiHyperPowerUp(){
-        if (e.Ookisa==140){
-            e.Ookisa = 70
+        if (e.ookisa==140){
+            e.ookisa = 70
         }else{
-            e.Ookisa = 140
+            e.ookisa = 140
         }
     }
 
