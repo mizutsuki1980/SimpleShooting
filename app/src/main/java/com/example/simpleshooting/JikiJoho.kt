@@ -41,7 +41,14 @@ class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var tamaOkisa:Int)
         return atariKyori
     }
 
-    fun hyperKaPowerUp(){
+    fun hyperPowerUp(){
+        if (jikiOokisa==200){
+            jikiOokisa = 50
+        }else{
+            jikiOokisa = 200
+        }
+    }
+    fun hyperShotPowerUp(){
         if (jikiOokisa==200){
             jikiOokisa = 50
         }else{

@@ -228,21 +228,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
 
-    fun hyperShotPowerUp(){
-        if (jk.jikiOokisa==200){
-            jk.jikiOokisa = 50
-        }else{
-            jk.jikiOokisa = 200
-        }
-    }
-
-    fun hyperPowerUp(){
-        if (jk.jikiOokisa==200){
-            jk.jikiOokisa = 50
-        }else{
-            jk.jikiOokisa = 200
-        }
-    }
 
     fun tekiHyperPowerUp(){
         if (e.ookisa==140){
