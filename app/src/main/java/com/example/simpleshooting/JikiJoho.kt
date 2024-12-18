@@ -1,5 +1,6 @@
 package com.example.simpleshooting
 
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 
@@ -81,5 +82,7 @@ class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var tamaOkisa:Int)
         jikiY = yyy
     }
 
-
+    fun drawJiki(canvas:Canvas){
+        canvas.drawCircle(jikiX.toFloat(),jikiY.toFloat(),(jikiOokisa/2).toFloat(),iro) //自機の移動　処理
+    }
 }
