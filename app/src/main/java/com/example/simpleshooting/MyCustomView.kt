@@ -252,38 +252,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(xx >= 800) { xx = -100 }
         return xx
     }
-    fun clickShitaBshoNiIdou(){
-        val saX = jk.x - clickX
-        val saY = jk.y - clickY
-        var x = jk.x
-        var y = jk.y
-        val speed = 2.5
-        val plus = 10 * speed .toInt()
-
-        if (saX >= -(plus) && saX <= plus){
-            x = clickX
-        }else {
-            if (saX > 0) {
-                x -= plus
-            }
-            if (saX < 0) {
-                x += plus
-            }
-        }
-        if (saY >= -plus && saY <= plus){
-            y = clickY
-        }else {
-            if (saY > 0) {
-                y -= plus
-            }
-            if (saY < 0) {
-                y += plus
-            }
-        }
-
-        jk.x = x
-        jk.y = y
-    }
 
 
 
