@@ -57,10 +57,10 @@ class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var tamaOkisa:Int)
     }
 
     fun clickShitaBshoNiIdou(clickX:Int,clickY:Int){
-        val saX = x - clickX
-        val saY = y - clickY
-        var xxx = x
-        var yyy = y
+        val saX = jikiX - clickX
+        val saY = jikiY - clickY
+        var xxx = jikiX
+        var yyy = jikiY
         val speed = 2.5
         val plus = 10 * speed .toInt()
 
@@ -85,8 +85,8 @@ class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var tamaOkisa:Int)
             }
         }
 
-        x = xxx
-        y = yyy
+        jikiX = xxx
+        jikiY = yyy
     }
 
 
