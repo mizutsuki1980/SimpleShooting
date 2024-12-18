@@ -4,18 +4,10 @@ import android.graphics.Color
 import android.graphics.Paint
 
 class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var tamaOkisa:Int) {
-    //色情報はJikiJohoに入れることにする　iro
-    //m.ってやつを調べていたら、eTamaというのを修正しなければいけないのでは？と思った。
-    //IchiJohoで作っちゃったのは、今全部m.に色が入ってるのか。面倒くさいっぽい。
-    //まずは自機の色を使ってないか。調べる。
-    var x:Int
-    var y:Int
+
     var iro = Paint()
 
     init {
-        x=jikiX
-        y=jikiY
-
         iro.style = Paint.Style.FILL
         iro.color = Color.RED
         val m = IchiJoho(0,0,50,10)
