@@ -46,8 +46,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tsugiNoSyori() {
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
-
-        clickShitaBshoNiIdou()        //自機の移動　処理
+        jk.clickShitaBshoNiIdou(clickX,clickY)
+        //clickShitaBshoNiIdou()        //自機の移動　処理
         e.x = tekiUgki(e.x)        //敵の移動　処理
         tamaSyori()        //自機の弾　処理
         tamaJikiSyori()     //自機の弾が当たったら、相手が消える処理をする

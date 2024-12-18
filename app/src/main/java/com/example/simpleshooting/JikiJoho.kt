@@ -56,4 +56,38 @@ class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var tamaOkisa:Int)
         }
     }
 
+    fun clickShitaBshoNiIdou(clickX:Int,clickY:Int){
+        val saX = x - clickX
+        val saY = y - clickY
+        var xxx = x
+        var yyy = y
+        val speed = 2.5
+        val plus = 10 * speed .toInt()
+
+        if (saX >= -(plus) && saX <= plus){
+            xxx = clickX
+        }else {
+            if (saX > 0) {
+                xxx -= plus
+            }
+            if (saX < 0) {
+                xxx += plus
+            }
+        }
+        if (saY >= -plus && saY <= plus){
+            yyy = clickY
+        }else {
+            if (saY > 0) {
+                yyy -= plus
+            }
+            if (saY < 0) {
+                yyy += plus
+            }
+        }
+
+        x = xxx
+        y = yyy
+    }
+
+
 }
