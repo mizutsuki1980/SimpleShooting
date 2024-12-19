@@ -213,8 +213,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun startSetUp(){
 
         jiki = JikiJoho(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa)
-        jiki.x = initialJikiX
-        jiki.y = initialJikiY
+        //jiki.x = initialJikiX
+        //jiki.y = initialJikiY
         e = teki()
         jt = jTama()
         et = eTama()
