@@ -79,7 +79,7 @@ class JikiJoho(var jikiOokisa:Int,var x:Int,var y:Int,var tamaOkisa:Int) {
         y = yyy
     }
 
-    fun drawJiki(canvas:Canvas){
+    fun draw(canvas:Canvas){
         canvas.drawCircle(x.toFloat(),y.toFloat(),(jikiOokisa/2).toFloat(),iro) //自機の移動　処理
     }
 }
