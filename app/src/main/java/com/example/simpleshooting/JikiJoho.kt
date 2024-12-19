@@ -7,8 +7,12 @@ import android.graphics.Paint
 class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var tamaOkisa:Int) {
 
     var iro = Paint()
+    var x :Int
+    var y :Int
 
     init {
+        x = jikiX
+        y = jikiY
         iro.style = Paint.Style.FILL
         iro.color = Color.RED
         val m = IchiJoho(0,0,50,10)
