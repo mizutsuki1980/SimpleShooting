@@ -31,10 +31,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.hyperButton).setOnClickListener {
-            custom.post { custom.jk.hyperPowerUp() }
+            custom.post { custom.jiki.hyperPowerUp() }
         }
         findViewById<Button>(R.id.hyperShotButton).setOnClickListener {
-            custom.post { custom.jk.hyperShotPowerUp() }
+            custom.post { custom.jiki.hyperShotPowerUp() }
         }
 
         findViewById<Button>(R.id.setButton).setOnClickListener {
