@@ -4,15 +4,15 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 
-class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var tamaOkisa:Int) {
+class JikiJoho(var jikiOokisa:Int,var x:Int,var y:Int,var tamaOkisa:Int) {
 
     var iro = Paint()
-    var x :Int
-    var y :Int
+//    var x :Int
+ //   var y :Int
 
     init {
-        x = jikiX
-        y = jikiY
+   //     x = jikiX
+     //   y = jikiY
         iro.style = Paint.Style.FILL
         iro.color = Color.RED
         val m = IchiJoho(0,0,50,10)
@@ -21,13 +21,6 @@ class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var tamaOkisa:Int)
         m.iro.color = Color.RED
     }
 
-
-    fun jiki(initialJikiX:Int,initialJikiY:Int,jikiOokisa:Int,tamaOkisa:Int):IchiJoho{
-        val m = IchiJoho(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa)
-        m.iro.style = Paint.Style.FILL
-        m.iro.color = Color.RED
-        return m
-    }
 
 
     fun atariKyori():Int{
@@ -54,10 +47,10 @@ class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var tamaOkisa:Int)
     }
 
     fun clickShitaBshoNiIdou(clickX:Int,clickY:Int){
-        val saX = jikiX - clickX
-        val saY = jikiY - clickY
-        var xxx = jikiX
-        var yyy = jikiY
+        val saX = x - clickX
+        val saY = y - clickY
+        var xxx = x
+        var yyy = y
         val speed = 2.5
         val plus = 10 * speed .toInt()
 
@@ -82,11 +75,11 @@ class JikiJoho(var jikiOokisa:Int,var jikiX:Int,var jikiY:Int,var tamaOkisa:Int)
             }
         }
 
-        jikiX = xxx
-        jikiY = yyy
+        x = xxx
+        y = yyy
     }
 
     fun drawJiki(canvas:Canvas){
-        canvas.drawCircle(jikiX.toFloat(),jikiY.toFloat(),(jikiOokisa/2).toFloat(),iro) //自機の移動　処理
+        canvas.drawCircle(x.toFloat(),y.toFloat(),(jikiOokisa/2).toFloat(),iro) //自機の移動　処理
     }
 }

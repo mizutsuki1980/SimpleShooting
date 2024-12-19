@@ -73,8 +73,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         var tamaSpeed = 3.5
         var xhanai =650
         var yHani = 900
-        var vx = jk.jikiX - et2.x
-        var vy = jk.jikiY - et2.y
+        var vx = jk.x - et2.x
+        var vy = jk.y - et2.y
 
         var resetKyori = 500 //よけ始める距離
         if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ et2.homing = false }
@@ -93,16 +93,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun enemyTamaAtatta2(){
-        val vx = et2.x - jk.jikiX
-        val vy = et2.y - jk.jikiY
+        val vx = et2.x - jk.x
+        val vy = et2.y - jk.y
         if(et2.ookisa == 30){
             dgCount += 1
 
             //弾２情報をリセット
             et2 = eTama()
             //以下２行を追加したら動いた。//なんかet2の値を取出でエラーが起きてる？//et2を作り直したらzenkaiVectだけでも設定してないとダメ
-            et2.zenkaiVect[0] = e.x - jk.jikiX //- et2.x
-            et2.zenkaiVect[1] = e.y - jk.jikiY //- et2.y
+            et2.zenkaiVect[0] = e.x - jk.x //- et2.x
+            et2.zenkaiVect[1] = e.y - jk.y //- et2.y
         }else{
             val atariKyori = jk.atariKyori()
             if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
@@ -130,8 +130,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun enemyTamaAtatta(){
-        val vx = et.x - jk.jikiX
-        val vy = et.y - jk.jikiY
+        val vx = et.x - jk.x
+        val vy = et.y - jk.y
         if(et.ookisa == 30){
             dgCount += 1
             et = eTama()
@@ -173,8 +173,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun enemyTama(){
-        var vx = jk.jikiX - et.x
-        var vy = jk.jikiY - et.y
+        var vx = jk.x - et.x
+        var vy = jk.y - et.y
 
         var resetKyori = 90 //よけ始める距離
         if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ et.homing = false }
@@ -203,7 +203,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun jTama():IchiJoho{
        //弾をリセットする。最初の状態にする。
-        val z = IchiJoho(jk.jikiX,jk.jikiY,10,jk.tamaOkisa)
+        val z = IchiJoho(jk.x,jk.y,10,jk.tamaOkisa)
         z.iro.style = Paint.Style.FILL
         z.iro.color = Color.GREEN
         return z
@@ -213,8 +213,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun startSetUp(){
 
         jk = JikiJoho(initialJikiX,initialJikiY,jikiOokisa,tamaOkisa)
-        jk.jikiX = initialJikiX
-        jk.jikiY = initialJikiY
+        jk.x = initialJikiX
+        jk.y = initialJikiY
         e = teki()
         jt = jTama()
         et = eTama()
