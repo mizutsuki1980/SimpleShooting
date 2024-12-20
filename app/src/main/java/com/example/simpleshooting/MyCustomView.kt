@@ -28,7 +28,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     var e = teki()
-    var jtt = JikiTama(jiki.x,jiki.y)
+    var jt = JikiTama(jiki.x,jiki.y)
     var et = eTama()
     var et2 = eTama()
 
@@ -62,7 +62,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     override fun onDraw(canvas: Canvas) {
         jiki.draw(canvas)
         canvas.drawRect(e.shikakuRectXY(e.x,e.y,e.ookisa), e.iro)   //敵の移動　処理
-        canvas.drawRect(jtt.shikakuRectXY(), jtt.iro)  //自機の弾　処理   //自機の弾が当て相手が消え処理
+        canvas.drawRect(jt.shikakuRectXY(), jt.iro)  //自機の弾　処理   //自機の弾が当て相手が消え処理
         canvas.drawRect(et.shikakuRectXY(et.x,et.y,et.ookisa), et.iro)  //敵の弾　処理    //敵の弾が当たったら、敵の弾は消滅する
         canvas.drawRect(et2.shikakuRectXY(et2.x,et2.y,et2.ookisa), et2.iro) //敵の弾　処理
     }
@@ -113,18 +113,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun tamaJikiSyori(){
-        if(jtt.ookisa == 30){
-            jtt = JikiTama(jiki.x,jiki.y)
+        if(jt.ookisa == 30){
+            jt = JikiTama(jiki.x,jiki.y)
         }
 
 
-        val vx = jtt.x - e.x
-        val vy = jtt.y - e.y
+        val vx = jt.x - e.x
+        val vy = jt.y - e.y
         val atariKyori = jiki.atariKyori()
 
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
-            jtt.iro.color = Color.WHITE
-            jtt.ookisa = 30
+            jt.iro.color = Color.WHITE
+            jt.ookisa = 30
             e = teki()
             scoreCount += 1
         }
@@ -154,9 +154,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val tamaPlus = 10 * tamaSpeed .toInt()
         tamaFrameIchi += 1
 
-        jtt.y -= tamaPlus
+        jt.y -= tamaPlus
 
-        if(jtt.y<5){
+        if(jt.y<5){
             tamaFrameIchi=0
         }        //画面の上部で消える
 
@@ -165,7 +165,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }        //20フレームでリセット
 
         if(tamaFrameIchi==0){
-            jtt = JikiTama(jiki.x,jiki.y)
+            jt = JikiTama(jiki.x,jiki.y)
 
         }
     }
@@ -203,7 +203,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         m.iro.color = Color.MAGENTA
         return m
     }
-    
+
 
     fun startSetUp(){
 
@@ -212,7 +212,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         clickY = initialJikiY
 
         e = teki()
-        jtt = JikiTama(jiki.x,jiki.y)
+        jt = JikiTama(jiki.x,jiki.y)
         et = eTama()
         et2 = eTama()
         frame = 0
