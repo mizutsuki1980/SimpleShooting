@@ -13,7 +13,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var frame = 0
     var dgCount = 0
     var scoreCount = 0
-    var jikiOokisa = 50
     var tekiOkisa = 70
     var tamaOkisa = 30
     var tamaFrameIchi = 0
@@ -25,7 +24,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
-    var jiki =JikiJoho(jikiOokisa,initialJikiX, initialJikiY,tamaOkisa)
+    var jiki =JikiJoho(initialJikiX, initialJikiY,tamaOkisa)
 
 
     var e = teki()
@@ -212,10 +211,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun startSetUp(){
 
-         jiki =JikiJoho(jikiOokisa,initialJikiX, initialJikiY,tamaOkisa)
+        jiki =JikiJoho(initialJikiX, initialJikiY,tamaOkisa)
+        clickX = initialJikiX
+        clickY = initialJikiY
 
-        //jiki.x = initialJikiX
-        //jiki.y = initialJikiY
         e = teki()
         jt = jTama()
         et = eTama()
@@ -223,7 +222,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         frame = 0
         dgCount = 0
         scoreCount = 0
-        jikiOokisa = 50
 
     }
 

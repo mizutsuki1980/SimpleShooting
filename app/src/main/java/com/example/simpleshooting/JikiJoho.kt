@@ -4,19 +4,16 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 
-class JikiJoho(var jikiOokisa:Int,var x:Int,var y:Int,var tamaOkisa:Int) {
+class JikiJoho(var x:Int,var y:Int,var tamaOkisa:Int) {
 
     var iro = Paint()
-//    var x :Int
- //   var y :Int
+    var jikiOokisa:Int
 
     init {
-   //     x = jikiX
-     //   y = jikiY
+        jikiOokisa = 50
         iro.style = Paint.Style.FILL
         iro.color = Color.RED
         val m = IchiJoho(0,0,50,10)
-        jikiOokisa = 50
         m.iro.style = Paint.Style.FILL
         m.iro.color = Color.RED
     }
