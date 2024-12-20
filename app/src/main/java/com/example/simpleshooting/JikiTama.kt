@@ -24,5 +24,24 @@ class JikiTama(var x:Int,var y:Int) {
         return m
     }
 
+    fun tamaSyori(){
+        val tamaSpeed = 8.0
+        val tamaPlus = 10 * tamaSpeed .toInt()
+
+//        tamaFrameIchi += 1
+
+  //      jt.y -= tamaPlus
+
+    //    if(jt.y<5){
+      //      tamaFrameIchi=0
+        //}        //画面の上部で消える
+
+//        if(tamaFrameIchi==20){
+  //          tamaFrameIchi=0
+    //    }        //20フレームでリセット
+
+      //  if(tamaFrameIchi==0){
+        //    jt = JikiTama(jiki.x,jiki.y)
+//        }
 
 }
