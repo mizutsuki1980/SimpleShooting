@@ -3,9 +3,11 @@ package com.example.simpleshooting
 import android.graphics.Color
 import android.graphics.Paint
 
-class JikiTama {
-    var x:Int
-    var y:Int
+class JikiTama(var x:Int,var y:Int,ookisa:Int) {
+    //var x:Int
+    //var y:Int
+    //IchiJohoってやつはいるのか？
+
 
     fun jTama(jikiX:Int,jikiY:Int,jikiTamaOkisa:Int):IchiJoho{
         //弾をリセットする。最初の状態にする。
