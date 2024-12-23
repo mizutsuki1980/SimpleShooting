@@ -47,8 +47,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         invalidate()
         jiki.clickShitaBshoNiIdou(clickX,clickY)
         e.x = tekiUgki(e.x)        //敵の移動　処理
-        tamaSyori()        //自機の弾　処理
-        tamaJikiSyori()     //自機の弾が当たったら、相手が消える処理をする
+        //tamaSyori()        //自機の弾　処理
+        jt.tamaSyori(jiki.x,jiki.y)
+        //tamaJikiSyori()     //自機の弾が当たったら、相手が消える処理をする
+        jt.tamaJikiSyori(jiki.x,jiki.y,e.x,e.y,jiki.atariKyori())
+
         enemyTama()        //敵の弾　処理
         enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
         et2.iro.color = Color.BLUE
