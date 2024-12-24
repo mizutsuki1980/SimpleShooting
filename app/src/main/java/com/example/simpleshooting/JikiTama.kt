@@ -28,6 +28,15 @@ class JikiTama(var x:Int,var y:Int) {
     }
 
 
+    fun reset(jikiX:Int,jikiY:Int){
+        x = jikiX
+        y = jikiY
+        ookisa = 10
+        iro.style = Paint.Style.FILL
+        iro.color = Color.GREEN
+        tamaFrame = 0
+    }
+
     fun tamaSyori(atariKyori:Int,jiki:JikiJoho,e:IchiJoho):Boolean {
         var hit = false
         val tamaSpeed = 8.0
@@ -43,24 +52,11 @@ class JikiTama(var x:Int,var y:Int) {
         }        //20フレームでリセット
 
         if(tamaFrame==0){
-            //jt = JikiTama(jiki.x,jiki.y)
-            x = jiki.x
-            y = jiki.y
-            ookisa = 10
-            iro.style = Paint.Style.FILL
-            iro.color = Color.GREEN
-            tamaFrame = 0
-
+            reset(jiki.x,jiki.y)
         }
         //で次に、ここで何をやってるのか？「自分の弾」と「敵の位置」を計算して、近かったら消滅、リセット。
         if(ookisa == 30){
-            //jt = JikiTama(jiki.x,jiki.y)
-            x = jiki.x
-            y = jiki.y
-            ookisa = 10
-            iro.style = Paint.Style.FILL
-            iro.color = Color.GREEN
-            tamaFrame = 0
+            reset(jiki.x,jiki.y)
         }
 
 
@@ -74,5 +70,4 @@ class JikiTama(var x:Int,var y:Int) {
         }
         return hit
     }
-
 }

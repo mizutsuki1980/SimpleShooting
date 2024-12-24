@@ -46,7 +46,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         invalidate()
         jiki.clickShitaBshoNiIdou(clickX,clickY)
         e.x = tekiUgki(e.x)        //敵の移動　処理
-        //jt.tamaSyoriAndTamaJikiSyori(e.x,e.y,jiki.atariKyori())     //自機の弾が当たったら、相手が消える処理をする
+
+        // 自機の弾が当たったら、相手が消える処理をする
         if(jt.tamaSyori(jiki.atariKyori(),jiki,e)){
             e = teki()
             scoreCount += 1
@@ -230,9 +231,5 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         return super.onTouchEvent(event)
     }
-
-
-
-
 }
 
