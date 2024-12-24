@@ -50,7 +50,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //tamaSyori()        //自機の弾　処理
         jt.tamaSyori(jiki.x,jiki.y)
         //tamaJikiSyori()     //自機の弾が当たったら、相手が消える処理をする
-        jt.tamaJikiSyori(jiki.x,jiki.y,e.x,e.y,jiki.atariKyori())
+        if(jt.tamaJikiSyori(jiki.x,jiki.y,e.x,e.y,jiki.atariKyori())){
+            e = teki()
+            scoreCount += 1
+        }
 
         enemyTama()        //敵の弾　処理
         enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する

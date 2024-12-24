@@ -52,30 +52,29 @@ class JikiTama(var x:Int,var y:Int) {
 
     }
 
-    fun tamaJikiSyori(jikiX:Int,jikiY:Int,ex:Int,ey:Int,atariKyori:Int){
+    fun tamaJikiSyori(jikiX:Int,jikiY:Int,ex:Int,ey:Int,atariKyori:Int):Boolean{
+        var hit = false
         if(ookisa == 30){
-//            jt = JikiTama(jiki.x,jiki.y)
             x=jikiX
             y=jikiY
-
         }
-
 
         val vx = x - ex
         val vy = y - ey
-        //val atariKyori = jiki.atariKyori()
 
 
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             iro.color = Color.WHITE
             ookisa = 30
-
+            hit = true
             //e = teki()
-            //敵が消える処理
+            //敵が消える処理　敵を消しちゃうのはなー、この中の処理じゃないだろう。多分。
+
             //scoreCount += 1
-            //スコアカウント処理
+            //スコアカウント処理　スコアもこの中にあると困るんではないのかな。
 
         }
+        return hit
     }
 
 }
