@@ -47,8 +47,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         invalidate()
         jiki.clickShitaBshoNiIdou(clickX,clickY)
         e.x = tekiUgki(e.x)        //敵の移動　処理
-        //tamaSyori()        //自機の弾　処理
-        jt.tamaSyoriAndTamaJikiSyori(e.x,e.y,jiki.atariKyori())     //自機の弾が当たったら、相手が消える処理をする
+        //jt.tamaSyoriAndTamaJikiSyori(e.x,e.y,jiki.atariKyori())     //自機の弾が当たったら、相手が消える処理をする
+        tamaSyoriAndTamaJikiSyori()
         enemyTama()        //敵の弾　処理
         enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
         et2.iro.color = Color.BLUE
@@ -133,44 +133,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
 
-    fun tamaSyori(){
-        val tamaSpeed = 8.0
-        val tamaPlus = 10 * tamaSpeed .toInt()
-        tamaFrameIchi += 1
-
-        jt.y -= tamaPlus
-
-        if(jt.y<5){
-            tamaFrameIchi=0
-        }        //画面の上部で消える
-
-        if(tamaFrameIchi==20){
-            tamaFrameIchi=0
-        }        //20フレームでリセット
-
-        if(tamaFrameIchi==0){
-            jt = JikiTama(jiki.x,jiki.y)
-
-        }
-        //ここでは何をやってるのか？多分、弾の位置をずらしているだけ。一定位置にいくと消える。的な。
-    }
-
-    fun tamaJikiSyori(){
-        //で次に、ここで何をやってるのか？「自分の弾」と「敵の位置」を計算して、近かったら消滅、リセット。
-        if(jt.ookisa == 30){
-            jt = JikiTama(jiki.x,jiki.y)
-        }
-        val vx = jt.x - e.x
-        val vy = jt.y - e.y
-        val atariKyori = jiki.atariKyori()
-
-        if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
-            jt.iro.color = Color.WHITE
-            jt.ookisa = 30
-            e = teki()
-            scoreCount += 1
-        }
-    }
 
     fun tamaSyoriAndTamaJikiSyori() {
         val tamaSpeed = 8.0
