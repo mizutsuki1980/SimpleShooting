@@ -77,7 +77,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }        //20フレームでリセット
 
         if(jt.tamaFrameFFF==0){
-            jt = JikiTama(jiki.x,jiki.y)
+            //jt = JikiTama(jiki.x,jiki.y)
+            jt.x = jiki.x
+            jt.y = jiki.y
+            jt.ookisa = 10
+            jt.iro.style = Paint.Style.FILL
+            jt.iro.color = Color.GREEN
+            jt.tamaFrameFFF = 0
 
         }
         //で次に、ここで何をやってるのか？「自分の弾」と「敵の位置」を計算して、近かったら消滅、リセット。
@@ -89,7 +95,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             jt.iro.style = Paint.Style.FILL
             jt.iro.color = Color.GREEN
             jt.tamaFrameFFF = 0
-
         }
 
 
