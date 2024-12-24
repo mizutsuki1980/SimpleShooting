@@ -47,14 +47,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki.clickShitaBshoNiIdou(clickX,clickY)
         e.x = tekiUgki(e.x)        //敵の移動　処理
         //jt.tamaSyoriAndTamaJikiSyori(e.x,e.y,jiki.atariKyori())     //自機の弾が当たったら、相手が消える処理をする
-        tamaSyoriAndTamaJikiSyori(jiki.atariKyori())
+        if(jt.tamaSyori(jiki.atariKyori(),jiki,e)){
+            e = teki()
+            scoreCount += 1
+        }
+
         enemyTama()        //敵の弾　処理
         enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
         et2.iro.color = Color.BLUE
         enemyTama2()        //敵の弾　処理
         enemyTamaAtatta2()
-
-
         handler.postDelayed({ tsugiNoSyori() }, 100)
     }
 
@@ -244,7 +246,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun tekiUgki(x:Int):Int{
-        val tekiSpeed = 20
+        val tekiSpeed = 10
         var xx = x
         if(xx<800){ xx += tekiSpeed }
         if(xx >= 800) { xx = -100 }

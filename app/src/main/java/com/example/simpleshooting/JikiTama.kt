@@ -65,10 +65,13 @@ class JikiTama(var x:Int,var y:Int) {
     }
 
 
-    fun tamaSyoriAndTamaJikiSyori(ex:Int,ey:Int,atariKyori:Int) {
+    fun tamaSyori(atariKyori:Int,jiki:JikiJoho,e:IchiJoho):Boolean {
+        var hit = false
         val tamaSpeed = 8.0
         val tamaPlus = 10 * tamaSpeed .toInt()
         tamaFrameFFF += 1
+        //全部置き換えてみるかjt.tamaFrameFFF
+
 
         y -= tamaPlus
 
@@ -81,36 +84,36 @@ class JikiTama(var x:Int,var y:Int) {
         }        //20フレームでリセット
 
         if(tamaFrameFFF==0){
-            //弾のリセット処理
             //jt = JikiTama(jiki.x,jiki.y)
+            x = jiki.x
+            y = jiki.y
             ookisa = 10
             iro.style = Paint.Style.FILL
             iro.color = Color.GREEN
             tamaFrameFFF = 0
-            //初期化をコピペした
 
         }
-
         //で次に、ここで何をやってるのか？「自分の弾」と「敵の位置」を計算して、近かったら消滅、リセット。
         if(ookisa == 30){
-            //弾のリセット処理
             //jt = JikiTama(jiki.x,jiki.y)
+            x = jiki.x
+            y = jiki.y
             ookisa = 10
             iro.style = Paint.Style.FILL
             iro.color = Color.GREEN
             tamaFrameFFF = 0
-            //初期化をコピペした
         }
-        val vx = x - ex
-        val vy = y - ey
+
+
+        val vx = x - e.x
+        val vy = y - e.y
 
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             iro.color = Color.WHITE
             ookisa = 30
-            //敵倒した処理
-            // e = teki()
-            //scoreCount += 1
+            hit = true
         }
+        return hit
     }
 
 }
