@@ -82,8 +82,17 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         //で次に、ここで何をやってるのか？「自分の弾」と「敵の位置」を計算して、近かったら消滅、リセット。
         if(jt.ookisa == 30){
-            jt = JikiTama(jiki.x,jiki.y)
+            //jt = JikiTama(jiki.x,jiki.y)
+            jt.x = jiki.x
+            jt.y = jiki.y
+            jt.ookisa = 10
+            jt.iro.style = Paint.Style.FILL
+            jt.iro.color = Color.GREEN
+            jt.tamaFrameFFF = 0
+
         }
+
+
         val vx = jt.x - e.x
         val vy = jt.y - e.y
 
