@@ -61,55 +61,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
 
-    fun tamaSyoriAndTamaJikiSyori(atariKyori:Int) {
-        val tamaSpeed = 8.0
-        val tamaPlus = 10 * tamaSpeed .toInt()
-        jt.tamaFrameFFF += 1
-        //全部置き換えてみるかjt.tamaFrameFFF
-
-
-        jt.y -= tamaPlus
-
-        if(jt.y<5){
-            jt.tamaFrameFFF=0
-        }        //画面の上部で消える
-
-        if(jt.tamaFrameFFF==20){
-            jt.tamaFrameFFF=0
-        }        //20フレームでリセット
-
-        if(jt.tamaFrameFFF==0){
-            //jt = JikiTama(jiki.x,jiki.y)
-            jt.x = jiki.x
-            jt.y = jiki.y
-            jt.ookisa = 10
-            jt.iro.style = Paint.Style.FILL
-            jt.iro.color = Color.GREEN
-            jt.tamaFrameFFF = 0
-
-        }
-        //で次に、ここで何をやってるのか？「自分の弾」と「敵の位置」を計算して、近かったら消滅、リセット。
-        if(jt.ookisa == 30){
-            //jt = JikiTama(jiki.x,jiki.y)
-            jt.x = jiki.x
-            jt.y = jiki.y
-            jt.ookisa = 10
-            jt.iro.style = Paint.Style.FILL
-            jt.iro.color = Color.GREEN
-            jt.tamaFrameFFF = 0
-        }
-
-
-        val vx = jt.x - e.x
-        val vy = jt.y - e.y
-
-        if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
-            jt.iro.color = Color.WHITE
-            jt.ookisa = 30
-            e = teki()
-            scoreCount += 1
-        }
-    }
 
 
     override fun onDraw(canvas: Canvas) {
@@ -258,21 +209,21 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
-            if (jt.tamaFrameFFF==0){jt.tamaFrameFFF=1}
+            if (jt.tamaFrame==0){jt.tamaFrame=1}
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
         }
 
         if (event.action == MotionEvent.ACTION_UP) {
-            if (jt.tamaFrameFFF==0){jt.tamaFrameFFF=1}
+            if (jt.tamaFrame==0){jt.tamaFrame=1}
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
         }
 
         if (event.action == MotionEvent.ACTION_MOVE) {
-            if (jt.tamaFrameFFF==0){jt.tamaFrameFFF=1}
+            if (jt.tamaFrame==0){jt.tamaFrame=1}
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束

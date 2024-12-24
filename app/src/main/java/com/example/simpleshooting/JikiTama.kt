@@ -7,13 +7,13 @@ import android.graphics.Rect
 class JikiTama(var x:Int,var y:Int) {
     var iro = Paint()
     var ookisa:Int
-    var tamaFrameFFF : Int
+    var tamaFrame : Int
 
     init {
         ookisa = 10
         iro.style = Paint.Style.FILL
         iro.color = Color.GREEN
-        tamaFrameFFF = 0
+        tamaFrame = 0
     }
 
 
@@ -27,70 +27,29 @@ class JikiTama(var x:Int,var y:Int) {
         return m
     }
 
-    fun tamaSyori(jikiX:Int,jikiY:Int){
-        val tamaSpeed = 8.0
-        val tamaPlus = 10 * tamaSpeed .toInt()
-        tamaFrameFFF += 1
-        y -= tamaPlus
-        if(y<5){
-            tamaFrameFFF=0
-        }        //画面の上部で消える
-        if(tamaFrameFFF==20){
-            tamaFrameFFF=0
-        }        //20フレームでリセット
-      if(tamaFrameFFF==0){
-            x=jikiX
-            y=jikiY
-        }
-    }
-
-    fun tamaJikiSyori(jikiX:Int,jikiY:Int,ex:Int,ey:Int,atariKyori:Int):Boolean{
-        if(ookisa == 30){
-            x=jikiX
-            y=jikiY
-            tamaFrameFFF=0
-        }
-
-        var hit = false
-        val vx = x - ex
-        val vy = y - ey
-
-
-        if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
-            iro.color = Color.WHITE
-            ookisa = 30
-            hit = true
-        }
-        return hit
-    }
-
 
     fun tamaSyori(atariKyori:Int,jiki:JikiJoho,e:IchiJoho):Boolean {
         var hit = false
         val tamaSpeed = 8.0
         val tamaPlus = 10 * tamaSpeed .toInt()
-        tamaFrameFFF += 1
-        //全部置き換えてみるかjt.tamaFrameFFF
-
-
+        tamaFrame += 1
         y -= tamaPlus
-
         if(y<5){
-            tamaFrameFFF=0
+            tamaFrame=0
         }        //画面の上部で消える
 
-        if(tamaFrameFFF==20){
-            tamaFrameFFF=0
+        if(tamaFrame==20){
+            tamaFrame=0
         }        //20フレームでリセット
 
-        if(tamaFrameFFF==0){
+        if(tamaFrame==0){
             //jt = JikiTama(jiki.x,jiki.y)
             x = jiki.x
             y = jiki.y
             ookisa = 10
             iro.style = Paint.Style.FILL
             iro.color = Color.GREEN
-            tamaFrameFFF = 0
+            tamaFrame = 0
 
         }
         //で次に、ここで何をやってるのか？「自分の弾」と「敵の位置」を計算して、近かったら消滅、リセット。
@@ -101,7 +60,7 @@ class JikiTama(var x:Int,var y:Int) {
             ookisa = 10
             iro.style = Paint.Style.FILL
             iro.color = Color.GREEN
-            tamaFrameFFF = 0
+            tamaFrame = 0
         }
 
 
