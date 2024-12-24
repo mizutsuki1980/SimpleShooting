@@ -15,7 +15,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var scoreCount = 0
     var tekiOkisa = 70
     var tamaOkisa = 30
-    var tamaFrameIchi = 0
     var enemyTamaSpeed = 2.0    //デフォはこれにしといて、変えれるようにしよう
 
     val initialJikiX = 300 //初期位置
@@ -63,19 +62,21 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tamaSyoriAndTamaJikiSyori(atariKyori:Int) {
         val tamaSpeed = 8.0
         val tamaPlus = 10 * tamaSpeed .toInt()
-        tamaFrameIchi += 1
+        jt.tamaFrameFFF += 1
+        //全部置き換えてみるかjt.tamaFrameFFF
+
 
         jt.y -= tamaPlus
 
         if(jt.y<5){
-            tamaFrameIchi=0
+            jt.tamaFrameFFF=0
         }        //画面の上部で消える
 
-        if(tamaFrameIchi==20){
-            tamaFrameIchi=0
+        if(jt.tamaFrameFFF==20){
+            jt.tamaFrameFFF=0
         }        //20フレームでリセット
 
-        if(tamaFrameIchi==0){
+        if(jt.tamaFrameFFF==0){
             jt = JikiTama(jiki.x,jiki.y)
 
         }
@@ -241,21 +242,21 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
-            if (tamaFrameIchi==0){tamaFrameIchi=1}
+            if (jt.tamaFrameFFF==0){jt.tamaFrameFFF=1}
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
         }
 
         if (event.action == MotionEvent.ACTION_UP) {
-            if (tamaFrameIchi==0){tamaFrameIchi=1}
+            if (jt.tamaFrameFFF==0){jt.tamaFrameFFF=1}
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
         }
 
         if (event.action == MotionEvent.ACTION_MOVE) {
-            if (tamaFrameIchi==0){tamaFrameIchi=1}
+            if (jt.tamaFrameFFF==0){jt.tamaFrameFFF=1}
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
