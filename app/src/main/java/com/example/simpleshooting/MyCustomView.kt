@@ -210,21 +210,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
-            if (jt.tamaFrame==0){jt.tamaFrame=1}
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
         }
 
         if (event.action == MotionEvent.ACTION_UP) {
-            if (jt.tamaFrame==0){jt.tamaFrame=1}
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
         }
 
         if (event.action == MotionEvent.ACTION_MOVE) {
-            if (jt.tamaFrame==0){jt.tamaFrame=1}
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
