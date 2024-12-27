@@ -16,6 +16,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tekiOkisa = 70
     var tamaOkisa = 30
     var enemyTamaSpeed = 2.0    //デフォはこれにしといて、変えれるようにしよう
+    var isFirstMove = false
+
 
     val initialJikiX = 300 //初期位置
     val initialJikiY = 800 //初期位置
@@ -48,11 +50,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         e.x = tekiUgki(e.x)        //敵の移動　処理
 
         // 自機の弾が当たったら、相手が消える処理をする
-        if(jt.tamaSyori(jiki.atariKyori(),jiki,e)){
-            e = teki()
-            scoreCount += 1
+        if(isFirstMove){
+            if (jt.tamaSyori(jiki.atariKyori(), jiki, e)) {
+                e = teki()
+                scoreCount += 1
+            }
         }
-
         enemyTama()        //敵の弾　処理
         enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
         et2.iro.color = Color.BLUE
@@ -210,18 +213,21 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
+            isFirstMove = true
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
         }
 
         if (event.action == MotionEvent.ACTION_UP) {
+            isFirstMove = true
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
         }
 
         if (event.action == MotionEvent.ACTION_MOVE) {
+            isFirstMove = true
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
