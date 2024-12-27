@@ -1,5 +1,6 @@
 package com.example.simpleshooting
 
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
@@ -59,4 +60,10 @@ class JikiTama(var x:Int,var y:Int) {
         }
         return hit
     }
+
+    fun draw(canvas: Canvas){
+
+        canvas.drawRect(shikakuRectXY(), iro)  //自機
+    }
+
 }

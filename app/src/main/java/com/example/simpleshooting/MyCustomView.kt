@@ -16,7 +16,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tekiOkisa = 70
     var tamaOkisa = 30
     var enemyTamaSpeed = 2.0    //デフォはこれにしといて、変えれるようにしよう
-    var isFirstMove = false
+    var isFirstMove = false //動きだしたら弾も出るようにする
 
 
     val initialJikiX = 300 //初期位置
@@ -26,10 +26,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
     var jiki =JikiJoho(initialJikiX, initialJikiY,tamaOkisa)
+    var jt = JikiTama(jiki.x,jiki.y)
 
 
     var e = teki()
-    var jt = JikiTama(jiki.x,jiki.y)
     var et = eTama()
     var et2 = eTama()
 
@@ -69,8 +69,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     override fun onDraw(canvas: Canvas) {
         jiki.draw(canvas)
+        jt.draw(canvas)
+        //canvas.drawRect(jt.shikakuRectXY(), jt.iro)  //自機の弾　処理   //自機の弾が当て相手が消え処理
+
         canvas.drawRect(e.shikakuRectXY(e.x,e.y,e.ookisa), e.iro)   //敵の移動　処理
-        canvas.drawRect(jt.shikakuRectXY(), jt.iro)  //自機の弾　処理   //自機の弾が当て相手が消え処理
+
         canvas.drawRect(et.shikakuRectXY(et.x,et.y,et.ookisa), et.iro)  //敵の弾　処理    //敵の弾が当たったら、敵の弾は消滅する
         canvas.drawRect(et2.shikakuRectXY(et2.x,et2.y,et2.ookisa), et2.iro) //敵の弾　処理
     }
