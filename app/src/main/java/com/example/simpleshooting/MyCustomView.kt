@@ -73,6 +73,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //canvas.drawRect(jt.shikakuRectXY(), jt.iro)  //自機の弾　処理   //自機の弾が当て相手が消え処理
 //123
         //main123を変更
+        //main123というブランチを作って、ここで作業することは、たぶんできる。
+        //これでいいんだろうか？
         canvas.drawRect(e.shikakuRectXY(e.x,e.y,e.ookisa), e.iro)   //敵の移動　処理
 
         canvas.drawRect(et.shikakuRectXY(et.x,et.y,et.ookisa), et.iro)  //敵の弾　処理    //敵の弾が当たったら、敵の弾は消滅する
