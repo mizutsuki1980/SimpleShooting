@@ -7,10 +7,40 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/scoreTextLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/damageTextLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/timeTextLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="000" />
+    </LinearLayout>
+
     <com.example.simpleshooting.MyCustomView
         android:id="@+id/mycustom"
         android:layout_width="match_parent"
-        android:layout_height="669dp" />
+        android:layout_height="590dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,12 +61,98 @@
             android:layout_weight="1"
             android:text="TextView" />
 
+        <TextView
+            android:id="@+id/textLabelGamenX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="GamenX" />
+
+        <TextView
+            android:id="@+id/textLabelGamenY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="GamenY" />
+
+        <TextView
+            android:id="@+id/textLabelVec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="---" />
+
     </LinearLayout>
 
     <Button
         android:id="@+id/setButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="ゲームリセット" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textLabelTokuten"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/textLabelDamage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/textLabelTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/hyperButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ハイパー化"
+            android:textSize="8sp" />
+
+        <Button
+            android:id="@+id/hyperShotButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ハイパーショット"
+            android:textSize="8sp" />
+
+        <Button
+            android:id="@+id/tekiHyperButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="敵もハイパー"
+            android:textSize="8sp" />
+
+        <Button
+            android:id="@+id/tekiHyperShotButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="敵もハイパーショット"
+            android:textSize="8sp" />
+    </LinearLayout>
 
 </LinearLayout>
