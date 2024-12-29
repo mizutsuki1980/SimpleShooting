@@ -10,6 +10,10 @@ import android.view.MotionEvent
 import android.view.View
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
+//お、なんか動いてるっぽい。最新版で。
+    //やっぱ敵が無敵になってるときあるっぽいなー
+    //ピンクの敵の弾がまったく動かなくなる場合がある。
+
     var frame = 0
     var dgCount = 0
     var scoreCount = 0
