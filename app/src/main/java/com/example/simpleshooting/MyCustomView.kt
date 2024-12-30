@@ -30,7 +30,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jt = JikiTama(jiki.x,jiki.y)
     var teki = Teki()
     var tt = TekiTama(teki.x,teki.y)
-
+    var ttr = TekiTamaRef(teki.x,teki.y)
 
 
 
@@ -51,7 +51,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         invalidate()
         jiki.clickShitaBshoNiIdou(clickX,clickY)
         teki.tekiYokoIdo()  //敵の移動　処理
-        // 自機の弾が当たったら、相手が消える処理をする
+        // 自機の弾が当たったら、カウントを増やして相手が消える処理をする
         if(isFirstMove){
             if (jt.tamaSyoriTekiJoho( jiki, teki)) {
                 teki = Teki()
@@ -59,16 +59,24 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             }
         }
         tt.tekiTamaMove(jiki,teki)  //敵の弾　処理
-//        enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
-        tt.tekiTamaAtatta(jiki)
+        tt.tekiTamaAtatta(jiki) //敵の弾が当たっていたらカウントを増やして消える
         if (tt.hit){
             dgCount += 1
             tt = TekiTama(teki.x,teki.y)
         }
 
-        et2.iro.color = Color.BLUE
+
+        ttr.tekiTamaRefMove(jiki)
         enemyTama2()        //敵の弾　処理
+        ttr.tekiTamaRefAtatta(jiki,teki)
+        if (ttr.hit){
+            dgCount += 1
+            ttr = TekiTamaRef(teki.x,teki.y)
+        }
+
         enemyTamaAtatta2()
+
+
         handler.postDelayed({ tsugiNoSyori() }, 100)
     }
 
@@ -80,7 +88,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jt.draw(canvas)     //自機の弾の処理
         teki.draw(canvas) //敵の移動　処理
 
-        tt.draw(canvas) //敵の弾の移動　処理
+        tt.draw(canvas) //敵の追尾弾の移動　処理
+        ttr.draw(canvas) //敵の反射弾の移動　処理
 
         canvas.drawRect(et2.shikakuRectXY(et2.x,et2.y,et2.ookisa), et2.iro) //敵の弾　処理
     }
@@ -127,43 +136,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 et2.ookisa = 30
             }
         }
-    }
-
-
-
-    fun enemyTamaAtatta(){
-        val vx = tt.x - jiki.x
-        val vy = tt.y - jiki.y
-        if(tt.ookisa == 30){
-            dgCount += 1
-            tt = TekiTama(teki.x,teki.y)
-            }else{
-            val atariKyori = jiki.atariKyori()
-            if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
-                tt.iro.color = Color.DKGRAY
-                tt.ookisa = 30
-            }
-        }
-    }
-
-    fun enemyTama(){
-        var vx = jiki.x - tt.x
-        var vy = jiki.y - tt.y
-
-        var resetKyori = 90 //よけ始める距離
-        if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ tt.homing = false }
-        if (tt.homing == false) {
-
-            vx = tt.zenkaix
-            vy = tt.zenkaiy
-        }
-        tt.zenkaix = vx
-        tt.zenkaiy = vy
-        //敵の弾の移動
-        val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
-        tt.x += ((vx / v)*10 * enemyTamaSpeed).toInt()
-        tt.y += ((vy / v)*10 * enemyTamaSpeed).toInt()
-        if (tt.x > 690 || tt.x < 0 || tt.y > 1050 || tt.y < 0){tt = TekiTama(teki.x,teki.y)}    //画面外で敵の弾のリセット
     }
 
 
