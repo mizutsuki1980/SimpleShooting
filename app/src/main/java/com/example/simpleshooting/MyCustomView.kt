@@ -50,12 +50,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         jiki.clickShitaBshoNiIdou(clickX,clickY)
-
-
         teki.tekiYokoIdo()  //敵の移動　処理
-
-
-
         // 自機の弾が当たったら、相手が消える処理をする
         if(isFirstMove){
             if (jt.tamaSyoriTekiJoho( jiki, teki)) {
@@ -63,9 +58,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 scoreCount += 1
             }
         }
-
-
-        enemyTama()        //敵の弾　処理
+        tt.tekiTamaMove(jiki,teki)
+        //enemyTama()        //敵の弾　処理
         enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
         et2.iro.color = Color.BLUE
         enemyTama2()        //敵の弾　処理
@@ -82,7 +76,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         teki.draw(canvas) //敵の移動　処理
 
         tt.draw(canvas) //敵の弾の移動　処理
-        //canvas.drawRect(et.shikakuRectXY(et.x,et.y,et.ookisa), et.iro)  //敵の弾　処理    //敵の弾が当たったら、敵の弾は消滅する
 
         canvas.drawRect(et2.shikakuRectXY(et2.x,et2.y,et2.ookisa), et2.iro) //敵の弾　処理
     }

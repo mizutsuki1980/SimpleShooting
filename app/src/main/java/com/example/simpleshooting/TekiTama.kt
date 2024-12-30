@@ -11,6 +11,7 @@ class TekiTama(var x:Int,var y:Int) {
     var homing :Boolean
     var zenkaix : Int
     var zenkaiy : Int
+    var speed : Double
 
     init{
         ookisa = 10
@@ -19,7 +20,41 @@ class TekiTama(var x:Int,var y:Int) {
         homing = true
         zenkaix = x
         zenkaiy = y
+        speed = 2.0
     }
+
+    fun tekiTamaMove(jiki:JikiJoho,teki:Teki){
+        var vx = jiki.x - x
+        var vy = jiki.y - y
+
+        var resetKyori = 90 //よけ始める距離
+        if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ homing = false }
+        if (homing == false) {
+
+            vx = zenkaix
+            vy = zenkaiy
+        }
+        zenkaix = vx
+        zenkaiy = vy
+        //敵の弾の移動
+        val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+        x += ((vx / v)*10 * speed).toInt()
+        y += ((vy / v)*10 * speed).toInt()
+
+        if (x > 690 || x < 0 || y > 1050 || y < 0){
+            //tt = TekiTama(teki.x,teki.y)
+            x = teki.x
+            y = teki.y
+            zenkaix = x
+            zenkaiy = y
+            homing = true
+            //弾のリセットどうすんだろう？これでいっか
+
+        }    //画面外で敵の弾のリセット
+
+    }
+
+
     fun shikakuRectXY(): Rect {
         val left = x  - ookisa / 2
         val right = x  + ookisa / 2
@@ -31,14 +66,6 @@ class TekiTama(var x:Int,var y:Int) {
 
     fun draw(canvas: Canvas){
         canvas.drawRect(shikakuRectXY(), iro)  //自機
-    }
-
-
-    fun eTama(teki:Teki):IchiJoho{
-        val m = IchiJoho(teki.x,teki.y,10,10)
-        m.iro.style = Paint.Style.FILL
-        m.iro.color = Color.MAGENTA
-        return m
     }
 
 }
