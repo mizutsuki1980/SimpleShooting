@@ -58,9 +58,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 scoreCount += 1
             }
         }
-        tt.tekiTamaMove(jiki,teki)
-        //enemyTama()        //敵の弾　処理
-        enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
+        tt.tekiTamaMove(jiki,teki)  //敵の弾　処理
+//        enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
+        tt.tekiTamaAtatta(jiki)
+        if (tt.hit){
+            dgCount += 1
+            tt = TekiTama(teki.x,teki.y)
+        }
+
         et2.iro.color = Color.BLUE
         enemyTama2()        //敵の弾　処理
         enemyTamaAtatta2()

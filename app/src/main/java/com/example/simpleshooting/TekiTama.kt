@@ -9,6 +9,7 @@ class TekiTama(var x:Int,var y:Int) {
     var iro = Paint()
     var ookisa:Int
     var homing :Boolean
+    var hit :Boolean
     var zenkaix : Int
     var zenkaiy : Int
     var speed : Double
@@ -18,6 +19,7 @@ class TekiTama(var x:Int,var y:Int) {
         iro.style = Paint.Style.FILL
         iro.color = Color.MAGENTA
         homing = true
+        hit = false
         zenkaix = x
         zenkaiy = y
         speed = 2.0
@@ -49,9 +51,23 @@ class TekiTama(var x:Int,var y:Int) {
             zenkaiy = y
             homing = true
             //弾のリセットどうすんだろう？これでいっか
-
         }    //画面外で敵の弾のリセット
-
+    }
+    fun tekiTamaAtatta(jiki:JikiJoho){
+    //カウント処理がはいってるなー。そとにだしたほうがいいのか。ならBooleanであたった、とかつけるのかな？
+        val vx = x - jiki.x
+        val vy = y - jiki.y
+        if(ookisa == 30){
+        hit = true
+        //            dgCount += 1
+         //           tt = TekiTama(teki.x,teki.y)
+        }else{
+            val atariKyori = jiki.atariKyori()
+            if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
+                iro.color = Color.DKGRAY
+                ookisa = 30
+            }
+        }
     }
 
 
