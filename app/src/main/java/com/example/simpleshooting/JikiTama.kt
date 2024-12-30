@@ -77,8 +77,6 @@ class JikiTama(var x:Int,var y:Int) {
             hit = true
         }
         return hit
-
-
     }
 
     fun tamaSyori(atariKyori:Int,jiki:JikiJoho,e:IchiJoho):Boolean {

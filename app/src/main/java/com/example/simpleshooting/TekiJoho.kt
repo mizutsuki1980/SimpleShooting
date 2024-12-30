@@ -8,13 +8,14 @@ class TekiJoho {
 
     var x :Int
     var y :Int
-    var ookisa =140
+    var ookisa =70
+
     var tekiSpeed = 10
     var iro = Paint()
 
     init{
-        x = -100
-        y = 70
+        x = 20
+        y = 100
         iro.style = Paint.Style.FILL
         iro.color = Color.CYAN
 

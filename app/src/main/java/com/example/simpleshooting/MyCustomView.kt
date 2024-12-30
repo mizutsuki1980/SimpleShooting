@@ -10,8 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
-//お、なんか動いてるっぽい。最新版で。
-    //やっぱ敵が無敵になってるときあるっぽいなー
+
     //ピンクの敵の弾がまったく動かなくなる場合がある。
 
     var frame = 0
@@ -31,7 +30,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     var jiki =JikiJoho(initialJikiX, initialJikiY,tamaOkisa)
     var jt = JikiTama(jiki.x,jiki.y)
-
+    var teki = TekiJoho()
 
     var e = teki()
     var et = eTama()
@@ -51,13 +50,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         jiki.clickShitaBshoNiIdou(clickX,clickY)
+
+
         e.x = tekiUgki(e.x)        //敵の移動　処理
+        teki.tekiYokoIdo()  //敵の移動　処理
+
+
 
         // 自機の弾が当たったら、相手が消える処理をする
         if(isFirstMove){
-            //            if (jt.tamaSyori(jiki.atariKyori(), jiki, e)) {
             if (jt.tamaSyoriTekiJoho( jiki, e)) {
                 e = teki()
+                teki = TekiJoho()
                 scoreCount += 1
             }
         }
@@ -183,6 +187,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         clickY = initialJikiY
 
         e = teki()
+        teki = TekiJoho()
+
         jt = JikiTama(jiki.x,jiki.y)
         et = eTama()
         et2 = eTama()
