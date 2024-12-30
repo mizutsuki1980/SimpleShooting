@@ -47,7 +47,7 @@ class JikiTama(var x:Int,var y:Int) {
     }
 
     //    fun tamaSyoriTekiJoho(jiki:JikiJoho,teki:TekiJoho):Boolean{
-    fun tamaSyoriTekiJoho(jiki:JikiJoho,e:IchiJoho):Boolean{
+    fun tamaSyoriTekiJoho(jiki:JikiJoho,teki:TekiJoho):Boolean{
         var hit = false
         val tamaSpeed = 8.0
         val tamaPlus = 10 * tamaSpeed .toInt()
@@ -67,9 +67,9 @@ class JikiTama(var x:Int,var y:Int) {
         //というかatariKyoriなんてべつに関数にしなくてもいいんじゃね？その場で計算すれば。
         //自機、弾、敵の情報はわかってんだし。
 
-        val vx = x - e.x
-        val vy = y - e.y
-        val atariKyori = 5 + e.ookisa/2 //当たり判定の距離
+        val vx = x - teki.x
+        val vy = y - teki.y
+        val atariKyori = 5 + teki.ookisa/2 //当たり判定の距離
 
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             iro.color = Color.WHITE
