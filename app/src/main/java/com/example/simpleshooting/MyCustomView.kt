@@ -16,7 +16,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var frame = 0
     var dgCount = 0
     var scoreCount = 0
-    var tekiOkisa = 70
     var tamaOkisa = 30
     var enemyTamaSpeed = 2.0    //デフォはこれにしといて、変えれるようにしよう
     var isFirstMove = false //動きだしたら弾も出るようにする
@@ -31,8 +30,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jiki =JikiJoho(initialJikiX, initialJikiY,tamaOkisa)
     var jt = JikiTama(jiki.x,jiki.y)
     var teki = TekiJoho()
+    var tt = TekiTama(teki.x,teki.y)
+
 
     var et = eTama()
+
+
     var et2 = eTama()
 
 
@@ -80,7 +83,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jt.draw(canvas)     //自機の弾の処理
         teki.draw(canvas) //敵の移動　処理
 
+        tt.draw(canvas) //敵の弾の移動　処理
         canvas.drawRect(et.shikakuRectXY(et.x,et.y,et.ookisa), et.iro)  //敵の弾　処理    //敵の弾が当たったら、敵の弾は消滅する
+
         canvas.drawRect(et2.shikakuRectXY(et2.x,et2.y,et2.ookisa), et2.iro) //敵の弾　処理
     }
 
