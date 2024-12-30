@@ -11,6 +11,7 @@ import android.view.View
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
     //ピンクの敵の弾がまったく動かなくなる場合がある。
+    //青い弾もいなくなることがある
 
     var frame = 0
     var dgCount = 0
@@ -31,10 +32,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var teki = Teki()
     var tt = TekiTama(teki.x,teki.y)
     var ttr = TekiTamaRef(jiki,teki)
-
-
-
-
 
 
     init{
@@ -63,16 +60,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             dgCount += 1
             tt = TekiTama(teki.x,teki.y)
         }
-
-
         ttr.tekiTamaRefMove(jiki)
         ttr.enemyTamaRefAtatta(jiki)
         if (ttr.hit){
             dgCount += 1
             ttr = TekiTamaRef(jiki,teki)
         }
-
-
 
         handler.postDelayed({ tsugiNoSyori() }, 100)
     }
@@ -84,12 +77,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki.draw(canvas)   //自機の処理
         jt.draw(canvas)     //自機の弾の処理
         teki.draw(canvas) //敵の移動　処理
-
         tt.draw(canvas) //敵の追尾弾の移動　処理
-
-
         ttr.draw(canvas) //敵の反射弾の移動　処理
-         canvas.drawRect(ttr.shikakuRectXY(),ttr.iro) //敵の弾　処理
 
     }
 
@@ -104,7 +93,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         clickX = initialJikiX
         clickY = initialJikiY
-
 
         frame = 0
         dgCount = 0
