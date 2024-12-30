@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 
-class TekiTamaRef(var x:Int,var y:Int) {
+class TekiTamaRef(var x:Int,var y:Int,jiki:JikiJoho,teki:Teki) {
     //reflection
     var iro = Paint()
     var ookisa:Int
@@ -21,35 +21,14 @@ class TekiTamaRef(var x:Int,var y:Int) {
         iro.color = Color.BLUE
         homing = true
         hit = false
-        zenkaix = x
-        zenkaiy = y
-        speed = 3.5
-    }
-    fun tekiTamaRefAtatta(jiki:JikiJoho,teki:Teki){
-        val vx = x - jiki.x
-        val vy = y - jiki.y
-        if(ookisa == 30){
-            //そとにだす
-            hit = true
-            //dgCount += 1
-
-            //弾２情報をリセット
-            //et2 = eTama()
-
-            //以下２行を追加したら動いた。//なんかet2の値を取出でエラーが起きてる？//et2を作り直したらzenkaiVectだけでも設定してないとダメ
-            zenkaix = teki.x - jiki.x //- et2.x
-            zenkaiy = teki.y - jiki.y //- et2.y
-        }else{
-            val atariKyori = jiki.atariKyori()
-            if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
-                iro.color = Color.DKGRAY
-                ookisa = 30
-            }
-        }
+        zenkaix = teki.x - jiki.x
+        zenkaiy = teki.y - jiki.y
+        speed = 2.5
     }
 
     fun tekiTamaRefMove(jiki:JikiJoho){
         //ここでtamaSpeedっていうのを設定している。他の弾にはない
+        var tamaSpeed = 3.5
         var xhanai =650
         var yHani = 900
         var vx = jiki.x - x
@@ -65,11 +44,32 @@ class TekiTamaRef(var x:Int,var y:Int) {
         zenkaiy = vy
         //敵の弾の移動
         val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
-        x += ((vx / v)*10 * speed).toInt()
-        y += ((vy / v)*10 * speed).toInt()
+        x += ((vx / v)*10 * tamaSpeed).toInt()
+        y += ((vy / v)*10 * tamaSpeed).toInt()
         if (x > xhanai || x < 0){zenkaix = -vx }
         if (y > yHani || y < 0){zenkaiy = -vy}
     }
+
+    fun enemyTamaRefAtatta(jiki:JikiJoho){
+        val vx = x - jiki.x
+        val vy = y - jiki.y
+        if(ookisa == 30){
+            hit = true
+//            dgCount += 1
+
+            //弾２情報をリセット
+   //         ttr = TekiTamaRef(teki.x,teki.y)
+          //以下２行を追加したら動いた。//なんかet2の値を取出でエラーが起きてる？//et2を作り直したらzenkaiVectだけでも設定してないとダメ
+        }else{
+            val atariKyori = jiki.atariKyori()
+            if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
+                iro.color = Color.DKGRAY
+                ookisa = 30
+            }
+        }
+    }
+
+
     fun shikakuRectXY(): Rect {
         val left = x  - ookisa / 2
         val right = x  + ookisa / 2

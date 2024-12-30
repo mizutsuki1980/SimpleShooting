@@ -30,11 +30,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jt = JikiTama(jiki.x,jiki.y)
     var teki = Teki()
     var tt = TekiTama(teki.x,teki.y)
-    var ttr = TekiTamaRef(teki.x,teki.y)
+    var ttr = TekiTamaRef(teki.x,teki.y,jiki,teki)
 
 
 
-    var et2 = eTama()
 
 
 
@@ -67,14 +66,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
         ttr.tekiTamaRefMove(jiki)
-        enemyTama2()        //敵の弾　処理
-        ttr.tekiTamaRefAtatta(jiki,teki)
+        ttr.enemyTamaRefAtatta(jiki)
         if (ttr.hit){
             dgCount += 1
-            ttr = TekiTamaRef(teki.x,teki.y)
+            ttr = TekiTamaRef(teki.x,teki.y,jiki,teki)
         }
 
-        enemyTamaAtatta2()
 
 
         handler.postDelayed({ tsugiNoSyori() }, 100)
@@ -89,65 +86,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         teki.draw(canvas) //敵の移動　処理
 
         tt.draw(canvas) //敵の追尾弾の移動　処理
+
+
         ttr.draw(canvas) //敵の反射弾の移動　処理
+         canvas.drawRect(ttr.shikakuRectXY(),ttr.iro) //敵の弾　処理
 
-        canvas.drawRect(et2.shikakuRectXY(et2.x,et2.y,et2.ookisa), et2.iro) //敵の弾　処理
     }
-
-    fun enemyTama2(){
-        //ここでtamaSpeedっていうのを設定している。他の弾にはない
-        var tamaSpeed = 3.5
-        var xhanai =650
-        var yHani = 900
-        var vx = jiki.x - et2.x
-        var vy = jiki.y - et2.y
-
-        var resetKyori = 500 //よけ始める距離
-        if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ et2.homing = false }
-        if (et2.homing == false) {
-            vx = et2.zenkaiVect[0]
-            vy = et2.zenkaiVect[1]
-        }
-        et2.zenkaiVect[0] = vx
-        et2.zenkaiVect[1] = vy
-        //敵の弾の移動
-        val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
-        et2.x += ((vx / v)*10 * tamaSpeed).toInt()
-        et2.y += ((vy / v)*10 * tamaSpeed).toInt()
-        if (et2.x > xhanai || et2.x < 0){et2.zenkaiVect[0] = -vx }
-        if (et2.y > yHani || et2.y < 0){et2.zenkaiVect[1] = -vy}
-    }
-
-    fun enemyTamaAtatta2(){
-        val vx = et2.x - jiki.x
-        val vy = et2.y - jiki.y
-        if(et2.ookisa == 30){
-            dgCount += 1
-
-            //弾２情報をリセット
-            et2 = eTama()
-            //以下２行を追加したら動いた。//なんかet2の値を取出でエラーが起きてる？//et2を作り直したらzenkaiVectだけでも設定してないとダメ
-            et2.zenkaiVect[0] = teki.x - jiki.x //- et2.x
-            et2.zenkaiVect[1] = teki.y - jiki.y //- et2.y
-        }else{
-            val atariKyori = jiki.atariKyori()
-            if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
-                et2.iro.color = Color.DKGRAY
-                et2.ookisa = 30
-            }
-        }
-    }
-
-
-
-
-    fun eTama():IchiJoho{
-        val m = IchiJoho(teki.x,teki.y,10,10)
-        m.iro.style = Paint.Style.FILL
-        m.iro.color = Color.MAGENTA
-        return m
-    }
-
+    
 
     fun startSetUp(){
 
@@ -160,7 +105,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         clickY = initialJikiY
 
 
-        et2 = eTama()
         frame = 0
         dgCount = 0
         scoreCount = 0
