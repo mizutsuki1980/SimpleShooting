@@ -56,7 +56,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         jiki.clickShitaBshoNiIdou(clickX,clickY)
-        e.x = tekiUgki(e.x)        //敵の移動　処理
+        //e.x = tekiUgki(e.x)        //敵の移動　処理
 
         teki.tekiYokoIdo()        //敵の横方向移動　処理
 
@@ -64,6 +64,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(isFirstMove){
             if (jt.tamaSyori(jiki.atariKyori(), jiki, e)) {
                 e = teki()
+
+                teki = TekiJoho()
+
                 scoreCount += 1
             }
         }
@@ -123,8 +126,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             //弾２情報をリセット
             et2 = eTama()
             //以下２行を追加したら動いた。//なんかet2の値を取出でエラーが起きてる？//et2を作り直したらzenkaiVectだけでも設定してないとダメ
-            et2.zenkaiVect[0] = e.x - jiki.x //- et2.x
-            et2.zenkaiVect[1] = e.y - jiki.y //- et2.y
+            et2.zenkaiVect[0] = teki.x - jiki.x //- et2.x
+            et2.zenkaiVect[1] = teki.y - jiki.y //- et2.y
         }else{
             val atariKyori = jiki.atariKyori()
             if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
@@ -174,7 +177,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun eTama():IchiJoho{
-        val m = IchiJoho(e.x,e.y,10,10)
+        val m = IchiJoho(teki.x,teki.y,10,10)
         m.iro.style = Paint.Style.FILL
         m.iro.color = Color.MAGENTA
         return m
@@ -200,10 +203,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun tekiHyperPowerUp(){
-        if (e.ookisa==140){
-            e.ookisa = 70
+        if (teki.ookisa==140){
+            teki.ookisa = 70
         }else{
-            e.ookisa = 140
+            teki.ookisa = 140
         }
     }
 

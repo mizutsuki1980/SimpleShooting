@@ -13,8 +13,8 @@ class TekiJoho {
     var iro = Paint()
 
     init{
-        x = -50
-        y = 5
+        x = -100
+        y = 70
         iro.style = Paint.Style.FILL
         iro.color = Color.CYAN
 
