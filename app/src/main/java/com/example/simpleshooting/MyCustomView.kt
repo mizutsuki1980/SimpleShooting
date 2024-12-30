@@ -55,11 +55,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         // 自機の弾が当たったら、相手が消える処理をする
         if(isFirstMove){
-            if (jt.tamaSyori(jiki.atariKyori(), jiki, e)) {
+            //            if (jt.tamaSyori(jiki.atariKyori(), jiki, e)) {
+            if (jt.tamaSyoriTekiJoho( jiki, e)) {
                 e = teki()
                 scoreCount += 1
             }
         }
+
+
         enemyTama()        //敵の弾　処理
         enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
         et2.iro.color = Color.BLUE

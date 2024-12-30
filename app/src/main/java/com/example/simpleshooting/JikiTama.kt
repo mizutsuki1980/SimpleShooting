@@ -37,7 +37,51 @@ class JikiTama(var x:Int,var y:Int) {
 
 //        fun tamaSyori(atariKyori:Int,jiki:JikiJoho,teki:TekiJoho):Boolean {
 
-        fun tamaSyori(atariKyori:Int,jiki:JikiJoho,e:IchiJoho):Boolean {
+
+    fun atariKyoriTama():Int{
+        var atariKyori = 5 +ookisa/2 //当たり判定の距離
+        if(ookisa==200){
+            atariKyori -= 5
+        }//大きいときは、ちょっと当たり判定をマイナスする
+        return atariKyori
+    }
+
+    //    fun tamaSyoriTekiJoho(jiki:JikiJoho,teki:TekiJoho):Boolean{
+    fun tamaSyoriTekiJoho(jiki:JikiJoho,e:IchiJoho):Boolean{
+        var hit = false
+        val tamaSpeed = 8.0
+        val tamaPlus = 10 * tamaSpeed .toInt()
+
+        y -= tamaPlus //自機の弾を上方向に動かす
+
+        if(y<5){
+            reset(jiki.x,jiki.y)
+        }//画面の上部で消える
+
+        if(ookisa == 30){
+            reset(jiki.x,jiki.y)
+        }//最後に消える前に表示してから消える
+
+
+        //「自分の弾」と「敵の位置」を計算して、近かったら敵は消滅、hitで確認してリセット。
+        //というかatariKyoriなんてべつに関数にしなくてもいいんじゃね？その場で計算すれば。
+        //自機、弾、敵の情報はわかってんだし。
+
+        val vx = x - e.x
+        val vy = y - e.y
+        val atariKyori = 5 + e.ookisa/2 //当たり判定の距離
+
+        if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
+            iro.color = Color.WHITE
+            ookisa = 30
+            hit = true
+        }
+        return hit
+
+
+    }
+
+    fun tamaSyori(atariKyori:Int,jiki:JikiJoho,e:IchiJoho):Boolean {
         var hit = false
         val tamaSpeed = 8.0
         val tamaPlus = 10 * tamaSpeed .toInt()
