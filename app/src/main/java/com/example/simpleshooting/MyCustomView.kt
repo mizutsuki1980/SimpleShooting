@@ -10,10 +10,12 @@ import android.view.MotionEvent
 import android.view.View
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
-//お、なんか動いてるっぽい。最新版で。
-    //やっぱ敵が無敵になってるときあるっぽいなー
-    //ピンクの敵の弾がまったく動かなくなる場合がある。
+    //お、なんか動いてるっぽい。最新版で。
 
+    //やっぱ敵が無敵になってるときあるっぽいなー
+
+    //ピンクの敵の弾がまったく動かなくなる場合がある。
+    //自機が上の方に来るとなる問題のような気がする。
     var frame = 0
     var dgCount = 0
     var scoreCount = 0
@@ -34,6 +36,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     var e = teki()
+
+    var teki = TekiJoho()
+
     var et = eTama()
     var et2 = eTama()
 
@@ -52,6 +57,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         invalidate()
         jiki.clickShitaBshoNiIdou(clickX,clickY)
         e.x = tekiUgki(e.x)        //敵の移動　処理
+
+        teki.tekiYokoIdo()        //敵の横方向移動　処理
 
         // 自機の弾が当たったら、相手が消える処理をする
         if(isFirstMove){
@@ -74,9 +81,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     override fun onDraw(canvas: Canvas) {
         jiki.draw(canvas)
         jt.draw(canvas)
-        //canvas.drawRect(jt.shikakuRectXY(), jt.iro)  //自機の弾　処理   //自機の弾が当て相手が消え処理
 
-        canvas.drawRect(e.shikakuRectXY(e.x,e.y,e.ookisa), e.iro)   //敵の移動　処理
+//        canvas.drawRect(e.shikakuRectXY(e.x,e.y,e.ookisa), e.iro)   //敵の移動　処理
+        canvas.drawRect(teki.shikakuRectXY(), teki.iro)   //敵の移動　処理
+
 
         canvas.drawRect(et.shikakuRectXY(et.x,et.y,et.ookisa), et.iro)  //敵の弾　処理    //敵の弾が当たったら、敵の弾は消滅する
         canvas.drawRect(et2.shikakuRectXY(et2.x,et2.y,et2.ookisa), et2.iro) //敵の弾　処理
