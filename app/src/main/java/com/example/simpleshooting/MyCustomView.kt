@@ -34,9 +34,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jiki =JikiJoho(initialJikiX, initialJikiY,tamaOkisa)
     var jt = JikiTama(jiki.x,jiki.y)
 
-
-    var e = teki()
-
     var teki = TekiJoho()
 
     var et = eTama()
@@ -56,17 +53,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         jiki.clickShitaBshoNiIdou(clickX,clickY)
-        //e.x = tekiUgki(e.x)        //敵の移動　処理
 
         teki.tekiYokoIdo()        //敵の横方向移動　処理
 
         // 自機の弾が当たったら、相手が消える処理をする
         if(isFirstMove){
-            if (jt.tamaSyori(jiki.atariKyori(), jiki, e)) {
-                e = teki()
-
+            if (jt.tamaSyori(jiki.atariKyori(), jiki, teki)) {
                 teki = TekiJoho()
-
                 scoreCount += 1
             }
         }
@@ -84,8 +77,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     override fun onDraw(canvas: Canvas) {
         jiki.draw(canvas)
         jt.draw(canvas)
-
-//        canvas.drawRect(e.shikakuRectXY(e.x,e.y,e.ookisa), e.iro)   //敵の移動　処理
         canvas.drawRect(teki.shikakuRectXY(), teki.iro)   //敵の移動　処理
 
 
@@ -190,7 +181,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         clickX = initialJikiX
         clickY = initialJikiY
 
-        e = teki()
+        teki = TekiJoho()
         jt = JikiTama(jiki.x,jiki.y)
         et = eTama()
         et2 = eTama()
@@ -210,21 +201,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
-    fun teki():IchiJoho{
-        val e = IchiJoho(20,100,tekiOkisa,10)
-        e.iro.style = Paint.Style.FILL
-        e.iro.color = Color.CYAN
-        return e
-    }
 
-
-    fun tekiUgki(x:Int):Int{
-        val tekiSpeed = 10
-        var xx = x
-        if(xx<800){ xx += tekiSpeed }
-        if(xx >= 800) { xx = -100 }
-        return xx
-    }
 
 
 

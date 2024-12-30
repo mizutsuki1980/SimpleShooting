@@ -35,7 +35,7 @@ class JikiTama(var x:Int,var y:Int) {
         iro.color = Color.GREEN
     }
 
-    fun tamaSyori(atariKyori:Int,jiki:JikiJoho,e:IchiJoho):Boolean {
+    fun tamaSyori(atariKyori:Int,jiki:JikiJoho,teki:TekiJoho):Boolean {
         var hit = false
         val tamaSpeed = 8.0
         val tamaPlus = 10 * tamaSpeed .toInt()
@@ -50,8 +50,8 @@ class JikiTama(var x:Int,var y:Int) {
         }
 
 
-        val vx = x - e.x
-        val vy = y - e.y
+        val vx = x - teki.x
+        val vy = y - teki.y
 
         if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
             iro.color = Color.WHITE
