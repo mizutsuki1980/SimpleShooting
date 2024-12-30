@@ -47,7 +47,7 @@ class JikiTama(var x:Int,var y:Int) {
     }
 
     //    fun tamaSyoriTekiJoho(jiki:JikiJoho,teki:TekiJoho):Boolean{
-    fun tamaSyoriTekiJoho(jiki:JikiJoho,teki:TekiJoho):Boolean{
+    fun tamaSyoriTekiJoho(jiki:JikiJoho,teki:Teki):Boolean{
         var hit = false
         val tamaSpeed = 8.0
         val tamaPlus = 10 * tamaSpeed .toInt()

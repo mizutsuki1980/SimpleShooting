@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -29,7 +28,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     var jiki =JikiJoho(initialJikiX, initialJikiY,tamaOkisa)
     var jt = JikiTama(jiki.x,jiki.y)
-    var teki = TekiJoho()
+    var teki = Teki()
     var tt = TekiTama(teki.x,teki.y)
 
 
@@ -61,7 +60,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         // 自機の弾が当たったら、相手が消える処理をする
         if(isFirstMove){
             if (jt.tamaSyoriTekiJoho( jiki, teki)) {
-                teki = TekiJoho()
+                teki = Teki()
                 scoreCount += 1
             }
         }
@@ -186,7 +185,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         clickX = initialJikiX
         clickY = initialJikiY
 
-        teki = TekiJoho()
+        teki = Teki()
 
         jt = JikiTama(jiki.x,jiki.y)
         et = eTama()

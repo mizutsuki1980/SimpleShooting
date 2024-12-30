@@ -30,7 +30,7 @@ class TekiTama(var x:Int,var y:Int) {
     }
 
 
-    fun eTama(teki:TekiJoho):IchiJoho{
+    fun eTama(teki:Teki):IchiJoho{
         val m = IchiJoho(teki.x,teki.y,10,10)
         m.iro.style = Paint.Style.FILL
         m.iro.color = Color.MAGENTA

@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 
-class TekiJoho {
+class Teki {
 
     var x :Int
     var y :Int
