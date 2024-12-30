@@ -8,7 +8,7 @@ class TekiJoho {
 
     var x :Int
     var y :Int
-    var ookisa =100
+    var ookisa =140
     var tekiSpeed = 10
     var iro = Paint()
 

@@ -33,7 +33,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     var jiki =JikiJoho(initialJikiX, initialJikiY,tamaOkisa)
     var jt = JikiTama(jiki.x,jiki.y)
-
     var teki = TekiJoho()
 
     var et = eTama()
@@ -53,16 +52,22 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         jiki.clickShitaBshoNiIdou(clickX,clickY)
-
         teki.tekiYokoIdo()        //敵の横方向移動　処理
 
         // 自機の弾が当たったら、相手が消える処理をする
         if(isFirstMove){
+
+            //んーなんかここ変じゃね？
+            //jikiの判定を敵に使ってる？
+
             if (jt.tamaSyori(jiki.atariKyori(), jiki, teki)) {
                 teki = TekiJoho()
                 scoreCount += 1
             }
         }
+
+        //だいたいtekiに置き換えてオッケーだが、なんか当たり判定が微妙だなー
+
         enemyTama()        //敵の弾　処理
         enemyTamaAtatta()        //敵の弾が当たったら、敵の弾は消滅する
         et2.iro.color = Color.BLUE
