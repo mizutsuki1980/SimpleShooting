@@ -30,7 +30,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jt = JikiTama(jiki.x,jiki.y)
     var teki = Teki()
     var tt = TekiTama(teki.x,teki.y)
-    var ttr = TekiTamaRef(teki.x,teki.y,jiki,teki)
+    var ttr = TekiTamaRef(jiki,teki)
 
 
 
@@ -69,7 +69,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         ttr.enemyTamaRefAtatta(jiki)
         if (ttr.hit){
             dgCount += 1
-            ttr = TekiTamaRef(teki.x,teki.y,jiki,teki)
+            ttr = TekiTamaRef(jiki,teki)
         }
 
 
@@ -92,7 +92,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
          canvas.drawRect(ttr.shikakuRectXY(),ttr.iro) //敵の弾　処理
 
     }
-    
+
 
     fun startSetUp(){
 
@@ -100,6 +100,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jt = JikiTama(jiki.x,jiki.y)
         teki = Teki()
         tt = TekiTama(teki.x,teki.y)
+        ttr = TekiTamaRef(jiki,teki)
 
         clickX = initialJikiX
         clickY = initialJikiY

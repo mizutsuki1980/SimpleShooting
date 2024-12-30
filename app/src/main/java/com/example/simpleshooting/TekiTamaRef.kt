@@ -5,8 +5,10 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 
-class TekiTamaRef(var x:Int,var y:Int,jiki:JikiJoho,teki:Teki) {
+class TekiTamaRef(jiki:JikiJoho,teki:Teki) {
     //reflection
+    var x = teki.x
+    var y = teki.y
     var iro = Paint()
     var ookisa:Int
     var homing :Boolean
@@ -21,14 +23,12 @@ class TekiTamaRef(var x:Int,var y:Int,jiki:JikiJoho,teki:Teki) {
         iro.color = Color.BLUE
         homing = true
         hit = false
-        zenkaix = teki.x - jiki.x
-        zenkaiy = teki.y - jiki.y
-        speed = 2.5
+        zenkaix = jiki.x
+        zenkaiy = jiki.y
+        speed = 3.0
     }
 
     fun tekiTamaRefMove(jiki:JikiJoho){
-        //ここでtamaSpeedっていうのを設定している。他の弾にはない
-        var tamaSpeed = 3.5
         var xhanai =650
         var yHani = 900
         var vx = jiki.x - x
@@ -44,8 +44,8 @@ class TekiTamaRef(var x:Int,var y:Int,jiki:JikiJoho,teki:Teki) {
         zenkaiy = vy
         //敵の弾の移動
         val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
-        x += ((vx / v)*10 * tamaSpeed).toInt()
-        y += ((vy / v)*10 * tamaSpeed).toInt()
+        x += ((vx / v)*10 * speed).toInt()
+        y += ((vy / v)*10 * speed).toInt()
         if (x > xhanai || x < 0){zenkaix = -vx }
         if (y > yHani || y < 0){zenkaiy = -vy}
     }
@@ -55,11 +55,6 @@ class TekiTamaRef(var x:Int,var y:Int,jiki:JikiJoho,teki:Teki) {
         val vy = y - jiki.y
         if(ookisa == 30){
             hit = true
-//            dgCount += 1
-
-            //弾２情報をリセット
-   //         ttr = TekiTamaRef(teki.x,teki.y)
-          //以下２行を追加したら動いた。//なんかet2の値を取出でエラーが起きてる？//et2を作り直したらzenkaiVectだけでも設定してないとダメ
         }else{
             val atariKyori = jiki.atariKyori()
             if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
