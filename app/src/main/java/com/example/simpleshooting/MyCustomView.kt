@@ -76,11 +76,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     override fun onDraw(canvas: Canvas) {
-        jiki.draw(canvas)
-        jt.draw(canvas)
-        //canvas.drawRect(jt.shikakuRectXY(), jt.iro)  //自機の弾　処理   //自機の弾が当て相手が消え処理
-
-        canvas.drawRect(teki.shikakuRectXY(), teki.iro)   //敵の移動　処理
+        jiki.draw(canvas)   //自機の処理
+        jt.draw(canvas)     //自機の弾の処理
+        teki.draw(canvas) //敵の移動　処理
 
         canvas.drawRect(et.shikakuRectXY(et.x,et.y,et.ookisa), et.iro)  //敵の弾　処理    //敵の弾が当たったら、敵の弾は消滅する
         canvas.drawRect(et2.shikakuRectXY(et2.x,et2.y,et2.ookisa), et2.iro) //敵の弾　処理

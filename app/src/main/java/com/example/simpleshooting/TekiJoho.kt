@@ -1,5 +1,6 @@
 package com.example.simpleshooting
 
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
@@ -47,5 +48,8 @@ class TekiJoho {
     fun tekiYokoIdo(){
         x += tekiSpeed
         if(x >= 800) { x = -50 } //端っこだったら元の位置に戻る
+    }
+    fun draw(canvas: Canvas){
+        canvas.drawRect(shikakuRectXY(), iro)   //敵の移動　処理
     }
 }
