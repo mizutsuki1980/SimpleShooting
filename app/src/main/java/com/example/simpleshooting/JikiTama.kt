@@ -35,18 +35,6 @@ class JikiTama(var x:Int,var y:Int) {
         iro.color = Color.GREEN
     }
 
-//        fun tamaSyori(atariKyori:Int,jiki:JikiJoho,teki:TekiJoho):Boolean {
-
-
-    fun atariKyoriTama():Int{
-        var atariKyori = 5 +ookisa/2 //当たり判定の距離
-        if(ookisa==200){
-            atariKyori -= 5
-        }//大きいときは、ちょっと当たり判定をマイナスする
-        return atariKyori
-    }
-
-    //    fun tamaSyoriTekiJoho(jiki:JikiJoho,teki:TekiJoho):Boolean{
     fun tamaSyoriTekiJoho(jiki:JikiJoho,teki:Teki):Boolean{
         var hit = false
         val tamaSpeed = 8.0
@@ -79,31 +67,6 @@ class JikiTama(var x:Int,var y:Int) {
         return hit
     }
 
-    fun tamaSyori(atariKyori:Int,jiki:JikiJoho,e:IchiJoho):Boolean {
-        var hit = false
-        val tamaSpeed = 8.0
-        val tamaPlus = 10 * tamaSpeed .toInt()
-        y -= tamaPlus
-        if(y<5){
-            reset(jiki.x,jiki.y)
-        }        //画面の上部で消える
-
-        //で次に、ここで何をやってるのか？「自分の弾」と「敵の位置」を計算して、近かったら消滅、リセット。
-        if(ookisa == 30){
-            reset(jiki.x,jiki.y)
-        }
-
-
-        val vx = x - e.x
-        val vy = y - e.y
-
-        if(vx<atariKyori && vx > -atariKyori && vy<atariKyori && vy > -atariKyori){
-            iro.color = Color.WHITE
-            ookisa = 30
-            hit = true
-        }
-        return hit
-    }
 
     fun draw(canvas: Canvas){
 

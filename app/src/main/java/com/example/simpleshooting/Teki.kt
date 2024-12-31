@@ -31,20 +31,6 @@ class Teki {
         return m
     }
 
-    fun teki():IchiJoho{
-        val e = IchiJoho(20,100,ookisa,10)
-        e.iro.style = Paint.Style.FILL
-        e.iro.color = Color.CYAN
-        return e
-    }
-    fun tekiUgki():Int{
-        val tekiSpeed = 10
-        var xx = x
-        if(xx<800){ xx += tekiSpeed }
-        if(xx >= 800) { xx = -100 }
-        return xx
-    }
-
     fun tekiYokoIdo(){
         x += tekiSpeed
         if(x >= 800) { x = -50 } //端っこだったら元の位置に戻る

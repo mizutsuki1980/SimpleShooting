@@ -13,9 +13,6 @@ class JikiJoho(var x:Int,var y:Int,var tamaOkisa:Int) {
         jikiOokisa = 50
         iro.style = Paint.Style.FILL
         iro.color = Color.RED
-        val m = IchiJoho(0,0,50,10)
-        m.iro.style = Paint.Style.FILL
-        m.iro.color = Color.RED
     }
 
 
