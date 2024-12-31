@@ -110,18 +110,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
-
-    fun tekiUgki(x:Int):Int{
-        val tekiSpeed = 10
-        var xx = x
-        if(xx<800){ xx += tekiSpeed }
-        if(xx >= 800) { xx = -100 }
-        return xx
-    }
-
-
-
-
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             isFirstMove = true
