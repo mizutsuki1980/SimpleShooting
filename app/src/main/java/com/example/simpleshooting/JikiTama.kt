@@ -35,7 +35,7 @@ class JikiTama(var x:Int,var y:Int) {
         iro.color = Color.GREEN
     }
 
-    fun tamaSyoriTekiJoho(jiki:JikiJoho,teki:Teki):Boolean{
+    fun idou(jiki:JikiJoho,teki:Teki):Boolean{
         var hit = false
         val tamaSpeed = 8.0
         val tamaPlus = 10 * tamaSpeed .toInt()

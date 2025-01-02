@@ -28,7 +28,7 @@ class TekiTamaRef(jiki:JikiJoho,teki:Teki) {
         speed = 3.0
     }
 
-    fun tekiTamaRefMove(jiki:JikiJoho){
+    fun move(jiki:JikiJoho){
         var xhanai =650
         var yHani = 900
         var vx = jiki.x - x
@@ -50,7 +50,7 @@ class TekiTamaRef(jiki:JikiJoho,teki:Teki) {
         if (y > yHani || y < 0){zenkaiy = -vy}
     }
 
-    fun enemyTamaRefAtatta(jiki:JikiJoho){
+    fun atari(jiki:JikiJoho){
         val vx = x - jiki.x
         val vy = y - jiki.y
         if(ookisa == 30){

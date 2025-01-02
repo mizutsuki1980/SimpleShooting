@@ -30,7 +30,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jt = JikiTama(jiki.x,jiki.y)
     var teki = Teki()
     var tekiTama = TekiTama(teki.x,teki.y)
-    var ttr = TekiTamaRef(jiki,teki)
+    var tekiTamaRef = TekiTamaRef(jiki,teki)
 
 
     init{
@@ -48,7 +48,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         teki.yokoIdo()  //敵の移動　処理
         // 自機の弾が当たったら、カウントを増やして相手が消える処理をする
         if(isFirstMove){
-            if (jt.tamaSyoriTekiJoho( jiki, teki)) {
+            if (jt.idou( jiki, teki)) {
                 teki = Teki()
                 scoreCount += 1
             }
@@ -58,13 +58,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         if (tekiTama.hit){
             dgCount += 1
-            tt = TekiTama(teki.x,teki.y)
+            tekiTama = TekiTama(teki.x,teki.y)
         }
-        ttr.tekiTamaRefMove(jiki)
-        ttr.enemyTamaRefAtatta(jiki)
-        if (ttr.hit){
+
+        tekiTamaRef.move(jiki)
+        tekiTamaRef.atari(jiki)
+        if (tekiTamaRef.hit){
             dgCount += 1
-            ttr = TekiTamaRef(jiki,teki)
+            tekiTamaRef = TekiTamaRef(jiki,teki)
         }
 
         handler.postDelayed({ tsugiNoSyori() }, 100)
@@ -78,7 +79,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jt.draw(canvas)     //自機の弾の処理
         teki.draw(canvas) //敵の移動　処理
         tekiTama.draw(canvas) //敵の追尾弾の移動　処理
-        ttr.draw(canvas) //敵の反射弾の移動　処理
+        tekiTamaRef.draw(canvas) //敵の反射弾の移動　処理
 
     }
 
@@ -89,7 +90,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jt = JikiTama(jiki.x,jiki.y)
         teki = Teki()
         tekiTama = TekiTama(teki.x,teki.y)
-        ttr = TekiTamaRef(jiki,teki)
+        tekiTamaRef = TekiTamaRef(jiki,teki)
 
         clickX = initialJikiX
         clickY = initialJikiY
