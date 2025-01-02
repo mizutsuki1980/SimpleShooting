@@ -50,7 +50,7 @@ class TekiTamaRef(jiki:JikiJoho,teki:Teki) {
         if (y > yHani || y < 0){zenkaiy = -vy}
     }
 
-    fun atari(jiki:JikiJoho){
+    fun atariCheck(jiki:JikiJoho){
         val vx = x - jiki.x
         val vy = y - jiki.y
         if(ookisa == 30){

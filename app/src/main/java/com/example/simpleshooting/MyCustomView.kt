@@ -44,17 +44,17 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tsugiNoSyori() {
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
-        jiki.idou(clickX,clickY)
+        jiki.move(clickX,clickY)
         teki.yokoIdo()  //敵の移動　処理
         // 自機の弾が当たったら、カウントを増やして相手が消える処理をする
         if(isFirstMove){
-            if (jikiTama.idou( jiki, teki)) {
+            if (jikiTama.move( jiki, teki)) {
                 teki = Teki()
                 scoreCount += 1
             }
         }
         tekiTama.move(jiki,teki)  //敵の弾　処理
-        tekiTama.atari(jiki) //敵の弾が当たっていたらカウントを増やして消える
+        tekiTama.atariCheck(jiki) //敵の弾が当たっていたらカウントを増やして消える
 
         if (tekiTama.hit){
             dgCount += 1
@@ -62,7 +62,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
 
         tekiTamaRef.move(jiki)
-        tekiTamaRef.atari(jiki)
+        tekiTamaRef.atariCheck(jiki)
         if (tekiTamaRef.hit){
             dgCount += 1
             tekiTamaRef = TekiTamaRef(jiki,teki)
