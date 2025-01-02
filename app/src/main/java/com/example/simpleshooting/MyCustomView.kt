@@ -47,8 +47,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki.move(clickX,clickY)
         teki.yokoIdo()  //敵の移動　処理
         // 自機の弾が当たったら、カウントを増やして相手が消える処理をする
+        jikiTama.move( jiki, teki)
         if(isFirstMove){
-            if (jikiTama.move( jiki, teki)) {
+            if (jikiTama.atariCheck( jiki, teki)) {
                 teki = Teki()
                 scoreCount += 1
             }
