@@ -38,9 +38,7 @@ class JikiTama(var x:Int,var y:Int) {
     fun move(jiki:JikiJoho,teki:Teki) {
         val tamaSpeed = 8.0
         val tamaPlus = 10 * tamaSpeed.toInt()
-
         y -= tamaPlus //自機の弾を上方向に動かす
-
         if (y < 5) {
             reset(jiki.x, jiki.y)
         }//画面の上部で消える
@@ -48,14 +46,10 @@ class JikiTama(var x:Int,var y:Int) {
         if (ookisa == 30) {
             reset(jiki.x, jiki.y)
         }//最後に消える前に表示してから消える
-
-
-        //「自分の弾」と「敵の位置」を計算して、近かったら敵は消滅、hitで確認してリセット。
-        //というかatariKyoriなんてべつに関数にしなくてもいいんじゃね？その場で計算すれば。
-        //自機、弾、敵の情報はわかってんだし。
     }
 
     fun atariCheck(jiki:JikiJoho,teki:Teki):Boolean{
+        //「自分の弾」と「敵の位置」を計算して、近かったら敵は消滅、hitで確認してリセット。
         var hit = false
 
         val vx = x - teki.x
@@ -72,7 +66,6 @@ class JikiTama(var x:Int,var y:Int) {
 
 
     fun draw(canvas: Canvas){
-
         canvas.drawRect(shikakuRectXY(), iro)  //自機
     }
 
