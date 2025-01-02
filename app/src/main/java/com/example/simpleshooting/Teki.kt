@@ -31,7 +31,7 @@ class Teki {
         return m
     }
 
-    fun tekiYokoIdo(){
+    fun yokoIdo(){
         x += tekiSpeed
         if(x >= 800) { x = -50 } //端っこだったら元の位置に戻る
     }

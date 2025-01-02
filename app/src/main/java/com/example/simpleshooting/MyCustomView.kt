@@ -17,7 +17,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var dgCount = 0
     var scoreCount = 0
     var tamaOkisa = 30
-    var enemyTamaSpeed = 2.0    //デフォはこれにしといて、変えれるようにしよう
     var isFirstMove = false //動きだしたら弾も出るようにする
 
 
@@ -30,7 +29,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jiki =JikiJoho(initialJikiX, initialJikiY,tamaOkisa)
     var jt = JikiTama(jiki.x,jiki.y)
     var teki = Teki()
-    var tt = TekiTama(teki.x,teki.y)
+    var tekiTama = TekiTama(teki.x,teki.y)
     var ttr = TekiTamaRef(jiki,teki)
 
 
@@ -45,8 +44,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tsugiNoSyori() {
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
-        jiki.clickShitaBshoNiIdou(clickX,clickY)
-        teki.tekiYokoIdo()  //敵の移動　処理
+        jiki.idou(clickX,clickY)
+        teki.yokoIdo()  //敵の移動　処理
         // 自機の弾が当たったら、カウントを増やして相手が消える処理をする
         if(isFirstMove){
             if (jt.tamaSyoriTekiJoho( jiki, teki)) {
@@ -54,9 +53,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 scoreCount += 1
             }
         }
-        tt.tekiTamaMove(jiki,teki)  //敵の弾　処理
-        tt.tekiTamaAtatta(jiki) //敵の弾が当たっていたらカウントを増やして消える
-        if (tt.hit){
+        tekiTama.move(jiki,teki)  //敵の弾　処理
+        tekiTama.atari(jiki) //敵の弾が当たっていたらカウントを増やして消える
+
+        if (tekiTama.hit){
             dgCount += 1
             tt = TekiTama(teki.x,teki.y)
         }
@@ -77,7 +77,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki.draw(canvas)   //自機の処理
         jt.draw(canvas)     //自機の弾の処理
         teki.draw(canvas) //敵の移動　処理
-        tt.draw(canvas) //敵の追尾弾の移動　処理
+        tekiTama.draw(canvas) //敵の追尾弾の移動　処理
         ttr.draw(canvas) //敵の反射弾の移動　処理
 
     }
@@ -88,7 +88,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki =JikiJoho(initialJikiX, initialJikiY,tamaOkisa)
         jt = JikiTama(jiki.x,jiki.y)
         teki = Teki()
-        tt = TekiTama(teki.x,teki.y)
+        tekiTama = TekiTama(teki.x,teki.y)
         ttr = TekiTamaRef(jiki,teki)
 
         clickX = initialJikiX

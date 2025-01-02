@@ -40,7 +40,7 @@ class JikiJoho(var x:Int,var y:Int,var tamaOkisa:Int) {
         }
     }
 
-    fun clickShitaBshoNiIdou(clickX:Int,clickY:Int){
+    fun idou(clickX:Int,clickY:Int){
         val saX = x - clickX
         val saY = y - clickY
         var xxx = x
