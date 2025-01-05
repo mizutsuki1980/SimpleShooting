@@ -117,6 +117,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             isFirstMove = true
             clickX = event.x.toInt()
             clickY = event.y.toInt()
+            clickY -= 170
             return true // 処理した場合はtrueを返す約束
         }
 
@@ -124,6 +125,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             isFirstMove = true
             clickX = event.x.toInt()
             clickY = event.y.toInt()
+            clickY -= 170
             return true // 処理した場合はtrueを返す約束
         }
 
@@ -131,6 +133,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             isFirstMove = true
             clickX = event.x.toInt()
             clickY = event.y.toInt()
+            clickY -= 170
             return true // 処理した場合はtrueを返す約束
         }
         return super.onTouchEvent(event)
