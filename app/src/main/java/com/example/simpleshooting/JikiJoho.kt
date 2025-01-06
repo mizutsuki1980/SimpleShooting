@@ -7,12 +7,15 @@ import android.graphics.Paint
 class JikiJoho(var x:Int,var y:Int,var tamaOkisa:Int) {
 
     var iro = Paint()
+    var irosub = Paint()
     var jikiOokisa:Int
 
     init {
         jikiOokisa = 50
         iro.style = Paint.Style.FILL
         iro.color = Color.RED
+        irosub.style = Paint.Style.FILL
+        irosub.color = Color.MAGENTA
     }
 
 
@@ -74,6 +77,9 @@ class JikiJoho(var x:Int,var y:Int,var tamaOkisa:Int) {
     }
 
     fun draw(canvas:Canvas){
-        canvas.drawCircle(x.toFloat(),y.toFloat(),(jikiOokisa/2).toFloat(),iro) //自機の移動　処理
+        //ここにドットを複数書くことで自機をドット絵として表示できる？
+        canvas.drawCircle(x+40.toFloat(),y.toFloat(),(jikiOokisa/2-10).toFloat(),irosub)    //サブ機の描画
+        canvas.drawCircle(x-40.toFloat(),y.toFloat(),(jikiOokisa/2-10).toFloat(),irosub)    //サブ機の描画
+        canvas.drawCircle(x.toFloat(),y.toFloat(),(jikiOokisa/2).toFloat(),iro) //自機の描画
     }
 }
