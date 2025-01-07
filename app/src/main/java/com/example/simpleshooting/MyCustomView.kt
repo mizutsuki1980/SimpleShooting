@@ -25,7 +25,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
     var jiki =Jiki(initialJikiX, initialJikiY,tamaOkisa)
-    var jikiTama = JikiTama(jiki.x,jiki.y)
+    var jikiTama = JikiTama(jiki.x,jiki.y-170)
     var teki = Teki()
     var tekiTama = TekiTama(teki.x,teki.y)
     var tekiTamaRef = TekiTamaRef(jiki,teki)
@@ -48,8 +48,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         teki.repeatSyori()
 
         // 自機の弾が当たったら、カウントを増やして相手が消える処理をする
-        jikiTama.move( jiki, teki)
         if(isFirstMove){
+            jikiTama.move( jiki, teki)
             if (jikiTama.atariCheck( jiki, teki)) {
                 teki = Teki()
                 scoreCount += 1
@@ -78,8 +78,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     override fun onDraw(canvas: Canvas) {
         jiki.draw(canvas)   //自機の処理
-        jikiTama.draw(canvas)     //自機の弾の処理
-        teki.draw(canvas) //敵の移動　処理
+        if(isFirstMove){ jikiTama.draw(canvas)}     //自機の弾の処理
+        teki.draw(canvas) //敵jikiTamaの移動　処理
         tekiTama.draw(canvas) //敵の追尾弾の移動　処理
         tekiTamaRef.draw(canvas) //敵の反射弾の移動　処理
         hpCounter.draw(canvas)
