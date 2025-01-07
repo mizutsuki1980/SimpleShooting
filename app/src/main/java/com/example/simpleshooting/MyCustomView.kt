@@ -26,6 +26,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     var jiki =Jiki(initialJikiX, initialJikiY,tamaOkisa)
     var jikiTama = JikiTama(jiki.x,jiki.y-170)
+    //ここでも-170してるのは、なんか面倒だしわかりにくいなー
+
     var teki = Teki()
     var tekiTama = TekiTama(teki.x,teki.y)
     var tekiTamaRef = TekiTamaRef(jiki,teki)
