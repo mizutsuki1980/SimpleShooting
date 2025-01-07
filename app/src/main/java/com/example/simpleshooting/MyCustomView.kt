@@ -42,7 +42,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tsugiNoSyori() {
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
-        jiki.move(clickX,clickY)
+        jiki.move(clickX,clickY-170) //クリックした場所から上に170の場所に移動する。指にかかって見えない為。
 
         teki.yokoIdo()  //敵の移動　処理
         teki.repeatSyori()
@@ -118,7 +118,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             isFirstMove = true
             clickX = event.x.toInt()
             clickY = event.y.toInt()
-            clickY -= 170
             return true // 処理した場合はtrueを返す約束
         }
 
@@ -126,7 +125,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             isFirstMove = true
             clickX = event.x.toInt()
             clickY = event.y.toInt()
-            clickY -= 170
             return true // 処理した場合はtrueを返す約束
         }
 
@@ -134,7 +132,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             isFirstMove = true
             clickX = event.x.toInt()
             clickY = event.y.toInt()
-            clickY -= 170
             return true // 処理した場合はtrueを返す約束
         }
         return super.onTouchEvent(event)
