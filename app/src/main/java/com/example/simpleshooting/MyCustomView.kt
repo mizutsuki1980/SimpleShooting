@@ -31,7 +31,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var teki = Teki()
     var tekiTama = TekiTama(teki.x,teki.y)
     var tekiTamaRef = TekiTamaRef(jiki,teki)
-    //var hpCounter = HPCounter()
+    var hpCounter = HPCounter()
 
     init{
 
@@ -80,9 +80,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         teki.draw(canvas) //敵jikiTamaの移動　処理
         tekiTama.draw(canvas) //敵の追尾弾の移動　処理
         tekiTamaRef.draw(canvas) //敵の反射弾の移動　処理
-        // 自機の弾を後に描画した方がそれっぽく見える
+        // 自機の弾を最後に描画した方がそれっぽく見える
         if(isFirstMove){ jikiTama.draw(canvas)}     //自機の弾の処理
-      //  hpCounter.draw(canvas)
+        hpCounter.draw(canvas)
     }
 
 
