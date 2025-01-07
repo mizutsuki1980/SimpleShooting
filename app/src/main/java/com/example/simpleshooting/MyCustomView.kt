@@ -31,7 +31,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var teki = Teki()
     var tekiTama = TekiTama(teki.x,teki.y)
     var tekiTamaRef = TekiTamaRef(jiki,teki)
-    var hpCounter = hpCounter()
+    var hpCounter = HPCounter()
 
     init{
 

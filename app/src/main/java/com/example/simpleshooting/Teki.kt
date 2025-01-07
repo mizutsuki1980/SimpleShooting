@@ -2,6 +2,7 @@ package com.example.simpleshooting
 
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Color.argb
 import android.graphics.Paint
 import android.graphics.Rect
 
@@ -25,7 +26,7 @@ class Teki {
         iro.color = Color.CYAN
 
         irosub.style = Paint.Style.FILL
-        irosub.color = Color.BLUE
+        irosub.color = argb(170, 0, 0, 255)
 
     }
 

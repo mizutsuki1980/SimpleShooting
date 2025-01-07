@@ -2,6 +2,7 @@ package com.example.simpleshooting
 
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Color.argb
 import android.graphics.Paint
 
 class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
@@ -13,9 +14,10 @@ class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
     init {
         jikiOokisa = 50
         iro.style = Paint.Style.FILL
-        iro.color = Color.RED
+        iro.color = argb(255, 200, 150, 150)
         irosub.style = Paint.Style.FILL
-        irosub.color = Color.MAGENTA
+        irosub.color = argb(170, 150, 0, 0)
+
     }
 
 
@@ -77,13 +79,14 @@ class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
     }
 
     fun draw(canvas:Canvas){
-        drawSubKi(canvas)
         canvas.drawCircle(x.toFloat(),y.toFloat(),(jikiOokisa/2).toFloat(),iro) //自機の描画
+        drawSubKi(canvas)
+        //なるほど、順番に描画されていくわけか
     }
 
     fun drawSubKi(canvas:Canvas){
-        canvas.drawCircle(x+40.toFloat(),y.toFloat(),(jikiOokisa/2-10).toFloat(),irosub)    //サブ機の描画
-        canvas.drawCircle(x-40.toFloat(),y.toFloat(),(jikiOokisa/2-10).toFloat(),irosub)    //サブ機の描画
+        canvas.drawCircle(x+30.toFloat(),y.toFloat(),(jikiOokisa/2-5).toFloat(),irosub)    //サブ機の描画
+        canvas.drawCircle(x-30.toFloat(),y.toFloat(),(jikiOokisa/2-5).toFloat(),irosub)    //サブ機の描画
 
     }
 
