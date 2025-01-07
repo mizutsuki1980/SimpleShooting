@@ -45,7 +45,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         jiki.move(clickX,clickY)
+
         teki.yokoIdo()  //敵の移動　処理
+        teki.repeatSyori()
+
         // 自機の弾が当たったら、カウントを増やして相手が消える処理をする
         jikiTama.move( jiki, teki)
         if(isFirstMove){

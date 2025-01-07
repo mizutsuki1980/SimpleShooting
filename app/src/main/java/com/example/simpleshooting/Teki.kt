@@ -15,9 +15,12 @@ class Teki {
     var iro = Paint()
     var irosub = Paint()
 
+    var tekiFrame = 0
+
     init{
         x = 20
         y = 100
+
         iro.style = Paint.Style.FILL
         iro.color = Color.CYAN
 
@@ -47,12 +50,28 @@ class Teki {
         x += tekiSpeed
         if(x >= 800) { x = -50 } //端っこだったら元の位置に戻る
     }
+
+    fun repeatSyori(){
+        tekiFrame += 1
+        if(tekiFrame == 15){tekiFrame = 0 }
+    }
+
     fun draw(canvas: Canvas){
          //なるほどー、shikakuRectXY()こういう風に書いちゃうと位置が固定されてしまうのか。
         canvas.drawRect(shikakuRectXY(), iro)   //敵の移動　処理
-        canvas.drawRect(shikakuRectXYSub(x-20-ookisa/2,y,30), irosub)   //敵の移動　処理
-        canvas.drawRect(shikakuRectXYSub(x+20+ookisa/2,y,30), irosub)   //敵の移動　処理
+        canvas.drawRect(shikakuRectXYSub(x-20-ookisa/2 + tekiFrame*2,y,30), irosub)   //敵の移動　処理
+        canvas.drawRect(shikakuRectXYSub(x+20+ookisa/2 - tekiFrame*2,y,30), irosub)   //敵の移動　処理
 
+        //くるくると敵のまわりをまわる衛星のようなものを作りたい
+        //軸を決めて、フレームとともにｘ+いくつ、ｙ+いくつとするとできるかな？
+
+        //1のときｘは＋ー０、ｙだけー１０
+        //2のときｘは＋２、ｙはー８
+        //3のときｘは＋４、ｙはー６
+        //4のときｘは＋６、ｙはー４
+        //5のときｘは＋８、ｙはー２
+        //6のときｘは＋１０、ｙは＋ー０
+        //みたいな？
 
     }
 }
