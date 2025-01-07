@@ -9,12 +9,52 @@ class JikiTama(var x:Int,var y:Int) {
     var iro = Paint()
     var ookisa:Int
 
+    val TAMA_NASI_STATE = 1
+    val NORMAL_STATE = 2
+    val TAMA_HIT_STATE = 3
+    val TAMA_HIT_END_STATE = 4
+
+    var status = TAMA_NASI_STATE // 最初は玉が画面内に無い状態
+
     init {
         ookisa = 10
         iro.style = Paint.Style.FILL
         iro.color = Color.GREEN
     }
 
+//こういう感じにしていく
+    fun nextFrame() {
+        when(status) {
+            TAMA_NASI_STATE -> {
+                // 現在の自機の場所に移動して
+//                move(jikiX jikiY)
+                // 移動状態に
+                status = NORMAL_STATE
+            }
+            NORMAL_STATE -> {
+//                moveOne() // 一つ上に移動
+                if (atariCheck()) {
+                    status = TAMA_HIT_STATE
+                    ookisa = 30
+                    iro. ....
+                }
+//                if (gamenGaiCheck()) {
+                    // 画面外に出たら無しの状態に一旦遷移
+
+//                    status = TAMA_NASI_STATE
+//                }
+            }
+            TAMA_HIT_STATE -> {
+                // ここで何フレームかカウントしてからでもいいが、とりあえず1フレームで次に行く
+                status = TAMA_HIT_END_STATE
+            }
+            TAMA_HIT_END_STATE -> {
+                // もとに戻す
+                ookisa = 10
+                status = TAMA_NASI_STATE
+            }
+        }
+    }
 
 
     fun shikakuRectXY(): Rect {

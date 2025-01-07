@@ -11,12 +11,11 @@ class Teki {
     var x :Int
     var y :Int
     var ookisa =70
+    var tekiFrame = 0
 
     var tekiSpeed = 10
     var iro = Paint()
     var irosub = Paint()
-
-    var tekiFrame = 0
 
     init{
         x = 20
@@ -29,7 +28,6 @@ class Teki {
         irosub.color = argb(170, 0, 0, 255)
 
     }
-
     fun shikakuRectXY(): Rect {
         val left = x  - ookisa / 2
         val right = x  + ookisa / 2
