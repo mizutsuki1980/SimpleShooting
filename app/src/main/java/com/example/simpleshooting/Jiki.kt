@@ -77,9 +77,15 @@ class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
     }
 
     fun draw(canvas:Canvas){
-        //ここにドットを複数書くことで自機をドット絵として表示できる？
-        canvas.drawCircle(x+40.toFloat(),y.toFloat(),(jikiOokisa/2-10).toFloat(),irosub)    //サブ機の描画
-        canvas.drawCircle(x-40.toFloat(),y.toFloat(),(jikiOokisa/2-10).toFloat(),irosub)    //サブ機の描画
+        drawSubKi(canvas)
         canvas.drawCircle(x.toFloat(),y.toFloat(),(jikiOokisa/2).toFloat(),iro) //自機の描画
     }
+
+    fun drawSubKi(canvas:Canvas){
+        canvas.drawCircle(x+40.toFloat(),y.toFloat(),(jikiOokisa/2-10).toFloat(),irosub)    //サブ機の描画
+        canvas.drawCircle(x-40.toFloat(),y.toFloat(),(jikiOokisa/2-10).toFloat(),irosub)    //サブ機の描画
+
+    }
+
+
 }
