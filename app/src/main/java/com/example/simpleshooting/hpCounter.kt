@@ -7,6 +7,9 @@ import android.graphics.Rect
 
 class hpCounter {
 
+    //shikakuRect1~5をなんか変数にまとめて一気に動かせるような感じにしたい。
+    //ベースとなる座標を決めて、動かせるようにしたい。たぶんできるだろう。
+
     var iro = Paint()
     var irosub = Paint()
 
@@ -23,7 +26,7 @@ class hpCounter {
         var yyy = 0
         var ooookisa = 200
         val left = 500
-        val right = 700
+        val right = 690
         val top = 0
         val bottom = 50
         val m = Rect(left, top, right,bottom)
@@ -79,6 +82,15 @@ class hpCounter {
         //四角ができる
         return m
     }
+    fun shikakuRect6(): Rect {
+        val left = 660
+        val right = 680
+        val top = 10
+        val bottom = 40
+        val m = Rect(left, top, right,bottom)
+        //四角ができる
+        return m
+    }
 
 
     fun draw(canvas: Canvas){
@@ -88,6 +100,7 @@ class hpCounter {
         canvas.drawRect(shikakuRect3(), irosub)
         canvas.drawRect(shikakuRect4(), irosub)
         canvas.drawRect(shikakuRect5(), irosub)
+        canvas.drawRect(shikakuRect6(), irosub)
     }
 
 }
