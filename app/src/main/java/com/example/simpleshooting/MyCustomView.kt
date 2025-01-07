@@ -2,8 +2,6 @@ package com.example.simpleshooting
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -26,7 +24,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
-    var jiki =JikiJoho(initialJikiX, initialJikiY,tamaOkisa)
+    var jiki =Jiki(initialJikiX, initialJikiY,tamaOkisa)
     var jikiTama = JikiTama(jiki.x,jiki.y)
     var teki = Teki()
     var tekiTama = TekiTama(teki.x,teki.y)
@@ -90,7 +88,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun startSetUp(){
 
-        jiki =JikiJoho(initialJikiX, initialJikiY,tamaOkisa)
+        jiki =Jiki(initialJikiX, initialJikiY,tamaOkisa)
         jikiTama = JikiTama(jiki.x,jiki.y)
         teki = Teki()
         tekiTama = TekiTama(teki.x,teki.y)

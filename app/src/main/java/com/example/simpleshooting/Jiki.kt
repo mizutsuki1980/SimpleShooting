@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 
-class JikiJoho(var x:Int,var y:Int,var tamaOkisa:Int) {
+class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
 
     var iro = Paint()
     var irosub = Paint()

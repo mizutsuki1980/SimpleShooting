@@ -25,7 +25,7 @@ class TekiTama(var x:Int,var y:Int) {
         speed = 2.0
     }
 
-    fun move(jiki:JikiJoho,teki:Teki){
+    fun move(jiki:Jiki, teki:Teki){
         var vx = jiki.x - x
         var vy = jiki.y - y
 
@@ -52,7 +52,7 @@ class TekiTama(var x:Int,var y:Int) {
             //弾のリセットどうすんだろう？これでいっか
         }    //画面外で敵の弾のリセット
     }
-    fun atariCheck(jiki:JikiJoho){
+    fun atariCheck(jiki:Jiki){
     //カウント処理がはいってるなー。そとにだしたほうがいいのか。ならBooleanであたった、とかつけるのかな？
         val vx = x - jiki.x
         val vy = y - jiki.y

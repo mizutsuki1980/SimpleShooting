@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 
-class TekiTamaRef(jiki:JikiJoho,teki:Teki) {
+class TekiTamaRef(jiki:Jiki, teki:Teki) {
     //reflection
     var x = teki.x
     var y = teki.y
@@ -28,7 +28,7 @@ class TekiTamaRef(jiki:JikiJoho,teki:Teki) {
         speed = 3.0
     }
 
-    fun move(jiki:JikiJoho){
+    fun move(jiki:Jiki){
         var xhanai =650
         var yHani = 900
         var vx = jiki.x - x
@@ -50,7 +50,7 @@ class TekiTamaRef(jiki:JikiJoho,teki:Teki) {
         if (y > yHani || y < 0){zenkaiy = -vy}
     }
 
-    fun atariCheck(jiki:JikiJoho){
+    fun atariCheck(jiki:Jiki){
         val vx = x - jiki.x
         val vy = y - jiki.y
         if(ookisa == 30){

@@ -35,7 +35,7 @@ class JikiTama(var x:Int,var y:Int) {
         iro.color = Color.GREEN
     }
 
-    fun move(jiki:JikiJoho,teki:Teki) {
+    fun move(jiki:Jiki, teki:Teki) {
         val tamaSpeed = 8.0
         val tamaPlus = 10 * tamaSpeed.toInt()
         y -= tamaPlus //自機の弾を上方向に動かす
@@ -48,7 +48,7 @@ class JikiTama(var x:Int,var y:Int) {
         }//最後に消える前に表示してから消える
     }
 
-    fun atariCheck(jiki:JikiJoho,teki:Teki):Boolean{
+    fun atariCheck(jiki:Jiki, teki:Teki):Boolean{
         //「自分の弾」と「敵の位置」を計算して、近かったら敵は消滅、hitで確認してリセット。
         var hit = false
 
