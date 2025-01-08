@@ -10,11 +10,12 @@ class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
     var iro = Paint()
     var irosub = Paint()
     var jikiOokisa:Int
+    var frame = 0
 
     init {
         jikiOokisa = 50
         iro.style = Paint.Style.FILL
-        iro.color = argb(255, 200, 150, 150)
+        iro.color = argb(255, 255, 255, 150)
         irosub.style = Paint.Style.FILL
         irosub.color = argb(170, 150, 0, 0)
 
@@ -85,8 +86,64 @@ class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
     }
 
     fun drawSubKi(canvas:Canvas){
-        canvas.drawCircle(x+30.toFloat(),y.toFloat(),(jikiOokisa/2-5).toFloat(),irosub)    //サブ機の描画
-        canvas.drawCircle(x-30.toFloat(),y.toFloat(),(jikiOokisa/2-5).toFloat(),irosub)    //サブ機の描画
+        //描画されるたびに＋されるだけでいいなら、ここに入れとけばいっか、frame+＝1
+        var xx = 0
+        var yy = 0
+        frame += 1
+        val num = frame % 12
+
+        when(num) {
+            0 -> {
+                xx=100
+                yy=0
+            }
+            1 -> {
+                xx=90
+                yy=10
+            }
+            3 -> {
+                xx=80
+                yy=20
+            }
+            4 -> {
+                xx=70
+                yy=30
+            }
+            5 -> {
+                xx=60
+                yy=40
+            }
+            6 -> {
+                xx=50
+                yy=50
+            }
+            7 -> {
+                xx=40
+                yy=60
+            }
+            8 -> {
+                xx=30
+                yy=70
+            }
+            9 -> {
+                xx=20
+                yy=80
+            }
+            10 -> {
+                xx=10
+                yy=90
+            }
+            11 -> {
+                xx=0
+                yy=100
+            }
+
+        }
+
+
+
+        canvas.drawCircle(x+xx.toFloat(),y+yy.toFloat(),(jikiOokisa/2-5).toFloat(),irosub)    //サブ機の描画
+        canvas.drawCircle(x-xx.toFloat(),y-yy.toFloat(),(jikiOokisa/2-5).toFloat(),irosub)    //サブ機の描画
 
     }
 

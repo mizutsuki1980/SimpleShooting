@@ -44,14 +44,19 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tsugiNoSyori() {
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
+
         jiki.move(clickX,clickY-170) //クリックした場所から上に170の場所に移動する。指にかかって見えない為。
 
         teki.yokoIdo()  //敵の移動　処理
         teki.repeatSyori()
 
         // 自機の弾が当たったら、カウントを増やして相手が消える処理をする
+
         if(isFirstMove){
             jikiTama.nextFrame(jiki,teki)
+            if (jikiTama.hit) {
+                scoreCount += 1
+            }
         }
 
         tekiTama.move(jiki,teki)  //敵の弾　処理
