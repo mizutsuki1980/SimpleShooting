@@ -87,8 +87,8 @@ class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
 
     fun drawSubKi(canvas:Canvas){
         //描画されるたびに＋されるだけでいいなら、ここに入れとけばいっか、frame+＝1
-        var xx = 0
-        var yy = 0
+        var xx = 50
+        var yy = 50
         frame += 1
         val num = frame % 12
 
