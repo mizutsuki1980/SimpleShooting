@@ -36,6 +36,7 @@ class JikiTama(var x:Int,var y:Int) {
             TAMA_HIT_STATE -> {
                 hitCountSyori() //ヒット処理して次へ
             }
+
             TAMA_HIT_END_STATE -> {
                 motoniModosu()  // もとに戻す
             }
