@@ -85,67 +85,16 @@ class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
         //なるほど、順番に描画されていくわけか
     }
 
+
+    //    1 * sin(θ) == y;
     fun drawSubKi(canvas:Canvas){
         //描画されるたびに＋されるだけでいいなら、ここに入れとけばいっか、frame+＝1
-        var xx = 50
-        var yy = 50
         frame += 1
-        val num = frame % 12
-
-        when(num) {
-            0 -> {
-                xx=100
-                yy=0
-            }
-            1 -> {
-                xx=90
-                yy=10
-            }
-            3 -> {
-                xx=80
-                yy=20
-            }
-            4 -> {
-                xx=70
-                yy=30
-            }
-            5 -> {
-                xx=60
-                yy=40
-            }
-            6 -> {
-                xx=50
-                yy=50
-            }
-            7 -> {
-                xx=40
-                yy=60
-            }
-            8 -> {
-                xx=30
-                yy=70
-            }
-            9 -> {
-                xx=20
-                yy=80
-            }
-            10 -> {
-                xx=10
-                yy=90
-            }
-            11 -> {
-                xx=0
-                yy=100
-            }
-
-        }
-
-
+        var xx = x/10 * Math.cos(frame/10.toDouble())
+        var yy = y/10 * Math.sin(frame/10.toDouble())
 
         canvas.drawCircle(x+xx.toFloat(),y+yy.toFloat(),(jikiOokisa/2-5).toFloat(),irosub)    //サブ機の描画
         canvas.drawCircle(x-xx.toFloat(),y-yy.toFloat(),(jikiOokisa/2-5).toFloat(),irosub)    //サブ機の描画
-
+        if (frame >= 40 ){frame = 0}
     }
-
-
 }
