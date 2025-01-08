@@ -10,7 +10,7 @@ class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
     var iro = Paint()
     var irosub = Paint()
     var jikiOokisa:Int
-    var frame = 0
+    var kakudo = 0
 
     init {
         jikiOokisa = 50
@@ -89,14 +89,13 @@ class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
     //    1 * sin(θ) == y;
     fun drawSubKi(canvas:Canvas){
         //描画されるたびに＋されるだけでいいなら、ここに入れとけばいっか、frame+＝1
-        frame += 1
-        val kakudo = frame.toDouble()
+        kakudo += 1
         val kyori = jikiOokisa*7
-        var xx = kyori * Math.cos(kakudo)/10
-        var yy = kyori * Math.sin(kakudo)/10
+        var xx = kyori * Math.cos(kakudo.toDouble())/10
+        var yy = kyori * Math.sin(kakudo.toDouble())/10
 
         canvas.drawCircle(x+xx.toFloat(),y+yy.toFloat(),(jikiOokisa/2-5).toFloat(),irosub)    //サブ機の描画
         canvas.drawCircle(x-xx.toFloat(),y-yy.toFloat(),(jikiOokisa/2-5).toFloat(),irosub)    //サブ機の描画
-        if (frame >= 360 ){frame = 0}
+        if (kakudo >= 360 ){kakudo = 0}
     }
 }

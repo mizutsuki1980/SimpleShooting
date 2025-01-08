@@ -11,7 +11,7 @@ class Teki {
     var x :Int
     var y :Int
     var ookisa =70
-    var frame = 0
+    var kakudo = 0
 
     var tekiSpeed = 10
     var iro = Paint()
@@ -50,10 +50,7 @@ class Teki {
         if(x >= 800) { x = -50 } //端っこだったら元の位置に戻る
     }
 
-    fun repeatSyori(){
-     //   frame += 1
-       // if(frame == 15){frame = 0 }
-    }
+
 
     fun draw(canvas: Canvas){
         canvas.drawRect(shikakuRectXY(), iro)   //敵の移動　処理
@@ -62,16 +59,15 @@ class Teki {
 
     fun drawSubKi(canvas:Canvas){
         //描画されるたびに＋されるだけでいいなら、ここに入れとけばいっか、frame+＝1
-        frame += 1
-        val kakudo = frame.toDouble()
+        kakudo += 1
         val kyori = ookisa*6
-        var xx = kyori * Math.cos(kakudo)/10
-        var yy = kyori * Math.sin(kakudo)/10
+        var xx = kyori * Math.cos(kakudo.toDouble())/10
+        var yy = kyori * Math.sin(kakudo.toDouble())/10
 
         canvas.drawRect(shikakuRectXYSub(x+xx.toInt() ,y+yy.toInt(),ookisa/3), irosub)   //敵の移動　処理
         canvas.drawRect(shikakuRectXYSub(x-xx.toInt() ,y-yy.toInt(),ookisa/3), irosub)   //敵の移動　処理
 
-        if (frame >= 360 ){frame = 0}
+        if (kakudo >= 360 ){kakudo = 0}
     }
 
 }

@@ -48,7 +48,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki.move(clickX,clickY-170) //クリックした場所から上に170の場所に移動する。指にかかって見えない為。
 
         teki.yokoIdo()  //敵の移動　処理
-        teki.repeatSyori()
 
         // 自機の弾が当たったら、カウントを増やして相手が消える処理をする
 
