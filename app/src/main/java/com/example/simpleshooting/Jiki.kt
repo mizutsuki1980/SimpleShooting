@@ -89,12 +89,13 @@ class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
     //    1 * sin(θ) == y;
     fun drawSubKi(canvas:Canvas){
         //描画されるたびに＋されるだけでいいなら、ここに入れとけばいっか、frame+＝1
-        frame += 1
-        var xx = x/10 * Math.cos(frame/10.toDouble())
-        var yy = y/10 * Math.sin(frame/10.toDouble())
+        frame += 10
+        val kakudo = frame.toDouble()
+        var xx = x * Math.cos(kakudo)/10
+        var yy = y * Math.sin(kakudo)/10
 
         canvas.drawCircle(x+xx.toFloat(),y+yy.toFloat(),(jikiOokisa/2-5).toFloat(),irosub)    //サブ機の描画
         canvas.drawCircle(x-xx.toFloat(),y-yy.toFloat(),(jikiOokisa/2-5).toFloat(),irosub)    //サブ機の描画
-        if (frame >= 40 ){frame = 0}
+        if (frame >= 360 ){frame = 0}
     }
 }
