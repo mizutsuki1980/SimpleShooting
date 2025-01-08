@@ -17,7 +17,7 @@ class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
         irosub.style = Paint.Style.FILL
-        irosub.color = argb(170, 150, 0, 0)
+        irosub.color = argb(170, 255, 140, 0)
 
     }
 
@@ -91,8 +91,9 @@ class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
         //描画されるたびに＋されるだけでいいなら、ここに入れとけばいっか、frame+＝1
         frame += 1
         val kakudo = frame.toDouble()
-        var xx = jikiOokisa*7 * Math.cos(kakudo)/10
-        var yy = jikiOokisa*7 * Math.sin(kakudo)/10
+        val kyori = jikiOokisa*7
+        var xx = kyori * Math.cos(kakudo)/10
+        var yy = kyori * Math.sin(kakudo)/10
 
         canvas.drawCircle(x+xx.toFloat(),y+yy.toFloat(),(jikiOokisa/2-5).toFloat(),irosub)    //サブ機の描画
         canvas.drawCircle(x-xx.toFloat(),y-yy.toFloat(),(jikiOokisa/2-5).toFloat(),irosub)    //サブ機の描画
