@@ -12,6 +12,7 @@ class Teki {
     var y :Int
     var ookisa =70
     var kakudo = 0
+    var hp = 3
 
     var tekiSpeed = 10
     var iro = Paint()

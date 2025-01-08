@@ -54,7 +54,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(isFirstMove){
             jikiTama.nextFrame(jiki,teki)
             if (jikiTama.hit) {
-                scoreCount += 1
+                teki.hp -= 1
+                if(teki.hp==0){
+                    scoreCount += 1
+                    teki = Teki()
+                }
+
             }
         }
 
