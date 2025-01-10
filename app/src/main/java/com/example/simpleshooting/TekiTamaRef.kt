@@ -17,9 +17,15 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
     var zenkaix : Int
     var zenkaiy : Int
     var speed : Double
-    var irosub = Paint()
-    var kisekix : Int
-    var kisekiy : Int
+
+    var irosubMae = Paint()
+    var irosubAto = Paint()
+
+
+    var kisekiMae_x : Int
+    var kisekiMae_y : Int
+    var kisekiAto_x : Int
+    var kisekiAto_y : Int
 
     init{
         ookisa = 10
@@ -29,20 +35,30 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         hit = false
         zenkaix = jiki.x
         zenkaiy = jiki.y
-        kisekix = zenkaix
-        kisekiy = zenkaiy
+        kisekiMae_x = zenkaix
+        kisekiMae_y = zenkaiy
+        kisekiAto_x = kisekiMae_x
+        kisekiAto_y = kisekiMae_y
 
         speed = 3.0
 
         //線を設定
-        irosub.style = Paint.Style.STROKE
-        irosub.color = Color.BLUE   //argb(255, 255, 255, 200)
-        irosub.strokeWidth = 4.0f
+        irosubMae.style = Paint.Style.STROKE
+        irosubMae.color = Color.BLUE   //argb(255, 255, 255, 200)
+        irosubMae.strokeWidth = 4.0f
+
+        irosubAto.style = Paint.Style.STROKE
+        irosubAto.color = Color.BLUE   //argb(255, 255, 255, 200)
+        irosubAto.strokeWidth = 1.5f
     }
 
     fun move(jiki:Jiki){
-        kisekix = x
-        kisekiy = y
+        kisekiAto_x = kisekiMae_x
+        kisekiAto_y = kisekiMae_y
+        kisekiMae_x = x
+        kisekiMae_y = y
+
+
 
         var xhanai =650
         var yHani = 900
@@ -91,7 +107,8 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
 
     fun draw(canvas: Canvas){
         canvas.drawRect(shikakuRectXY(), iro)
-        canvas.drawLine(kisekix.toFloat(),kisekiy.toFloat(),x.toFloat(),y.toFloat(),irosub)
+        canvas.drawLine(kisekiMae_x.toFloat(),kisekiMae_y.toFloat(),x.toFloat(),y.toFloat(),irosubMae)
+        canvas.drawLine(kisekiAto_x.toFloat(),kisekiAto_y.toFloat(),kisekiMae_x.toFloat(),kisekiMae_y.toFloat(),irosubAto)
     }
 
 }
