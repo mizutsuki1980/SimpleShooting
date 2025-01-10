@@ -38,9 +38,9 @@ class HPCounter {
 
     init {
         iro.style = Paint.Style.FILL
-        iro.color = argb(255, 70, 230, 230)
+        iro.color = argb(255, 255, 200, 200)
         irosub.style = Paint.Style.FILL
-        irosub.color = argb(255, 125, 130, 230)
+        irosub.color = argb(255, 255, 255, 200)
         //線を設定
         //irosub.style = Paint.Style.STROKE
         //irosub.strokeWidth = 5.0f

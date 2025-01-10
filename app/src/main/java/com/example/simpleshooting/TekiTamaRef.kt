@@ -2,6 +2,7 @@ package com.example.simpleshooting
 
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Color.argb
 import android.graphics.Paint
 import android.graphics.Rect
 
@@ -16,6 +17,9 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
     var zenkaix : Int
     var zenkaiy : Int
     var speed : Double
+    var irosub = Paint()
+    var kisekix : Int
+    var kisekiy : Int
 
     init{
         ookisa = 10
@@ -25,10 +29,21 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         hit = false
         zenkaix = jiki.x
         zenkaiy = jiki.y
+        kisekix = zenkaix
+        kisekiy = zenkaiy
+
         speed = 3.0
+
+        //線を設定
+        irosub.style = Paint.Style.STROKE
+        irosub.color = Color.BLUE   //argb(255, 255, 255, 200)
+        irosub.strokeWidth = 4.0f
     }
 
     fun move(jiki:Jiki){
+        kisekix = x
+        kisekiy = y
+
         var xhanai =650
         var yHani = 900
         var vx = jiki.x - x
@@ -76,6 +91,7 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
 
     fun draw(canvas: Canvas){
         canvas.drawRect(shikakuRectXY(), iro)
+        canvas.drawLine(kisekix.toFloat(),kisekiy.toFloat(),x.toFloat(),y.toFloat(),irosub)
     }
 
 }
