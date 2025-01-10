@@ -30,7 +30,9 @@ class JikiTama(var x:Int,var y:Int) {
             }
             NORMAL_STATE -> {
                 moveOne()                //ひとつ上に弾を移動
-                attaterukaCheck(teki)    //当たっているかチェック
+                if(attaterukaCheck(teki)) {                     //当たっているかチェック
+                    gotoHitState()
+                }
                 if (y < 5) { status = TAMA_NASI_STATE } // 画面外に出たら無しの状態に一旦遷移
             }
             TAMA_HIT_STATE -> {
@@ -41,6 +43,9 @@ class JikiTama(var x:Int,var y:Int) {
                 motoniModosu()  // もとに戻す
             }
         }
+    }
+    fun gotoHitState(){
+        status = TAMA_HIT_STATE
     }
     fun moveOne(){
         val tamaSpeed = 8.0
@@ -71,7 +76,6 @@ class JikiTama(var x:Int,var y:Int) {
         val atariKyori = 5 + teki.ookisa / 2 //当たり判定の距離
 
         if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
-            status = TAMA_HIT_STATE
             iro.color = Color.WHITE
             ookisa = 30
             return true
