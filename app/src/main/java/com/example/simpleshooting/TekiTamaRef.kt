@@ -107,8 +107,8 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
 
     fun draw(canvas: Canvas){
         canvas.drawRect(shikakuRectXY(), iro)
-        canvas.drawLine(kisekiMae_x.toFloat(),kisekiMae_y.toFloat(),x.toFloat(),y.toFloat(),irosubMae)
-        canvas.drawLine(kisekiAto_x.toFloat(),kisekiAto_y.toFloat(),kisekiMae_x.toFloat(),kisekiMae_y.toFloat(),irosubAto)
+        canvas.drawLine(kisekiMae_x.toFloat(),kisekiMae_y.toFloat(),x.toFloat(),y.toFloat(),irosubMae) //軌跡１の表示
+        canvas.drawLine(kisekiAto_x.toFloat(),kisekiAto_y.toFloat(),kisekiMae_x.toFloat(),kisekiMae_y.toFloat(),irosubAto)  //軌跡２の表示
     }
 
 }
