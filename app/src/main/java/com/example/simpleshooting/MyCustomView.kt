@@ -68,6 +68,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         if (tekiTama.hit){
             dgCount += 1
+            jiki.hp -= 1
             tekiTama = TekiTama(teki.x,teki.y)
         }
 
@@ -75,6 +76,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tekiTamaRef.atariCheck(jiki)
         if (tekiTamaRef.hit){
             dgCount += 1
+            jiki.hp -= 1
             tekiTamaRef = TekiTamaRef(jiki,teki)
         }
 
@@ -91,7 +93,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tekiTamaRef.draw(canvas) //敵の反射弾の移動　処理
         // 自機の弾を最後に描画した方がそれっぽく見える
         if(isFirstMove){ jikiTama.draw(canvas)}     //自機の弾の処理
-        hpCounter.draw(canvas)
+        hpCounter.draw(canvas,jiki)
     }
 
 

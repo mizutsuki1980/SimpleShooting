@@ -11,6 +11,7 @@ class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
     var irosub = Paint()
     var jikiOokisa:Int
     var kakudo = 0
+    var hp = 6
 
     init {
         jikiOokisa = 50

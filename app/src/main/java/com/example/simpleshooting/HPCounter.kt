@@ -27,11 +27,11 @@ class HPCounter {
     //んー、なんかよくわからんくなってきた。
     //表示するときにはCanavasがいるから、Drawの中で繰り返さなきゃならんのか。
     //for(a in 1..<6) {　とかで描画しながら増やすとかやっていきたかったが
-    //最初にリスト作るほうがいいのか
+    //最初にリスト作るほうがいいのか？
 
 
     var yokohaba = 190
-    var tatehaba = 30
+    var tatehaba = 50
     var waku = 10
     var x = 500
     var y = 0
@@ -49,7 +49,7 @@ class HPCounter {
     fun shikakuRect(): Rect {
         //元になる四角をつくる、ここはOK
         val left = x
-        val right = x+190//690
+        val right = x+yokohaba//690
         val top = y
         val bottom = y+50 //50
         val m = Rect(left, top, right,bottom)
@@ -64,10 +64,8 @@ class HPCounter {
         val migikata =  hidarikata+20
         val left = hidarikata
         val right = migikata
-
-
         val top = y + waku
-        val bottom = y+50 - waku //50
+        val bottom = y+tatehaba - waku //50
         val m = Rect(left, top, right,bottom)
         return m
     }
@@ -75,9 +73,10 @@ class HPCounter {
 
 
 
-    fun draw(canvas: Canvas){
+    fun draw(canvas: Canvas,jiki:Jiki){
         canvas.drawRect(shikakuRect(), iro)
-        for(a in 0..<4) {
+        for(a in 0..<jiki.hp) {
+            //なんかマイナスになっても動き続けるんだな。へー
             canvas.drawRect(hpShikakuRect(a+1), irosub)
         }
     }
