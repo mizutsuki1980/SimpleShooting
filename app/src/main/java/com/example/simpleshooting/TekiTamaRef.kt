@@ -33,10 +33,12 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         iro.color = Color.BLUE
         homing = true
         hit = false
-        zenkaix = jiki.x
-        zenkaiy = jiki.y
+        zenkaix = teki.x
+        zenkaiy = teki.y
+
         kisekiMae_x = zenkaix
         kisekiMae_y = zenkaiy
+
         kisekiAto_x = kisekiMae_x
         kisekiAto_y = kisekiMae_y
 
