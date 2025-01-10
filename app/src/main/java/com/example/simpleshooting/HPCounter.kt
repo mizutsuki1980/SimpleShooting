@@ -15,21 +15,51 @@ class HPCounter {
     var iro = Paint()
     var irosub = Paint()
 
+    //まず元となる四角を作って、そこにＨＰの四角をおいていく。
+    //それが190×30の四角
+    //それをＭａｘＨＰで割る。今回は6
+    //それぞれに枠をつけたいから、6+1となる
+    //枠は幅10とする。
+    //なんで190-（10*(6+1)）となる
+    //今回は120を6で割ることになる。20だ。
+    //10+20+10+20+10+20+10+20+10+20+10+20+10という感じか。
+
+
+    var yokohaba = 190
+    var tatehaba = 30
+    var waku = 10
+    var x = 500
+    var y = 0
+
     init {
         iro.style = Paint.Style.FILL
-        iro.color = argb(150, 255, 255, 255)
+        iro.color = argb(255, 70, 230, 230)
+        irosub.style = Paint.Style.FILL
+        irosub.color = argb(255, 125, 130, 230)
         //線を設定
-        irosub.style = Paint.Style.STROKE
-        irosub.color = argb(125, 0, 0, 255)
-        irosub.strokeWidth = 5.0f
-        //canvas.drawColor(Color.argb(125, 0, 0, 255));
-
-        //ctx.fillStyle = "rgba(" + [0, 0, 255, 1] + ")";
-
-        //canvas.drawBitmap(bmp, 100, 100, mPaint);
-        //ビットマップも出せそうだけど、まだ置いておくか。
+        //irosub.style = Paint.Style.STROKE
+        //irosub.strokeWidth = 5.0f
 
     }
+    fun drawOne(canvas: Canvas,rect:Rect,iro:Paint) {
+        canvas.drawRect(rect, iro)
+    }
+
+    fun shikakuRect(canvas:Canvas,atai:Int){
+        val m = Rect(x, y, x+yokohaba,y+tatehaba)
+        drawOne(canvas,m, iro)
+        //まず元の四角を表示
+
+        //HPの分だけ四角を表示
+        for(a in 1..<6) {
+            val m = Rect(x+10+20*a, y, x+10+20*a+20,y+tatehaba)
+            drawOne(canvas,m, iro)
+
+        }
+
+    }
+
+
 
     fun shikakuRect(): Rect {
         var xxx = 600
@@ -94,6 +124,7 @@ class HPCounter {
         val m = Rect(left, top, right,bottom)
         return m
     }
+
 
 
     fun draw(canvas: Canvas){
