@@ -25,7 +25,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
     var jiki =Jiki(initialJikiX, initialJikiY,initialTamaOkisa)
-    var jikiTama = jiki.tamaHassha()    //ここでY -170してる
+    var jikiTama = jiki.tamaHassha()    //ここでY -170してる。弾の発射位置もー１７０の為。
     var teki = Teki()
     var tekiTama = teki.tamaHassha()    //TekiTamaのオブジェクトを作るのは、TekiTama内でなくてもよい。へー
     var tekiTamaRef = TekiTamaRef(jiki,teki)

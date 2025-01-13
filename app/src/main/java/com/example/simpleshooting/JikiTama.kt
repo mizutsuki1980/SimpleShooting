@@ -58,9 +58,12 @@ class JikiTama(var x:Int,var y:Int) {
         ookisa = 30
         status = TAMA_HIT_STATE
     }
+
+    //弾のスピードを半分くらいにした。早すぎるとめり込んでも当たってない判定に見える為。
+    //直線上の敵に１ダメ与えるレーザーみたいなのがあってもいいなぁ。距離を無視して、ｘ軸だけ見る。
     fun moveOne(){
-        val tamaSpeed = 8.0
-        val tamaPlus = 10 * tamaSpeed.toInt()
+        val tamaSpeed = 5.5
+        val tamaPlus = 5 * tamaSpeed.toInt()
         y -= tamaPlus //自機の弾を上方向に動かす
     }
     fun jikiKaraStart(jiki:Jiki){
