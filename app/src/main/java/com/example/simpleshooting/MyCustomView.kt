@@ -7,15 +7,10 @@ import android.view.MotionEvent
 import android.view.View
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
-
-    //ピンクの敵の弾がまったく動かなくなる場合がある。
-    //青い弾もいなくなることがある
-
     var frame = 0
     var dgCount = 0
     var scoreCount = 0
     var isFirstMove = false //動きだしたら弾も出るようにする
-
 
     val initialJikiX = 300 //初期位置
     val initialJikiY = 800 //初期位置
@@ -41,25 +36,20 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tsugiNoSyori() {
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
-
         jiki.move(clickX,clickY-170) //クリックした場所から上に170の場所に移動する。指にかかって見えない為。
-
         teki.yokoIdo()  //敵の移動　処理
 
-        // 自機の弾が当たったら、カウントを増やして相手が消える処理をする
 
-        if(isFirstMove){
-            jikiTama.nextFrame(jiki,teki)
+        //ここから下　　そもそも、自機弾のここを直した方がいいのか。敵の弾に行く前に。
+            jikiTama.nextFrame(jiki,teki,isFirstMove)
             if (jikiTama.hit) {
                 teki.hp -= 1
                 if(teki.hp==0){
                     scoreCount += 1
                     teki = Teki()
-                }
-
             }
         }
-
+        //ここから上が自機の弾の修正したほうがいいと思うところ
 
         //ここから以下が状態遷移に入る
         tekiTama.move(jiki,teki)  //敵の弾　処理

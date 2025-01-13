@@ -23,33 +23,30 @@ class JikiTama(var x:Int,var y:Int) {
         iro.color = Color.GREEN
     }
 
-    fun nextFrame(jiki:Jiki,teki:Teki) {
-        when(status) {
-            TAMA_NASI_STATE -> {
-                jikiKaraStart(jiki)         // 現在の自機の場所に移動してリセット
-            }
-            NORMAL_STATE -> {
-                moveOne()                //ひとつ上に弾を移動
-
-//                移動する()
-//                if (当たり判定内にいる？（teki) ) {
-//                    当たった処理()
-//                }
-
-                //いいんだよな？
-                //当たった処理()はgotoHitState()ってことだよな？
-
-                if(attaterukaCheck(teki)) {                     //当たっているかチェック
-                    gotoHitState()
+    fun nextFrame(jiki:Jiki,teki:Teki,isFirstMove:Boolean) {
+        if(isFirstMove) {
+            when (status) {
+                TAMA_NASI_STATE -> {
+                    jikiKaraStart(jiki)         // 現在の自機の場所に移動してリセット
                 }
-                if (y < 5) { status = TAMA_NASI_STATE } // 画面外に出たら無しの状態に一旦遷移
-            }
-            TAMA_HIT_STATE -> {
-                hitCountSyori() //ヒット処理して次へ
-            }
 
-            TAMA_HIT_END_STATE -> {
-                motoniModosu()  // もとに戻す
+                NORMAL_STATE -> {
+                    moveOne()                //ひとつ上に弾を移動
+                    if (attaterukaCheck(teki)) {                     //当たっているかチェック
+                        gotoHitState()
+                    }
+                    if (y < 5) {
+                        status = TAMA_NASI_STATE
+                    } // 画面外に出たら無しの状態に一旦遷移
+                }
+
+                TAMA_HIT_STATE -> {
+                    hitCountSyori() //ヒット処理して次へ
+                }
+
+                TAMA_HIT_END_STATE -> {
+                    motoniModosu()  // もとに戻す
+                }
             }
         }
     }
