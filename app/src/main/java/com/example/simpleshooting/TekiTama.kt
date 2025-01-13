@@ -97,7 +97,7 @@ class TekiTama(var x:Int,var y:Int) {
         val vec = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
 
         //こうしないとホーミングが切れた後、また離れるとホーミング状態に戻ってしまう。
-        //２段階ホーミングにしないとダメなんか？
+        //２段階ホーミングにしないとダメなんか？ま、いっか
         if (homing) {
             if (vec < resetKyori) {
                 homing = false
@@ -129,9 +129,9 @@ class TekiTama(var x:Int,var y:Int) {
     fun attaterukaCheck(jiki:Jiki):Boolean {
             val vx = x - jiki.x
             val vy = y - jiki.y
-            val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+            val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
             val atarikyori = (jiki.ookisa).toDouble()
-            if (v < atarikyori){
+            if (kyori < atarikyori){
                 return true
             }else{
                 return false

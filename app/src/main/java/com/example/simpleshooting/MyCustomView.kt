@@ -41,9 +41,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun tekiTamaAtattaSyori(){
-            dgCount += 1
-            jiki.hp -= 1
-          //  tekiTama = teki.tamaHassha()
+        dgCount += 1
+        jiki.hp -= 1
+        //  tekiTama = teki.tamaHassha()
     }
 
     fun beginAnimation() {
@@ -62,6 +62,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tekiTama.nextFrame(jiki,teki)
         if(tekiTama.hit){tekiTamaAtattaSyori()}//jikiTamaと同様。スコアとか動くので。
 
+
+//        tekiTamaRef.nextFrame(jiki,teki)
+//        if(tekiTama.hit){tekiTamaAtattaSyori()}//tekiTamaのものを流用できるっぽい。スコアとか動くので。
 
         //以下はこの次
         tekiTamaRef.move(jiki)
