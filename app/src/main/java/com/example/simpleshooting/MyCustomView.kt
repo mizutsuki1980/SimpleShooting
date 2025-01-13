@@ -43,7 +43,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tekiTamaAtattaSyori(){
             dgCount += 1
             jiki.hp -= 1
-            tekiTama = teki.tamaHassha()
+          //  tekiTama = teki.tamaHassha()
     }
 
     fun beginAnimation() {
@@ -60,8 +60,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(jikiTama.hit){jikiTamaAtattaSyori()} //敵のリセット、敵のHP処理、スコアカウントとかあるから、jikiTamaのメソッドにしない方がいいかな
 
         tekiTama.nextFrame(jiki,teki)
-        if(tekiTama.hit){tekiTamaAtattaSyori()}
+        if(tekiTama.hit){tekiTamaAtattaSyori()}//jikiTamaと同様。スコアとか動くので。
 
+
+        //以下はこの次
         tekiTamaRef.move(jiki)
         tekiTamaRef.atariCheck(jiki)
         if (tekiTamaRef.hit){
@@ -69,6 +71,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             jiki.hp -= 1
             tekiTamaRef = TekiTamaRef(jiki,teki)
         }
+        //以上はこの次
+
 
         handler.postDelayed({ tsugiNoSyori() }, 100)
     }

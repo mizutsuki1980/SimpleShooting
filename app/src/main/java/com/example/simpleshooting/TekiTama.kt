@@ -65,6 +65,9 @@ class TekiTama(var x:Int,var y:Int) {
         zenkaiy = y
         kisekix = x
         kisekiy = y
+
+        irosubMae.strokeWidth = 2.0f
+
         status = NORMAL_STATE
     }
 
@@ -96,10 +99,31 @@ class TekiTama(var x:Int,var y:Int) {
                     }
 
     }
-    fun attaterukaCheck(teki:Teki):Boolean{return false}
-    fun gotoHitState(){}
-    fun hitCountSyori(){}
-    fun motoniModosu(){}
+    fun attaterukaCheck(jiki:Jiki):Boolean {
+        //敵位置はｘ、ｙ
+        //自機はjikiに入っている。
+        //trueなら次の状態遷移
+        //jikiは円だからベクトルでいっか
+        val vx = jiki.x - x
+        val vy = jiki.y - y
+        val v = Math.sqrt((vx * vx) + (vy * vy).toDouble())
+        if (v >= jiki.ookisa.toDouble()) {
+            
+            return true
+        } else {
+            return false
+        }
+    }
+
+    fun gotoHitState(){
+        status = TAMA_HIT_STATE
+    }
+    fun hitCountSyori(){
+        status = TAMA_HIT_END_STATE
+    }
+    fun motoniModosu(){
+        status = TAMA_NASI_STATE
+    }
 
     fun nextFrame(jiki:Jiki,teki:Teki) {
         when(status) {
@@ -107,16 +131,17 @@ class TekiTama(var x:Int,var y:Int) {
                 tekiKaraStart(teki)         //最初のリセット処理
             }
             NORMAL_STATE -> {
-                moveOne(jiki)                //ひとつ上に弾を移動
-
-                if(attaterukaCheck(teki)) {                     //当たっているかチェック
+                moveOne(jiki)                //自機にひとつ近づくように弾を移動
+                if(attaterukaCheck(jiki)) {                     //自機に当たっているかチェック
                     gotoHitState()
                 }
-                if (y < 5) { status = TAMA_NASI_STATE } // 画面外に出たら無しの状態に一旦遷移
+                //画面外なら、最初へ状態遷移
+                if (x > 690 || x < 0 || y > 1050 || y < 0){ status = TAMA_NASI_STATE }
             }
             TAMA_HIT_STATE -> {
                 hitCountSyori() //ヒット処理して次へ
             }
+
 
             TAMA_HIT_END_STATE -> {
                 motoniModosu()  // もとに戻す

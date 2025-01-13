@@ -9,12 +9,12 @@ class Jiki(var x:Int, var y:Int) {
 
     val iro = Paint()
     val irosub = Paint()
-    var jikiOokisa = 30
+    var ookisa = 30
     var kakudo = 0
     var hp = 6
 
     init {
-        jikiOokisa = 50
+        ookisa = 50
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
         irosub.style = Paint.Style.FILL
@@ -25,25 +25,25 @@ class Jiki(var x:Int, var y:Int) {
 
 
     fun atariKyori():Int{
-        var atariKyori = 5 + jikiOokisa/2 //当たり判定の距離
-        if(jikiOokisa==200){
+        var atariKyori = 5 + ookisa/2 //当たり判定の距離
+        if(ookisa==200){
             atariKyori -= 5
         }//大きいときは、ちょっと当たり判定をマイナスする
         return atariKyori
     }
 
     fun hyperPowerUp(){
-        if (jikiOokisa==200){
-            jikiOokisa = 50
+        if (ookisa==200){
+            ookisa = 50
         }else{
-            jikiOokisa = 200
+            ookisa = 200
         }
     }
     fun hyperShotPowerUp(){
-        if (jikiOokisa==200){
-            jikiOokisa = 50
+        if (ookisa==200){
+            ookisa = 50
         }else{
-            jikiOokisa = 200
+            ookisa = 200
         }
     }
 
@@ -81,7 +81,7 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun draw(canvas:Canvas){
-        canvas.drawCircle(x.toFloat(),y.toFloat(),(jikiOokisa/2).toFloat(),iro) //自機の描画
+        canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa/2).toFloat(),iro) //自機の描画
         drawSubKi(canvas)
     }
 
@@ -90,14 +90,14 @@ class Jiki(var x:Int, var y:Int) {
     }
     fun drawSubKi(canvas:Canvas){
         kakudo += 1
-        val kyori = jikiOokisa*7
+        val kyori = ookisa*7
         val xx = kyori * Math.cos(kakudo.toDouble())/10
         val yy = kyori * Math.sin(kakudo.toDouble())/10
 
         //なんか一定の角度で色変えたり、消えたりしたいなー
 
-        canvas.drawCircle(x+xx.toFloat(),y+yy.toFloat(),(jikiOokisa/2-12).toFloat(),irosub)    //サブ機の描画
-        canvas.drawCircle(x-xx.toFloat(),y-yy.toFloat(),(jikiOokisa/2-12).toFloat(),irosub)    //サブ機の描画
+        canvas.drawCircle(x+xx.toFloat(),y+yy.toFloat(),(ookisa/2-12).toFloat(),irosub)    //サブ機の描画
+        canvas.drawCircle(x-xx.toFloat(),y-yy.toFloat(),(ookisa/2-12).toFloat(),irosub)    //サブ機の描画
 
 
         if (kakudo >= 360 ){kakudo = 0}
