@@ -29,9 +29,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     }
 
-    fun beginAnimation() {
-        tsugiNoSyori()  //最初に一回だけ呼ばれる
-    }
+
     fun jikiTamaAtattaSyori(){
         if (jikiTama.hit) {
             teki.hp -= 1
@@ -40,6 +38,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 teki = Teki()
             }
         }
+    }
+
+    fun tekiTamaAtattaSyori(){
+            dgCount += 1
+            jiki.hp -= 1
+            tekiTama = teki.tamaHassha()
+    }
+
+    fun beginAnimation() {
+        tsugiNoSyori()  //最初に一回だけ呼ばれる
     }
 
     fun tsugiNoSyori() {
@@ -51,18 +59,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jikiTama.nextFrame(jiki,teki,isFirstMove)
         if(jikiTama.hit){jikiTamaAtattaSyori()} //敵のリセット、敵のHP処理、スコアカウントとかあるから、jikiTamaのメソッドにしない方がいいかな
 
-
-        //ここから以下が状態遷移に入る
-        tekiTama.move(jiki,teki)  //敵の弾　処理
-        tekiTama.atariCheck(jiki)
-
-        if (tekiTama.hit){  //敵の弾が当たっていたらカウントを増やして消える
-            dgCount += 1
-            jiki.hp -= 1
-            tekiTama = teki.tamaHassha()
-        }
-        //ここまで状態遷移に入る
-
+        tekiTama.nextFrame(jiki,teki)
+        if(tekiTama.hit){tekiTamaAtattaSyori()}
 
         tekiTamaRef.move(jiki)
         tekiTamaRef.atariCheck(jiki)

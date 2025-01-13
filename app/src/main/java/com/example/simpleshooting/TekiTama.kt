@@ -53,9 +53,50 @@ class TekiTama(var x:Int,var y:Int) {
         irosubMae.strokeWidth = 2.0f
     }
 
-    fun tekiKaraStart(teki:Teki){}
-    fun moveOne(jiki:Jiki){}
-    fun attaterukaCheck(teki:Teki):Boolean{return true}
+    fun tekiKaraStart(teki:Teki){
+        ookisa = 10
+        iro.style = Paint.Style.FILL
+        iro.color = Color.YELLOW
+        homing = true
+        hit = false
+        x = teki.x
+        y = teki.y
+        zenkaix = x
+        zenkaiy = y
+        kisekix = x
+        kisekiy = y
+        status = NORMAL_STATE
+    }
+
+    fun moveOne(jiki:Jiki){
+        var vx = jiki.x - x
+        var vy = jiki.y - y
+        val resetKyori = 90 //よけ始める距離
+        if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ homing = false }
+        if (homing == false) {
+
+            vx = zenkaix
+            vy = zenkaiy
+        }
+        zenkaix = vx
+        zenkaiy = vy
+        //敵の弾の移動
+        val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+        x += ((vx / v)*10 * speed).toInt()
+        y += ((vy / v)*10 * speed).toInt()
+
+        //弾は＋だけど、軌跡はマイナスにする
+        kisekix = x-((vx / v)*10 * speed).toInt()
+        kisekiy = y-((vy / v)*10 * speed).toInt()
+        irosubMae.strokeWidth += 0.5f
+
+
+        if (x > 690 || x < 0 || y > 1050 || y < 0){
+            status = TAMA_NASI_STATE
+                    }
+
+    }
+    fun attaterukaCheck(teki:Teki):Boolean{return false}
     fun gotoHitState(){}
     fun hitCountSyori(){}
     fun motoniModosu(){}
@@ -63,10 +104,11 @@ class TekiTama(var x:Int,var y:Int) {
     fun nextFrame(jiki:Jiki,teki:Teki) {
         when(status) {
             TAMA_NASI_STATE -> {
-                tekiKaraStart(teki)         // 現在の自機の場所に移動してリセット
+                tekiKaraStart(teki)         //最初のリセット処理
             }
             NORMAL_STATE -> {
                 moveOne(jiki)                //ひとつ上に弾を移動
+
                 if(attaterukaCheck(teki)) {                     //当たっているかチェック
                     gotoHitState()
                 }
@@ -82,6 +124,8 @@ class TekiTama(var x:Int,var y:Int) {
         }
     }
 
+
+    //ここから以下をnextFrameに置き換える。
     fun move(jiki:Jiki, teki:Teki){
         var vx = jiki.x - x
         var vy = jiki.y - y
@@ -118,6 +162,9 @@ class TekiTama(var x:Int,var y:Int) {
             homing = true
         }
     }
+    //ここから上　までをnextFrameに置き換える。
+
+
     fun atariCheck(jiki:Jiki){
         val vx = x - jiki.x
         val vy = y - jiki.y
