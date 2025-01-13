@@ -60,14 +60,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             }
         }
 
-        tekiTama.move(jiki,teki)  //敵の弾　処理
-        tekiTama.atariCheck(jiki) //敵の弾が当たっていたらカウントを増やして消える
 
-        if (tekiTama.hit){
+        //ここから以下が状態遷移に入る
+        tekiTama.move(jiki,teki)  //敵の弾　処理
+        tekiTama.atariCheck(jiki)
+
+        if (tekiTama.hit){  //敵の弾が当たっていたらカウントを増やして消える
             dgCount += 1
             jiki.hp -= 1
-            tekiTama = TekiTama(teki.x,teki.y)
+            tekiTama = teki.tamaHassha()
         }
+        //ここまで状態遷移に入る
+
 
         tekiTamaRef.move(jiki)
         tekiTamaRef.atariCheck(jiki)
