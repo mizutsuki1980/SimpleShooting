@@ -13,9 +13,9 @@ class TekiTama(var x:Int,var y:Int) {
     var zenkaix : Int
     var zenkaiy : Int
     var speed : Double
-    var kakudo = 0
+
     val irosubMae = Paint()
-    val irosubAto = Paint()
+
     var kisekix : Int
     var kisekiy : Int
 
@@ -93,12 +93,25 @@ class TekiTama(var x:Int,var y:Int) {
     fun moveOne(jiki:Jiki){
         var vx = jiki.x - x
         var vy = jiki.y - y
-        val resetKyori = 90 //よけ始める距離
-        if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ homing = false }
-        if (homing == false) {
+        val resetKyori =100.0 //よけ始める距離
+        val vec = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+
+        //こうしないとホーミングが切れた後、また離れるとホーミング状態に戻ってしまう。
+        //２段階ホーミングにしないとダメなんか？
+        if (homing) {
+            if (vec < resetKyori) {
+                homing = false
+            } else {
+                homing = true
+            }
+        }else{
             vx = zenkaix
             vy = zenkaiy
         }
+
+
+
+
         zenkaix = vx
         zenkaiy = vy
         //敵の弾の移動
@@ -111,6 +124,8 @@ class TekiTama(var x:Int,var y:Int) {
         kisekiy = y-((vy / v)*10 * speed).toInt()
         irosubMae.strokeWidth += 0.5f
     }
+
+
     fun attaterukaCheck(jiki:Jiki):Boolean {
             val vx = x - jiki.x
             val vy = y - jiki.y
