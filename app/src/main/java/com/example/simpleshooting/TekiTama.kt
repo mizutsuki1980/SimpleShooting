@@ -27,6 +27,13 @@ class TekiTama(var x:Int,var y:Int) {
     var kisekix : Int
     var kisekiy : Int
 
+    val TAMA_NASI_STATE = 1
+    val NORMAL_STATE = 2
+    val TAMA_HIT_STATE = 3
+    val TAMA_HIT_END_STATE = 4
+
+    var status = TAMA_NASI_STATE // 最初は玉が画面内に無い状態
+
     init{
         ookisa = 10
         iro.style = Paint.Style.FILL
@@ -44,6 +51,35 @@ class TekiTama(var x:Int,var y:Int) {
         irosubMae.style = Paint.Style.STROKE
         irosubMae.color = Color.RED   //argb(255, 255, 255, 200)
         irosubMae.strokeWidth = 2.0f
+    }
+
+    fun tekiKaraStart(teki:Teki){}
+    fun moveOne(jiki:Jiki){}
+    fun attaterukaCheck(teki:Teki):Boolean{return true}
+    fun gotoHitState(){}
+    fun hitCountSyori(){}
+    fun motoniModosu(){}
+
+    fun nextFrame(jiki:Jiki,teki:Teki) {
+        when(status) {
+            TAMA_NASI_STATE -> {
+                tekiKaraStart(teki)         // 現在の自機の場所に移動してリセット
+            }
+            NORMAL_STATE -> {
+                moveOne(jiki)                //ひとつ上に弾を移動
+                if(attaterukaCheck(teki)) {                     //当たっているかチェック
+                    gotoHitState()
+                }
+                if (y < 5) { status = TAMA_NASI_STATE } // 画面外に出たら無しの状態に一旦遷移
+            }
+            TAMA_HIT_STATE -> {
+                hitCountSyori() //ヒット処理して次へ
+            }
+
+            TAMA_HIT_END_STATE -> {
+                motoniModosu()  // もとに戻す
+            }
+        }
     }
 
     fun move(jiki:Jiki, teki:Teki){
