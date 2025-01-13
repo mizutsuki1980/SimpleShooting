@@ -32,6 +32,15 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun beginAnimation() {
         tsugiNoSyori()  //最初に一回だけ呼ばれる
     }
+    fun jikiTamaAtattaSyori(){
+        if (jikiTama.hit) {
+            teki.hp -= 1
+            if(teki.hp==0){
+                scoreCount += 1
+                teki = Teki()
+            }
+        }
+    }
 
     fun tsugiNoSyori() {
         frame += 1  //繰り返し処理はここでやってる
@@ -39,17 +48,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki.move(clickX,clickY-170) //クリックした場所から上に170の場所に移動する。指にかかって見えない為。
         teki.yokoIdo()  //敵の移動　処理
 
+        jikiTama.nextFrame(jiki,teki,isFirstMove)
+        if(jikiTama.hit){jikiTamaAtattaSyori()} //敵のリセット、敵のHP処理、スコアカウントとかあるから、jikiTamaのメソッドにしない方がいいかな
 
-        //ここから下　　そもそも、自機弾のここを直した方がいいのか。敵の弾に行く前に。
-            jikiTama.nextFrame(jiki,teki,isFirstMove)
-            if (jikiTama.hit) {
-                teki.hp -= 1
-                if(teki.hp==0){
-                    scoreCount += 1
-                    teki = Teki()
-            }
-        }
-        //ここから上が自機の弾の修正したほうがいいと思うところ
 
         //ここから以下が状態遷移に入る
         tekiTama.move(jiki,teki)  //敵の弾　処理
