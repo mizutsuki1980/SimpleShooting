@@ -71,6 +71,21 @@ class JikiTama(var x:Int,var y:Int) {
         hit = true //ヒットは１回のみカウントするので、すぐにfalseに
         status = TAMA_HIT_END_STATE
     }
+    fun attaterukaCheckVec(teki:Teki):Boolean {
+        val vx = x - teki.x
+        val vy = y - teki.y
+        val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+        val atarikyori = (teki.ookisa-10).toDouble()
+        //なんか当たってないのに当たってるように見えるので、－10してる。円だから？
+        //となると、ベクトルを使うと、なんかいまいちになるのか。へー
+        if (v < atarikyori){
+            return true
+        }else{
+            return false
+        }
+
+    }
+
 
     fun attaterukaCheck(teki:Teki):Boolean {
         //いろいろ作って思ったが、あれ、これってベクトルじゃね？
