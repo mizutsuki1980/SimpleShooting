@@ -85,7 +85,9 @@ class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
         drawSubKi(canvas)
     }
 
-
+    fun tamaHassha():JikiTama{
+        return JikiTama(x,y-170)
+    }
     fun drawSubKi(canvas:Canvas){
         kakudo += 1
         val kyori = jikiOokisa*7

@@ -25,21 +25,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
     var jiki =Jiki(initialJikiX, initialJikiY,tamaOkisa)
-    var jikiTama = JikiTama(jiki.x,jiki.y-170)
-    //ここでも-170してるのは、なんか面倒だしわかりにくいなー
-
+    var jikiTama = jiki.tamaHassha()    //ここでY -170してる
     var teki = Teki()
-
-    //var tekiTama = TekiTama(teki.x,teki.y)
-
-    //var tekiTama = teki.tamaHassha()
-    //これだとtekiTamaはTekiTamaのオブジェクトじゃなくなっちゃうんではないか？それでいいのか？
-    //ほかのクラスで作ってしまってもいいのか。どうなんだろうね。まーやってみるか。
-
-    var tekiTama = teki.tamaHassha()
-
-
-
+    var tekiTama = teki.tamaHassha()    //TekiTamaのオブジェクトを作るのは、TekiTama内でなくてもよい。へー
     var tekiTamaRef = TekiTamaRef(jiki,teki)
     var hpCounter = HPCounter()
 
