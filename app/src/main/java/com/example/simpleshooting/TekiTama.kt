@@ -10,6 +10,8 @@ import android.graphics.Rect
 //if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ homing = false }
 // 的なやつもifを見やすくする。
 
+//いっこいっこやらないと、わからなくなる
+
 
 class TekiTama(var x:Int,var y:Int) {
     val iro = Paint()
@@ -25,24 +27,6 @@ class TekiTama(var x:Int,var y:Int) {
     var kisekix : Int
     var kisekiy : Int
 
-
-    //なんかサインコサイン的なもので進行方向とは逆、みたいな指定ができそうだなー
-    //    zenkaix = vx
-    //    zenkaiy = vy
-    //これとｘ、ｙがあればなんかできそうだな
-
-    //なんかzenkaixとか使うと、にょーんとなってしまう。
-    //前回の位置がはいってるんじゃねーのか？
-    //zennkaixなら前回のｘだよなぁ、入ってるの。こういうことか。名前と挙動を一致させないと困るのは。
-
-
-    //kakudo += 1
-    //val kyori = jikiOokisa*7
-    //var xx = kyori * Math.cos(kakudo.toDouble())/10
-    //var yy = kyori * Math.sin(kakudo.toDouble())/10
-
-
-    //ホーミング弾はどうしようかなぁ。後ろから炎でもだそうかなぁ。
     init{
         ookisa = 10
         iro.style = Paint.Style.FILL
@@ -60,10 +44,6 @@ class TekiTama(var x:Int,var y:Int) {
         irosubMae.style = Paint.Style.STROKE
         irosubMae.color = Color.RED   //argb(255, 255, 255, 200)
         irosubMae.strokeWidth = 2.0f
-
-//        irosubAto.style = Paint.Style.STROKE
-  //      irosubAto.color = Color.YELLOW   //argb(255, 255, 255, 200)
-    //    irosubAto.strokeWidth = 1.5f
     }
 
     fun move(jiki:Jiki, teki:Teki){
@@ -100,11 +80,9 @@ class TekiTama(var x:Int,var y:Int) {
             irosubMae.strokeWidth = 2.0f
 
             homing = true
-            //弾のリセットどうすんだろう？これでいっか
-        }    //画面外で敵の弾のリセット
+        }
     }
     fun atariCheck(jiki:Jiki){
-    //カウント処理がはいってるなー。そとにだしたほうがいいのか。ならBooleanであたった、とかつけるのかな？
         val vx = x - jiki.x
         val vy = y - jiki.y
         if(ookisa == 30){
