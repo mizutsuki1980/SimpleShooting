@@ -5,6 +5,12 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 
+//TekiTamaとTekiTamaRefにも状態遷移を入れる
+//めんどー
+//if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ homing = false }
+// 的なやつもifを見やすくする。
+
+
 class TekiTama(var x:Int,var y:Int) {
     val iro = Paint()
     var ookisa:Int
