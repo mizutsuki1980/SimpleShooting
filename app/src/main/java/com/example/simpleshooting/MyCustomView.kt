@@ -29,7 +29,17 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     //ここでも-170してるのは、なんか面倒だしわかりにくいなー
 
     var teki = Teki()
-    var tekiTama = TekiTama(teki.x,teki.y)
+
+    //var tekiTama = TekiTama(teki.x,teki.y)
+
+    //var tekiTama = teki.tamaHassha()
+    //これだとtekiTamaはTekiTamaのオブジェクトじゃなくなっちゃうんではないか？それでいいのか？
+    //ほかのクラスで作ってしまってもいいのか。どうなんだろうね。まーやってみるか。
+
+    var tekiTama = teki.tamaHassha()
+
+
+
     var tekiTamaRef = TekiTamaRef(jiki,teki)
     var hpCounter = HPCounter()
 

@@ -40,7 +40,7 @@ class TekiTama(var x:Int,var y:Int) {
     init{
         ookisa = 10
         iro.style = Paint.Style.FILL
-        iro.color = Color.CYAN
+        iro.color = Color.YELLOW
         homing = true
         hit = false
         zenkaix = x

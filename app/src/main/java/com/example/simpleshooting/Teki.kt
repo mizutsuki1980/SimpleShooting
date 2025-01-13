@@ -29,6 +29,10 @@ class Teki {
         irosub.color = argb(170, 0, 0, 255)
 
     }
+    fun tamaHassha():TekiTama{
+        return TekiTama(x,y)
+    }
+
     fun shikakuRectXY(): Rect {
         val left = x  - ookisa / 2
         val right = x  + ookisa / 2

@@ -92,8 +92,12 @@ class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
         var xx = kyori * Math.cos(kakudo.toDouble())/10
         var yy = kyori * Math.sin(kakudo.toDouble())/10
 
+        //なんか一定の角度で色変えたり、消えたりしたいなー
+
         canvas.drawCircle(x+xx.toFloat(),y+yy.toFloat(),(jikiOokisa/2-12).toFloat(),irosub)    //サブ機の描画
         canvas.drawCircle(x-xx.toFloat(),y-yy.toFloat(),(jikiOokisa/2-12).toFloat(),irosub)    //サブ機の描画
+
+
         if (kakudo >= 360 ){kakudo = 0}
     }
 }
