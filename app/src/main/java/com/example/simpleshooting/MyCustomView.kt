@@ -14,17 +14,17 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var frame = 0
     var dgCount = 0
     var scoreCount = 0
-    var tamaOkisa = 30
     var isFirstMove = false //動きだしたら弾も出るようにする
 
 
     val initialJikiX = 300 //初期位置
     val initialJikiY = 800 //初期位置
+    val initialTamaOkisa = 30 //初期値
 
     var clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
-    var jiki =Jiki(initialJikiX, initialJikiY,tamaOkisa)
+    var jiki =Jiki(initialJikiX, initialJikiY,initialTamaOkisa)
     var jikiTama = jiki.tamaHassha()    //ここでY -170してる
     var teki = Teki()
     var tekiTama = teki.tamaHassha()    //TekiTamaのオブジェクトを作るのは、TekiTama内でなくてもよい。へー
@@ -97,7 +97,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun startSetUp(){
 
-        jiki =Jiki(initialJikiX, initialJikiY,tamaOkisa)
+        jiki =Jiki(initialJikiX, initialJikiY,initialTamaOkisa)
         jikiTama = JikiTama(jiki.x,jiki.y)
         teki = Teki()
         tekiTama = TekiTama(teki.x,teki.y)
