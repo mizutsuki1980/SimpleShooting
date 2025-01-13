@@ -63,18 +63,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(tekiTama.hit){tekiTamaAtattaSyori()}//jikiTamaと同様。スコアとか動くので。
 
 
-//        tekiTamaRef.nextFrame(jiki,teki)
-//        if(tekiTama.hit){tekiTamaAtattaSyori()}//tekiTamaのものを流用できるっぽい。スコアとか動くので。
-
-        //以下はこの次
-        tekiTamaRef.move(jiki)
-        tekiTamaRef.atariCheck(jiki)
-        if (tekiTamaRef.hit){
-            dgCount += 1
-            jiki.hp -= 1
-            tekiTamaRef = TekiTamaRef(jiki,teki)
-        }
-        //以上はこの次
+        tekiTamaRef.nextFrame(jiki,teki)
+        if(tekiTamaRef.hit){tekiTamaAtattaSyori()}//tekiTamaのものを流用できるっぽい。スコアとか動くので。
 
 
         handler.postDelayed({ tsugiNoSyori() }, 100)
