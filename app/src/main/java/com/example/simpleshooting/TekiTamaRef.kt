@@ -85,33 +85,65 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
 
         status = NORMAL_STATE
     }
-
-    fun moveOne(jiki:Jiki){
-        //ｘ、ｙが変化する前に、これらに数値を入れることで軌跡のデータになる。
+    fun kisekiWoTukuru(){
         kisekiAto_x = kisekiMae_x
         kisekiAto_y = kisekiMae_y
         kisekiMae_x = x
         kisekiMae_y = y
 
-        //反射ならここで分岐する
-        //???再現できないぞ、ロストテクノロジーとなったな。
-        if (x > 650 || x < 0){
-            x -=10
-        }else{
-            x +=10
+    }
+    fun kakudoTukuru(vx:Int,vy:Int){
+        if (isFirst) {
+            kakudo = Math.sqrt((vx * vx) + (vy * vy).toDouble())
+            isFirst = false
         }
+    }
+
+    fun moveOne(jiki:Jiki){
+        kisekiAto_x = kisekiMae_x
+        kisekiAto_y = kisekiMae_y
+        kisekiMae_x = x
+        kisekiMae_y = y
 
 
 
-        if (y > 900 || y < 0){
-            y -=10
-        }else{
-            y +=10
+        val xhanai =650
+        val yHani = 900
+        var vx = jiki.x - x
+        var vy = jiki.y - y
+
+        val resetKyori = 500 //よけ始める距離
+        var homing = true
+        if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ homing = false }
+        if (homing == false) {
+            vx = zenkaix
+            vy = zenkaiy
         }
+        zenkaix = vx
+        zenkaiy = vy
+        //敵の弾の移動
+        val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+        x += ((vx / v)*10 * speed).toInt()
+        y += ((vy / v)*10 * speed).toInt()
+        if (x > xhanai || x < 0){zenkaix = -vx }
+        if (y > yHani || y < 0){zenkaiy = -vy}
+    }
 
-        //ｘ、ｙは増える
-        x +=10
-        y +=10
+
+    fun moveOne2(jiki:Jiki){
+        //ｘ、ｙが変化する前に、これらに数値を入れることで軌跡のデータになる。
+        kisekiWoTukuru()
+        var vx = jiki.x - x
+        var vy = jiki.y - y
+        kakudoTukuru(vx,vy)
+        val v = kakudo
+        x += ((vx / v)*10 * speed).toInt()
+        y += ((vy / v)*10 * speed).toInt()
+
+        //ここ謎、なんでzennkaiにマイナスで入れてんの？でもこれないとダメ。
+        if (x > 650 || x < 0){zenkaix = -vx }
+        if (y > 900 || y < 0){zenkaiy = -vy}
+
     }
 
     fun moveOne1(jiki:Jiki){
