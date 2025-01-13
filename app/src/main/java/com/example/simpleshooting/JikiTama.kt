@@ -30,6 +30,15 @@ class JikiTama(var x:Int,var y:Int) {
             }
             NORMAL_STATE -> {
                 moveOne()                //ひとつ上に弾を移動
+
+//                移動する()
+//                if (当たり判定内にいる？（teki) ) {
+//                    当たった処理()
+//                }
+
+                //いいんだよな？
+                //当たった処理()はgotoHitState()ってことだよな？
+
                 if(attaterukaCheck(teki)) {                     //当たっているかチェック
                     gotoHitState()
                 }
