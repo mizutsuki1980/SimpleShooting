@@ -5,14 +5,6 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 
-//TekiTamaとTekiTamaRefにも状態遷移を入れる
-//めんどー
-//if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ homing = false }
-// 的なやつもifを見やすくする。
-
-//いっこいっこやらないと、わからなくなる
-
-
 class TekiTama(var x:Int,var y:Int) {
     val iro = Paint()
     var ookisa:Int
@@ -53,6 +45,33 @@ class TekiTama(var x:Int,var y:Int) {
         irosubMae.strokeWidth = 2.0f
     }
 
+
+    fun nextFrame(jiki:Jiki,teki:Teki) {
+        when(status) {
+            TAMA_NASI_STATE -> {
+                tekiKaraStart(teki)         //最初のリセット処理
+            }
+            NORMAL_STATE -> {
+                moveOne(jiki)                //自機にひとつ近づくように弾を移動
+                if(attaterukaCheck(jiki)) {                     //自機に当たっているかチェック
+                    gotoHitState()
+                }
+                //画面外なら、最初へ状態遷移
+                if (x > 690 || x < 0 || y > 1050 || y < 0){ status = TAMA_NASI_STATE }
+            }
+            TAMA_HIT_STATE -> {
+                moveOne(jiki)   //めりこむ感じ
+                hitCountSyori() //ヒット処理して次へ
+            }
+            TAMA_HIT_END_STATE -> {
+                moveOne(jiki)   //めりこむ感じ
+                motoniModosu()  // もとに戻す
+            }
+        }
+    }
+
+
+
     fun tekiKaraStart(teki:Teki){
         ookisa = 10
         iro.style = Paint.Style.FILL
@@ -77,7 +96,6 @@ class TekiTama(var x:Int,var y:Int) {
         val resetKyori = 90 //よけ始める距離
         if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ homing = false }
         if (homing == false) {
-
             vx = zenkaix
             vy = zenkaiy
         }
@@ -92,119 +110,31 @@ class TekiTama(var x:Int,var y:Int) {
         kisekix = x-((vx / v)*10 * speed).toInt()
         kisekiy = y-((vy / v)*10 * speed).toInt()
         irosubMae.strokeWidth += 0.5f
-
-
-        if (x > 690 || x < 0 || y > 1050 || y < 0){
-            status = TAMA_NASI_STATE
-                    }
-
     }
     fun attaterukaCheck(jiki:Jiki):Boolean {
-        //敵位置はｘ、ｙ
-        //自機はjikiに入っている。
-        //trueなら次の状態遷移
-        //jikiは円だからベクトルでいっか
-        val vx = jiki.x - x
-        val vy = jiki.y - y
-        val v = Math.sqrt((vx * vx) + (vy * vy).toDouble())
-
-        if (v >= jiki.ookisa.toDouble()) {
-            //なんかここのところ以外はうまくいってるっぽい
-//            return true
-            return false
-
-        } else {
-            return false
-        }
+            val vx = x - jiki.x
+            val vy = y - jiki.y
+            val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+            val atarikyori = (jiki.ookisa).toDouble()
+            if (v < atarikyori){
+                return true
+            }else{
+                return false
+            }
     }
 
     fun gotoHitState(){
+        iro.color = Color.DKGRAY
+        ookisa = 30
         status = TAMA_HIT_STATE
     }
     fun hitCountSyori(){
+        hit = true
         status = TAMA_HIT_END_STATE
     }
     fun motoniModosu(){
+        hit = false //hitだけ先に戻さないと二回カウントされてしまう。
         status = TAMA_NASI_STATE
-    }
-
-    fun nextFrame(jiki:Jiki,teki:Teki) {
-        when(status) {
-            TAMA_NASI_STATE -> {
-                tekiKaraStart(teki)         //最初のリセット処理
-            }
-            NORMAL_STATE -> {
-                moveOne(jiki)                //自機にひとつ近づくように弾を移動
-                if(attaterukaCheck(jiki)) {                     //自機に当たっているかチェック
-                    gotoHitState()
-                }
-                //画面外なら、最初へ状態遷移
-                if (x > 690 || x < 0 || y > 1050 || y < 0){ status = TAMA_NASI_STATE }
-            }
-            TAMA_HIT_STATE -> {
-                hitCountSyori() //ヒット処理して次へ
-            }
-
-
-            TAMA_HIT_END_STATE -> {
-                motoniModosu()  // もとに戻す
-            }
-        }
-    }
-
-
-    //ここから以下をnextFrameに置き換える。
-    fun move(jiki:Jiki, teki:Teki){
-        var vx = jiki.x - x
-        var vy = jiki.y - y
-        val resetKyori = 90 //よけ始める距離
-        if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ homing = false }
-        if (homing == false) {
-
-            vx = zenkaix
-            vy = zenkaiy
-        }
-        zenkaix = vx
-        zenkaiy = vy
-        //敵の弾の移動
-        val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
-        x += ((vx / v)*10 * speed).toInt()
-        y += ((vy / v)*10 * speed).toInt()
-
-        //弾は＋だけど、軌跡はマイナスにする
-        kisekix = x-((vx / v)*10 * speed).toInt()
-        kisekiy = y-((vy / v)*10 * speed).toInt()
-        irosubMae.strokeWidth += 0.5f
-
-
-        if (x > 690 || x < 0 || y > 1050 || y < 0){
-            x = teki.x
-            y = teki.y
-            zenkaix = x
-            zenkaiy = y
-
-            kisekix = x
-            kisekiy = y
-            irosubMae.strokeWidth = 2.0f
-
-            homing = true
-        }
-    }
-    //ここから上　までをnextFrameに置き換える。
-
-
-    fun atariCheck(jiki:Jiki){
-        val vx = x - jiki.x
-        val vy = y - jiki.y
-        if(ookisa == 30){
-        hit = true
-        }else{
-            val atariKyori = jiki.atariKyori()
-            if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
-                iro.color = Color.DKGRAY
-                ookisa = 30
-            }
-        }
     }
 
 

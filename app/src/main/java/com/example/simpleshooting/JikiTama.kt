@@ -97,7 +97,6 @@ class JikiTama(var x:Int,var y:Int) {
         }else{
             return false
         }
-
     }
 
 
