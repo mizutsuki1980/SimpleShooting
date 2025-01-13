@@ -107,9 +107,12 @@ class TekiTama(var x:Int,var y:Int) {
         val vx = jiki.x - x
         val vy = jiki.y - y
         val v = Math.sqrt((vx * vx) + (vy * vy).toDouble())
+
         if (v >= jiki.ookisa.toDouble()) {
-            
-            return true
+            //なんかここのところ以外はうまくいってるっぽい
+//            return true
+            return false
+
         } else {
             return false
         }
