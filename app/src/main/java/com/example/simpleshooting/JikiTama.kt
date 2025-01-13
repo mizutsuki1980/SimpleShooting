@@ -87,16 +87,17 @@ class JikiTama(var x:Int,var y:Int) {
         val x2 = teki.x +teki.ookisa / 2
         val y2 = teki.y +teki.ookisa / 2
 
-        var xflag = false
-        var yflag = false
-        if (x >= x1 && x <= x2){xflag=true}
-        if (y >= y1 && y <= y2){yflag=true}
+        val isXInside = (x >= x1 && x <= x2)
+        val isYInside = (y >= y1 && y <= y2)
 
-        if (xflag && yflag){
+
+
+        if (isXInside && isYInside){
             return true
         }else{
             return false
         }
+
     }
 
 
