@@ -73,15 +73,67 @@ class JikiTama(var x:Int,var y:Int) {
     }
 
     fun attaterukaCheck(teki:Teki):Boolean {
+        //いろいろ作って思ったが、あれ、これってベクトルじゃね？
         val vx = x - teki.x
         val vy = y - teki.y
         val atariKyori = 5 + teki.ookisa / 2 //当たり判定の距離
 
-        if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
+        val x1 = teki.x -teki.ookisa / 2
+        val y1 = teki.y -teki.ookisa / 2
+        val x2 = teki.x +teki.ookisa / 2
+        val y2 = teki.y +teki.ookisa / 2
+
+        var xflag = false
+        var yflag = false
+        if (x >= x1 && x <= x2){xflag=true}
+        if (y >= y1 && y <= y2){yflag=true}
+
+        if (xflag && yflag){
             return true
-        }else {
+        }else{
             return false
         }
+
+        //ｖｘっていうのは敵ｘと弾ｘの差
+        //ｖｙっていうのは敵ｙと弾ｙの差
+        //マイナスもありうる
+
+        //ａｔａｒｉ距離ってのは敵の大きさの半分、つまりａｔａｒｉ距離ではない。敵の大きさの半分
+        //ａｔａｒｉ範囲ならａｔａｒｉ範囲ｘ１、ｙ１、ｘ２、ｙ２ときめちまいえばいいべ
+
+        //敵はこんな風にきめている
+        //        fun shikakuRectXY(): Rect {
+        //            val left = x  - ookisa / 2
+        //            val right = x  + ookisa / 2
+        //            val top = y  - ookisa / 2
+        //            val bottom = y + ookisa / 2
+        //            val m = Rect(left, top, right,bottom)
+        //            return m
+        //        }
+        //これが敵の表示されている部分。ここに入ったらあたりになる。
+        //なんでｘ１（左肩）は敵ｘーｏｏｋｉｓａ/２とかわかってる。
+
+
+
+        //んん－これは何をチェックしているんだ。たぶん距離だけど。
+
+        //ｖｘがａｔａｒｉ距離より小さくて
+        //ｖｘがマイナスのａｔａｒｉ 距離より小さくて
+        //さらに
+        //ｖｙがａｔａｒｉ距離より小さくて
+        //ｖｙがマイナスのａｔａｒｉ距離より小さい
+        //if,ifっていっぱい作った方がいいってことか。まぁそうなのかも。
+
+
+        // でも全部条件に一致しないとダメってことだよなぁ。flagを二つ使うとか？ｘ軸はオッケー、ｙ軸はオッケーみたいな。
+        //あー、なるほど、ＸとかＹがマイナスなんじゃないかってところをカバーしてるのか。でも座標ってプラスしかないよね。
+        //ちがうな。ちゃんとマイナスを考えているっぽい。消したら左側が全部あたりになってしまった。
+
+        //この一文に全部はいってるのすげーな。なんなん。
+        //たぶん、右上より左下、左上より右下、右下より左上、左下より右上、全部に該当するもの、ってことかな。
+        //敵の位置きまってます、ｘｙ　から　ｘ＋？？？ｙ＋？？？
+        //弾の位置きまってますｘ、ｙ
+        //これを比較しているだけ
     }
 
 
