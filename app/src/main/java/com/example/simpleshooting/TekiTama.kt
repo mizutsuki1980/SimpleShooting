@@ -6,7 +6,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 
 class TekiTama(var x:Int,var y:Int) {
-    var iro = Paint()
+    val iro = Paint()
     var ookisa:Int
     var homing :Boolean
     var hit :Boolean
@@ -14,8 +14,8 @@ class TekiTama(var x:Int,var y:Int) {
     var zenkaiy : Int
     var speed : Double
     var kakudo = 0
-    var irosubMae = Paint()
-    var irosubAto = Paint()
+    val irosubMae = Paint()
+    val irosubAto = Paint()
     var kisekix : Int
     var kisekiy : Int
 
@@ -63,7 +63,7 @@ class TekiTama(var x:Int,var y:Int) {
     fun move(jiki:Jiki, teki:Teki){
         var vx = jiki.x - x
         var vy = jiki.y - y
-        var resetKyori = 90 //よけ始める距離
+        val resetKyori = 90 //よけ始める距離
         if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ homing = false }
         if (homing == false) {
 

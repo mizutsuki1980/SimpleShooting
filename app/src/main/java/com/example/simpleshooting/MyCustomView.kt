@@ -19,12 +19,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     val initialJikiX = 300 //初期位置
     val initialJikiY = 800 //初期位置
-    val initialTamaOkisa = 30 //初期値
 
     var clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
-    var jiki =Jiki(initialJikiX, initialJikiY,initialTamaOkisa)
+    var jiki =Jiki(initialJikiX, initialJikiY)
     var jikiTama = jiki.tamaHassha()    //ここでY -170してる。弾の発射位置もー１７０の為。
     var teki = Teki()
     var tekiTama = teki.tamaHassha()    //TekiTamaのオブジェクトを作るのは、TekiTama内でなくてもよい。へー
@@ -97,7 +96,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun startSetUp(){
 
-        jiki =Jiki(initialJikiX, initialJikiY,initialTamaOkisa)
+        jiki =Jiki(initialJikiX, initialJikiY)
         jikiTama = JikiTama(jiki.x,jiki.y)
         teki = Teki()
         tekiTama = TekiTama(teki.x,teki.y)

@@ -10,7 +10,7 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
     //reflection
     var x = teki.x
     var y = teki.y
-    var iro = Paint()
+    val iro = Paint()
     var ookisa:Int
     var homing :Boolean
     var hit :Boolean
@@ -18,8 +18,8 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
     var zenkaiy : Int
     var speed : Double
 
-    var irosubMae = Paint()
-    var irosubAto = Paint()
+    val irosubMae = Paint()
+    val irosubAto = Paint()
 
 
     var kisekiMae_x : Int
@@ -62,12 +62,12 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
 
 
 
-        var xhanai =650
-        var yHani = 900
+        val xhanai =650
+        val yHani = 900
         var vx = jiki.x - x
         var vy = jiki.y - y
 
-        var resetKyori = 500 //よけ始める距離
+        val resetKyori = 500 //よけ始める距離
         if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ homing = false }
         if (homing == false) {
             vx = zenkaix

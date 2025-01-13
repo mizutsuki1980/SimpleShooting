@@ -15,8 +15,8 @@ class Teki {
     var hp = 3
 
     var tekiSpeed = 10
-    var iro = Paint()
-    var irosub = Paint()
+    val iro = Paint()
+    val irosub = Paint()
 
     init{
         x = 20
@@ -66,8 +66,8 @@ class Teki {
         //描画されるたびに＋されるだけでいいなら、ここに入れとけばいっか、frame+＝1
         kakudo += 1
         val kyori = ookisa*6
-        var xx = kyori * Math.cos(kakudo.toDouble())/10
-        var yy = kyori * Math.sin(kakudo.toDouble())/10
+        val xx = kyori * Math.cos(kakudo.toDouble())/10
+        val yy = kyori * Math.sin(kakudo.toDouble())/10
 
         canvas.drawRect(shikakuRectXYSub(x+xx.toInt() ,y+yy.toInt(),ookisa/3), irosub)   //敵の移動　処理
         canvas.drawRect(shikakuRectXYSub(x-xx.toInt() ,y-yy.toInt(),ookisa/3), irosub)   //敵の移動　処理

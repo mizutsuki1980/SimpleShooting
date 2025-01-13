@@ -5,11 +5,11 @@ import android.graphics.Color
 import android.graphics.Color.argb
 import android.graphics.Paint
 
-class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
+class Jiki(var x:Int, var y:Int) {
 
-    var iro = Paint()
-    var irosub = Paint()
-    var jikiOokisa:Int
+    val iro = Paint()
+    val irosub = Paint()
+    var jikiOokisa = 30
     var kakudo = 0
     var hp = 6
 
@@ -91,8 +91,8 @@ class Jiki(var x:Int, var y:Int, var tamaOkisa:Int) {
     fun drawSubKi(canvas:Canvas){
         kakudo += 1
         val kyori = jikiOokisa*7
-        var xx = kyori * Math.cos(kakudo.toDouble())/10
-        var yy = kyori * Math.sin(kakudo.toDouble())/10
+        val xx = kyori * Math.cos(kakudo.toDouble())/10
+        val yy = kyori * Math.sin(kakudo.toDouble())/10
 
         //なんか一定の角度で色変えたり、消えたりしたいなー
 

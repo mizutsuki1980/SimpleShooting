@@ -12,8 +12,8 @@ class HPCounter {
     //shikakuRect1~5をなんか変数にまとめて一気に動かせるような感じにしたい。
     //ベースとなる座標を決めて、動かせるようにしたい。たぶんできるだろう。
 
-    var iro = Paint()
-    var irosub = Paint()
+    val iro = Paint()
+    val irosub = Paint()
 
     //まず元となる四角を作って、そこにＨＰの四角をおいていく。
     //それが190×30の四角

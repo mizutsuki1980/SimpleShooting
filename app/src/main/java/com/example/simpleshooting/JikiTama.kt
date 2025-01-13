@@ -6,7 +6,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 
 class JikiTama(var x:Int,var y:Int) {
-    var iro = Paint()
+    val iro = Paint()
     var ookisa:Int
     var hit = false
 
