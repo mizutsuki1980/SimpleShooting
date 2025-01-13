@@ -86,8 +86,35 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         status = NORMAL_STATE
     }
 
-
     fun moveOne(jiki:Jiki){
+        //ｘ、ｙが変化する前に、これらに数値を入れることで軌跡のデータになる。
+        kisekiAto_x = kisekiMae_x
+        kisekiAto_y = kisekiMae_y
+        kisekiMae_x = x
+        kisekiMae_y = y
+
+        //反射ならここで分岐する
+        //???再現できないぞ、ロストテクノロジーとなったな。
+        if (x > 650 || x < 0){
+            x -=10
+        }else{
+            x +=10
+        }
+
+
+
+        if (y > 900 || y < 0){
+            y -=10
+        }else{
+            y +=10
+        }
+
+        //ｘ、ｙは増える
+        x +=10
+        y +=10
+    }
+
+    fun moveOne1(jiki:Jiki){
         // なんだかよくわからなくなってる
         //まず最初だけ角度が決まる。
         //敵位置から自機位置に向かう。
