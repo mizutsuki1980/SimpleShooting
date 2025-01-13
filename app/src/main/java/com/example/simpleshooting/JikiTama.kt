@@ -45,6 +45,8 @@ class JikiTama(var x:Int,var y:Int) {
         }
     }
     fun gotoHitState(){
+        iro.color = Color.WHITE
+        ookisa = 30
         status = TAMA_HIT_STATE
     }
     fun moveOne(){
@@ -76,8 +78,6 @@ class JikiTama(var x:Int,var y:Int) {
         val atariKyori = 5 + teki.ookisa / 2 //当たり判定の距離
 
         if (vx < atariKyori && vx > -atariKyori && vy < atariKyori && vy > -atariKyori) {
-            iro.color = Color.WHITE
-            ookisa = 30
             return true
         }else {
             return false
