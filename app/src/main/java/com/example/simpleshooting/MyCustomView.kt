@@ -63,7 +63,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(tekiTama.hit){tekiTamaAtattaSyori()}//jikiTamaと同様。スコアとか動くので。
 
 
-        tekiTamaRef.move(jiki)  //古いバージョンに戻した。
+        tekiTamaRef.move(jiki)  //古いバージョンに戻した。//当たる判定はないが、動きはコレ。
         //tekiTamaRef.nextFrame(jiki,teki)
         //if(tekiTamaRef.hit){tekiTamaAtattaSyori()}//tekiTamaのものを流用できるっぽい。スコアとか動くので。
 

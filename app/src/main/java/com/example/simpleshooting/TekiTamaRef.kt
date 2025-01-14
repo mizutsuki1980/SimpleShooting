@@ -22,25 +22,28 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
     val irosubAto = Paint()
 
 
-    var kisekiMae_x : Int
-    var kisekiMae_y : Int
-    var kisekiAto_x : Int
-    var kisekiAto_y : Int
+    var x2 : Int
+    var y2 : Int
+    var x3 : Int
+    var y3 : Int
 
     init{
         ookisa = 10
         iro.style = Paint.Style.FILL
         iro.color = Color.BLUE
-        homing = true
+
+
+        homing = false
+
         hit = false
         zenkaix = teki.x
         zenkaiy = teki.y
 
-        kisekiMae_x = zenkaix
-        kisekiMae_y = zenkaiy
+        x2 = zenkaix
+        y2 = zenkaiy
 
-        kisekiAto_x = kisekiMae_x
-        kisekiAto_y = kisekiMae_y
+        x3 = x2
+        y3 = y2
 
         speed = 3.0
 
@@ -55,26 +58,34 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
     }
 
     fun move(jiki:Jiki){
-        kisekiAto_x = kisekiMae_x
-        kisekiAto_y = kisekiMae_y
-        kisekiMae_x = x
-        kisekiMae_y = y
-
-
+        x3 = x2
+        y3 = y2
+        x2 = x
+        y2 = y
 
         val xhanai =650
         val yHani = 900
+
         var vx = jiki.x - x
         var vy = jiki.y - y
 
-        val resetKyori = 500 //よけ始める距離
-        if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ homing = false }
-        if (homing == false) {
-            vx = zenkaix
-            vy = zenkaiy
-        }
+        vx = zenkaix
+        vy = zenkaiy
+
         zenkaix = vx
         zenkaiy = vy
+
+        //ここで一回目だけの処理になっているのか、、、
+        //ｖｘに自機と弾の差が入ります
+        //ｖｘにzenkaiｘが入ります
+        //ｚｅｎｎｋａｉｘにｖｘが入ります。
+        //なんだこの構造は、、、、？と思ったが、なぜかうまく動いている。
+
+        //たぶん、ここに入る毎にｖｘは元に戻っている。varがついてるから。この中でしか使えない。
+        //zennkaixはメンバ変数、その値をずっと持ってる。
+        //だから最初に定義されたｖｘ→ｚｅｎｎｋａｉｘはそのあと、ずっとｚｅｎｎｋａｉｘになる。
+        //そんな感じか。
+        
         //敵の弾の移動
         val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
         x += ((vx / v)*10 * speed).toInt()
@@ -109,8 +120,8 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
 
     fun draw(canvas: Canvas){
         canvas.drawRect(shikakuRectXY(), iro)
-        canvas.drawLine(kisekiMae_x.toFloat(),kisekiMae_y.toFloat(),x.toFloat(),y.toFloat(),irosubMae) //軌跡１の表示
-        canvas.drawLine(kisekiAto_x.toFloat(),kisekiAto_y.toFloat(),kisekiMae_x.toFloat(),kisekiMae_y.toFloat(),irosubAto)  //軌跡２の表示
+        canvas.drawLine(x2.toFloat(),y2.toFloat(),x.toFloat(),y.toFloat(),irosubMae) //軌跡１の表示
+        canvas.drawLine(x3.toFloat(),y3.toFloat(),x2.toFloat(),y2.toFloat(),irosubAto)  //軌跡２の表示
     }
 
 }
