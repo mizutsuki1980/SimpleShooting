@@ -43,13 +43,34 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         //線を設定
         iro.style = Paint.Style.FILL
         iro.color = Color.BLUE   //argb(255, 255, 255, 200)
-
         irosubMae.style = Paint.Style.STROKE
         irosubMae.color = Color.BLUE   //argb(255, 255, 255, 200)
         irosubMae.strokeWidth = 4.0f
         irosubAto.style = Paint.Style.STROKE
         irosubAto.color = Color.BLUE   //argb(255, 255, 255, 200)
         irosubAto.strokeWidth = 1.5f
+    }
+
+
+    fun move(jiki:Jiki){
+        kakudoKeisan(jiki)  //移動する角度を決める
+        kisekiKeisan()  //先に軌跡の計算をしないとダメ、ｘｙが動いてしまう。
+        tamaIdo()   //弾が移動する
+        reflectKeisan() //画面端についたら反転する
+
+    }
+    fun kakudoKeisan(jiki:Jiki){
+        if (isfirst) {
+            holdx = jiki.x - x
+            holdy = jiki.y - y
+            isfirst = false
+        }else {
+            //ここに入るともうｖｘは動かない。反転するときにだけマイナス１の掛け算になる。
+            holdx = spx
+            holdy = spy
+        }
+        spx = holdx
+        spy = holdy
     }
 
     fun kisekiKeisan(){
@@ -59,31 +80,21 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         y2 = y
     }
 
-    fun move(jiki:Jiki){
-        kisekiKeisan()
-        if (isfirst) {
-             holdx = jiki.x - x
-             holdy = jiki.y - y
-            isfirst = false
-        }else {
-            //ここに入るともうｖｘは動かない。反転するときにだけマイナス１で掛け算になる。
-             holdx = spx
-             holdy = spy
-        }
-        spx = holdx
-        spy = holdy
-
+    fun tamaIdo(){
+        //TekiTamaRefの弾の移動する加算
         val kyori = Math.sqrt((holdx * holdx) + (holdy * holdy) .toDouble())
         x += ((spx / kyori)*10 * speed).toInt()
         y += ((spy / kyori)*10 * speed).toInt()
-
+    }
+    fun reflectKeisan(){
         val xhanai =650
         val yHani = 900
+        //右端でも左端でも対応している優れモノ
         if (x > xhanai || x < 0){spx = -holdx }
+        //上端でも下端でも対応している優れモノ
         if (y > yHani || y < 0){spy = -holdy}
+
     }
-
-
 
     fun shikakuRectXY(): Rect {
         val left = x  - ookisa / 2
