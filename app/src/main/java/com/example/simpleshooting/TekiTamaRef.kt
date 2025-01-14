@@ -113,7 +113,7 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         var vy = jiki.y - y
 
         val resetKyori = 500 //よけ始める距離
-        var homing = true
+        var homing = true //とりあえずtrueを入れる
         if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ homing = false }
         if (homing == false) {
             vx = zenkaix
