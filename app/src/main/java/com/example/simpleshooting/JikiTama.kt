@@ -91,11 +91,7 @@ class JikiTama(var x:Int,var y:Int) {
         val isYInside = (y >= y1 && y <= y2)
 
 
-        if (isXInside && isYInside){
-            return true
-        }else{
-            return false
-        }
+        return isXInside && isYInside
 
     }
 
