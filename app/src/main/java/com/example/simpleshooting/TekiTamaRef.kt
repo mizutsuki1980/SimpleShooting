@@ -12,7 +12,7 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
     var y = teki.y
     val iro = Paint()
     var ookisa:Int
-    var homing :Boolean
+    var isfirst :Boolean
     var hit :Boolean
     var spx : Int
     var spy : Int
@@ -21,11 +21,15 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
     val irosubMae = Paint()
     val irosubAto = Paint()
 
-
+    //軌跡の計算に使う
     var x2 : Int
     var y2 : Int
     var x3 : Int
     var y3 : Int
+
+    //反射の計算に使う
+    var vx = 0
+    var vy = 0
 
     init{
         ookisa = 10
@@ -33,7 +37,7 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         iro.color = Color.BLUE
 
 
-        homing = false
+        isfirst = true
 
         hit = false
         spx = teki.x
@@ -66,43 +70,22 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         val xhanai =650
         val yHani = 900
 
-        var vx = jiki.x - x
-        var vy = jiki.y - y
-
-        vx = spx
-        vy = spy
+        if (isfirst) {
+             vx = jiki.x - x
+             vy = jiki.y - y
+            isfirst = false
+        }else {
+             vx = spx
+             vy = spy
+        }
 
         spx = vx
         spy = vy
 
+        val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+        x += ((spx / kyori)*10 * speed).toInt()
+        y += ((spy / kyori)*10 * speed).toInt()
 
-        //zennkaiｘをｓｐｘに変更。スペシャルなｘ。わかりずれーかな？
-        //多分、前回のＸっていう情報はなんかで必要なんじゃなかったかな？
-        //反射ならいらないのかな？
-
-        //ここで一回目だけの処理になっているのか、、、
-        //ｖｘに自機と弾の差が入ります
-        //ｖｘにzenkaiｘが入ります
-        //ｚｅｎｎｋａｉｘにｖｘが入ります。
-        //なんだこの構造は、、、、？と思ったが、なぜかうまく動いている。
-
-        //たぶん、ここに入る毎にｖｘは元に戻っている。varがついてるから。この中でしか使えない。
-        //zennkaixはメンバ変数、その値をずっと持ってる。
-        //だから最初に定義されたｖｘ→ｚｅｎｎｋａｉｘはそのあと、ずっとｚｅｎｎｋａｉｘになる。
-        //そんな感じか。
-
-        //でｚｅｎｎｋａｉｘで毎回上書きされる。なので実質konkaiｘだ
-        //それを下の方でifで書き換えている。これが反射の仕組みだ。
-        //だからｚｅｎｎｋａｉｘにマイナスのｖｘを入れると反射するのだ。
-        //わかりずらー
-
-
-        //敵の弾の移動
-        val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
-
-        //ｖｘにはｚｅｎｎｋａｉｘが入っている。なんで実質ｚｅｎｎｋａｉｘが今回の加算に使われている。
-        x += ((spx / v)*10 * speed).toInt()
-        y += ((spy / v)*10 * speed).toInt()
         if (x > xhanai || x < 0){spx = -vx }
         if (y > yHani || y < 0){spy = -vy}
     }
