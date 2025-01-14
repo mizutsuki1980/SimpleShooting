@@ -130,7 +130,8 @@ class TekiTama(var x:Int,var y:Int) {
             val vx = x - jiki.x
             val vy = y - jiki.y
             val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
-            val atarikyori = (jiki.ookisa).toDouble()
+            //ホーミング避けるのきつくね？ということで、すこし小さくします
+            val atarikyori = (jiki.ookisa-5).toDouble()
             if (kyori < atarikyori){
                 return true
             }else{
