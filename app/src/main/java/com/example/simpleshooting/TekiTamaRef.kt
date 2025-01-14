@@ -14,8 +14,8 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
     var ookisa:Int
     var homing :Boolean
     var hit :Boolean
-    var zenkaix : Int
-    var zenkaiy : Int
+    var spx : Int
+    var spy : Int
     var speed : Double
 
     val irosubMae = Paint()
@@ -36,11 +36,11 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         homing = false
 
         hit = false
-        zenkaix = teki.x
-        zenkaiy = teki.y
+        spx = teki.x
+        spy = teki.y
 
-        x2 = zenkaix
-        y2 = zenkaiy
+        x2 = spx
+        y2 = spy
 
         x3 = x2
         y3 = y2
@@ -69,11 +69,16 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         var vx = jiki.x - x
         var vy = jiki.y - y
 
-        vx = zenkaix
-        vy = zenkaiy
+        vx = spx
+        vy = spy
 
-        zenkaix = vx
-        zenkaiy = vy
+        spx = vx
+        spy = vy
+
+
+        //zennkaiｘをｓｐｘに変更。スペシャルなｘ。わかりずれーかな？
+        //多分、前回のＸっていう情報はなんかで必要なんじゃなかったかな？
+        //反射ならいらないのかな？
 
         //ここで一回目だけの処理になっているのか、、、
         //ｖｘに自機と弾の差が入ります
@@ -94,10 +99,12 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
 
         //敵の弾の移動
         val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
-        x += ((vx / v)*10 * speed).toInt()
-        y += ((vy / v)*10 * speed).toInt()
-        if (x > xhanai || x < 0){zenkaix = -vx }
-        if (y > yHani || y < 0){zenkaiy = -vy}
+
+        //ｖｘにはｚｅｎｎｋａｉｘが入っている。なんで実質ｚｅｎｎｋａｉｘが今回の加算に使われている。
+        x += ((spx / v)*10 * speed).toInt()
+        y += ((spy / v)*10 * speed).toInt()
+        if (x > xhanai || x < 0){spx = -vx }
+        if (y > yHani || y < 0){spy = -vy}
     }
 
     fun atariCheck(jiki:Jiki){
