@@ -46,10 +46,8 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         isFirst = true
         zenkaix = teki.x
         zenkaiy = teki.y
-
         kisekiMae_x = zenkaix
         kisekiMae_y = zenkaiy
-
         kisekiAto_x = kisekiMae_x
         kisekiAto_y = kisekiMae_y
 
@@ -72,6 +70,8 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         iro.color = Color.BLUE
         hit = false
         isFirst = true
+        x = teki.x
+        y = teki.y
         zenkaix = teki.x
         zenkaiy = teki.y
 
@@ -86,6 +86,8 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         status = NORMAL_STATE
     }
     fun kisekiWoTukuru(){
+        zenkaix = x
+        zenkaiy = y
         kisekiAto_x = kisekiMae_x
         kisekiAto_y = kisekiMae_y
         kisekiMae_x = x
@@ -113,12 +115,6 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         var vy = jiki.y - y
 
         val resetKyori = 500 //よけ始める距離
-        var homing = true //とりあえずtrueを入れる
-        if(vx<resetKyori && vx > -resetKyori && vy<resetKyori && vy > -resetKyori){ homing = false }
-        if (homing == false) {
-            vx = zenkaix
-            vy = zenkaiy
-        }
         zenkaix = vx
         zenkaiy = vy
         //敵の弾の移動
