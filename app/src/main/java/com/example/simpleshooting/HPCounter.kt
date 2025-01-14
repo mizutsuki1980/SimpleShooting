@@ -9,27 +9,9 @@ import android.graphics.Rect
 
 class HPCounter {
 
-    //shikakuRect1~5をなんか変数にまとめて一気に動かせるような感じにしたい。
-    //ベースとなる座標を決めて、動かせるようにしたい。たぶんできるだろう。
 
     val iro = Paint()
     val irosub = Paint()
-
-    //まず元となる四角を作って、そこにＨＰの四角をおいていく。
-    //それが190×30の四角
-    //それをＭａｘＨＰで割る。今回は6
-    //それぞれに枠をつけたいから、6+1となる
-    //枠は幅10とする。
-    //なんで190-（10*(6+1)）となる
-    //今回は120を6で割ることになる。20だ。
-    //10+20+10+20+10+20+10+20+10+20+10+20+10という感じか。
-
-    //んー、なんかよくわからんくなってきた。
-    //表示するときにはCanavasがいるから、Drawの中で繰り返さなきゃならんのか。
-    //for(a in 1..<6) {　とかで描画しながら増やすとかやっていきたかったが
-    //最初にリスト作るほうがいいのか？
-
-
     var yokohaba = 190
     var tatehaba = 50
     var waku = 10
@@ -38,12 +20,9 @@ class HPCounter {
 
     init {
         iro.style = Paint.Style.FILL
-        iro.color = argb(255, 255, 200, 200)
+        iro.color = Color.RED
         irosub.style = Paint.Style.FILL
         irosub.color = argb(255, 255, 255, 200)
-        //線を設定
-        //irosub.style = Paint.Style.STROKE
-        //irosub.strokeWidth = 5.0f
 
     }
     fun shikakuRect(): Rect {
