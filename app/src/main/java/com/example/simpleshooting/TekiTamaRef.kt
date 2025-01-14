@@ -102,21 +102,12 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
     }
 
     fun moveOne(jiki:Jiki){
-        kisekiAto_x = kisekiMae_x
-        kisekiAto_y = kisekiMae_y
-        kisekiMae_x = x
-        kisekiMae_y = y
-
-
-
+        kisekiWoTukuru()    //最初に段々計算入れる、これは要る
         val xhanai =650
         val yHani = 900
         var vx = jiki.x - x
         var vy = jiki.y - y
 
-        val resetKyori = 500 //よけ始める距離
-        zenkaix = vx
-        zenkaiy = vy
         //敵の弾の移動
         val v = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
         x += ((vx / v)*10 * speed).toInt()
