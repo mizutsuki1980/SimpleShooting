@@ -22,6 +22,8 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
     val irosubAto = Paint()
 
     //軌跡の計算に使う
+    var x1 = x
+    var y1 = y
     var x2 = x
     var y2 = y
     var x3 = x
@@ -30,6 +32,16 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
     //反射の計算に使う
     var holdx = 0
     var holdy = 0
+
+
+    //状態遷移関連
+    val TAMA_NASI_STATE = 1
+    val NORMAL_STATE = 2
+    val TAMA_HIT_STATE = 3
+    val TAMA_HIT_END_STATE = 4
+
+    var status = TAMA_NASI_STATE // 最初は玉が画面内に無い状態
+
 
     init{
         x = teki.x
@@ -40,9 +52,10 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         spx = x
         spy = y
 
-        //線を設定
         iro.style = Paint.Style.FILL
         iro.color = Color.BLUE   //argb(255, 255, 255, 200)
+
+        //線を設定
         irosubMae.style = Paint.Style.STROKE
         irosubMae.color = Color.BLUE   //argb(255, 255, 255, 200)
         irosubMae.strokeWidth = 4.0f
@@ -57,8 +70,34 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         kisekiKeisan()  //先に軌跡の計算をしないとダメ、ｘｙが動いてしまう。
         tamaIdo()   //弾が移動する
         reflectKeisan() //画面端についたら反転する
-
     }
+
+    fun moveOne(jiki:Jiki){
+        kakudoKeisan(jiki)  //移動する角度を決める
+        kisekiKeisan()  //先に軌跡の計算をしないとダメ、ｘｙが動いてしまう。
+        tamaIdo()   //弾が移動する
+        reflectKeisan() //画面端についたら反転する
+    }
+
+    fun moveHitedOne(jiki:Jiki){
+        kakudoKeisan(jiki)  //移動する角度を決める
+        kisekiKeisan()  //先に軌跡の計算をしないとダメ、ｘｙが動いてしまう。
+        reflectKeisan() //画面端についたら反転する
+    }
+
+
+    fun attaterukaCheck(jiki:Jiki):Boolean {
+        val vx = x - jiki.x
+        val vy = y - jiki.y
+        val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+        val atarikyori = (jiki.ookisa).toDouble()
+        if (kyori < atarikyori){
+            return true
+        }else{
+            return false
+        }
+    }
+
     fun kakudoKeisan(jiki:Jiki){
         if (isfirst) {
             holdx = jiki.x - x
@@ -74,10 +113,14 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
     }
 
     fun kisekiKeisan(){
+        // 逆順にいれていかないとダメ
         x3 = x2
         y3 = y2
-        x2 = x
-        y2 = y
+        x2 = x1
+        y2 = y1
+        x1 = x
+        y1 = y
+
     }
 
     fun tamaIdo(){
@@ -109,6 +152,63 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         canvas.drawRect(shikakuRectXY(), iro)
         canvas.drawLine(x2.toFloat(),y2.toFloat(),x.toFloat(),y.toFloat(),irosubMae) //軌跡１の表示
         canvas.drawLine(x3.toFloat(),y3.toFloat(),x2.toFloat(),y2.toFloat(),irosubAto)  //軌跡２の表示
+    }
+
+    fun tekiKaraStart(teki:Teki){
+        x = teki.x
+        y = teki.y
+
+        x1 = x
+        y1 = y
+        x2 = x
+        y2 = y
+        x3 = x
+        y3 = y
+
+        ookisa = 10
+        isfirst = true
+        hit = false
+        spx = x
+        spy = y
+
+        iro.style = Paint.Style.FILL
+        iro.color = Color.BLUE   //argb(255, 255, 255, 200)
+        status = NORMAL_STATE
+    }
+
+    fun nextFrame(jiki:Jiki,teki:Teki) {
+        when(status) {
+            TAMA_NASI_STATE -> {
+                tekiKaraStart(teki)         //最初のリセット処理
+            }
+            NORMAL_STATE -> {
+                moveOne(jiki)                //自機にひとつ近づくように弾を移動
+                if(attaterukaCheck(jiki)) {                     //自機に当たっているかチェック
+                    gotoHitState()
+                }
+            }
+            TAMA_HIT_STATE -> {
+                moveHitedOne(jiki)   //めりこむ感じ
+                hitCountSyori() //ヒット処理して次へ
+            }
+            TAMA_HIT_END_STATE -> {
+                moveHitedOne(jiki)   //めりこむ感じ
+                motoniModosu()  // もとに戻す
+            }
+        }
+    }
+    fun gotoHitState(){
+        iro.color = Color.DKGRAY
+        ookisa = 30
+        status = TAMA_HIT_STATE
+    }
+    fun hitCountSyori(){
+        hit = true
+        status = TAMA_HIT_END_STATE
+    }
+    fun motoniModosu(){
+        hit = false //hitだけ先に戻さないと二回カウントされてしまう。
+        status = TAMA_NASI_STATE
     }
 
 }
