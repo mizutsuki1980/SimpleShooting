@@ -84,15 +84,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         // 自機の弾を最後に描画した方がそれっぽく見える
         if(isFirstMove){ jikiTama.draw(canvas)}     //自機の弾の処理
         hpCounter.draw(canvas,jiki)
+        hantoumeinotamaDraw(canvas)
+    }
 
-    val         irohantoumei = Paint()
+    fun hantoumeinotamaDraw(canvas:Canvas){
+        val irohantoumei = Paint()
         irohantoumei.style = Paint.Style.FILL
-        irohantoumei.color = argb(20, 255, 255, 255)
-
+        irohantoumei.color = argb(50, 255, 255, 255)
         canvas.drawCircle(clickX.toFloat(),clickY.toFloat(),(100).toFloat(),irohantoumei)    //半透明の円の表示
 
     }
-
 
     fun startSetUp(){
 
