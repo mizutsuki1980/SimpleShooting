@@ -28,26 +28,40 @@ class JikiKen(jiki:Jiki) {
     fun tatenagashikakuRectXY(): Rect {
         val left = x  - ookisa / 2
         val right = x  + ookisa / 2
-        val top = y  - ookisa
-        val bottom = y + ookisa
+        val top = y  - nobiruhanni
+        val bottom = y + nobiruhanni
         val m = Rect(left, top, right,bottom)
         return m
     }
 
     fun draw(canvas: Canvas){
-        canvas.drawRect(tatenagashikakuRectXY(), iro)  //自機
+        if(timeCount>10) {
+            canvas.drawRect(tatenagashikakuRectXY(), iro)  //自機
+        }
     }
+
 
     fun jikiKaraStart(jiki:Jiki){
-
+        x = jiki.x
+        y = jiki.y
+        nobiruhanni = 10
+        timeCount = 0
+        status =  NORMAL_STATE
     }
-    fun taiki(){
+
+    fun taiki(jiki:Jiki){
         timeCount += 1
+        if(timeCount==10){
+            x = jiki.x
+            y = jiki.y
+        }
+
     }
 
-    fun moveOne(){
+    fun nobiru(){
         if(timeCount>10){
-
+            y -= 5*timeCount
+            nobiruhanni += 5*timeCount
         }
 
     }
@@ -65,7 +79,8 @@ class JikiKen(jiki:Jiki) {
                 }
 
                 NORMAL_STATE -> {
-                    moveOne()                //ひとつ上に弾を移動
+                    taiki(jiki)
+                    nobiru()                //ひとつ上に弾を移動
 
                     if (attaterukaCheck(teki)) {                     //当たっているかチェック
                         gotoHitState()
