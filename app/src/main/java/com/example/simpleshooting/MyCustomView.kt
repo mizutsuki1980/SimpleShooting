@@ -22,6 +22,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     var jiki =Jiki(initialJikiX, initialJikiY)
     var jikiTama = jiki.tamaHassha()    //ここでY -170してる。弾の発射位置もー１７０の為。
+    var jikiKen = JikiKen(jiki)
+
+
     var teki = Teki()
     var tekiTama = teki.tamaHassha()    //TekiTamaのオブジェクトを作るのは、TekiTama内でなくてもよい。へー
     var tekiTamaRef = TekiTamaRef(jiki,teki)
@@ -42,6 +45,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
+
     fun tekiTamaAtattaSyori(){
         dgCount += 1
         jiki.hp -= 1
@@ -60,6 +64,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         jikiTama.nextFrame(jiki,teki,isFirstMove)
         if(jikiTama.hit){jikiTamaAtattaSyori()} //敵のリセット、敵のHP処理、スコアカウントとかあるから、jikiTamaのメソッドにしない方がいいかな
+
+        jikiKen.nextFrame(jiki,teki,isFirstMove)
+
 
         tekiTama.nextFrame(jiki,teki)
         if(tekiTama.hit){tekiTamaAtattaSyori()}//jikiTamaと同様。スコアとか動くので。
