@@ -2,6 +2,8 @@ package com.example.simpleshooting
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color.argb
+import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -82,6 +84,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         // 自機の弾を最後に描画した方がそれっぽく見える
         if(isFirstMove){ jikiTama.draw(canvas)}     //自機の弾の処理
         hpCounter.draw(canvas,jiki)
+
+    val         irohantoumei = Paint()
+        irohantoumei.style = Paint.Style.FILL
+        irohantoumei.color = argb(20, 255, 255, 255)
+
+        canvas.drawCircle(clickX.toFloat(),clickY.toFloat(),(100).toFloat(),irohantoumei)    //半透明の円の表示
+
     }
 
 
