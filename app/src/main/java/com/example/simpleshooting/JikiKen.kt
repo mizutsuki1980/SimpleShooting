@@ -59,6 +59,8 @@ class JikiKen(jiki:Jiki) {
     }
 
     fun nobiru(){
+        //なかなかイメージ通りだけど、剣なんだから行って帰ってこないとなぁ
+        
         if(timeCount>10){
             y -= 5*timeCount
             nobiruhanni += 5*timeCount
