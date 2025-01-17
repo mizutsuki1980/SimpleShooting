@@ -29,7 +29,7 @@ class JikiKen(jiki:Jiki) {
         val left = x  - ookisa / 2
         val right = x  + ookisa / 2
         if (nobiruhanni<1){nobiruhanni=0}
-        if (nobiruhanni>100){nobiruhanni=100}
+        if (nobiruhanni>250){nobiruhanni=250}
         val top = y  - nobiruhanni
         val bottom = y
         val m = Rect(left, top, right,bottom)
@@ -49,6 +49,7 @@ class JikiKen(jiki:Jiki) {
         nobiruhanni = 10
         timeCount = 0
         status =  NORMAL_STATE
+        iro.color = Color.WHITE
     }
 
     fun taiki(jiki:Jiki){
@@ -71,8 +72,20 @@ class JikiKen(jiki:Jiki) {
             if (timeCount == 30) { status = TAMA_NASI_STATE }
         }
     }
-    fun attaterukaCheck(teki:Teki):Boolean{return true}
-    fun gotoHitState(){}
+    fun attaterukaCheck(teki:Teki):Boolean{
+        val x1 = teki.x -teki.ookisa / 2
+        val y1 = teki.y -teki.ookisa / 2
+        val x2 = teki.x +teki.ookisa / 2
+        val y2 = teki.y +teki.ookisa / 2
+        val isXInside = (x >= x1 && x <= x2)
+        // (y  - nobiruhanni) 剣の先っぽ
+        //全部を判定すると面倒だから、大体で真ん中二点くらいで適当に判定するとか？
+        val isYInside = ((y  - nobiruhanni) >= y1 && (y  - nobiruhanni) <= y2)
+
+        return isXInside && isYInside
+
+    }
+    fun gotoHitState(){        iro.color = Color.RED }
     fun hitCountSyori(){}
     fun motoniModosu(){}
 
@@ -90,9 +103,6 @@ class JikiKen(jiki:Jiki) {
                     if (attaterukaCheck(teki)) {                     //当たっているかチェック
                         gotoHitState()
                     }
-                    if (y < 5) {
-                        status = TAMA_NASI_STATE
-                    } // 画面外に出たら無しの状態に一旦遷移
                 }
 
                 TAMA_HIT_STATE -> {
