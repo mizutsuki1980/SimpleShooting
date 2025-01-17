@@ -93,6 +93,13 @@ class JikiKen(jiki:Jiki) {
         }
     }
     fun attaterukaCheck(teki:Teki):Boolean{
+
+        //剣はかすっただけでもヒット扱いにしたい。
+        //なんか今は剣が敵の範囲に入るとヒットしているように見える。
+        //剣の左肩が、敵の右肩をちょっとでもかすめたら、当たった、という判定にしたい。
+        //なんで、敵のｘＬｅｆｔとｘＲｉｇｈｔで剣のｋＬｅｆｔ、ｋＲｉｇｈｔみたいにして、
+        //xleftとkleftで同じになったらすぐにヒット、みたいな
+
         val x1 = teki.x -teki.ookisa / 2
         val y1 = teki.y -teki.ookisa / 2
         val x2 = teki.x +teki.ookisa / 2
