@@ -24,8 +24,18 @@ class JikiKen(jiki:Jiki) {
         iro.style = Paint.Style.FILL
         iro.color = Color.WHITE
     }
-
     fun tatenagashikakuRectXY(): Rect {
+        val left = x  - ookisa / 2
+        val right = x  + ookisa / 2
+
+        nobiruhanni=250
+        val top = y  - nobiruhanni
+        val bottom = y
+        val m = Rect(left, top, right,bottom)
+        return m
+    }
+
+    fun tatenagashikakuRectXY2(): Rect {
         val left = x  - ookisa / 2
         val right = x  + ookisa / 2
         if (nobiruhanni<1){nobiruhanni=0}
@@ -35,8 +45,11 @@ class JikiKen(jiki:Jiki) {
         val m = Rect(left, top, right,bottom)
         return m
     }
-
     fun draw(canvas: Canvas){
+            canvas.drawRect(tatenagashikakuRectXY(), iro)  //自機
+    }
+
+    fun draw2(canvas: Canvas){
         if(timeCount>10) {
             canvas.drawRect(tatenagashikakuRectXY(), iro)  //自機
         }
@@ -61,7 +74,14 @@ class JikiKen(jiki:Jiki) {
 
     }
 
+    //なんかわかんないからデバックモードとしてだしっぱにしたいな
     fun nobiru(jiki:Jiki) {
+        x = jiki.x
+        y = jiki.y
+        if (timeCount == 30) { status = TAMA_NASI_STATE }
+    }
+
+    fun nobiru2(jiki:Jiki) {
         //なかなかイメージ通りだけど、剣なんだから行って帰ってこないとなぁ
 
         if (timeCount > 10) {
@@ -78,9 +98,13 @@ class JikiKen(jiki:Jiki) {
         val x2 = teki.x +teki.ookisa / 2
         val y2 = teki.y +teki.ookisa / 2
         val isXInside = (x >= x1 && x <= x2)
+        if(isXInside){        iro.color = Color.GREEN }
         // (y  - nobiruhanni) 剣の先っぽ
         //全部を判定すると面倒だから、大体で真ん中二点くらいで適当に判定するとか？
-        val isYInside = ((y  - nobiruhanni) >= y1 && (y  - nobiruhanni) <= y2)
+        // 敵大きさの半分づつあがると、判定がトラック型になるんじゃないかな？
+
+        var isYInside : Boolean
+        isYInside = ((y  - nobiruhanni) >= y1 && (y  - nobiruhanni) <= y2)
 
         return isXInside && isYInside
 
