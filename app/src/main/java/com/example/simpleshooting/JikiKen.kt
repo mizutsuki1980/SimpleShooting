@@ -29,7 +29,7 @@ class JikiKen(jiki:Jiki) {
         val left = x  - ookisa / 2
         val right = x  + ookisa / 2
         val top = y  - nobiruhanni
-        val bottom = y + nobiruhanni
+        val bottom = y
         val m = Rect(left, top, right,bottom)
         return m
     }
@@ -58,16 +58,29 @@ class JikiKen(jiki:Jiki) {
 
     }
 
-    fun nobiru(){
+    fun nobiru(jiki:Jiki) {
         //なかなかイメージ通りだけど、剣なんだから行って帰ってこないとなぁ
-        
-        if(timeCount>10){
-            y -= 5*timeCount
-            nobiruhanni += 5*timeCount
+
+        if (timeCount > 10) {
+            //なんかそれっぽいけど、わかりづらくない？
+
+            x = jiki.x
+            y = jiki.y
+
+            if (timeCount < 20) {
+                nobiruhanni += 5 * timeCount
+            }
+            if (timeCount > 20) {
+                nobiruhanni -= 3 * timeCount
+                //マイナスになりすぎると、下から突き出してしまう。
+            }
+
+
+            if (timeCount == 30) {
+                status = TAMA_NASI_STATE
+            }
         }
-
     }
-
     fun attaterukaCheck(teki:Teki):Boolean{return true}
     fun gotoHitState(){}
     fun hitCountSyori(){}
@@ -82,7 +95,7 @@ class JikiKen(jiki:Jiki) {
 
                 NORMAL_STATE -> {
                     taiki(jiki)
-                    nobiru()                //ひとつ上に弾を移動
+                    nobiru(jiki)                //ひとつ上に弾を移動
 
                     if (attaterukaCheck(teki)) {                     //当たっているかチェック
                         gotoHitState()
