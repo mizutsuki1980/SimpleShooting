@@ -28,6 +28,8 @@ class JikiKen(jiki:Jiki) {
     fun tatenagashikakuRectXY(): Rect {
         val left = x  - ookisa / 2
         val right = x  + ookisa / 2
+        if (nobiruhanni<1){nobiruhanni=0}
+        if (nobiruhanni>100){nobiruhanni=100}
         val top = y  - nobiruhanni
         val bottom = y
         val m = Rect(left, top, right,bottom)
@@ -62,23 +64,11 @@ class JikiKen(jiki:Jiki) {
         //なかなかイメージ通りだけど、剣なんだから行って帰ってこないとなぁ
 
         if (timeCount > 10) {
-            //なんかそれっぽいけど、わかりづらくない？
-
             x = jiki.x
             y = jiki.y
-
-            if (timeCount < 20) {
-                nobiruhanni += 5 * timeCount
-            }
-            if (timeCount > 20) {
-                nobiruhanni -= 3 * timeCount
-                //マイナスになりすぎると、下から突き出してしまう。
-            }
-
-
-            if (timeCount == 30) {
-                status = TAMA_NASI_STATE
-            }
+            if (timeCount < 20) { nobiruhanni += 5 * timeCount }
+            if (timeCount >= 20 && timeCount < 30) { nobiruhanni -= 3 * timeCount }
+            if (timeCount == 30) { status = TAMA_NASI_STATE }
         }
     }
     fun attaterukaCheck(teki:Teki):Boolean{return true}
