@@ -36,7 +36,15 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun jikiTamaAtattaSyori(){
+       //攻撃方法が増えるたびに、ここにつかしなきゃなんないのかなー
         if (jikiTama.hit) {
+            teki.hp -= 1
+            if(teki.hp==0){
+                scoreCount += 1
+                teki = Teki()
+            }
+        }
+        if (jikiKen.hit) {
             teki.hp -= 1
             if(teki.hp==0){
                 scoreCount += 1
@@ -66,7 +74,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(jikiTama.hit){jikiTamaAtattaSyori()} //敵のリセット、敵のHP処理、スコアカウントとかあるから、jikiTamaのメソッドにしない方がいいかな
 
         jikiKen.nextFrame(jiki,teki,isFirstMove)
-
+        if(jikiKen.hit){jikiTamaAtattaSyori()}
 
         tekiTama.nextFrame(jiki,teki)
         if(tekiTama.hit){tekiTamaAtattaSyori()}//jikiTamaと同様。スコアとか動くので。

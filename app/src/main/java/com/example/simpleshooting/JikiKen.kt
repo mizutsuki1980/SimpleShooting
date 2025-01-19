@@ -12,7 +12,7 @@ class JikiKen(jiki:Jiki) {
     val ookisa = 10
     var nobiruhanni = 10
     var timeCount = 0
-
+    var hit = false
     val TAMA_NASI_STATE = 1
     val NORMAL_STATE = 2
     val TAMA_HIT_STATE = 3
@@ -61,6 +61,7 @@ class JikiKen(jiki:Jiki) {
         y = jiki.y
         nobiruhanni = 10
         timeCount = 0
+        hit = false
         status =  NORMAL_STATE
         iro.color = Color.WHITE
     }
@@ -93,53 +94,45 @@ class JikiKen(jiki:Jiki) {
         }
     }
     fun attaterukaCheck(teki:Teki):Boolean{
-
-        //剣はかすっただけでもヒット扱いにしたい。
-        //なんか今は剣が敵の範囲に入るとヒットしているように見える。
-        //剣の左肩が、敵の右肩をちょっとでもかすめたら、当たった、という判定にしたい。
-        //なんで、敵のｘＬｅｆｔとｘＲｉｇｈｔで剣のｋＬｅｆｔ、ｋＲｉｇｈｔみたいにして、
-        //xleftとkleftで同じになったらすぐにヒット、みたいな
-
-        val x1 = teki.x -teki.ookisa / 2
-        val y1 = teki.y -teki.ookisa / 2
-        val x2 = teki.x +teki.ookisa / 2
-        val y2 = teki.y +teki.ookisa / 2
-        val isXInside = (x >= x1 && x <= x2)
-        if(isXInside){        iro.color = Color.GREEN }
-        // (y  - nobiruhanni) 剣の先っぽ
-        //全部を判定すると面倒だから、大体で真ん中二点くらいで適当に判定するとか？
-        // 敵大きさの半分づつあがると、判定がトラック型になるんじゃないかな？
-
-        var isYInside : Boolean
-        isYInside = ((y  - nobiruhanni) >= y1 && (y  - nobiruhanni) <= y2)
-
-        return isXInside && isYInside
-
+        var isXInside = false
+        val tleft = teki.x -teki.ookisa / 2    //左肩
+        val tright = teki.x +teki.ookisa / 2    //右肩
+        isXInside =  (x >= tleft && x <= tright)
+        return isXInside
     }
-    fun gotoHitState(){        iro.color = Color.RED }
-    fun hitCountSyori(){}
-    fun motoniModosu(){}
 
+
+    fun gotoHitState(){
+        iro.color = Color.RED
+        status = TAMA_HIT_STATE
+    }
+
+    fun hitCountSyori(){
+        hit = true //ヒットは１回のみカウントするので、すぐにfalseに
+        status = TAMA_HIT_END_STATE
+    }
+    fun motoniModosu(){
+        hit = false //ヒットは１回のみカウントするので、すぐにfalseに
+        status = TAMA_NASI_STATE
+    }
+
+    //こういう感じに作ると３フレーム判定につかうので、３フレームで１ダメージみたいになる。
     fun nextFrame(jiki:Jiki,teki:Teki,isFirstMove:Boolean) {
         if(isFirstMove) {
             when (status) {
                 TAMA_NASI_STATE -> {
                     jikiKaraStart(jiki)         // 現在の自機の場所に移動してリセット
                 }
-
                 NORMAL_STATE -> {
                     taiki(jiki)
                     nobiru(jiki)                //ひとつ上に弾を移動
-
                     if (attaterukaCheck(teki)) {                     //当たっているかチェック
                         gotoHitState()
                     }
                 }
-
                 TAMA_HIT_STATE -> {
                     hitCountSyori() //ヒット処理して次へ
                 }
-
                 TAMA_HIT_END_STATE -> {
                     motoniModosu()  // もとに戻す
                 }
