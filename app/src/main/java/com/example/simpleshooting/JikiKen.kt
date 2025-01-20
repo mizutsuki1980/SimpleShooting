@@ -9,8 +9,9 @@ class JikiKen(jiki:Jiki) {
     var x = jiki.x
     var y = jiki.y
     val iro = Paint()
-    val ookisa = 10
+    var ookisa = 30
     var nobiruhanni = 10
+    var nagasa : Int
     var timeCount = 0
     var hit = false
     val TAMA_NASI_STATE = 1
@@ -23,31 +24,108 @@ class JikiKen(jiki:Jiki) {
     init {
         iro.style = Paint.Style.FILL
         iro.color = Color.WHITE
+        x = jiki.x
+        y = jiki.y
+        ookisa = 30
+        nagasa = 100
+        status = TAMA_NASI_STATE
+    }
+    fun nagasaRectXY(jiki:Jiki,kyori:Int): Rect {
+        val jx = jiki.x
+        val jy = jiki.y - kyori
+        val left = jx  - ookisa / 2
+        val right = jx  + ookisa / 2
+        val top = jy - ookisa / 2
+        val bottom = jy+ ookisa / 2
+        val m = Rect(left, top, right,bottom)
+        return m
     }
 
+    fun tyouhoukeiRectXY(jiki:Jiki): Rect {
+        val jx = jiki.x
+        val jy = jiki.y -nagasa
+        val left = jx  - ookisa / 2
+        val right = jx  + ookisa / 2
+        val top = jy - ookisa / 2
+        val bottom = jy+ ookisa / 2
+        val m = Rect(left, top, right,bottom)
+        return m
+    }
 
-    //剣のだしかたが、考えが、そもそも違う気がする。
-    //ｘ、ｙはどこの事を指すのか？
-    //剣先だ
-    //剣先と自機を繋ぐように、白いラインを表示するだけ。
-    //ｘ、ｙは数フレーム存在して、消える。当たり判定も消える。これは弾と同じ。
-    //いまはｙーnobiruhanni　とかにしているから、わかりづらくなっている。
-    //ｙは剣先の座標にする。
-    //そのように変更していこう
+    fun timer(){
+        timeCount += 1
+        if (timeCount > 30){
+            timeCount = 0
+        }
+    }
+
+    fun kengaNobiru(jiki:Jiki) {
+        if (timeCount == 0){ nagasa = 100 }
+        if (timeCount > 10 && timeCount < 20) {
+            nagasa += 10
+        }
+    }
+    fun attaterukaKurikaesiCheck(jiki:Jiki,teki:Teki,kyori:Int):Boolean{
+        val jx = jiki.x
+        val jy = jiki.y - kyori
+
+        var isXInside = false
+        val tleft = teki.x -teki.ookisa / 2    //左肩
+        val tright = teki.x +teki.ookisa / 2    //右肩
+        isXInside =  (jx >= tleft && jx <= tright)
+
+        var isYInside = false
+        val ttop = teki.y -teki.ookisa / 2    //上辺
+        val tbuttom = teki.y +teki.ookisa / 2    //下辺
+        isYInside =  (jy >= ttop && jy <= tbuttom)
+
+        return (isXInside && isYInside)
+    }
+
+    fun attaterukaCheck(jiki:Jiki,teki:Teki):Boolean{
+        var flag = false
+        var kyori = nagasa - ookisa/2
+        //距離にはnagasaが入る、最初は先頭、nagasaの数値そのまま、
+        //そこからnagasaーookisa/2にしていく
+        //それが自機の手前まで続くイメージ
+
+        for(a in 0..<5) {
+            kyori =  nagasa - (ookisa/2) * a
+            if(flag){}else{
+                flag = attaterukaKurikaesiCheck(jiki,teki,kyori)
+            }
+        }
+        return flag
+    }
+
+    fun draw(canvas: Canvas,jiki: Jiki){
+        var kyori = nagasa - ookisa/2
+
+        for(a in 0..<5) {
+            kyori =  nagasa - (ookisa/2) * a
+//            canvas.drawRect(nagasaRectXY(jiki,kyori), iro)  //自機
+            canvas.drawCircle(jiki.x.toFloat(),jiki.y-kyori.toFloat(),(ookisa/2).toFloat(),iro)
+
+
+        }
+    }
+
+    //もっというと、表示も当たり判定も、全部●●●●でつなげて
+    //チェーンマインみたいな形にしたらわかりやすいんじゃね
+    //やってみよう
 
 
 
-    //こういう感じに作ると３フレーム判定につかうので、３フレームで１ダメージみたいになる。
     fun nextFrame(jiki:Jiki,teki:Teki,isFirstMove:Boolean) {
         if(isFirstMove) {
             when (status) {
                 TAMA_NASI_STATE -> {
-                    jikiKaraStart(jiki)         // 現在の自機の場所に移動してリセット
+                    jikiKaraStart()         // 現在の自機の場所に移動してリセット
                 }
                 NORMAL_STATE -> {
-                    taiki(jiki)
-                    nobiru(jiki)                //ひとつ上に弾を移動
-                    if (attaterukaCheck(teki)) {                     //当たっているかチェック
+                    timer()
+                    kengaNobiru(jiki)                //ひとつ上に弾を移動
+                    if (attaterukaCheck(jiki,teki)) {                     //当たっているかチェック
                         gotoHitState()
                     }
                 }
@@ -61,67 +139,20 @@ class JikiKen(jiki:Jiki) {
         }
     }
 
-    fun tatenagashikakuRectXY(): Rect {
-        val left = x  - ookisa / 2
-        val right = x  + ookisa / 2
-        if (nobiruhanni<1){nobiruhanni=0}
-        if (nobiruhanni>250){nobiruhanni=250}
-        val top = y  - nobiruhanni
-        val bottom = y
-        val m = Rect(left, top, right,bottom)
-        return m
-    }
-
-    fun draw(canvas: Canvas){
-            canvas.drawRect(tatenagashikakuRectXY(), iro)  //自機
-    }
 
 
 
-    fun jikiKaraStart(jiki:Jiki){
-        x = jiki.x
-        y = jiki.y
+
+    fun jikiKaraStart(){
         nobiruhanni = 10
+        nagasa = 100
         timeCount = 0
         hit = false
         status =  NORMAL_STATE
         iro.color = Color.WHITE
     }
 
-    fun taiki(jiki:Jiki){
-        timeCount += 1
-        if(timeCount==10){
-            x = jiki.x
-            y = jiki.y
-        }
 
-    }
-
-    fun nobiru(jiki:Jiki) {
-        //なかなかイメージ通りだけど、剣なんだから行って帰ってこないとなぁ
-
-        if (timeCount > 10) {
-            x = jiki.x
-            y = jiki.y
-            if (timeCount < 20) { nobiruhanni += 5 * timeCount }
-            if (timeCount >= 20 && timeCount < 30) { nobiruhanni -= 3 * timeCount }
-            if (timeCount == 30) { status = TAMA_NASI_STATE }
-        }
-    }
-
-    fun attaterukaCheck(teki:Teki):Boolean{
-        var isXInside = false
-        val tleft = teki.x -teki.ookisa / 2    //左肩
-        val tright = teki.x +teki.ookisa / 2    //右肩
-        isXInside =  (x >= tleft && x <= tright)
-
-        var isYInside = false
-        val ttop = teki.y -teki.ookisa / 2    //上辺
-        val tbuttom = teki.y +teki.ookisa / 2    //下辺
-        isYInside =  (y  - nobiruhanni >= ttop && y  - nobiruhanni <= tbuttom)
-
-        return (isXInside && isYInside)
-    }
 
 
     fun gotoHitState(){
@@ -131,6 +162,7 @@ class JikiKen(jiki:Jiki) {
 
     fun hitCountSyori(){
         hit = true //ヒットは１回のみカウントするので、すぐにfalseに
+
         status = TAMA_HIT_END_STATE
     }
     fun motoniModosu(){
