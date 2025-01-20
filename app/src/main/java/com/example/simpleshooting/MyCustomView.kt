@@ -29,6 +29,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var tekiTama = teki.tamaHassha()    //TekiTamaのオブジェクトを作るのは、TekiTama内でなくてもよい。へー
     var tekiTamaRef = TekiTamaRef(jiki,teki)
     var hpCounter = HPCounter()
+    var scCounter = ScoreCounter()
 
     init{
 
@@ -79,8 +80,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tekiTama.nextFrame(jiki,teki)
         if(tekiTama.hit){tekiTamaAtattaSyori()}//jikiTamaと同様。スコアとか動くので。
 
-
-        //tekiTamaRef.move(jiki)  //古いバージョンに戻した。//当たる判定はないが、動きはコレ。
         tekiTamaRef.nextFrame(jiki,teki)
         if(tekiTamaRef.hit){tekiTamaAtattaSyori()}//tekiTamaのものを流用できるっぽい。スコアとか動くので。
 
@@ -100,6 +99,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(isFirstMove){ jikiTama.draw(canvas)}     //自機の弾の処理
         if(isFirstMove){ jikiKen.draw(canvas,jiki)}     //自機の弾の処理
         hpCounter.draw(canvas,jiki)
+        scCounter.draw(canvas,scoreCount)
         hantoumeinotamaDraw(canvas)
     }
 
