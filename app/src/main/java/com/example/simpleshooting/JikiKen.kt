@@ -21,13 +21,18 @@ class JikiKen(jiki:Jiki) {
 
     var status = TAMA_NASI_STATE // 最初は玉が画面内に無い状態
 
+    //長さって考えを捨てないとダメなのかもしれない。
+    //単純に増えていく仕組みは、自機から１個、２個、３個が絶対いい。
+    //時間経過とともに１個づつふえていく、という風に変更する。
+
+
     init {
         iro.style = Paint.Style.FILL
         iro.color = Color.WHITE
         x = jiki.x
         y = jiki.y
         ookisa = 30
-        nagasa = 100
+        nagasa = 150
         status = TAMA_NASI_STATE
     }
 
@@ -39,7 +44,7 @@ class JikiKen(jiki:Jiki) {
     }
 
     fun kengaNobiru(jiki:Jiki) {
-        if (timeCount == 0){ nagasa = 100 }
+        if (timeCount == 0){ nagasa = 150 }
         if (timeCount > 10 && timeCount < 20) {
             nagasa += 10
         }
@@ -68,13 +73,11 @@ class JikiKen(jiki:Jiki) {
 
     fun attaterukaCheck(jiki:Jiki,teki:Teki):Boolean{
         var flag = false
-        var kyori = nagasa - ookisa/2
-        //距離にはnagasaが入る、最初は先頭、nagasaの数値そのまま、
-        //そこからnagasaーookisa/2にしていく
-        //それが自機の手前まで続くイメージ
 
-        for(a in 0..<7) {
-            kyori =  nagasa - (ookisa/2) * a
+        //ここは当たり判定
+        var kyori = nagasa - ookisa/2
+        for(a in 0..<5) {
+            kyori =  nagasa - (ookisa) * a
             if(flag){}else{
                 flag = attaterukaKurikaesiCheck(jiki,teki,kyori)
             }
@@ -83,9 +86,12 @@ class JikiKen(jiki:Jiki) {
     }
 
     fun draw(canvas: Canvas,jiki: Jiki){
-        var kyori = nagasa - ookisa/2
-        for(a in 0..<7) {
-            kyori =  nagasa - (ookisa/2) * a
+        //一個目が最後尾なのかー、じゃぁ自分の前まで後から補完するとか？
+
+        //ここは描画
+        var kyori :Int
+        for(a in 0..<5) {
+            kyori =  nagasa - (ookisa) * a
             canvas.drawCircle(jiki.x.toFloat(),jiki.y-kyori.toFloat(),(ookisa/2).toFloat(),iro)
         }
     }
@@ -117,7 +123,7 @@ class JikiKen(jiki:Jiki) {
 
     fun jikiKaraStart(){
         nobiruhanni = 10
-        nagasa = 100
+        nagasa = 150
         timeCount = 0
         hit = false
         status =  NORMAL_STATE
