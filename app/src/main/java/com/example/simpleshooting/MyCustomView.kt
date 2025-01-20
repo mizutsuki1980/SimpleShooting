@@ -98,7 +98,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tekiTamaRef.draw(canvas) //敵の反射弾の移動　処理
         // 自機の弾を最後に描画した方がそれっぽく見える
         if(isFirstMove){ jikiTama.draw(canvas)}     //自機の弾の処理
-        if(isFirstMove){ jikiKen.draw(canvas)}     //自機の弾の処理
+        if(isFirstMove){ jikiKen.draw(canvas,jiki)}     //自機の弾の処理
         hpCounter.draw(canvas,jiki)
         hantoumeinotamaDraw(canvas)
     }
