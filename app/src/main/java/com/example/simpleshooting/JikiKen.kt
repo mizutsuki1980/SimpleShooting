@@ -30,27 +30,6 @@ class JikiKen(jiki:Jiki) {
         nagasa = 100
         status = TAMA_NASI_STATE
     }
-    fun nagasaRectXY(jiki:Jiki,kyori:Int): Rect {
-        val jx = jiki.x
-        val jy = jiki.y - kyori
-        val left = jx  - ookisa / 2
-        val right = jx  + ookisa / 2
-        val top = jy - ookisa / 2
-        val bottom = jy+ ookisa / 2
-        val m = Rect(left, top, right,bottom)
-        return m
-    }
-
-    fun tyouhoukeiRectXY(jiki:Jiki): Rect {
-        val jx = jiki.x
-        val jy = jiki.y -nagasa
-        val left = jx  - ookisa / 2
-        val right = jx  + ookisa / 2
-        val top = jy - ookisa / 2
-        val bottom = jy+ ookisa / 2
-        val m = Rect(left, top, right,bottom)
-        return m
-    }
 
     fun timer(){
         timeCount += 1
@@ -65,6 +44,8 @@ class JikiKen(jiki:Jiki) {
             nagasa += 10
         }
     }
+
+
     fun attaterukaKurikaesiCheck(jiki:Jiki,teki:Teki,kyori:Int):Boolean{
         val jx = jiki.x
         val jy = jiki.y - kyori
@@ -82,6 +63,9 @@ class JikiKen(jiki:Jiki) {
         return (isXInside && isYInside)
     }
 
+    //丸の先端が当たった時、当たってない。
+    //当たり判定の小さい四角をひとつ、おいてはどうか？
+
     fun attaterukaCheck(jiki:Jiki,teki:Teki):Boolean{
         var flag = false
         var kyori = nagasa - ookisa/2
@@ -89,7 +73,7 @@ class JikiKen(jiki:Jiki) {
         //そこからnagasaーookisa/2にしていく
         //それが自機の手前まで続くイメージ
 
-        for(a in 0..<5) {
+        for(a in 0..<7) {
             kyori =  nagasa - (ookisa/2) * a
             if(flag){}else{
                 flag = attaterukaKurikaesiCheck(jiki,teki,kyori)
@@ -100,19 +84,11 @@ class JikiKen(jiki:Jiki) {
 
     fun draw(canvas: Canvas,jiki: Jiki){
         var kyori = nagasa - ookisa/2
-
-        for(a in 0..<5) {
+        for(a in 0..<7) {
             kyori =  nagasa - (ookisa/2) * a
-//            canvas.drawRect(nagasaRectXY(jiki,kyori), iro)  //自機
             canvas.drawCircle(jiki.x.toFloat(),jiki.y-kyori.toFloat(),(ookisa/2).toFloat(),iro)
-
-
         }
     }
-
-    //もっというと、表示も当たり判定も、全部●●●●でつなげて
-    //チェーンマインみたいな形にしたらわかりやすいんじゃね
-    //やってみよう
 
 
 
@@ -139,10 +115,6 @@ class JikiKen(jiki:Jiki) {
         }
     }
 
-
-
-
-
     fun jikiKaraStart(){
         nobiruhanni = 10
         nagasa = 100
@@ -151,10 +123,6 @@ class JikiKen(jiki:Jiki) {
         status =  NORMAL_STATE
         iro.color = Color.WHITE
     }
-
-
-
-
     fun gotoHitState(){
         iro.color = Color.RED
         status = TAMA_HIT_STATE
