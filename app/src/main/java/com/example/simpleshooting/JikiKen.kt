@@ -22,7 +22,7 @@ class JikiKen(jiki:Jiki) {
 
     init {
         iro.style = Paint.Style.FILL
-        iro.color = Color.WHITE
+        iro.color = Color.LTGRAY
         x = jiki.x
         y = jiki.y
         ookisa = 10
@@ -94,7 +94,7 @@ class JikiKen(jiki:Jiki) {
         bunsin = 0
         hit = false
         status = NORMAL_STATE
-        iro.color = Color.WHITE
+        iro.color = Color.LTGRAY
     }
 
     fun gotoHitState() {

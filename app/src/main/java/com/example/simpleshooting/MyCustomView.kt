@@ -2,6 +2,7 @@ package com.example.simpleshooting
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Color.argb
 import android.graphics.Paint
 import android.util.AttributeSet
@@ -70,7 +71,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         jiki.move(clickX,clickY-jikiIchiTyousei) //クリックした場所から上に170の場所に移動する。指にかかって見えない為。
-        teki.yokoIdo()  //敵の移動　処理
+        teki.yokoIdo()  //敵の移動　処理。
 
         jikiTama.nextFrame(jiki,teki,isFirstMove)
         if(jikiTama.hit){jikiTamaAtattaSyori()} //敵のリセット、敵のHP処理、スコアカウントとかあるから、jikiTamaのメソッドにしない方がいいかな
@@ -85,7 +86,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(tekiTamaRef.hit){tekiTamaAtattaSyori()}//tekiTamaのものを流用できるっぽい。スコアとか動くので。
 
 
-        handler.postDelayed({ tsugiNoSyori() }, 100)
+        if(jiki.hp == 0){
+
+        }else{
+            handler.postDelayed({ tsugiNoSyori() }, 100)
+        }
+
     }
 
 
@@ -102,8 +108,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         hpCounter.draw(canvas,jiki)
         scCounter.draw(canvas,scoreCount,frame)
         hantoumeinotamaDraw(canvas)
+        if(jiki.hp == 0){gameover(canvas)}
     }
 
+    fun gameover(canvas:Canvas){
+        val hyoujiIro =  Paint()
+        hyoujiIro.style = Paint.Style.FILL
+        hyoujiIro.color = Color.BLUE
+        hyoujiIro.textSize = 100.toFloat()
+
+        canvas.drawText("Game Over",(120).toFloat(),(400).toFloat(),hyoujiIro)
+
+    }
     fun hantoumeinotamaDraw(canvas:Canvas){
         val irohantoumei = Paint()
         irohantoumei.style = Paint.Style.FILL
