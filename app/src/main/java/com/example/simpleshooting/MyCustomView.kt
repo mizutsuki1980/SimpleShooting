@@ -13,6 +13,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var dgCount = 0
     var scoreCount = 0
     var isFirstMove = false //動きだしたら弾も出るようにする
+    val jikiIchiTyousei = 120 //クリックした位置よりちょっと上にくる。そうしないと指に隠れて見えない。
 
     val initialJikiX = 300 //初期位置
     val initialJikiY = 800 //初期位置
@@ -21,7 +22,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
     var jiki =Jiki(initialJikiX, initialJikiY)
-    var jikiTama = jiki.tamaHassha()    //ここでY -170してる。弾の発射位置もー１７０の為。
+    var jikiTama = jiki.tamaHassha(jikiIchiTyousei)    //弾の発射位置もjikiIchiTyouseiの影響を受ける。
     var jikiKen = JikiKen(jiki)
 
 
@@ -68,7 +69,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tsugiNoSyori() {
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
-        jiki.move(clickX,clickY-170) //クリックした場所から上に170の場所に移動する。指にかかって見えない為。
+        jiki.move(clickX,clickY-jikiIchiTyousei) //クリックした場所から上に170の場所に移動する。指にかかって見えない為。
         teki.yokoIdo()  //敵の移動　処理
 
         jikiTama.nextFrame(jiki,teki,isFirstMove)
@@ -99,7 +100,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(isFirstMove){ jikiTama.draw(canvas)}     //自機の弾の処理
         if(isFirstMove){ jikiKen.draw(canvas,jiki)}     //自機の弾の処理
         hpCounter.draw(canvas,jiki)
-        scCounter.draw(canvas,scoreCount)
+        scCounter.draw(canvas,scoreCount,frame)
         hantoumeinotamaDraw(canvas)
     }
 
