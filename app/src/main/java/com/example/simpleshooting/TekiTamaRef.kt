@@ -64,14 +64,6 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         irosubAto.strokeWidth = 1.5f
     }
 
-
-    fun move(jiki:Jiki){
-        kakudoKeisan(jiki)  //移動する角度を決める
-        kisekiKeisan()  //先に軌跡の計算をしないとダメ、ｘｙが動いてしまう。
-        tamaIdo()   //弾が移動する
-        reflectKeisan() //画面端についたら反転する
-    }
-
     fun moveOne(jiki:Jiki){
         kakudoKeisan(jiki)  //移動する角度を決める
         kisekiKeisan()  //先に軌跡の計算をしないとダメ、ｘｙが動いてしまう。
