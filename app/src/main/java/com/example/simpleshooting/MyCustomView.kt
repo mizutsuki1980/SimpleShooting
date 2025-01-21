@@ -30,6 +30,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var teki = Teki()
     var tekiTama = teki.tamaHassha()    //TekiTamaのオブジェクトを作るのは、TekiTama内でなくてもよい。へー
     var tekiTamaRef = TekiTamaRef(jiki,teki)
+    var houdaiTama = HoudaiTama()
     var hpCounter = HPCounter()
     var scCounter = ScoreCounter()
 
@@ -85,6 +86,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tekiTamaRef.nextFrame(jiki,teki)
         if(tekiTamaRef.hit){tekiTamaAtattaSyori()}//tekiTamaのものを流用できるっぽい。スコアとか動くので。
 
+        houdaiTama.nextFrame(jiki,teki)
 
         if(jiki.hp == 0){
 
@@ -102,6 +104,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         teki.draw(canvas) //敵jikiTamaの移動　処理
         tekiTama.draw(canvas) //敵の追尾弾の移動　処理
         tekiTamaRef.draw(canvas) //敵の反射弾の移動　処理
+        houdaiTama.draw(canvas) //砲台の弾
         // 自機の弾を最後に描画した方がそれっぽく見える
         if(isFirstMove){ jikiTama.draw(canvas)}     //自機の弾の処理
         if(isFirstMove){ jikiKen.draw(canvas,jiki)}     //自機の弾の処理
