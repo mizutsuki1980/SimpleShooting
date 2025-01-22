@@ -133,19 +133,27 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun startSetUp(){
 
-        jiki =Jiki(initialJikiX, initialJikiY)
-        jikiTama = JikiTama(jiki.x,jiki.y)
-        teki = Teki()
-        tekiTama = TekiTama(teki.x,teki.y)
-        tekiTamaRef = TekiTamaRef(jiki,teki)
+         frame = 0
+         dgCount = 0
+         scoreCount = 0
+         isFirstMove = false //動きだしたら弾も出るようにする
 
-        clickX = initialJikiX
-        clickY = initialJikiY
 
-        frame = 0
-        dgCount = 0
-        scoreCount = 0
+         clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
+         clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
+         jiki =Jiki(initialJikiX, initialJikiY)
+         jikiTama = jiki.tamaHassha(jikiIchiTyousei)    //弾の発射位置もjikiIchiTyouseiの影響を受ける。
+         jikiKen = JikiKen(jiki)
+
+
+         teki = Teki()
+         tekiTama = teki.tamaHassha()    //TekiTamaのオブジェクトを作るのは、TekiTama内でなくてもよい。へー
+         tekiTamaRef = TekiTamaRef(jiki,teki)
+         houdaiTama = HoudaiTama()
+         hpCounter = HPCounter()
+         scCounter = ScoreCounter()
+        tsugiNoSyori()
     }
 
 

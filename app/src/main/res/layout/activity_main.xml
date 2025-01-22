@@ -85,7 +85,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/setButton"
+        android:id="@+id/gameReSetButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ゲームリセット" />

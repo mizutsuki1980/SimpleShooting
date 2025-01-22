@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.Display
 import android.widget.Button
 import android.widget.TextView
-import java.util.logging.Handler
 
 class MainActivity : AppCompatActivity() {
     val handler = android.os.Handler()
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             custom.post { custom.jiki.hyperShotPowerUp() }
         }
 
-        findViewById<Button>(R.id.setButton).setOnClickListener {
+        findViewById<Button>(R.id.gameReSetButton).setOnClickListener{
             custom.post { custom.startSetUp() }
         }
 
