@@ -111,7 +111,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         hpCounter.draw(canvas,jiki)
         scCounter.draw(canvas,scoreCount,frame)
         hantoumeinotamaDraw(canvas)
-        if(jiki.hp == 0){gameover(canvas)}
+        if(jiki.hp == 0){
+            gameover(canvas)
+
+        }
     }
 
     fun gameover(canvas:Canvas){
@@ -132,28 +135,24 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun startSetUp(){
+        frame = 0
+        dgCount = 0
+        scoreCount = 0
+        isFirstMove = false //動きだしたら弾も出るようにする
 
-         frame = 0
-         dgCount = 0
-         scoreCount = 0
-         isFirstMove = false //動きだしたら弾も出るようにする
+        jiki =Jiki(initialJikiX, initialJikiY)
+        jikiTama = jiki.tamaHassha(jikiIchiTyousei)    //弾の発射位置もjikiIchiTyouseiの影響を受ける。
+        jikiKen = JikiKen(jiki)
+        teki = Teki()
+        tekiTama = teki.tamaHassha()    //TekiTamaのオブジェクトを作るのは、TekiTama内でなくてもよい。へー
+        tekiTamaRef = TekiTamaRef(jiki,teki)
+        houdaiTama = HoudaiTama()
+        hpCounter = HPCounter()
+        scCounter = ScoreCounter()
 
-
-         clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
-         clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
-
-         jiki =Jiki(initialJikiX, initialJikiY)
-         jikiTama = jiki.tamaHassha(jikiIchiTyousei)    //弾の発射位置もjikiIchiTyouseiの影響を受ける。
-         jikiKen = JikiKen(jiki)
-
-
-         teki = Teki()
-         tekiTama = teki.tamaHassha()    //TekiTamaのオブジェクトを作るのは、TekiTama内でなくてもよい。へー
-         tekiTamaRef = TekiTamaRef(jiki,teki)
-         houdaiTama = HoudaiTama()
-         hpCounter = HPCounter()
-         scCounter = ScoreCounter()
         tsugiNoSyori()
+
+
     }
 
 

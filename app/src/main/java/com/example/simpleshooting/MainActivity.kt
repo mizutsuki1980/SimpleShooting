@@ -54,6 +54,12 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.damageTextLabel).text=custom.dgCount.toString()
         findViewById<TextView>(R.id.timeTextLabel).text=custom.frame.toString()
 
+        if(custom.jiki.hp==0){
+            findViewById<Button>(R.id.gameReSetButton).isEnabled=true
+        }else{
+            findViewById<Button>(R.id.gameReSetButton).isEnabled=false
+        }
+
         handler.postDelayed( { mainTsugiNoSyori() }, 100)
     }
 
