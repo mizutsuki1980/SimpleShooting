@@ -5,12 +5,6 @@ import android.graphics.Color
 import android.graphics.Paint
 
 class HoudaiTama {
-    // 弾も自機も敵も、全部〇の方が当たり判定にベクトルが使えて便利じゃね？と思った。
-    //とりあえず砲台の弾は〇にする。
-
-    //固定の場所から打ち出される砲台みたいなイメージ
-    //山なりな軌道を作ってみたい。
-
     var x = 500
     var y = 500
     val initialOokisa = 50 //ここで大きさを初期設定
@@ -59,11 +53,12 @@ class HoudaiTama {
     }
 
     fun attaterukaCheck(jiki:Jiki):Boolean {
+        //ここがどうのとは関係なく減ってるっぽい
         val vx = x - jiki.x
         val vy = y - jiki.y
         val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble()) + ookisa/2.toDouble()
-        //ホーミング避けるのきつくね？ということで、すこし小さくします
         val atarikyori = (jiki.ookisa-5).toDouble()
+
         if (kyori < atarikyori){
             return true
         }else{
@@ -93,10 +88,13 @@ class HoudaiTama {
         status = NORMAL_STATE
     }
     fun nextFrame(jiki:Jiki,teki:Teki) {
+        //この中でうごいているのは動いている。
+        //hitが常にONになているっぽい。
+
+
         when(status) {
             TAMA_NASI_STATE -> {
                 syokika()
-                status = NORMAL_STATE
             }
 
             NORMAL_STATE -> {
