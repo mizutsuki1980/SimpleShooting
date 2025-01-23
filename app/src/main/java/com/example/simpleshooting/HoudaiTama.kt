@@ -13,7 +13,9 @@ class HoudaiTama {
 
     var x = 500
     var y = 500
-    var ookisa = 10
+    val initialOokisa = 50 //ここで大きさを初期設定
+
+    var ookisa = initialOokisa
     var timecount = 0
     var hit = false
     var zenkaix = 500
@@ -31,7 +33,9 @@ class HoudaiTama {
     fun syokika(){
         x = 500
         y = 500
-        ookisa = 100
+        ookisa = initialOokisa
+        timecount = 0
+
         hit = false
         zenkaix = 500
         zenkaiy = 500
@@ -47,30 +51,41 @@ class HoudaiTama {
     }
 
 
-    fun tekiKaraStart(teki:Teki) {
-        syokika()
-    }
 
     fun moveOne(){
         x -= 1
         y -= 1
         ookisa -= 3
     }
-    fun attaterukaCheck(jiki:Jiki):Boolean{return false}
+
+    fun attaterukaCheck(jiki:Jiki):Boolean {
+        val vx = x - jiki.x
+        val vy = y - jiki.y
+        val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble()) + ookisa/2.toDouble()
+        //ホーミング避けるのきつくね？ということで、すこし小さくします
+        val atarikyori = (jiki.ookisa-5).toDouble()
+        if (kyori < atarikyori){
+            return true
+        }else{
+            return false
+        }
+    }
+
 
     fun timecount(){
         timecount += 1
-
-        ookisa -= 10
     }
 
-    fun tenmetu(){
+    fun tenmetuTamahenka(){
         if (timecount % 2 == 0) {
             iro.style = Paint.Style.FILL
         }else{
             iro.style = Paint.Style.STROKE
         }
+        ookisa -= 3
+
     }
+
 
     fun irokae(){
         iro.style = Paint.Style.FILL
@@ -80,28 +95,25 @@ class HoudaiTama {
     fun nextFrame(jiki:Jiki,teki:Teki) {
         when(status) {
             TAMA_NASI_STATE -> {
-                timecount()
-                tenmetu()
-                if (timecount == 9 ){
-                    irokae()
-                    status = NORMAL_STATE
-                }
+                syokika()
+                status = NORMAL_STATE
             }
 
             NORMAL_STATE -> {
-                moveOne()                //自機にひとつ近づくように弾を移動
-                if(attaterukaCheck(jiki)) {                     //自機に当たっているかチェック
+                timecount()
+                tenmetuTamahenka()
+                if(attaterukaCheck(jiki)){
                     gotoHitState()
+                }else {
+                    if (timecount == 10) {
+                        status = TAMA_HIT_STATE
+                    }
                 }
-                //画面外なら、最初へ状態遷移
-
             }
             TAMA_HIT_STATE -> {
-                moveOne()   //めりこむ感じ
                 hitCountSyori() //ヒット処理して次へ
             }
             TAMA_HIT_END_STATE -> {
-                moveOne()   //めりこむ感じ
                 motoniModosu()  // もとに戻す
             }
         }
@@ -109,7 +121,6 @@ class HoudaiTama {
 
     fun gotoHitState(){
         iro.color = Color.DKGRAY
-        ookisa = 30
         status = TAMA_HIT_STATE
     }
     fun hitCountSyori(){

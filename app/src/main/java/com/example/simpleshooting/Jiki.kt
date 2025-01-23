@@ -24,13 +24,6 @@ class Jiki(var x:Int, var y:Int) {
 
 
 
-    fun atariKyori():Int{
-        var atariKyori = 5 + ookisa/2 //当たり判定の距離
-        if(ookisa==200){
-            atariKyori -= 5
-        }//大きいときは、ちょっと当たり判定をマイナスする
-        return atariKyori
-    }
 
     fun hyperPowerUp(){
         if (ookisa==200){
