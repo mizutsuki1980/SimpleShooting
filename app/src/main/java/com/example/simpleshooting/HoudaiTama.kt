@@ -14,6 +14,7 @@ class HoudaiTama {
     var x = 500
     var y = 500
     var ookisa = 10
+    var timecount = 0
     var hit = false
     var zenkaix = 500
     var zenkaiy = 500
@@ -30,11 +31,12 @@ class HoudaiTama {
     fun syokika(){
         x = 500
         y = 500
-        ookisa = 10
+        ookisa = 100
         hit = false
         zenkaix = 500
         zenkaiy = 500
         speed = 2.0
+
         iro.style = Paint.Style.STROKE
         iro.color = Color.RED
         status = NORMAL_STATE
@@ -48,17 +50,44 @@ class HoudaiTama {
     fun tekiKaraStart(teki:Teki) {
         syokika()
     }
+
     fun moveOne(){
         x -= 1
         y -= 1
+        ookisa -= 3
     }
     fun attaterukaCheck(jiki:Jiki):Boolean{return false}
 
+    fun timecount(){
+        timecount += 1
+
+        ookisa -= 10
+    }
+
+    fun tenmetu(){
+        if (timecount % 2 == 0) {
+            iro.style = Paint.Style.FILL
+        }else{
+            iro.style = Paint.Style.STROKE
+        }
+    }
+
+    fun irokae(){
+        iro.style = Paint.Style.FILL
+        iro.color = Color.RED
+        status = NORMAL_STATE
+    }
     fun nextFrame(jiki:Jiki,teki:Teki) {
         when(status) {
             TAMA_NASI_STATE -> {
-                tekiKaraStart(teki)         //最初のリセット処理
+                timecount()
+                tenmetu()
+                if (timecount == 9 ){
+                    irokae()
+                    status = NORMAL_STATE
+                }
             }
+
             NORMAL_STATE -> {
                 moveOne()                //自機にひとつ近づくように弾を移動
                 if(attaterukaCheck(jiki)) {                     //自機に当たっているかチェック
