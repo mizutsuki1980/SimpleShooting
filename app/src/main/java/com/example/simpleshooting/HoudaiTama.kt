@@ -77,8 +77,6 @@ class HoudaiTama {
         }else{
             iro.style = Paint.Style.STROKE
         }
-        ookisa -= 3
-
     }
 
 
@@ -88,30 +86,29 @@ class HoudaiTama {
         status = NORMAL_STATE
     }
     fun nextFrame(jiki:Jiki,teki:Teki) {
-        //この中でうごいているのは動いている。
-        //hitが常にONになているっぽい。
-
-
         when(status) {
             TAMA_NASI_STATE -> {
                 syokika()
             }
 
             NORMAL_STATE -> {
+                ookisa -= 3
                 timecount()
                 tenmetuTamahenka()
                 if(attaterukaCheck(jiki)){
                     gotoHitState()
                 }else {
                     if (timecount == 10) {
-                        status = TAMA_HIT_STATE
+                        status = TAMA_NASI_STATE
                     }
                 }
             }
             TAMA_HIT_STATE -> {
+                tenmetuTamahenka()
                 hitCountSyori() //ヒット処理して次へ
             }
             TAMA_HIT_END_STATE -> {
+                tenmetuTamahenka()
                 motoniModosu()  // もとに戻す
             }
         }
@@ -119,6 +116,7 @@ class HoudaiTama {
 
     fun gotoHitState(){
         iro.color = Color.DKGRAY
+        ookisa = initialOokisa
         status = TAMA_HIT_STATE
     }
     fun hitCountSyori(){
