@@ -84,13 +84,13 @@ class HoudaiTama {
             }
 
             NORMAL_STATE -> {
-                ookisa -= 3
+                ookisa -= 1
                 timecount()
                 tenmetuTamahenka()
                 if(attaterukaCheck(jiki)){
                     gotoHitState()
                 }else {
-                    if (timecount == 10) {
+                    if (timecount == 30) {
                         status = TAMA_NASI_STATE
                     }
                 }
