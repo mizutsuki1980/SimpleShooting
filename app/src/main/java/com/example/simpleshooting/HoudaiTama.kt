@@ -26,15 +26,18 @@ class HoudaiTama {
 
     var status = TAMA_NASI_STATE // 最初は玉が画面内に無い状態
 
+    //ランダムに出現させたい
     fun syokika(){
-        x = 500
-        y = 500
+        val xlist = listOf<Int>(10,50,150,200,250,300,350,400,450,500,550,600,650)
+        val ylist = listOf<Int>(50,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950)
+        x = xlist.random()
+        y = ylist.random()
         ookisa = initialOokisa
         timecount = 0
 
         hit = false
-        zenkaix = 500
-        zenkaiy = 500
+        zenkaix = x
+        zenkaiy = y
         speed = 2.0
 
         iro.style = Paint.Style.STROKE
