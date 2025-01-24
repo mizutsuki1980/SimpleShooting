@@ -44,14 +44,6 @@ class HoudaiTama {
         syokika()
     }
 
-
-
-    fun moveOne(){
-        x -= 1
-        y -= 1
-        ookisa -= 3
-    }
-
     fun attaterukaCheck(jiki:Jiki):Boolean {
         //ここがどうのとは関係なく減ってるっぽい
         val vx = x - jiki.x
@@ -65,25 +57,15 @@ class HoudaiTama {
             return false
         }
     }
-
-
     fun timecount(){
         timecount += 1
     }
-
     fun tenmetuTamahenka(){
         if (timecount % 2 == 0) {
             iro.style = Paint.Style.FILL
         }else{
             iro.style = Paint.Style.STROKE
         }
-    }
-
-
-    fun irokae(){
-        iro.style = Paint.Style.FILL
-        iro.color = Color.RED
-        status = NORMAL_STATE
     }
     fun nextFrame(jiki:Jiki,teki:Teki) {
         when(status) {
@@ -113,7 +95,6 @@ class HoudaiTama {
             }
         }
     }
-
     fun gotoHitState(){
         iro.color = Color.DKGRAY
         ookisa = initialOokisa
