@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 
 class HoudaiTama {
+
     var x = 500
     var y = 500
     val initialOokisa = 50 //ここで大きさを初期設定
@@ -16,6 +17,7 @@ class HoudaiTama {
     var zenkaiy = 500
     var speed = 2.0
     val iro = Paint()
+    val irogray = Paint()
 
     val TAMA_NASI_STATE = 1
     val NORMAL_STATE = 2
@@ -38,6 +40,10 @@ class HoudaiTama {
         iro.style = Paint.Style.STROKE
         iro.color = Color.RED
         status = NORMAL_STATE
+
+        irogray.style = Paint.Style.STROKE
+        irogray.color = Color.DKGRAY
+
     }
 
     init{
@@ -45,7 +51,6 @@ class HoudaiTama {
     }
 
     fun attaterukaCheck(jiki:Jiki):Boolean {
-        //ここがどうのとは関係なく減ってるっぽい
         val vx = x - jiki.x
         val vy = y - jiki.y
         val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble()) + ookisa/2.toDouble()
@@ -67,6 +72,8 @@ class HoudaiTama {
             iro.style = Paint.Style.STROKE
         }
     }
+
+    //もうさ、あたったら新しい〇つくっちゃえばよくね？
     fun nextFrame(jiki:Jiki,teki:Teki) {
         when(status) {
             TAMA_NASI_STATE -> {
@@ -109,9 +116,11 @@ class HoudaiTama {
         status = TAMA_NASI_STATE
     }
 
+    //まぁいっか。わかるし。
     fun draw(canvas: Canvas) {
-            canvas.drawCircle(x.toFloat(),y.toFloat(),ookisa.toFloat(),iro)
-        }
+        if(status>2){ canvas.drawCircle(x.toFloat(),y.toFloat(),100.toFloat(),irogray)}
+        canvas.drawCircle(x.toFloat(),y.toFloat(),ookisa.toFloat(),iro)
+    }
 
 
 }
