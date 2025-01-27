@@ -35,9 +35,13 @@ class JikiKen(jiki:Jiki) {
         if (bunsin==bunsinMax){bunsin=0}
     }
     fun draw(canvas: Canvas, jiki: Jiki) {
+        val huerulist = listOf<Int>(15,20,25,30,35,40,45,50,55,60,65,70,75,80,85)
+        var hueru = huerulist.random()
+
         for (a in 0..<bunsin) {
             var kyori = ookisa * a + ookisa + (ookisa/2)
-            canvas.drawCircle(jiki.x.toFloat(),jiki.y-kyori.toFloat(),(ookisa/2).toFloat(),iro)
+            hueru = huerulist.random()
+            canvas.drawCircle(jiki.x.toFloat(),jiki.y-kyori.toFloat(),(ookisa/2+hueru/10).toFloat(),iro)
        }
     }
 
