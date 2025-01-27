@@ -26,12 +26,6 @@ class HoudaiTama {
 
     var status = TAMA_NASI_STATE // 最初は玉が画面内に無い状態
 
-    //ランダムに出現させたい
-    //けど現在地に突然出てきてダメージ食らうのは理不尽すぎる。
-    //なんか出現の予兆みたいなのがあるといいな。
-    //最初だけ大きな枠線をつけるってのはどうだろうか？
-
-
     fun syokika(){
         val xlist = listOf<Int>(100,150,200,250,300,350,400,450,500,550,600)
         val ylist = listOf<Int>(150,200,250,300,350,400,450,500,550,600,650,700,750,800,850)
@@ -50,6 +44,7 @@ class HoudaiTama {
 
         irogray.style = Paint.Style.STROKE
         irogray.color = Color.DKGRAY
+        irogray.strokeWidth = 12.0F
 
         status = TAMA_SYUTUGEN_ATARANAI_STATE
     }
@@ -89,11 +84,8 @@ class HoudaiTama {
         }
     }
 
-    //もうさ、あたったら新しい〇つくっちゃえばよくね？
     fun nextFrame(jiki:Jiki,teki:Teki) {
         when(status) {
-
-
             TAMA_NASI_STATE -> {
                 syokika()
             }
@@ -103,7 +95,7 @@ class HoudaiTama {
                 tenmetuOsoi()
                 if(timecount>20){
                     status=NORMAL_STATE
-                    iro.color = Color.argb(255, 255, 200, 255)
+                    iro.color = Color.RED
                 }
             }
 
@@ -116,7 +108,7 @@ class HoudaiTama {
                 if(attaterukaCheck(jiki)){
                     gotoHitState()
                 }else {
-                    if (timecount == 60) {
+                    if (timecount == 40) {
                         status = TAMA_NASI_STATE
                     }
                 }
@@ -149,8 +141,10 @@ class HoudaiTama {
 
     //まぁいっか。わかるし。
     fun draw(canvas: Canvas) {
-        if(status>3){ canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2).toFloat(),irogray)}
         canvas.drawCircle(x.toFloat(),y.toFloat(),ookisa.toFloat(),iro)
+        if(status>3){ canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2).toFloat(),irogray)}
+        if(status>3){ canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2-50).toFloat(),irogray)}
+        if(status>3){ canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2-100).toFloat(),irogray)}
     }
 
 
