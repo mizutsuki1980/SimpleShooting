@@ -15,10 +15,12 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
 
     var x = 50
     var y = 50
+    var xfloat = 0f
+    var yfloat = 0f
     var ookisa:Int
     var hit :Boolean
     val speed = 3.0
-
+    var frame = 15
     val iro = Paint()
     val irosub = Paint()
 
@@ -45,10 +47,16 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
     }
 
     fun moveOne(jiki:Jiki){
-        //ここにやまなりの計算を入れる
-        x += 1
-        y = Math.sqrt((x-1)*(x+5).toDouble()).toInt()
-        //???よくわからん。わからんかった。
+
+
+        val a = 0.01f  // 放物線の開き具合
+        val b = 0f     // 線形項（傾きのようなもの）
+        val c = 20 / 2f // 放物線の頂点の高さを中央に調整
+
+        xfloat = frame.toFloat() // フレーム数をxとして利用
+        yfloat = a * xfloat * xfloat + b * xfloat + c
+
+
     }
 
 
@@ -67,7 +75,7 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
     }
 
     fun draw(canvas: Canvas){
-        canvas.drawCircle(x.toFloat(),y.toFloat(),ookisa.toFloat(),iro)
+        canvas.drawCircle(xfloat,yfloat,ookisa.toFloat(),iro)
     }
 
     fun syokika(teki:Teki){
@@ -79,6 +87,7 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
     }
 
     fun nextFrame(jiki:Jiki,teki:Teki) {
+        frame += 1
         when(status) {
             TAMA_NASI_STATE -> {
                 syokika(teki)         //最初のリセット処理
