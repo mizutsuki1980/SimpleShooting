@@ -47,7 +47,8 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
     fun moveOne(jiki:Jiki){
         //ここにやまなりの計算を入れる
         x += 1
-        y += 1
+        y = Math.sqrt((x-1)*(x+5).toDouble()).toInt()
+        //???よくわからん。わからんかった。
     }
 
 
