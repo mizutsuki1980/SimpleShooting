@@ -13,19 +13,14 @@ import android.graphics.Rect
 class TekiTamaYama(jiki:Jiki, teki:Teki) {
     //一定時間で適当にでてくるようにする。
 
-    var x = teki.x
-    var y = teki.y
+    var x = 50
+    var y = 50
     var ookisa:Int
-    var isfirst :Boolean
     var hit :Boolean
     val speed = 3.0
 
     val iro = Paint()
     val irosub = Paint()
-
-
-
-
 
     //状態遷移関連
     val TAMA_NASI_STATE = 1
@@ -37,31 +32,28 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
 
 
     init{
-        x = teki.x
-        y = teki.y
         ookisa = 10
-        isfirst = true
         hit = false
 
         iro.style = Paint.Style.FILL
         iro.color = Color.BLUE   //argb(255, 255, 255, 200)
 
-        //線を設定
+        //線を設定 //いるかな？
         irosub.style = Paint.Style.STROKE
         irosub.color = Color.BLUE   //argb(255, 255, 255, 200)
         irosub.strokeWidth = 4.0f
     }
 
     fun moveOne(jiki:Jiki){
-
+        //ここにやまなりの計算を入れる
+        x += 1
+        y += 1
     }
 
-    fun moveHitedOne(jiki:Jiki){
-
-    }
 
 
     fun attaterukaCheck(jiki:Jiki):Boolean {
+        //当たり判定はこれでオッケー
         val vx = x - jiki.x
         val vy = y - jiki.y
         val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
@@ -73,31 +65,22 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
         }
     }
 
-
-
-    fun shikakuRectXY(): Rect {
-        val left = x  - ookisa / 2
-        val right = x  + ookisa / 2
-        val top = y  - ookisa / 2
-        val bottom = y + ookisa / 2
-        val m = Rect(left, top, right,bottom)
-        return m
-    }
-
     fun draw(canvas: Canvas){
-        canvas.drawRect(shikakuRectXY(), iro)
+        canvas.drawCircle(x.toFloat(),y.toFloat(),ookisa.toFloat(),iro)
     }
 
-    fun tekiKaraStart(teki:Teki){
-
-
+    fun syokika(teki:Teki){
+        x=50
+        y=50
+        ookisa = 10
+        hit = false
         status = NORMAL_STATE
     }
 
     fun nextFrame(jiki:Jiki,teki:Teki) {
         when(status) {
             TAMA_NASI_STATE -> {
-                tekiKaraStart(teki)         //最初のリセット処理
+                syokika(teki)         //最初のリセット処理
             }
             NORMAL_STATE -> {
                 moveOne(jiki)                //自機にひとつ近づくように弾を移動
@@ -106,11 +89,9 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
                 }
             }
             TAMA_HIT_STATE -> {
-                moveHitedOne(jiki)   //めりこむ感じ
                 hitCountSyori() //ヒット処理して次へ
             }
             TAMA_HIT_END_STATE -> {
-                moveHitedOne(jiki)   //めりこむ感じ
                 motoniModosu()  // もとに戻す
             }
         }
