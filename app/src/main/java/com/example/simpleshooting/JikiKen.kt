@@ -37,6 +37,10 @@ class JikiKen(jiki:Jiki) {
     fun draw(canvas: Canvas, jiki: Jiki) {
         val huerulist = listOf<Int>(15,20,25,30,35,40,45,50,55,60,65,70,75,80,85)
         var hueru = huerulist.random()
+        //ランダムで色も変えれたけど、きもかったからやめた。あと当たった時に赤にならないといけないしなー。
+//        val randomIrolist = listOf<Int>(Color.LTGRAY,Color.YELLOW,Color.MAGENTA)
+//        var randomIro = randomIrolist.random()
+//        iro.color = randomIro
 
         for (a in 0..<bunsin) {
             var kyori = ookisa * a + ookisa + (ookisa/2)
