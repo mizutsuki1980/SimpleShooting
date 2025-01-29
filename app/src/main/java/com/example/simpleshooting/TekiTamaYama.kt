@@ -13,22 +13,14 @@ import android.graphics.Rect
 class TekiTamaYama(jiki:Jiki, teki:Teki) {
     //一定時間で適当にでてくるようにする。
 
-    //ここでー２５０してるんだった！
-    //そうだこれ直さなきゃいけないんだった。
-    //こういうの忘れるよなぁ、、、。その日のうちにやってしまいたい。
-
-
-    val initialFrame = -250 //ここでフレーム数を初期設定
-
-    var x = 0f
-    var y = 0f
-
-
-    var frame = initialFrame
-
+    var x = 50
+    var y = 50
+    var xfloat = 0f
+    var yfloat = 0f
     var ookisa:Int
     var hit :Boolean
     val speed = 3.0
+    var frame = 15
     val iro = Paint()
     val irosub = Paint()
 
@@ -54,13 +46,16 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
         irosub.strokeWidth = 4.0f
     }
 
-    fun moveOne(){
+    fun moveOne(jiki:Jiki){
+
+
         val a = 0.01f  // 放物線の開き具合
         val b = 0f     // 線形項（傾きのようなもの）
-        val c = 500 / 2f // 放物線の頂点の高さを中央に調整
+        val c = 20 / 2f // 放物線の頂点の高さを中央に調整
 
-         x = frame.toFloat() // フレーム数をxとして利用
-         y = a * x * x + b * x + c
+        xfloat = frame.toFloat() // フレーム数をxとして利用
+        yfloat = a * xfloat * xfloat + b * xfloat + c
+
 
     }
 
@@ -68,38 +63,27 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
 
     fun attaterukaCheck(jiki:Jiki):Boolean {
         //当たり判定はこれでオッケー
-        //なんかこのへんでだめなんだよなぁ、きっと。
-        val xx = x.toInt()
-        val yy = y.toInt()
-        val vx = xx - jiki.x
-        val vy = yy - jiki.y
-
-
-
-
-        val kyori = Math.sqrt(((vx * vx) + (vy * vy)) .toDouble())
+        val vx = x - jiki.x
+        val vy = y - jiki.y
+        val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
         val atarikyori = (jiki.ookisa).toDouble()
-
         if (kyori < atarikyori){
             return true
         }else{
             return false
         }
-
     }
 
     fun draw(canvas: Canvas){
-        canvas.drawCircle(x+250,y,ookisa.toFloat(),iro)
+        canvas.drawCircle(xfloat,yfloat,ookisa.toFloat(),iro)
     }
 
     fun syokika(){
-        x = 0f
-        y = 0f
-        frame = initialFrame
+        x=50
+        y=50
         ookisa = 10
         hit = false
         status = NORMAL_STATE
-        iro.color = Color.BLUE   //argb(255, 255, 255, 200)
     }
 
     fun nextFrame(jiki:Jiki) {
@@ -109,16 +93,10 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
                 syokika()         //最初のリセット処理
             }
             NORMAL_STATE -> {
-                moveOne()                //自機にひとつ近づくように弾を移動
-//                if(attaterukaCheck(jiki)) {                     //自機に当たっているかチェック
-                //x>10fというのはいつまでたっても成立しない。
-                //なんで？
-
-                  if (frame > 10){
+                moveOne(jiki)                //自機にひとつ近づくように弾を移動
+                if(attaterukaCheck(jiki)) {                     //自機に当たっているかチェック
                     gotoHitState()
                 }
-
-                if(frame>250){status = TAMA_NASI_STATE}
             }
             TAMA_HIT_STATE -> {
                 hitCountSyori() //ヒット処理して次へ
