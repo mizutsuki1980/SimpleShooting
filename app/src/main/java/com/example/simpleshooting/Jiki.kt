@@ -9,6 +9,7 @@ class Jiki(var x:Int, var y:Int) {
 
     val iro = Paint()
     val irosub = Paint()
+    val irokao = Paint()
     var ookisa = 30
     var kakudo = 0
     var hp = 6
@@ -19,6 +20,8 @@ class Jiki(var x:Int, var y:Int) {
         iro.color = argb(255, 255, 255, 150)
         irosub.style = Paint.Style.FILL
         irosub.color = argb(170, 255, 140, 0)
+        irokao.style = Paint.Style.FILL
+        irokao.color = argb(255, 0, 0, 0)
 
     }
 
@@ -75,7 +78,13 @@ class Jiki(var x:Int, var y:Int) {
 
     fun draw(canvas:Canvas){
         canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa/2).toFloat(),iro) //自機の描画
+        drawKao(canvas)
         drawSubKi(canvas)
+    }
+    fun drawKao(canvas:Canvas){
+        canvas.drawCircle(x-18.toFloat(),y-10.toFloat(),5.toFloat(),irokao) //自機の描画
+        canvas.drawCircle(x+18.toFloat(),y-10.toFloat(),5.toFloat(),irokao) //自機の描画
+        canvas.drawCircle(x.toFloat(),y+15.toFloat(),10.toFloat(),irokao) //自機の描画
     }
 
     fun tamaHassha(jikiIchiTyousei:Int):JikiTama{
