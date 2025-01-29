@@ -6,21 +6,19 @@ import android.graphics.Paint
 import android.graphics.Rect
 
 
-//やまなりに左右からでてくる弾を作りたい
-//とりあえずTekiTamaRefをコピペ。
 
 
 class TekiTamaYama(jiki:Jiki, teki:Teki) {
     //一定時間で適当にでてくるようにする。
 
-    var x = 50
-    var y = 50
+    var x = 100
+    var y = 100
     var xfloat = 0f
     var yfloat = 0f
     var ookisa:Int
     var hit :Boolean
-    val speed = 3.0
-    var frame = 15
+    val speed = 10
+    var frame = 0
     val iro = Paint()
     val irosub = Paint()
 
@@ -47,16 +45,15 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
     }
 
     fun moveOne(jiki:Jiki){
-
-
-        val a = 0.01f  // 放物線の開き具合
-        val b = 0f     // 線形項（傾きのようなもの）
-        val c = 20 / 2f // 放物線の頂点の高さを中央に調整
-
-        xfloat = frame.toFloat() // フレーム数をxとして利用
+        val a = 0.01f  // 放物線の開き具合　//増やすと角度がきつくなる　減らすと？　なんか上のほうまで行く？よくわからん
+        val b = 0f     // 線形項（傾きのようなもの）　//わからん
+        val c = 700 / 2f // 放物線の頂点の高さを中央に調整 //よくわからん　何で割る２なん？
+        xfloat = frame-250.toFloat() // フレーム数をxとして利用
+        //ここの数式を変えると－２５０なんてしなくてもいいのかなー？
         yfloat = a * xfloat * xfloat + b * xfloat + c
-
-
+        xfloat = xfloat + 250f
+        x = xfloat.toInt()
+        y = yfloat.toInt()
     }
 
 
@@ -79,15 +76,26 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
     }
 
     fun syokika(){
-        x=50
-        y=50
-        ookisa = 10
+
+        x = 100
+        y = 100
+        xfloat = 0f
+        yfloat = 0f
+        ookisa=10
         hit = false
+        frame = 0
         status = NORMAL_STATE
+        iro.style = Paint.Style.FILL
+        iro.color = Color.BLUE   //argb(255, 255, 255, 200)
+    }
+    fun gamengaiCheck(){
+        //画面外なら、最初へ状態遷移
+        if (x > 690 || x < 0 || y > 1050 || y < 0){ status = TAMA_NASI_STATE }
     }
 
+
     fun nextFrame(jiki:Jiki) {
-        frame += 1
+        frame += speed
         when(status) {
             TAMA_NASI_STATE -> {
                 syokika()         //最初のリセット処理
@@ -97,6 +105,7 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
                 if(attaterukaCheck(jiki)) {                     //自機に当たっているかチェック
                     gotoHitState()
                 }
+                gamengaiCheck() //画面外なら消す
             }
             TAMA_HIT_STATE -> {
                 hitCountSyori() //ヒット処理して次へ

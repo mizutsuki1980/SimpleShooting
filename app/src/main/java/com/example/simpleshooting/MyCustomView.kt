@@ -52,7 +52,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             }
         }
         if (jikiKen.hit) {
-            teki.hp -= 1
+            teki.hp = 0
             if(teki.hp==0){
                 scoreCount += 1
                 teki = Teki()
