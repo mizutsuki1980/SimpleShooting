@@ -92,7 +92,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         houdaiTama.nextFrame(jiki,teki)
         if(houdaiTama.hit){tekiTamaAtattaSyori()}//流用　ここの問題？
 
-        tekiTamaYama.nextFrame(jiki,teki)
+        tekiTamaYama.nextFrame(jiki)
+        if(tekiTamaYama.hit){tekiTamaAtattaSyori()}//流用　ここの問題？
 
 
         if(jiki.hp == 0){

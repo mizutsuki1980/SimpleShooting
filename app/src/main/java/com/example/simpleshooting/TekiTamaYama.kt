@@ -49,7 +49,7 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
         irosub.strokeWidth = 4.0f
     }
 
-    fun moveOne(jiki:Jiki){
+    fun moveOne(){
         val a = 0.01f  // 放物線の開き具合
         val b = 0f     // 線形項（傾きのようなもの）
         val c = 500 / 2f // 放物線の頂点の高さを中央に調整
@@ -63,42 +63,49 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
 
     fun attaterukaCheck(jiki:Jiki):Boolean {
         //当たり判定はこれでオッケー
-        val vx = x - jiki.x
-        val vy = y - jiki.y
+        val xx = x.toInt()
+        val yy = y.toInt()
+        val vx = xx - jiki.x
+        val vy = yy - jiki.y
         val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
         val atarikyori = (jiki.ookisa).toDouble()
+
         if (kyori < atarikyori){
             return true
         }else{
             return false
         }
+
     }
 
     fun draw(canvas: Canvas){
         canvas.drawCircle(x+250,y,ookisa.toFloat(),iro)
     }
 
-    fun syokika(teki:Teki){
-         x = 0f
-         y = 0f
+    fun syokika(){
+        x = 0f
+        y = 0f
         frame = initialFrame
-
         ookisa = 10
         hit = false
         status = NORMAL_STATE
+        iro.color = Color.BLUE   //argb(255, 255, 255, 200)
     }
 
-    fun nextFrame(jiki:Jiki,teki:Teki) {
+    fun nextFrame(jiki:Jiki) {
         frame += 1
         when(status) {
             TAMA_NASI_STATE -> {
-                syokika(teki)         //最初のリセット処理
+                syokika()         //最初のリセット処理
             }
             NORMAL_STATE -> {
-                moveOne(jiki)                //自機にひとつ近づくように弾を移動
+                moveOne()                //自機にひとつ近づくように弾を移動
                 if(attaterukaCheck(jiki)) {                     //自機に当たっているかチェック
+                    ookisa = 100
                     gotoHitState()
                 }
+
+                if(frame>250){status = TAMA_NASI_STATE}
             }
             TAMA_HIT_STATE -> {
                 hitCountSyori() //ヒット処理して次へ
