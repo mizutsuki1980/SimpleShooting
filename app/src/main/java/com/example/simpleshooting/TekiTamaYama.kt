@@ -13,6 +13,11 @@ import android.graphics.Rect
 class TekiTamaYama(jiki:Jiki, teki:Teki) {
     //一定時間で適当にでてくるようにする。
 
+    //ここでー２５０してるんだった！
+    //そうだこれ直さなきゃいけないんだった。
+    //こういうの忘れるよなぁ、、、。その日のうちにやってしまいたい。
+
+
     val initialFrame = -250 //ここでフレーム数を初期設定
 
     var x = 0f
@@ -63,11 +68,16 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
 
     fun attaterukaCheck(jiki:Jiki):Boolean {
         //当たり判定はこれでオッケー
+        //なんかこのへんでだめなんだよなぁ、きっと。
         val xx = x.toInt()
         val yy = y.toInt()
         val vx = xx - jiki.x
         val vy = yy - jiki.y
-        val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+
+
+
+
+        val kyori = Math.sqrt(((vx * vx) + (vy * vy)) .toDouble())
         val atarikyori = (jiki.ookisa).toDouble()
 
         if (kyori < atarikyori){
@@ -100,8 +110,11 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
             }
             NORMAL_STATE -> {
                 moveOne()                //自機にひとつ近づくように弾を移動
-                if(attaterukaCheck(jiki)) {                     //自機に当たっているかチェック
-                    ookisa = 100
+//                if(attaterukaCheck(jiki)) {                     //自機に当たっているかチェック
+                //x>10fというのはいつまでたっても成立しない。
+                //なんで？
+
+                  if (frame > 10){
                     gotoHitState()
                 }
 
