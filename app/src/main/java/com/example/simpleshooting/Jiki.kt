@@ -21,7 +21,7 @@ class Jiki(var x:Int, var y:Int) {
         irosub.style = Paint.Style.FILL
         irosub.color = argb(170, 255, 140, 0)
         irokao.style = Paint.Style.FILL
-        irokao.color = argb(255, 0, 0, 0)
+        irokao.color = argb(50, 0, 0, 0)
 
     }
 
@@ -82,8 +82,8 @@ class Jiki(var x:Int, var y:Int) {
         drawSubKi(canvas)
     }
     fun drawKao(canvas:Canvas){
-        canvas.drawCircle(x-18.toFloat(),y-10.toFloat(),5.toFloat(),irokao) //自機の描画
-        canvas.drawCircle(x+18.toFloat(),y-10.toFloat(),5.toFloat(),irokao) //自機の描画
+        canvas.drawCircle(x-18.toFloat(),y-8.toFloat(),5.toFloat(),irokao) //自機の描画
+        canvas.drawCircle(x+18.toFloat(),y-8.toFloat(),5.toFloat(),irokao) //自機の描画
         canvas.drawCircle(x.toFloat(),y+15.toFloat(),10.toFloat(),irokao) //自機の描画
     }
 
