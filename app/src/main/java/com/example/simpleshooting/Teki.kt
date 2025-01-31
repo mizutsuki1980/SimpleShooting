@@ -17,6 +17,14 @@ class Teki {
     var tekiSpeed = 10
     val iro = Paint()
     val irosub = Paint()
+    val irokao = Paint()
+
+    val TEKI_YOWAYOWA_STATE = 1
+    val TEKI_NORMAL_STATE = 2
+    val TEKI_TSUYO_STATE = 3
+    val TEKI_ONITSUYO_STATE = 4
+
+    var status = TEKI_YOWAYOWA_STATE // 最初は玉が画面内に無い状態
 
     init{
         x = 20
@@ -28,7 +36,25 @@ class Teki {
         irosub.style = Paint.Style.FILL
         irosub.color = argb(170, 0, 0, 255)
 
+        irokao.style = Paint.Style.STROKE
+        irokao.color = Color.BLUE   //argb(255, 255, 255, 200)
+        irokao.strokeWidth = 5.0f
+
     }
+
+    fun nextFrame() {
+        when(status) {
+            TEKI_YOWAYOWA_STATE -> {
+            }
+            TEKI_NORMAL_STATE -> {
+            }
+            TEKI_TSUYO_STATE -> {
+            }
+            TEKI_ONITSUYO_STATE -> {
+            }
+        }
+    }
+
     fun tamaHassha():TekiTama{
         return TekiTama(x,y)
     }
@@ -56,11 +82,18 @@ class Teki {
     }
 
 
+    fun drawKao(canvas: Canvas){
+        canvas.drawLine(x-35.toFloat(),y-20.toFloat(),x-10.toFloat(),y-10.toFloat(),irokao)
+        canvas.drawLine(x+35.toFloat(),y-20.toFloat(),x+10.toFloat(),y-10.toFloat(),irokao)
+    }
 
     fun draw(canvas: Canvas){
         canvas.drawRect(shikakuRectXY(), iro)   //敵の移動　処理
         drawSubKi(canvas)
+        drawKao(canvas)
     }
+
+
 
     fun drawSubKi(canvas:Canvas){
         //描画されるたびに＋されるだけでいいなら、ここに入れとけばいっか、frame+＝1
