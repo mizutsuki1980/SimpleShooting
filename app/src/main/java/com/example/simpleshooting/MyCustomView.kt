@@ -27,9 +27,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jikiKen = JikiKen(jiki)
 
 
+    //こいつはだす、こいつはださない、的なオンオフスイッチをつくりたい。
+    //当たり判定とかもオンオフする
+    //isAppearance　だろうか？　出現を英訳　こいつをtrueとかfalseとかしてみるか
+
     var teki = Teki()
+
     var tekiTama = teki.tamaHassha()    //TekiTamaのオブジェクトを作るのは、TekiTama内でなくてもよい。へー
+
     var tekiTamaRef = TekiTamaRef(jiki,teki)
+
     var tekiTamaYama = TekiTamaYama(jiki,teki)
 
 
@@ -69,31 +76,57 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun beginAnimation() {
         tsugiNoSyori()  //最初に一回だけ呼ばれる
     }
+    fun tekiKougekiHueru(){
+        if(scoreCount==1){tekiTama.isAppearance=true}
+        if(scoreCount==2){tekiTamaRef.isAppearance=true}
+        if(scoreCount==3){houdaiTama.isAppearance=true}
 
+        if(frame==200){tekiTama.isAppearance=true}
+        if(frame==400){tekiTamaRef.isAppearance=true}
+        if(frame==600){houdaiTama.isAppearance=true}
+
+    }
     fun tsugiNoSyori() {
         frame += 1  //繰り返し処理はここでやってる
+        tekiKougekiHueru()
         invalidate()
-        jiki.move(clickX,clickY-jikiIchiTyousei) //クリックした場所から上に170の場所に移動する。指にかかって見えない為。
+        jiki.move(clickX, clickY - jikiIchiTyousei) //クリックした場所から上に170の場所に移動する。指にかかって見えない為。
         teki.yokoIdo()  //敵の移動　処理。
 
-        jikiTama.nextFrame(jiki,teki,isFirstMove)
-        if(jikiTama.hit){jikiTamaAtattaSyori()} //敵のリセット、敵のHP処理、スコアカウントとかあるから、jikiTamaのメソッドにしない方がいいかな
+        jikiTama.nextFrame(jiki, teki, isFirstMove)
+        if (jikiTama.hit) {
+            jikiTamaAtattaSyori()
+        } //敵のリセット、敵のHP処理、スコアカウントとかあるから、jikiTamaのメソッドにしない方がいいかな
 
-        jikiKen.nextFrame(jiki,teki,isFirstMove)
-        if(jikiKen.hit){jikiTamaAtattaSyori()}
+        jikiKen.nextFrame(jiki, teki, isFirstMove)
+        if (jikiKen.hit) {
+            jikiTamaAtattaSyori()
+        }
 
-        tekiTama.nextFrame(jiki,teki)
-        if(tekiTama.hit){tekiTamaAtattaSyori()}//jikiTamaと同様。スコアとか動くので。
+        if (tekiTama.isAppearance) {
+            tekiTama.nextFrame(jiki, teki)
+            if (tekiTama.hit) {
+                tekiTamaAtattaSyori()
+            }//jikiTamaと同様。スコアとか動くので。
+        }
 
-        tekiTamaRef.nextFrame(jiki,teki)
-        if(tekiTamaRef.hit){tekiTamaAtattaSyori()}//流用
+        if(tekiTamaRef.isAppearance){
+            tekiTamaRef.nextFrame(jiki, teki)
+            if (tekiTamaRef.hit) {
+                tekiTamaAtattaSyori()
+            }//流用
+        }
+        if(houdaiTama.isAppearance) {
+            houdaiTama.nextFrame(jiki, teki)
+            if (houdaiTama.hit) {
+                tekiTamaAtattaSyori()
+            }//流用　ここの問題？
+        }
 
-        houdaiTama.nextFrame(jiki,teki)
-        if(houdaiTama.hit){tekiTamaAtattaSyori()}//流用　ここの問題？
-
-        tekiTamaYama.nextFrame(jiki)
-        if(tekiTamaYama.hit){tekiTamaAtattaSyori()}//流用　ここの問題？
-
+        if(tekiTamaYama.isAppearance){
+            tekiTamaYama.nextFrame(jiki)
+            if(tekiTamaYama.hit){tekiTamaAtattaSyori()}//流用　ここの問題？
+        }
 
         if(jiki.hp == 0){
 
@@ -109,8 +142,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     override fun onDraw(canvas: Canvas) {
         jiki.draw(canvas)   //自機の処理
         teki.draw(canvas) //敵jikiTamaの移動　処理
-        tekiTama.draw(canvas) //敵の追尾弾の移動　処理
-        tekiTamaRef.draw(canvas) //敵の反射弾の移動　処理
+        if(tekiTama.isAppearance){ tekiTama.draw(canvas)} //敵の追尾弾の移動　処理
+        if(tekiTamaRef.isAppearance){ tekiTamaRef.draw(canvas)} //敵の反射弾の移動　処理
         houdaiTama.draw(canvas) //砲台の弾
         tekiTamaYama.draw(canvas) //山なりの弾
 

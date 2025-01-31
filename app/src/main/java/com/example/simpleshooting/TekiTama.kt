@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 
 class TekiTama(var x:Int,var y:Int) {
+    var isAppearance = false
     val iro = Paint()
     var ookisa:Int
     var homing :Boolean

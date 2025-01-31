@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 
 class HoudaiTama {
+    var isAppearance = false
 
     var x = 500
     var y = 500

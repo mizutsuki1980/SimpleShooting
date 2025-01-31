@@ -8,6 +8,7 @@ import android.graphics.Rect
 
 class TekiTamaRef(jiki:Jiki, teki:Teki) {
     //reflection
+    var isAppearance = false
     var x = teki.x
     var y = teki.y
     var ookisa:Int

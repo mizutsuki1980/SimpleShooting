@@ -10,6 +10,7 @@ import android.graphics.Rect
 
 class TekiTamaYama(jiki:Jiki, teki:Teki) {
     //一定時間で適当にでてくるようにする。
+    var isAppearance = true
 
     var x = 100
     var y = 100
