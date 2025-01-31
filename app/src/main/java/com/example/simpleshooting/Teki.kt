@@ -42,15 +42,23 @@ class Teki {
 
     }
 
-    fun nextFrame() {
+    fun nextFrame(scoreCount:Int) {
+        val ss = scoreCount % 4
+        if(ss==0){status=TEKI_YOWAYOWA_STATE}
+        if(ss==1){status=TEKI_NORMAL_STATE}
+        if(ss==2){status=TEKI_TSUYO_STATE}
+        if(ss==3){status=TEKI_ONITSUYO_STATE}
         when(status) {
             TEKI_YOWAYOWA_STATE -> {
+                tekiSpeed = 15
             }
             TEKI_NORMAL_STATE -> {
             }
             TEKI_TSUYO_STATE -> {
+                tekiSpeed = 20
             }
             TEKI_ONITSUYO_STATE -> {
+                tekiSpeed = 40
             }
         }
     }
@@ -83,8 +91,27 @@ class Teki {
 
 
     fun drawKao(canvas: Canvas){
-        canvas.drawLine(x-35.toFloat(),y-20.toFloat(),x-10.toFloat(),y-10.toFloat(),irokao)
-        canvas.drawLine(x+35.toFloat(),y-20.toFloat(),x+10.toFloat(),y-10.toFloat(),irokao)
+        when(status) {
+            TEKI_YOWAYOWA_STATE -> {
+                canvas.drawLine(x-35.toFloat(),y-10.toFloat(),x-10.toFloat(),y-20.toFloat(),irokao)
+                canvas.drawLine(x+35.toFloat(),y-10.toFloat(),x+10.toFloat(),y-20.toFloat(),irokao)
+            }
+            TEKI_NORMAL_STATE -> {
+                canvas.drawLine(x-35.toFloat(),y-15.toFloat(),x-10.toFloat(),y-15.toFloat(),irokao)
+                canvas.drawLine(x+35.toFloat(),y-15.toFloat(),x+10.toFloat(),y-15.toFloat(),irokao)
+            }
+            TEKI_TSUYO_STATE -> {
+                canvas.drawLine(x-35.toFloat(),y-20.toFloat(),x-10.toFloat(),y-10.toFloat(),irokao)
+                canvas.drawLine(x+35.toFloat(),y-20.toFloat(),x+10.toFloat(),y-10.toFloat(),irokao)
+            }
+            TEKI_ONITSUYO_STATE -> {
+                canvas.drawLine(x-35.toFloat(),y-20.toFloat(),x-10.toFloat(),y-10.toFloat(),irokao)
+                canvas.drawLine(x+35.toFloat(),y-20.toFloat(),x+10.toFloat(),y-10.toFloat(),irokao)
+                canvas.drawLine(x-15.toFloat(),y-25.toFloat(),x-5.toFloat(),y-25.toFloat(),irokao)
+                canvas.drawLine(x+15.toFloat(),y-25.toFloat(),x+5.toFloat(),y-25.toFloat(),irokao)
+            }
+        }
+
     }
 
     fun draw(canvas: Canvas){

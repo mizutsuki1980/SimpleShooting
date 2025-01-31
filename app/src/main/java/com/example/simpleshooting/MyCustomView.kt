@@ -84,14 +84,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(frame==200){tekiTama.isAppearance=true}
         if(frame==400){tekiTamaRef.isAppearance=true}
         if(frame==600){houdaiTama.isAppearance=true}
-
     }
+
     fun tsugiNoSyori() {
         frame += 1  //繰り返し処理はここでやってる
         tekiKougekiHueru()
         invalidate()
         jiki.move(clickX, clickY - jikiIchiTyousei) //クリックした場所から上に170の場所に移動する。指にかかって見えない為。
         teki.yokoIdo()  //敵の移動　処理。
+
+        teki.nextFrame(scoreCount)
 
         jikiTama.nextFrame(jiki, teki, isFirstMove)
         if (jikiTama.hit) {
