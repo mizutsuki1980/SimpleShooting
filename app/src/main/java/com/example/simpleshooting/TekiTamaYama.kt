@@ -45,8 +45,10 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
     }
 
     fun moveOne(jiki:Jiki){
-        val a = 0.01f  // 放物線の開き具合　//増やすと角度がきつくなる　減らすと？　なんか上のほうまで行く？よくわからん
-        val b = 0f     // 線形項（傾きのようなもの）　//わからん
+        val a = 0.004f  // 放物線の開き具合　//増やすと角度がきつくなる。減らすほど平行になる。0.01～0.001くらいの間で調整する
+
+        val b = 1.1f     // 線形項（傾きのようなもの）　//0～1.5くらい　よくわからんがYが増える
+
         val c = 700 / 2f // 放物線の頂点の高さを中央に調整 //よくわからん　何で割る２なん？
         xfloat = frame-250.toFloat() // フレーム数をxとして利用
         //ここの数式を変えると－２５０なんてしなくてもいいのかなー？
@@ -105,7 +107,9 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
                 if(attaterukaCheck(jiki)) {                     //自機に当たっているかチェック
                     gotoHitState()
                 }
-                gamengaiCheck() //画面外なら消す
+                gamengaiCheck() //画面外
+
+            // なら消す
             }
             TAMA_HIT_STATE -> {
                 hitCountSyori() //ヒット処理して次へ
