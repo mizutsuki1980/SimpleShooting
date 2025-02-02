@@ -31,8 +31,8 @@ class Teki {
         y = 100
 
         iro.style = Paint.Style.FILL
-        iro.color = Color.CYAN
-
+        iro.color = argb(255, 0, 255, 255)
+        //alphaってのは明度？
         irosub.style = Paint.Style.FILL
         irosub.color = argb(170, 0, 0, 255)
 
@@ -51,14 +51,18 @@ class Teki {
         when(status) {
             TEKI_YOWAYOWA_STATE -> {
                 tekiSpeed = 15
+                iro.color = argb(255, 0, 255, 255)
             }
             TEKI_NORMAL_STATE -> {
+                iro.color = argb(255, 0, 220, 220)
             }
             TEKI_TSUYO_STATE -> {
                 tekiSpeed = 20
+                iro.color = argb(255, 0, 180, 180)
             }
             TEKI_ONITSUYO_STATE -> {
                 tekiSpeed = 40
+                iro.color = argb(255, 0, 150, 150)
             }
         }
     }
