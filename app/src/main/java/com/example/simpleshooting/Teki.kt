@@ -37,7 +37,7 @@ class Teki {
         irosub.color = argb(170, 0, 0, 255)
 
         irokao.style = Paint.Style.STROKE
-        irokao.color = Color.BLUE   //argb(255, 255, 255, 200)
+        irokao.color = Color.GRAY   //argb(255, 255, 255, 200)
         irokao.strokeWidth = 5.0f
 
     }
