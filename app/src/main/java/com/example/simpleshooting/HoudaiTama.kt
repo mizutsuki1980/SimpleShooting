@@ -5,7 +5,9 @@ import android.graphics.Color
 import android.graphics.Paint
 
 class HoudaiTama {
-    var isAppearance = false
+
+    var isAppearance = true
+//    var isAppearance = false
 
     var x = 500
     var y = 500
@@ -52,7 +54,7 @@ class HoudaiTama {
 
 
         irosikaku.style = Paint.Style.STROKE
-        irosikaku.color = Color.WHITE
+        irosikaku.color = Color.LTGRAY
         irosikaku.strokeWidth = 3.0F
 
         status = TAMA_SYUTUGEN_ATARANAI_STATE
@@ -156,12 +158,9 @@ class HoudaiTama {
     }
 
     fun drawSikaku(canvas: Canvas) {
-        canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2+100).toFloat(),irosikaku)
-        canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2+80).toFloat(),irosikaku)
-        canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2+60).toFloat(),irosikaku)
-        canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2+40).toFloat(),irosikaku)
-        canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2+20).toFloat(),irosikaku)
-        canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2).toFloat(),irosikaku)
+
+        canvas.drawCircle(x.toFloat(),y.toFloat(),(50-timecount % 5).toFloat(),irosikaku)
+        canvas.drawCircle(x.toFloat(),y.toFloat(),(30-timecount % 5).toFloat(),irosikaku)
     }
 
     fun drawAtatteru(canvas: Canvas) {
