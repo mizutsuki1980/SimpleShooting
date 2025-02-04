@@ -19,6 +19,9 @@ class HoudaiTama {
     var speed = 2.0
     val iro = Paint()
     val irogray = Paint()
+    val irosikaku = Paint()
+
+
     val TAMA_NASI_STATE = 1
     val TAMA_SYUTUGEN_ATARANAI_STATE = 2
     val NORMAL_STATE = 3
@@ -46,6 +49,11 @@ class HoudaiTama {
         irogray.style = Paint.Style.STROKE
         irogray.color = Color.DKGRAY
         irogray.strokeWidth = 12.0F
+
+
+        irosikaku.style = Paint.Style.STROKE
+        irosikaku.color = Color.WHITE
+        irosikaku.strokeWidth = 3.0F
 
         status = TAMA_SYUTUGEN_ATARANAI_STATE
     }
@@ -143,10 +151,24 @@ class HoudaiTama {
     //まぁいっか。わかるし。
     fun draw(canvas: Canvas) {
         canvas.drawCircle(x.toFloat(),y.toFloat(),ookisa.toFloat(),iro)
-        if(status>3){ canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2).toFloat(),irogray)}
-        if(status>3){ canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2-50).toFloat(),irogray)}
-        if(status>3){ canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2-100).toFloat(),irogray)}
+        if(status==TAMA_SYUTUGEN_ATARANAI_STATE){drawSikaku(canvas)}
+        if(status>3){ drawAtatteru(canvas)}
     }
 
+    fun drawSikaku(canvas: Canvas) {
+        canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2+100).toFloat(),irosikaku)
+        canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2+80).toFloat(),irosikaku)
+        canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2+60).toFloat(),irosikaku)
+        canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2+40).toFloat(),irosikaku)
+        canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2+20).toFloat(),irosikaku)
+        canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2).toFloat(),irosikaku)
+    }
+
+    fun drawAtatteru(canvas: Canvas) {
+         canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2).toFloat(),irogray)
+         canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2-50).toFloat(),irogray)
+         canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa*2-100).toFloat(),irogray)
+
+    }
 
 }

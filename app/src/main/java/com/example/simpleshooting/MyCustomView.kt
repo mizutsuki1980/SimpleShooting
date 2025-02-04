@@ -146,7 +146,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         teki.draw(canvas) //敵jikiTamaの移動　処理
         if(tekiTama.isAppearance){ tekiTama.draw(canvas)} //敵の追尾弾の移動　処理
         if(tekiTamaRef.isAppearance){ tekiTamaRef.draw(canvas)} //敵の反射弾の移動　処理
-        houdaiTama.draw(canvas) //砲台の弾
+        if(houdaiTama.isAppearance){houdaiTama.draw(canvas)} //砲台の弾
         tekiTamaYama.draw(canvas) //山なりの弾
 
         if(isFirstMove){ jikiTama.draw(canvas)}     //自機の弾の処理
