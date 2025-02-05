@@ -33,8 +33,8 @@ class HoudaiTama {
     fun syokika(){
         val xlist = listOf<Int>(100,150,200,250,300,350,400,450,500,550,600)
         val ylist = listOf<Int>(150,200,250,300,350,400,450,500,550,600,650,700,750,800,850)
-///        x = xlist.random()
-   //     y = ylist.random()
+        //  x = xlist.random()
+        //  y = ylist.random()
         x=300
         y=700
         ookisa = initialOokisa
@@ -68,7 +68,7 @@ class HoudaiTama {
         val vx = x - jiki.x
         val vy = y - jiki.y
         val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble()) + ookisa/2.toDouble()
-        val atarikyori = (jiki.ookisa-5).toDouble()
+        val atarikyori = (jiki.ookisa+ookisa).toDouble()
 
         if (kyori < atarikyori){
             return true
@@ -95,6 +95,14 @@ class HoudaiTama {
         }
     }
 
+
+    //当たらない現象、再現できたかもしれない。
+    //右下にいると当たらない。ときがある。もうその位置にいるとずっと当たらない。
+    //左下も当たらない。
+    //右上はなんか反応が遅い。
+    //左上も当たんない。
+    //範囲設定が小さいのかな？
+
     fun nextFrame(jiki:Jiki,teki:Teki) {
         when(status) {
             TAMA_NASI_STATE -> {
@@ -112,10 +120,6 @@ class HoudaiTama {
 
             NORMAL_STATE -> {
                 ookisa -= 1
-                timecount()
-                tenmetuTamahenka()
-
-                //んー、ここでヒットステイツで消えちゃうとだめなのかなー
                 if(attaterukaCheck(jiki)){
                     gotoHitState()
                 }else {
@@ -123,20 +127,21 @@ class HoudaiTama {
                         status = TAMA_NASI_STATE
                     }
                 }
+                timecount()
+                tenmetuTamahenka()
             }
 
 
             TAMA_HIT_STATE -> {
-                tenmetuTamahenka()
                 hitCountSyori() //ヒット処理して次へ
             }
             TAMA_HIT_END_STATE -> {
-                tenmetuTamahenka()
                 motoniModosu()  // もとに戻す
             }
         }
     }
     fun gotoHitState(){
+        iro.style = Paint.Style.FILL
         iro.color = Color.DKGRAY
         ookisa = initialOokisa
         status = TAMA_HIT_STATE
