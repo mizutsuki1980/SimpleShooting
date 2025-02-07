@@ -86,31 +86,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(frame==600){houdaiTama.isAppearance=true}
     }
 
-    fun tsugiNoSyori() {
-        frame += 1  //繰り返し処理はここでやってる
-        tekiKougekiHueru()
-        invalidate()
-        jiki.move(clickX, clickY - jikiIchiTyousei) //クリックした場所から上に170の場所に移動する。指にかかって見えない為。
-        teki.yokoIdo()  //敵の移動　処理。
 
-        teki.nextFrame(scoreCount)
 
-        jikiTama.nextFrame(jiki, teki, isFirstMove)
-        if (jikiTama.hit) {
-            jikiTamaAtattaSyori()
-        } //敵のリセット、敵のHP処理、スコアカウントとかあるから、jikiTamaのメソッドにしない方がいいかな
-
-        jikiKen.nextFrame(jiki, teki, isFirstMove)
-        if (jikiKen.hit) {
-            jikiTamaAtattaSyori()
-        }
+    fun tekiTamaNextFrame(){
 
         if (tekiTama.isAppearance) {
             tekiTama.nextFrame(jiki, teki)
             if (tekiTama.hit) {
                 tekiTamaAtattaSyori()
             }//jikiTamaと同様。スコアとか動くので。
-        }
+         }
 
         if(tekiTamaRef.isAppearance){
             tekiTamaRef.nextFrame(jiki, teki)
@@ -130,12 +115,26 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             if(tekiTamaYama.hit){tekiTamaAtattaSyori()}//流用　ここの問題？
         }
 
-        if(jiki.hp == 0){
 
+    }
+
+
+    fun tsugiNoSyori() {
+        frame += 1  //繰り返し処理はここでやってる
+        tekiKougekiHueru()
+        invalidate()
+        jiki.move(clickX, clickY - jikiIchiTyousei) //クリックした場所から上に170の場所に移動する。指にかかって見えない為。
+        teki.yokoIdo()  //敵の移動　処理。
+        teki.nextFrame(scoreCount)
+        jikiTama.nextFrame(jiki, teki, isFirstMove)
+        if (jikiTama.hit) { jikiTamaAtattaSyori() }
+        jikiKen.nextFrame(jiki, teki, isFirstMove)
+        if (jikiKen.hit) { jikiTamaAtattaSyori() }
+        tekiTamaNextFrame() //敵の弾の処理は全部ここにまとめる
+        if(jiki.hp == 0){
         }else{
             handler.postDelayed({ tsugiNoSyori() }, 100)
         }
-
     }
 
 
