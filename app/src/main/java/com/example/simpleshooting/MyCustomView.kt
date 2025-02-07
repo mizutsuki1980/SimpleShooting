@@ -39,6 +39,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     var tekiTamaYama = TekiTamaYama(jiki,teki)
 
+    var item = Item()
 
     var houdaiTama = HoudaiTama()
     var hpCounter = HPCounter()
@@ -92,27 +93,21 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         if (tekiTama.isAppearance) {
             tekiTama.nextFrame(jiki, teki)
-            if (tekiTama.hit) {
-                tekiTamaAtattaSyori()
-            }//jikiTamaと同様。スコアとか動くので。
+            if (tekiTama.hit) { tekiTamaAtattaSyori() }
          }
 
         if(tekiTamaRef.isAppearance){
             tekiTamaRef.nextFrame(jiki, teki)
-            if (tekiTamaRef.hit) {
-                tekiTamaAtattaSyori()
-            }//流用
+            if (tekiTamaRef.hit) { tekiTamaAtattaSyori() }
         }
         if(houdaiTama.isAppearance) {
             houdaiTama.nextFrame(jiki, teki)
-            if (houdaiTama.hit) {
-                tekiTamaAtattaSyori()
-            }//流用　ここの問題？
+            if (houdaiTama.hit) { tekiTamaAtattaSyori() }
         }
 
         if(tekiTamaYama.isAppearance){
             tekiTamaYama.nextFrame(jiki)
-            if(tekiTamaYama.hit){tekiTamaAtattaSyori()}//流用　ここの問題？
+            if(tekiTamaYama.hit){tekiTamaAtattaSyori()}
         }
 
 
@@ -131,6 +126,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jikiKen.nextFrame(jiki, teki, isFirstMove)
         if (jikiKen.hit) { jikiTamaAtattaSyori() }
         tekiTamaNextFrame() //敵の弾の処理は全部ここにまとめる
+        item.nextFrame(jiki) //いったんここで作る、あとでtekiTamaNextFrame() に入れる
         if(jiki.hp == 0){
         }else{
             handler.postDelayed({ tsugiNoSyori() }, 100)
@@ -143,6 +139,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     override fun onDraw(canvas: Canvas) {
         jiki.draw(canvas)   //自機の処理
         teki.draw(canvas) //敵jikiTamaの移動　処理
+        item.draw(canvas) //アイテムの処理
         if(tekiTama.isAppearance){ tekiTama.draw(canvas)} //敵の追尾弾の移動　処理
         if(tekiTamaRef.isAppearance){ tekiTamaRef.draw(canvas)} //敵の反射弾の移動　処理
         if(houdaiTama.isAppearance){houdaiTama.draw(canvas)} //砲台の弾

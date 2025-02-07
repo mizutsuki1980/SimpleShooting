@@ -6,7 +6,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 
 class Item {
-    var isAppearance = false
+    var isAppearance = true
 
     val xlist = listOf<Int>(100,150,200,250,300,350,400,450,500,550,600)
     var x = xlist.random()
@@ -36,15 +36,15 @@ class Item {
 
 
     fun syokika(){
-        status = ITEM_SYUTUGEN_STATE
          x = xlist.random()
          y = 20
+        status = ITEM_SYUTUGEN_STATE
     }
     fun moveOne(){
         y+= 10
     }
 
-    fun nextFrame(jiki:Jiki,teki:Teki) {
+    fun nextFrame(jiki:Jiki) {
         if (isAppearance) {
             when (status) {
                 ITEM_NASI_STATE -> {
