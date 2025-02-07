@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 
 class HoudaiTama {
-    var isAppearance = true
+    var isAppearance = false
 
     var x = 500
     var y = 500
@@ -33,10 +33,8 @@ class HoudaiTama {
     fun syokika(){
         val xlist = listOf<Int>(100,150,200,250,300,350,400,450,500,550,600)
         val ylist = listOf<Int>(150,200,250,300,350,400,450,500,550,600,650,700,750,800,850)
-        //  x = xlist.random()
-        //  y = ylist.random()
-        x=300
-        y=700
+          x = xlist.random()
+          y = ylist.random()
         ookisa = initialOokisa
         timecount = 0
 
@@ -102,6 +100,11 @@ class HoudaiTama {
     //右上はなんか反応が遅い。
     //左上も当たんない。
     //範囲設定が小さいのかな？
+
+    //ついにコミットを消すのに成功した
+    //コミットの打ち消し、というのは一行増えるだけだった
+    //コミットの取り消し、というのがあるようだ
+    //なんだこのわかりづらさは。
 
     fun nextFrame(jiki:Jiki,teki:Teki) {
         when(status) {
