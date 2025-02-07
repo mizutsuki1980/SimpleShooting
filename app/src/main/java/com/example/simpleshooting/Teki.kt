@@ -43,6 +43,8 @@ class Teki {
     }
 
     fun nextFrame(scoreCount:Int) {
+        //なんかここの作りは、状態遷移の意味合いとちょっとちがうんじゃないか？と感じている
+
         val ss = scoreCount % 4
         if(ss==0){status=TEKI_YOWAYOWA_STATE}
         if(ss==1){status=TEKI_NORMAL_STATE}
@@ -52,17 +54,26 @@ class Teki {
             TEKI_YOWAYOWA_STATE -> {
                 tekiSpeed = 15
                 iro.color = argb(255, 0, 255, 255)
+                irokao.style = Paint.Style.STROKE
+                irokao.color = Color.GRAY   //argb(255, 255, 255, 200)
+                irokao.strokeWidth = 5.0f
             }
             TEKI_NORMAL_STATE -> {
                 iro.color = argb(255, 0, 220, 220)
             }
+
             TEKI_TSUYO_STATE -> {
                 tekiSpeed = 20
                 iro.color = argb(255, 0, 180, 180)
+
+                irokao.color = Color.RED   //argb(255, 255, 255, 200)
             }
             TEKI_ONITSUYO_STATE -> {
                 tekiSpeed = 40
                 iro.color = argb(255, 0, 150, 150)
+
+                irokao.color = Color.RED   //argb(255, 255, 255, 200)
+                irokao.strokeWidth = 7.0f
             }
         }
     }
