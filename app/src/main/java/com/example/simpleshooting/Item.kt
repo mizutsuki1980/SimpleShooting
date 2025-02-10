@@ -36,16 +36,18 @@ class Item {
 
 
     fun syokika(){
-         x = xlist.random()
-         y = 20
-         ookisa = initialOokisa
+        x = xlist.random()
+        y = 20
+        ookisa = initialOokisa
         status = ITEM_SYUTUGEN_STATE
+        iro.color = Color.YELLOW
     }
+
     fun moveOne(){
         y+= 10
     }
 
-    fun nextFrame(jiki:Jiki) {
+    fun nextFrame(jiki:Jiki,jikiTama:JikiTama) {
         if (isAppearance) {
             when (status) {
                 ITEM_NASI_STATE -> {
@@ -54,9 +56,13 @@ class Item {
 
                 ITEM_SYUTUGEN_STATE -> {
                     moveOne()
-                    if (attaterukaCheck(jiki)) {
+                    if (jikiniattaterukaCheck(jiki)) {
                         ookisa = 25
                         status = ITEM_GET_STATE
+                    }
+                    if (tamaniatatterukaCheck(jikiTama)) {
+                        iro.color = Color.WHITE
+
                     }
                 }
                 ITEM_GET_STATE -> {
@@ -72,22 +78,25 @@ class Item {
             }
         }
     }
+    fun tamaniatatterukaCheck(jikiTama:JikiTama):Boolean{
+        val x1 = x - ookisa / 2 - jikiTama.ookisa / 2
+        val y1 = y - ookisa / 2 - jikiTama.ookisa / 2
+        val x2 = x + ookisa / 2 + jikiTama.ookisa / 2
+        val y2 = y + ookisa / 2 + jikiTama.ookisa / 2
+        val isXInside = (jikiTama.x >= x1 && jikiTama.x <= x2)
+        val isYInside = (jikiTama.y >= y1 && jikiTama.y <= y2)
+        return isXInside && isYInside
 
-    fun attaterukaCheck(jiki:Jiki):Boolean {
-        //これちゃんと当たってるのかな？なんか自分の大きさが考慮されてない気がする、、、
-        //と思ったので、自分（Item）の大きさを２で割って加えてみた
-        //それっぽく動いてるように見える。
+    }
 
+    fun jikiniattaterukaCheck(jiki:Jiki):Boolean {
         val x1 = jiki.x -jiki.ookisa / 2 - ookisa / 2
         val y1 = jiki.y -jiki.ookisa / 2 - ookisa / 2
         val x2 = jiki.x +jiki.ookisa / 2 + ookisa / 2
         val y2 = jiki.y +jiki.ookisa / 2 + ookisa / 2
-
         val isXInside = (x >= x1 && x <= x2)
         val isYInside = (y >= y1 && y <= y2)
-
         return isXInside && isYInside
-
     }
 
     fun shikakuRectXY(): Rect {

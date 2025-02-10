@@ -126,7 +126,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jikiKen.nextFrame(jiki, teki, isFirstMove)
         if (jikiKen.hit) { jikiTamaAtattaSyori() }
         tekiTamaNextFrame() //敵の弾の処理は全部ここにまとめる
-        item.nextFrame(jiki) //いったんここで作る、あとでtekiTamaNextFrame() に入れる
+        item.nextFrame(jiki,jikiTama) //いったんここで作る、あとでtekiTamaNextFrame() に入れる
         if(jiki.hp == 0){
         }else{
             handler.postDelayed({ tsugiNoSyori() }, 100)
