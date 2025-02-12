@@ -52,7 +52,9 @@ class Item {
         y+= (kasoku*10).toInt()
     }
     fun moveMinus(){
-        kasoku *= 2
+        kasoku *= 1.3
+
+
         y-= (kasoku*10).toInt()
     }
 
