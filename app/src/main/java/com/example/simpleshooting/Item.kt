@@ -11,6 +11,9 @@ class Item {
     val xlist = listOf<Int>(100,150,200,250,300,350,400,450,500,550,600)
     var x = xlist.random()
     var y = 20
+    var kasoku = 1.25
+    var rakkacount = 0
+
 
     val initialOokisa = 50 //ここで大きさを初期設定
     var ookisa = initialOokisa
@@ -38,14 +41,27 @@ class Item {
     fun syokika(){
         x = xlist.random()
         y = 20
+        kasoku = 1.01
         ookisa = initialOokisa
         status = ITEM_SYUTUGEN_STATE
         iro.color = Color.YELLOW
     }
 
     fun moveOne(){
-        y+= 10
+        kasoku *= 1.01
+        y+= (kasoku*10).toInt()
     }
+    fun moveMinus(){
+        kasoku *= 2
+        y-= (kasoku*10).toInt()
+    }
+
+    fun randomirokae(){
+        val irolist = listOf<Int>(Color.WHITE,Color.YELLOW,Color.CYAN,Color.MAGENTA)
+        var iroA = irolist.random()
+        iro.color = iroA
+    }
+
 
     fun nextFrame(jiki:Jiki,jikiTama:JikiTama) {
         if (isAppearance) {
@@ -55,14 +71,23 @@ class Item {
                 }
 
                 ITEM_SYUTUGEN_STATE -> {
-                    moveOne()
+                    if(rakkacount == 0) { moveOne() }
+
+                    if ( rakkacount >0){
+                        moveMinus()
+                        rakkacount -= 1
+                    }
+
+                    if (y>=1500) {
+                        status = ITEM_NASI_STATE
+                    }
                     if (jikiniattaterukaCheck(jiki)) {
                         ookisa = 25
                         status = ITEM_GET_STATE
                     }
                     if (tamaniatatterukaCheck(jikiTama)) {
-                        iro.color = Color.WHITE
-
+                        randomirokae()
+                        rakkacount = 10
                     }
                 }
                 ITEM_GET_STATE -> {
