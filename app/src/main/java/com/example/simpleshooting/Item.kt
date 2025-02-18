@@ -14,7 +14,6 @@ class Item {
     var kasoku = 1.25
     var rakkacount = 0
 
-
     val initialOokisa = 50 //ここで大きさを初期設定
     var ookisa = initialOokisa
     var timecount = 0
@@ -41,6 +40,7 @@ class Item {
     fun syokika(){
         x = xlist.random()
         y = 20
+        hit = false
         kasoku = 1.01
         ookisa = initialOokisa
         status = ITEM_SYUTUGEN_STATE
@@ -52,7 +52,7 @@ class Item {
         y+= (kasoku*10).toInt()
     }
     fun moveMinus(){
-        kasoku *= 1.3
+        kasoku *= 1.1
 
 
         y-= (kasoku*10).toInt()
@@ -88,8 +88,9 @@ class Item {
                         status = ITEM_GET_STATE
                     }
                     if (tamaniatatterukaCheck(jikiTama)) {
+                        hit = true
                         randomirokae()
-                        rakkacount = 10
+                        rakkacount = 8
                     }
                 }
                 ITEM_GET_STATE -> {
