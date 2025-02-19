@@ -129,7 +129,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         item.nextFrame(jiki,jikiTama) //いったんここで作る、あとでtekiTamaNextFrame() に入れる
         //        if(item.hit){jikiTama.hit = true}//自機弾のリセット（Itemに当たったら、自機弾は消さなければならない。）
         //こういう風に書くと、敵に当たった、とも処理されてしまっている。なんか一瞬で敵がパワーアップしてしまう。
-
+        //if(item.hit){jikiTama = jiki.tamaHassha(jikiIchiTyousei)}   //もしアイテムに弾が当たっていたら、弾のリセット処理をする
+        //んー、なんかこの方法もダメだな。弾が透けないとダメなのかも。通過してくれないと、跳ね返ったアイテムがまた当たってしまう。
+        //ツインビーはボタン押すまで次の弾がでなかったからか。
+        
         if(jiki.hp == 0){
         }else{
             handler.postDelayed({ tsugiNoSyori() }, 100)
