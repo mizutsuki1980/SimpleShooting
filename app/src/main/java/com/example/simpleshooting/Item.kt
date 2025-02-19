@@ -24,8 +24,9 @@ class Item {
 
     val ITEM_NASI_STATE = 1
     val ITEM_SYUTUGEN_STATE = 2
-    val ITEM_GET_STATE = 3
-    val ITEM_OWARI_STATE = 4
+    val ITEM_HANEKAERI_STATE = 3
+    val ITEM_GET_STATE = 4
+    val ITEM_OWARI_STATE = 5
 
     var status = ITEM_NASI_STATE // 最初は玉が画面内に無い状態
     init {
@@ -34,6 +35,8 @@ class Item {
         irosub.style = Paint.Style.FILL
         irosub.color = Color.LTGRAY
     }
+
+
 
 
 
@@ -73,12 +76,8 @@ class Item {
                 }
 
                 ITEM_SYUTUGEN_STATE -> {
-                    if(rakkacount == 0) { moveOne() }
 
-                    if ( rakkacount >0){
-                        moveMinus()
-                        rakkacount -= 1
-                    }
+                    moveOne()
 
                     if (y>=1500) {
                         status = ITEM_NASI_STATE
@@ -87,12 +86,24 @@ class Item {
                         ookisa = 25
                         status = ITEM_GET_STATE
                     }
+
                     if (tamaniatatterukaCheck(jikiTama)) {
                         hit = true
                         randomirokae()
                         rakkacount = 8
+                        status = ITEM_HANEKAERI_STATE
                     }
                 }
+
+                ITEM_HANEKAERI_STATE -> {
+                    if(rakkacount == 0) { status = ITEM_SYUTUGEN_STATE }
+
+                    if ( rakkacount >0){
+                        moveMinus()
+                        rakkacount -= 1
+                    }
+                }
+
                 ITEM_GET_STATE -> {
                     ookisa /= 2
                     status = ITEM_OWARI_STATE
@@ -137,8 +148,8 @@ class Item {
     }
 
     fun draw(canvas: Canvas){
-        canvas.drawRect(shikakuRectXY(), iro)  //自機
-        if (status>2){drawyosumi(canvas)}
+        canvas.drawRect(shikakuRectXY(), iro)  //自機の表示
+        if (status>3){drawyosumi(canvas)} //エフェクトの表示　statusが３以上だったら、という条件をつかっているので、sutatusが増えたらここも変えなければいけない
     }
 
     fun drawyosumi(canvas: Canvas) {

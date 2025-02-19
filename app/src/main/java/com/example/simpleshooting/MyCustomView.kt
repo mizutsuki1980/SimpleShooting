@@ -127,7 +127,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if (jikiKen.hit) { jikiTamaAtattaSyori() }
         tekiTamaNextFrame() //敵の弾の処理は全部ここにまとめる
         item.nextFrame(jiki,jikiTama) //いったんここで作る、あとでtekiTamaNextFrame() に入れる
-        if(item.hit){jikiKen.hit = true}//自機弾のリセット（Itemに当たったら、自機弾は消さなければならない。）
+        //        if(item.hit){jikiTama.hit = true}//自機弾のリセット（Itemに当たったら、自機弾は消さなければならない。）
+        //こういう風に書くと、敵に当たった、とも処理されてしまっている。なんか一瞬で敵がパワーアップしてしまう。
 
         if(jiki.hp == 0){
         }else{
