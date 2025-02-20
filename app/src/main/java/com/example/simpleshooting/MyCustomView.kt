@@ -132,7 +132,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //if(item.hit){jikiTama = jiki.tamaHassha(jikiIchiTyousei)}   //もしアイテムに弾が当たっていたら、弾のリセット処理をする
         //んー、なんかこの方法もダメだな。弾が透けないとダメなのかも。通過してくれないと、跳ね返ったアイテムがまた当たってしまう。
         //ツインビーはボタン押すまで次の弾がでなかったからか。
-        
+
+        if(item.hit){   //もしアイテムに弾が当たっていたら、弾のリセット処理をする、そしてワンフレーム分だけ動かす
+            jikiTama = jiki.tamaHassha(jikiIchiTyousei)
+            jikiTama.nextFrame(jiki, teki, isFirstMove)
+        }
+
         if(jiki.hp == 0){
         }else{
             handler.postDelayed({ tsugiNoSyori() }, 100)
@@ -217,6 +222,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
         }
+
+
 
         if (event.action == MotionEvent.ACTION_UP) {
             isFirstMove = true

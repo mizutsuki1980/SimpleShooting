@@ -67,8 +67,10 @@ class Item {
         iro.color = iroA
     }
 
-
     fun nextFrame(jiki:Jiki,jikiTama:JikiTama) {
+
+        //ヒットしつつ取得される、ということもありえるのか。むずいなー
+
         if (isAppearance) {
             when (status) {
                 ITEM_NASI_STATE -> {
