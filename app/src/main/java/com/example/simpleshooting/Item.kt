@@ -24,9 +24,10 @@ class Item {
 
     val ITEM_NASI_STATE = 1
     val ITEM_SYUTUGEN_STATE = 2
-    val ITEM_HANEKAERI_STATE = 3
-    val ITEM_GET_STATE = 4
-    val ITEM_OWARI_STATE = 5
+    val ITEM_RAKKA_STATE = 3
+    val ITEM_HANEKAERI_STATE = 4
+    val ITEM_GET_STATE = 5
+    val ITEM_OWARI_STATE = 6
 
     var status = ITEM_NASI_STATE // 最初は玉が画面内に無い状態
     init {
@@ -36,18 +37,15 @@ class Item {
         irosub.color = Color.LTGRAY
     }
 
-
-
-
-
     fun syokika(){
         x = xlist.random()
         y = 20
         hit = false
         kasoku = 1.01
         ookisa = initialOokisa
-        status = ITEM_SYUTUGEN_STATE
         iro.color = Color.YELLOW
+
+        status = ITEM_SYUTUGEN_STATE
     }
 
     fun moveOne(){
@@ -56,8 +54,6 @@ class Item {
     }
     fun moveMinus(){
         kasoku *= 1.1
-
-
         y-= (kasoku*10).toInt()
     }
 
@@ -67,58 +63,43 @@ class Item {
         iro.color = iroA
     }
 
+
+    //①なし　②出現　③落下 　④弾に当たり跳ね返り処理、色変え
+    //⑤落下　⑥取得 　⑦終わり
+    //みたいに別ける
+
     fun nextFrame(jiki:Jiki,jikiTama:JikiTama) {
 
         //ヒットしつつ取得される、ということもありえるのか。むずいなー
-
+        // これさー、どこのフレームでも当たりチェックやっていいんじゃないの？実は
+        
         if (isAppearance) {
+        if (tamaAtariCheck(jikiTama)){randomirokae()}
+
             when (status) {
-                ITEM_NASI_STATE -> {
-                    syokika()
-                }
-
-                ITEM_SYUTUGEN_STATE -> {
-
+                ITEM_NASI_STATE -> { syokika() }
+                ITEM_SYUTUGEN_STATE -> { status = ITEM_RAKKA_STATE }
+                ITEM_RAKKA_STATE-> {
                     moveOne()
-
-                    if (y>=1500) {
-                        status = ITEM_NASI_STATE
-                    }
-                    if (jikiniattaterukaCheck(jiki)) {
-                        ookisa = 25
-                        status = ITEM_GET_STATE
-                    }
-
-                    if (tamaniatatterukaCheck(jikiTama)) {
-                        hit = true
-                        randomirokae()
-                        rakkacount = 8
-                        status = ITEM_HANEKAERI_STATE
-                    }
+                    if (y>=1500) { status = ITEM_NASI_STATE }
                 }
 
                 ITEM_HANEKAERI_STATE -> {
-                    if(rakkacount == 0) { status = ITEM_SYUTUGEN_STATE }
-
-                    if ( rakkacount >0){
-                        moveMinus()
-                        rakkacount -= 1
-                    }
                 }
 
                 ITEM_GET_STATE -> {
-                    ookisa /= 2
-                    status = ITEM_OWARI_STATE
+
 
                 }
                 ITEM_OWARI_STATE -> {
-                    ookisa /= 2
-                    status =  ITEM_NASI_STATE
+
                 }
+
 
             }
         }
     }
+
     fun tamaniatatterukaCheck(jikiTama:JikiTama):Boolean{
         val x1 = x - ookisa / 2 - jikiTama.ookisa / 2
         val y1 = y - ookisa / 2 - jikiTama.ookisa / 2
@@ -192,5 +173,15 @@ class Item {
 
     }
 
+    fun tamaAtariCheck(jikiTama:JikiTama):Boolean{
+        val x1 = x - ookisa / 2 - jikiTama.ookisa / 2
+        val y1 = y - ookisa / 2 - jikiTama.ookisa / 2
+        val x2 = x + ookisa / 2 + jikiTama.ookisa / 2
+        val y2 = y + ookisa / 2 + jikiTama.ookisa / 2
+        val isXInside = (jikiTama.x >= x1 && jikiTama.x <= x2)
+        val isYInside = (jikiTama.y >= y1 && jikiTama.y <= y2)
+        return isXInside && isYInside
+
+    }
 
 }
