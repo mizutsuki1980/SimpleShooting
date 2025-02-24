@@ -13,6 +13,7 @@ class Item {
     var y = 20
     var kasoku = 1.25
     var rakkacount = 0
+    var itemGetJiTimeCount = 0
 
     val initialOokisa = 50 //ここで大きさを初期設定
     var ookisa = initialOokisa
@@ -82,18 +83,21 @@ class Item {
                 ITEM_RAKKA_STATE-> {
                     moveOne()
                     if (y>=1500) { status = ITEM_NASI_STATE }
+                    if(jikiAtariCheck(jiki)){
+                        itemGetJiTimeCount = 5
+                        status = ITEM_GET_STATE
+                    }
                 }
 
                 ITEM_HANEKAERI_STATE -> {
                 }
 
                 ITEM_GET_STATE -> {
-
-
+                    itemGetJiTimeCount -= 1
+                    ookisa /=2
+                    if(itemGetJiTimeCount==0){status = ITEM_OWARI_STATE }
                 }
-                ITEM_OWARI_STATE -> {
-
-                }
+                ITEM_OWARI_STATE -> { status = ITEM_NASI_STATE }
 
 
             }
@@ -111,7 +115,7 @@ class Item {
 
     }
 
-    fun jikiniattaterukaCheck(jiki:Jiki):Boolean {
+    fun jikiAtariCheck(jiki:Jiki):Boolean {
         val x1 = jiki.x -jiki.ookisa / 2 - ookisa / 2
         val y1 = jiki.y -jiki.ookisa / 2 - ookisa / 2
         val x2 = jiki.x +jiki.ookisa / 2 + ookisa / 2
@@ -132,7 +136,7 @@ class Item {
 
     fun draw(canvas: Canvas){
         canvas.drawRect(shikakuRectXY(), iro)  //自機の表示
-        if (status>3){drawyosumi(canvas)} //エフェクトの表示　statusが３以上だったら、という条件をつかっているので、sutatusが増えたらここも変えなければいけない
+        if (status == ITEM_GET_STATE){drawyosumi(canvas)} //エフェクトの表示　statusが３以上だったら、という条件をつかっているので、sutatusが増えたらここも変えなければいけない
     }
 
     fun drawyosumi(canvas: Canvas) {
@@ -169,8 +173,6 @@ class Item {
         val bottom4 = (y-25) + ookisa / 2
         val m4 = Rect(left4, top4, right4,bottom4)
         canvas.drawRect(m4, iro)  //自機
-
-
     }
 
     fun tamaAtariCheck(jikiTama:JikiTama):Boolean{
