@@ -12,7 +12,7 @@ class Item {
     var x = xlist.random()
     var y = 20
     var kasoku = 1.25
-    var rakkacount = 0
+    var rakkaCount = 0
     var itemGetJiTimeCount = 0
 
     val initialOokisa = 50 //ここで大きさを初期設定
@@ -55,8 +55,8 @@ class Item {
         y+= (kasoku*10).toInt()
     }
     fun moveMinus(){
-        kasoku *= 1.1
-        y-= (kasoku*10).toInt()
+        kasoku *= 1.2
+        y-= (kasoku*1).toInt()
     }
 
     fun randomirokae(){
@@ -74,24 +74,53 @@ class Item {
 
         //ヒットしつつ取得される、ということもありえるのか。むずいなー
         // これさー、どこのフレームでも当たりチェックやっていいんじゃないの？実は
-        if (isAppearance) { if (tamaAtariCheck(jikiTama)){randomirokae()}}
 
         when (status) {
             ITEM_NASI_STATE -> { syokika() }
             ITEM_SYUTUGEN_STATE -> { status = ITEM_RAKKA_STATE }
 
             ITEM_RAKKA_STATE-> {
+                if (isAppearance) { if (tamaAtariCheck(jikiTama)){
+                    isAppearance = false
+                    randomirokae()}
+                }
                 moveOne()
                 if (y>=1500) { status = ITEM_NASI_STATE }
-                if(jikiAtariCheck(jiki)){   //ITEM_GET_STATEに入れば色は変わらないようにしたい。
+
+
+                if (tamaAtariCheck(jikiTama)){
+                    //弾があたっていたら、数秒間。たまにあたらない判定にして、跳ね返る。
+                    rakkaCount = 12
+                    isAppearance = false    //何回も当たらないようにする
+                    status = ITEM_HANEKAERI_STATE
+                }
+
+                if(jikiAtariCheck(jiki)){   //自機に触れる判定は、弾が当たる判定よりあとになければいけない //ITEM_GET_STATEに入れば色は変わらないようにしたい。
+                // 自機にあたっていたら、問答無用でGetにとぶ
                     itemGetJiTimeCount = 5
                     ookisa /=2
-                    isAppearance = false
+                    isAppearance = false    //何回も当たらないようにする
                     status = ITEM_GET_STATE
                 }
             }
 
             ITEM_HANEKAERI_STATE -> {
+                rakkaCount -= 1
+                if (rakkaCount==0){
+                    isAppearance = true    //当たり判定を有効にする
+                    kasoku = 1.01   //加速を元に戻す
+                    status = ITEM_RAKKA_STATE
+                }
+                moveMinus()
+
+                if(jikiAtariCheck(jiki)){   //自機に触れる判定は、弾が当たる判定よりあとになければいけない //ITEM_GET_STATEに入れば色は変わらないようにしたい。
+                    // 自機にあたっていたら、問答無用でGetにとぶ
+                    itemGetJiTimeCount = 5
+                    ookisa /=2
+                    isAppearance = false
+                    status = ITEM_GET_STATE
+                }
+
             }
 
             ITEM_GET_STATE -> {
@@ -104,7 +133,7 @@ class Item {
     }
 
 
-    fun tamaniatatterukaCheck(jikiTama:JikiTama):Boolean{
+    fun tamaAtariCheck(jikiTama:JikiTama):Boolean{
         val x1 = x - ookisa / 2 - jikiTama.ookisa / 2
         val y1 = y - ookisa / 2 - jikiTama.ookisa / 2
         val x2 = x + ookisa / 2 + jikiTama.ookisa / 2
@@ -175,15 +204,5 @@ class Item {
         canvas.drawRect(m4, iro)  //自機
     }
 
-    fun tamaAtariCheck(jikiTama:JikiTama):Boolean{
-        val x1 = x - ookisa / 2 - jikiTama.ookisa / 2
-        val y1 = y - ookisa / 2 - jikiTama.ookisa / 2
-        val x2 = x + ookisa / 2 + jikiTama.ookisa / 2
-        val y2 = y + ookisa / 2 + jikiTama.ookisa / 2
-        val isXInside = (jikiTama.x >= x1 && jikiTama.x <= x2)
-        val isYInside = (jikiTama.y >= y1 && jikiTama.y <= y2)
-        return isXInside && isYInside
-
-    }
 
 }
