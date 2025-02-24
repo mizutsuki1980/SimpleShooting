@@ -42,6 +42,7 @@ class Item {
         x = xlist.random()
         y = 20
         hit = false
+        isAppearance = true
         kasoku = 1.01
         ookisa = initialOokisa
         iro.color = Color.YELLOW
@@ -73,36 +74,35 @@ class Item {
 
         //ヒットしつつ取得される、ということもありえるのか。むずいなー
         // これさー、どこのフレームでも当たりチェックやっていいんじゃないの？実は
-        
-        if (isAppearance) {
-        if (tamaAtariCheck(jikiTama)){randomirokae()}
+        if (isAppearance) { if (tamaAtariCheck(jikiTama)){randomirokae()}}
 
-            when (status) {
-                ITEM_NASI_STATE -> { syokika() }
-                ITEM_SYUTUGEN_STATE -> { status = ITEM_RAKKA_STATE }
-                ITEM_RAKKA_STATE-> {
-                    moveOne()
-                    if (y>=1500) { status = ITEM_NASI_STATE }
-                    if(jikiAtariCheck(jiki)){
-                        itemGetJiTimeCount = 5
-                        status = ITEM_GET_STATE
-                    }
-                }
+        when (status) {
+            ITEM_NASI_STATE -> { syokika() }
+            ITEM_SYUTUGEN_STATE -> { status = ITEM_RAKKA_STATE }
 
-                ITEM_HANEKAERI_STATE -> {
-                }
-
-                ITEM_GET_STATE -> {
-                    itemGetJiTimeCount -= 1
+            ITEM_RAKKA_STATE-> {
+                moveOne()
+                if (y>=1500) { status = ITEM_NASI_STATE }
+                if(jikiAtariCheck(jiki)){   //ITEM_GET_STATEに入れば色は変わらないようにしたい。
+                    itemGetJiTimeCount = 5
                     ookisa /=2
-                    if(itemGetJiTimeCount==0){status = ITEM_OWARI_STATE }
+                    isAppearance = false
+                    status = ITEM_GET_STATE
                 }
-                ITEM_OWARI_STATE -> { status = ITEM_NASI_STATE }
-
-
             }
+
+            ITEM_HANEKAERI_STATE -> {
+            }
+
+            ITEM_GET_STATE -> {
+                itemGetJiTimeCount -= 1
+                ookisa /=2
+                if(itemGetJiTimeCount==0){status = ITEM_OWARI_STATE }
+            }
+            ITEM_OWARI_STATE -> { status = ITEM_NASI_STATE }
         }
     }
+
 
     fun tamaniatatterukaCheck(jikiTama:JikiTama):Boolean{
         val x1 = x - ookisa / 2 - jikiTama.ookisa / 2
