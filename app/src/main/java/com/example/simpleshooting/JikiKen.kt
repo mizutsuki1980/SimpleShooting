@@ -4,11 +4,13 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
+import kotlin.io.path.Path
 
 class JikiKen(jiki:Jiki) {
     var x = jiki.x
     var y = jiki.y
     val iro = Paint()
+    val kpaint  =  Paint()
     var ookisa : Int
     var bunsin = 0
     val bunsinMax = 20
@@ -23,6 +25,9 @@ class JikiKen(jiki:Jiki) {
     init {
         iro.style = Paint.Style.FILL
         iro.color = Color.LTGRAY
+        kpaint.style = Paint.Style.FILL_AND_STROKE
+        kpaint.color = Color.DKGRAY
+
         x = jiki.x
         y = jiki.y
         ookisa = 10
@@ -37,16 +42,22 @@ class JikiKen(jiki:Jiki) {
     fun draw(canvas: Canvas, jiki: Jiki) {
         val huerulist = listOf<Int>(15,20,25,30,35,40,45,50,55,60,65,70,75,80,85)
         var hueru = huerulist.random()
-        //ランダムで色も変えれたけど、きもかったからやめた。あと当たった時に赤にならないといけないしなー。
-//        val randomIrolist = listOf<Int>(Color.LTGRAY,Color.YELLOW,Color.MAGENTA)
-//        var randomIro = randomIrolist.random()
-//        iro.color = randomIro
-
         for (a in 0..<bunsin) {
             var kyori = ookisa * a + ookisa + (ookisa/2)
             hueru = huerulist.random()
             canvas.drawCircle(jiki.x.toFloat(),jiki.y-kyori.toFloat(),(ookisa/2+hueru/10).toFloat(),iro)
        }
+        val path = android.graphics.Path()
+
+        path.moveTo(jiki.x+10.0f, jiki.y+10.0f)
+        ///始点を決める。
+        path.lineTo(200.0f, 150.0f)
+        path.lineTo(150.0f, 200.0f)
+        path.close()
+
+        canvas.drawPath(path, kpaint)
+
+
     }
 
     fun checkOne(jiki:Jiki,teki:Teki,kyori:Int):Boolean{
