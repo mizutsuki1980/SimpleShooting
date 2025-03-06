@@ -49,10 +49,12 @@ class JikiKen(jiki:Jiki) {
        }
         val path = android.graphics.Path()
 
-        path.moveTo(jiki.x+0.0f, jiki.y-10.0f)
+        path.moveTo(jiki.x+20.0f, jiki.y-30.0f)
         ///始点を決める。
-        path.lineTo(jiki.x-20.0f, jiki.y-150.0f)
-        path.lineTo(jiki.x+20.0f, jiki.y-150.0f)
+        path.lineTo(jiki.x+20.0f, jiki.y-200.0f)
+        path.lineTo(jiki.x+00.0f, jiki.y-220.0f)
+        path.lineTo(jiki.x-20.0f, jiki.y-200.0f)
+        path.lineTo(jiki.x-20.0f, jiki.y-30.0f)
         path.close()
 
         canvas.drawPath(path, kpaint)
