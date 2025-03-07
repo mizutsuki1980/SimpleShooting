@@ -26,7 +26,7 @@ class JikiKen(jiki:Jiki) {
         iro.style = Paint.Style.FILL
         iro.color = Color.LTGRAY
         kpaint.style = Paint.Style.FILL_AND_STROKE
-        kpaint.color = Color.DKGRAY
+        kpaint.color = Color.WHITE
 
         x = jiki.x
         y = jiki.y
@@ -47,8 +47,11 @@ class JikiKen(jiki:Jiki) {
             hueru = huerulist.random()
             canvas.drawCircle(jiki.x.toFloat(),jiki.y-kyori.toFloat(),(ookisa/2+hueru/10).toFloat(),iro)
        }
-        val path = android.graphics.Path()
+        canvas.drawPath(kenPath(jiki), kpaint)
 
+    }
+    fun kenPath(jiki: Jiki):android.graphics.Path{
+        val path = android.graphics.Path()
         path.moveTo(jiki.x+20.0f, jiki.y-30.0f)
         ///始点を決める。
         path.lineTo(jiki.x+20.0f, jiki.y-200.0f)
@@ -56,12 +59,8 @@ class JikiKen(jiki:Jiki) {
         path.lineTo(jiki.x-20.0f, jiki.y-200.0f)
         path.lineTo(jiki.x-20.0f, jiki.y-30.0f)
         path.close()
-
-        canvas.drawPath(path, kpaint)
-
-
+        return path
     }
-
     fun checkOne(jiki:Jiki,teki:Teki,kyori:Int):Boolean{
         val jx = jiki.x
         val jy = jiki.y - kyori
