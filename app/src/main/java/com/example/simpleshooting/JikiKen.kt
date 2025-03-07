@@ -22,6 +22,8 @@ class JikiKen(jiki:Jiki) {
 
     var status = TAMA_NASI_STATE // 最初は玉が画面内に無い状態
 
+    var nagasa = 100
+
     init {
         iro.style = Paint.Style.FILL
         iro.color = Color.LTGRAY
@@ -39,6 +41,7 @@ class JikiKen(jiki:Jiki) {
         bunsin += 1
         if (bunsin==bunsinMax){bunsin=0}
     }
+
     fun draw(canvas: Canvas, jiki: Jiki) {
         val huerulist = listOf<Int>(15,20,25,30,35,40,45,50,55,60,65,70,75,80,85)
         var hueru = huerulist.random()
@@ -47,16 +50,18 @@ class JikiKen(jiki:Jiki) {
             hueru = huerulist.random()
             canvas.drawCircle(jiki.x.toFloat(),jiki.y-kyori.toFloat(),(ookisa/2+hueru/10).toFloat(),iro)
        }
-        canvas.drawPath(kenPath(jiki), kpaint)
 
+        nagasa += 10
+        canvas.drawPath(kenPath(jiki,nagasa), kpaint)
+        if(nagasa > 200){nagasa = 100}
     }
-    fun kenPath(jiki: Jiki):android.graphics.Path{
+    fun kenPath(jiki: Jiki,nagasa:Int):android.graphics.Path{
         val path = android.graphics.Path()
         path.moveTo(jiki.x+20.0f, jiki.y-30.0f)
         ///始点を決める。
-        path.lineTo(jiki.x+20.0f, jiki.y-200.0f)
-        path.lineTo(jiki.x+00.0f, jiki.y-220.0f)
-        path.lineTo(jiki.x-20.0f, jiki.y-200.0f)
+        path.lineTo(jiki.x+20.0f, jiki.y-nagasa-100.0f)
+        path.lineTo(jiki.x+00.0f, jiki.y-nagasa-120.0f)
+        path.lineTo(jiki.x-20.0f, jiki.y-nagasa-100.0f)
         path.lineTo(jiki.x-20.0f, jiki.y-30.0f)
         path.close()
         return path
