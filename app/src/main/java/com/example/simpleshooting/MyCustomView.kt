@@ -148,6 +148,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     override fun onDraw(canvas: Canvas) {
+        //なんかこう、色合いが全体的にダメ。自機、敵、弾ははっきりわかんないとなー
+        
         jiki.draw(canvas)   //自機の処理
         teki.draw(canvas) //敵jikiTamaの移動　処理
         item.draw(canvas) //アイテムの処理
@@ -155,9 +157,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(tekiTamaRef.isAppearance){ tekiTamaRef.draw(canvas)} //敵の反射弾の移動　処理
         if(houdaiTama.isAppearance){houdaiTama.draw(canvas)} //砲台の弾
         tekiTamaYama.draw(canvas) //山なりの弾
-
         if(isFirstMove){ jikiTama.draw(canvas)}     //自機の弾の処理
-        if(isFirstMove){ jikiKen.draw(canvas,jiki)}     //自機の弾の処理
+        //if(isFirstMove){ jikiKen.draw(canvas,jiki)}     //自機の剣の処理 　//剣は見ずらいからいらない、せっかく作ったけど。
         hpCounter.draw(canvas,jiki)
         scCounter.draw(canvas,scoreCount,frame)
         hantoumeinotamaDraw(canvas)
