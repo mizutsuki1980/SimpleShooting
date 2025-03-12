@@ -149,7 +149,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     override fun onDraw(canvas: Canvas) {
         //なんかこう、色合いが全体的にダメ。自機、敵、弾ははっきりわかんないとなー
-        
+
         jiki.draw(canvas)   //自機の処理
         teki.draw(canvas) //敵jikiTamaの移動　処理
         item.draw(canvas) //アイテムの処理
