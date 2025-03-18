@@ -127,15 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="ハイパー化"
-            android:textSize="8sp" />
-
-        <Button
-            android:id="@+id/hyperShotButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="ハイパーショット"
+            android:text="おっきくなる"
             android:textSize="8sp" />
 
         <Button
@@ -143,16 +135,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="敵もハイパー"
+            android:text="敵もおっきくなる"
             android:textSize="8sp" />
 
-        <Button
-            android:id="@+id/tekiHyperShotButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="敵もハイパーショット"
-            android:textSize="8sp" />
     </LinearLayout>
 
 </LinearLayout>
