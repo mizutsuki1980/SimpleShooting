@@ -25,16 +25,6 @@ class MainActivity : AppCompatActivity() {
         custom = findViewById<MyCustomView>(R.id.mycustom)
         custom.post { custom.beginAnimation() }
 
-        findViewById<Button>(R.id.tekiHyperButton).setOnClickListener {
-            custom.post { custom.tekiHyperPowerUp() }
-        }
-
-        findViewById<Button>(R.id.hyperButton).setOnClickListener {
-            custom.post { custom.jiki.hyperPowerUp() }
-        }
-//        findViewById<Button>(R.id.hyperShotButton).setOnClickListener {
-  //          custom.post { custom.jiki.hyperShotPowerUp() }
-    //    }
 
         findViewById<Button>(R.id.gameReSetButton).setOnClickListener{
             custom.post { custom.startSetUp() }

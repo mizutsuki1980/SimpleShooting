@@ -35,13 +35,7 @@ class Jiki(var x:Int, var y:Int) {
             ookisa = 200
         }
     }
-    fun hyperShotPowerUp(){
-        if (ookisa==200){
-            ookisa = 50
-        }else{
-            ookisa = 200
-        }
-    }
+
 
     fun move(clickX:Int,clickY:Int){
         val saX = x - clickX
