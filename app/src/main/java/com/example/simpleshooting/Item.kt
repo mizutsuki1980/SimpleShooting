@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 
 class Item {
+    //剣は消した
     var isAppearance = true
 
     val xlist = listOf<Int>(100,150,200,250,300,350,400,450,500,550,600)
