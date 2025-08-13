@@ -135,6 +135,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         if(item.hit){   //もしアイテムに弾が当たっていたら、弾のリセット処理をする、そしてワンフレーム分だけ動かす
             jikiTama = jiki.tamaHassha(jikiIchiTyousei)
+            //ここにアイテム処理をかく？とったらスコアが上がるとか。
             jikiTama.nextFrame(jiki, teki, isFirstMove)
         }
 
@@ -148,7 +149,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     override fun onDraw(canvas: Canvas) {
-        //なんかこう、色合いが全体的にダメ。自機、敵、弾ははっきりわかんないとなー
 
         jiki.draw(canvas)   //自機の処理
         teki.draw(canvas) //敵jikiTamaの移動　処理
@@ -165,7 +165,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         hantoumeinotamaDraw(canvas)
         if(jiki.hp == 0){
             gameover(canvas)
-
         }
     }
 
