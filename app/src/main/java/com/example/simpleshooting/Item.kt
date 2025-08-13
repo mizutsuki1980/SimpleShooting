@@ -155,6 +155,7 @@ class Item {
         return isXInside && isYInside
     }
 
+
     fun shikakuRectXY(): Rect {
         val left = x  - ookisa / 2
         val right = x  + ookisa / 2
@@ -164,8 +165,21 @@ class Item {
         return m
     }
 
+    fun maruRectXY(): Rect {
+        val left = x  - ookisa / 2
+        val right = x  + ookisa / 2
+        val top = y  - ookisa / 2
+        val bottom = y + ookisa / 2
+        val m = Rect(left, top, right,bottom)
+//        canvas.drawCircle(x+xx.toFloat(),y+yy.toFloat(),(ookisa/2-12).toFloat(),irosub)    //サブ機の描画
+
+
+        return m
+    }
+
     fun draw(canvas: Canvas){
-        canvas.drawRect(shikakuRectXY(), iro)  //自機の表示
+        canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa/2).toFloat(),iro)    //サブ機の描画
+        //canvas.drawRect(shikakuRectXY(), iro)  //自機の表示
         if (status == ITEM_GET_STATE){drawyosumi(canvas)} //エフェクトの表示　statusが３以上だったら、という条件をつかっているので、sutatusが増えたらここも変えなければいけない
     }
 
