@@ -160,6 +160,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(isFirstMove){ jikiTama.draw(canvas)}     //自機の弾の処理
         //if(isFirstMove){ jikiKen.draw(canvas,jiki)}     //自機の剣の処理 　//剣は見ずらいからいらない、せっかく作ったけど。
         hpCounter.draw(canvas,jiki)
+
         scCounter.draw(canvas,scoreCount,frame)
         hantoumeinotamaDraw(canvas)
         if(jiki.hp == 0){

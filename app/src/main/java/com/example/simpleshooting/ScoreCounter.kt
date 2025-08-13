@@ -11,6 +11,8 @@ class ScoreCounter {
     val iroMoji = Paint()
     val irosub = Paint()
     val irosubMoji = Paint()
+    val irosubMojiTitleTime = Paint()
+    val irosubMojiTitleScore = Paint()
 
     var yokohaba = 190
     var x = 20
@@ -29,7 +31,13 @@ class ScoreCounter {
         irosubMoji.color = argb(255, 0, 0, 0)
         irosubMoji.textSize = 30.toFloat()
 
+        irosubMojiTitleScore.style = Paint.Style.FILL
+        irosubMojiTitleScore.color = argb(255, 255, 255, 255)
+        irosubMojiTitleScore.textSize = 20.toFloat()
 
+        irosubMojiTitleTime.style = Paint.Style.FILL
+        irosubMojiTitleTime.color = argb(255, 0, 0, 0)
+        irosubMojiTitleTime.textSize = 25.toFloat()
 
     }
 
@@ -56,9 +64,11 @@ class ScoreCounter {
 
     fun draw(canvas: Canvas,scoreCount:Int,frame:Int){
         canvas.drawRect(shikakuRect(), iro)
-        canvas.drawText(zerohuyasu(scoreCount.toString()),(x+9).toFloat(),(y+40).toFloat(),iroMoji)
+        canvas.drawText(zerohuyasu(scoreCount.toString()),(x+9).toFloat(),(y+44).toFloat(),iroMoji)
+        canvas.drawText("score",(20).toFloat(),(16).toFloat(),irosubMojiTitleScore)
         canvas.drawRect(timeshikakuRect(), irosub)
-        canvas.drawText(zerohuyasu(frame.toString()),(x+9+200).toFloat(),(y+40).toFloat(),irosubMoji)
+        canvas.drawText(zerohuyasu(frame.toString()),(x+9+200).toFloat(),(y+44).toFloat(),irosubMoji)
+        canvas.drawText("time",(20+200).toFloat(),(19).toFloat(),irosubMojiTitleTime)
     }
     fun zerohuyasu(text:String):String{
         val ketasuu = 8 //今回は８桁に固定
