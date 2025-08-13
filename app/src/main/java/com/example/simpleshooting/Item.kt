@@ -34,7 +34,7 @@ class Item {
     var status = ITEM_NASI_STATE // 最初は玉が画面内に無い状態
     init {
         iro.style = Paint.Style.FILL
-        iro.color = Color.YELLOW
+        iro.color = Color.GREEN
         irosub.style = Paint.Style.FILL
         irosub.color = Color.LTGRAY
     }
@@ -46,7 +46,7 @@ class Item {
         isAppearance = true
         kasoku = 1.01
         ookisa = initialOokisa
-        iro.color = Color.YELLOW
+        iro.color = Color.GREEN
 
         status = ITEM_SYUTUGEN_STATE
     }
@@ -61,7 +61,7 @@ class Item {
     }
 
     fun randomirokae(){
-        val irolist = listOf<Int>(Color.WHITE,Color.YELLOW,Color.CYAN,Color.MAGENTA)
+        val irolist = listOf<Int>(Color.WHITE,Color.GREEN,Color.CYAN,Color.MAGENTA)
         var iroA = irolist.random()
         iro.color = iroA
     }
@@ -179,7 +179,7 @@ class Item {
 
     fun draw(canvas: Canvas){
         canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa/2).toFloat(),iro)
-        //canvas.drawRect(shikakuRectXY(), iro)  
+        //canvas.drawRect(shikakuRectXY(), iro)
         if (status == ITEM_GET_STATE){drawyosumi(canvas)} //エフェクトの表示　statusが３以上だったら、という条件をつかっているので、sutatusが増えたらここも変えなければいけない
     }
 
