@@ -178,8 +178,8 @@ class Item {
     }
 
     fun draw(canvas: Canvas){
-        canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa/2).toFloat(),iro)    //サブ機の描画
-        //canvas.drawRect(shikakuRectXY(), iro)  //自機の表示
+        canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa/2).toFloat(),iro)
+        //canvas.drawRect(shikakuRectXY(), iro)  
         if (status == ITEM_GET_STATE){drawyosumi(canvas)} //エフェクトの表示　statusが３以上だったら、という条件をつかっているので、sutatusが増えたらここも変えなければいけない
     }
 
