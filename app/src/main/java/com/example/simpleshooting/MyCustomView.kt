@@ -13,6 +13,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var frame = 0
     var dgCount = 0
     var scoreCount = 0
+    var tokuten = 0
     var isFirstMove = false //動きだしたら弾も出るようにする
     val jikiIchiTyousei = 120 //クリックした位置よりちょっと上にくる。そうしないと指に隠れて見えない。
 
@@ -127,15 +128,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if (jikiKen.hit) { jikiTamaAtattaSyori() }
         tekiTamaNextFrame() //敵の弾の処理は全部ここにまとめる
         item.nextFrame(jiki,jikiTama) //いったんここで作る、あとでtekiTamaNextFrame() に入れる
-        //        if(item.hit){jikiTama.hit = true}//自機弾のリセット（Itemに当たったら、自機弾は消さなければならない。）
-        //こういう風に書くと、敵に当たった、とも処理されてしまっている。なんか一瞬で敵がパワーアップしてしまう。
-        //if(item.hit){jikiTama = jiki.tamaHassha(jikiIchiTyousei)}   //もしアイテムに弾が当たっていたら、弾のリセット処理をする
-        //んー、なんかこの方法もダメだな。弾が透けないとダメなのかも。通過してくれないと、跳ね返ったアイテムがまた当たってしまう。
-        //ツインビーはボタン押すまで次の弾がでなかったからか。
+
+        //ここでアイテム取った時しょりしてるっぽい
+        when(item.iro.color) {
+            Color.WHITE->{tokuten += 20}
+            Color.GREEN->{tokuten += 10}
+            Color.CYAN->{tokuten += 30}
+            Color.MAGENTA->{tokuten += 40}
+        }
+
 
         if(item.hit){   //もしアイテムに弾が当たっていたら、弾のリセット処理をする、そしてワンフレーム分だけ動かす
             jikiTama = jiki.tamaHassha(jikiIchiTyousei)
-            //ここにアイテム処理をかく？とったらスコアが上がるとか。
             jikiTama.nextFrame(jiki, teki, isFirstMove)
         }
 
@@ -161,7 +165,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //if(isFirstMove){ jikiKen.draw(canvas,jiki)}     //自機の剣の処理 　//剣は見ずらいからいらない、せっかく作ったけど。
         hpCounter.draw(canvas,jiki)
 
-        scCounter.draw(canvas,scoreCount,frame)
+        scCounter.draw(canvas,tokuten,frame)
         hantoumeinotamaDraw(canvas)
         if(jiki.hp == 0){
             gameover(canvas)
@@ -189,6 +193,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         frame = 0
         dgCount = 0
         scoreCount = 0
+        tokuten = 0
+
         isFirstMove = false //動きだしたら弾も出るようにする
 
         jiki =Jiki(initialJikiX, initialJikiY)
