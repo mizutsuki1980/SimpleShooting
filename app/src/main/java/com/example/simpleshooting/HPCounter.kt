@@ -12,6 +12,8 @@ class HPCounter {
 
     val iro = Paint()
     val irosub = Paint()
+    val iroHeart = Paint()
+
     var yokohaba = 190
     var tatehaba = 50
     var waku = 10
@@ -21,6 +23,10 @@ class HPCounter {
     init {
         iro.style = Paint.Style.FILL
         iro.color = Color.RED
+        iroHeart.style = Paint.Style.FILL
+        iroHeart.color = Color.RED
+        iroHeart.textSize = 60.toFloat()
+
         irosub.style = Paint.Style.FILL
         irosub.color = argb(255, 255, 255, 200)
 
@@ -54,6 +60,9 @@ class HPCounter {
 
     fun draw(canvas: Canvas,jiki:Jiki){
         canvas.drawRect(shikakuRect(), iro)
+        canvas.drawText("♡",(435).toFloat(),(50).toFloat(),iroHeart)
+
+
         for(a in 0..<jiki.hp) {
             //なんかマイナスになっても動き続けるんだな。へー
             canvas.drawRect(hpShikakuRect(a+1), irosub)
