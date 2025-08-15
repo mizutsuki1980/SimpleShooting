@@ -58,7 +58,7 @@ class HPCounter {
     }
 
 
-    fun drawHaert(canvas: Canvas, z:Float, w:Float){
+    fun drawHaert(canvas: Canvas, xx:Float, yy:Float){
         val paintHaert = Paint()
 
         paintHaert.color = Color.RED
@@ -68,61 +68,80 @@ class HPCounter {
         val pathHaert = android.graphics.Path()
         //        val z = 850f //ハートの最下部
         //        val w = 300f //ハートのｘ軸
-        pathHaert.moveTo(w, z) // 下のとがった部分
+
+        pathHaert.moveTo(xx, yy) // 下のとがった部分
         // 左側のカーブ
-        pathHaert.cubicTo(w-150f*b, z-100f*b, w-150f*b, z-250f*b, w, z-200f*b)
+        pathHaert.cubicTo(xx-150f*b, yy-100f*b, xx-150f*b, yy-250f*b, xx, yy-200f*b)
         // 右側のカーブ
-        pathHaert.cubicTo(w+150f*b, z-250f*b, w+150f*b, z-100f*b, w, z)
+        pathHaert.cubicTo(xx+150f*b, yy-250f*b, xx+150f*b, yy-100f*b, xx, yy)
         pathHaert.close()
         canvas.drawPath(pathHaert,paintHaert)
     }
 
     fun drawBell(canvas: Canvas, z:Float, w:Float){
-
-        val pathBell = android.graphics.Path()
-            // スタート地点：上部の中央（ベルのてっぺん）
-        pathBell.moveTo(300f, 200f)
-
-            // 左側のカーブ（上から下に広がる）
-        pathBell.cubicTo(200f, 220f, 180f, 350f, 200f, 400f)
-
-            // 下部（底）のアーチ
-        pathBell.quadTo(300f, 450f, 400f, 400f)
-
-            // 右側のカーブ（下から上に狭まる）
-        pathBell.cubicTo(420f, 350f, 400f, 220f, 300f, 200f)
-
-        pathBell.close()
+        // --- ベル本体 ---
 
 
-        val paint = Paint().apply {
+        val pathBell = android.graphics.Path().apply {
+            moveTo(300f, 200f)
+
+            // 左側カーブ
+            cubicTo(200f, 220f, 180f, 350f, 200f, 400f)
+
+            // 下部アーチ（底部分）
+            quadTo(300f, 450f, 400f, 400f)
+
+            // 右側カーブ
+            cubicTo(420f, 350f, 400f, 220f, 300f, 200f)
+
+            close()
+        }
+
+        // --- 空洞（黒い部分） ---
+        val pathHole = android.graphics.Path().apply {
+            // 下部の内側だけの弧を描く
+            moveTo(220f, 400f)
+            quadTo(300f, 430f, 380f, 400f)
+            quadTo(300f, 420f, 220f, 400f) // 下側の弧
+
+            close()
+        }
+
+        // --- 鈴の玉（下の丸） ---
+        val ballX = 300f
+        val ballY = 440f
+        val ballRadius = 10f
+
+        // --- Paint定義 ---
+        val paintBell = Paint().apply {
             color = Color.YELLOW
             style = Paint.Style.FILL
             isAntiAlias = true
         }
 
-        canvas.drawPath(pathBell, paint)
-
-// 鈴の玉（オプション）
-        val ballPaint = Paint().apply {
-            color = Color.DKGRAY
+        val paintHole = Paint().apply {
+            color = Color.BLACK
             style = Paint.Style.FILL
+            isAntiAlias = true
         }
 
-        canvas.drawCircle(300f, 450f, 10f, ballPaint)
+        val paintBall = Paint().apply {
+            color = Color.DKGRAY
+            style = Paint.Style.FILL
+            isAntiAlias = true
+        }
 
+        // --- 描画 ---
+        canvas.drawPath(pathBell, paintBell)  // ベル本体（黄色）
+        canvas.drawPath(pathHole, paintHole)  // 空洞部分（黒）
+        canvas.drawCircle(ballX, ballY, ballRadius, paintBall) // 鈴の玉
 
-        val ballX = 300f
-        val ballY = 450f
-        val ballRadius = 10f
-
-        canvas.drawCircle(ballX, ballY, ballRadius, paint)
 
     }
     fun draw(canvas: Canvas,jiki:Jiki){
         canvas.drawRect(shikakuRect(), iro)
         //canvas.drawText("♡",(435).toFloat(),(50).toFloat(),iroHeart)
-        drawHaert(canvas,50f,465f)
+        drawHaert(canvas,465f,50f)
         drawBell(canvas,10f,20f)
 
         for(a in 0..<jiki.hp) {
