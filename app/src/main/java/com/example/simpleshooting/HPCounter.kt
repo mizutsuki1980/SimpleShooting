@@ -66,21 +66,17 @@ class HPCounter {
     //}
 
 
-
-    fun draw(canvas: Canvas,jiki:Jiki){
-        canvas.drawRect(shikakuRect(), iro)
-        canvas.drawText("♡",(435).toFloat(),(50).toFloat(),iroHeart)
-
-
-        //ハートを描いてみる
+    fun drawHaert(canvas: Canvas, z:Float, w:Float){
         val paintHaert = Paint()
+
         paintHaert.color = Color.RED
         paintHaert.style = Paint.Style.FILL
 
+
         val pathHaert = android.graphics.Path()
 
-        val z = 850f //ハートの最下部
-        val w = 300f //ハートのｘ軸
+        //        val z = 850f //ハートの最下部
+        //        val w = 300f //ハートのｘ軸
 
         pathHaert.moveTo(300f, z) // 下のとがった部分
         // 左側のカーブ
@@ -88,9 +84,14 @@ class HPCounter {
         // 右側のカーブ
         pathHaert.cubicTo(w+150f, z-250f, w+150f, z-100f, w, z)
         pathHaert.close()
-
         canvas.drawPath(pathHaert,paintHaert)
 
+    }
+
+    fun draw(canvas: Canvas,jiki:Jiki){
+        canvas.drawRect(shikakuRect(), iro)
+        canvas.drawText("♡",(435).toFloat(),(50).toFloat(),iroHeart)
+        drawHaert(canvas,850f,300f,0.5)
 
         for(a in 0..<jiki.hp) {
             //なんかマイナスになっても動き続けるんだな。へー
