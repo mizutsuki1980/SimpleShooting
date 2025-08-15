@@ -116,6 +116,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun tsugiNoSyori() {
+// ポーズとかつけたい
+        //なんかもうちょっとだけちゃんとした作りにしたい。おもに見た目。
+
         frame += 1  //繰り返し処理はここでやってる
         tekiKougekiHueru()
         invalidate()
@@ -129,7 +132,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tekiTamaNextFrame() //敵の弾の処理は全部ここにまとめる
         item.nextFrame(jiki,jikiTama) //いったんここで作る、あとでtekiTamaNextFrame() に入れる
 
-        //ここでアイテム取った時しょりしてるっぽい
         if(item.status==6) {
             when (item.iro.color) {
                 Color.WHITE -> {tokuten += 20 }
