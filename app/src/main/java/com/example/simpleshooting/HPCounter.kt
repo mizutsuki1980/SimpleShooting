@@ -78,41 +78,29 @@ class HPCounter {
         canvas.drawPath(pathHaert,paintHaert)
     }
 
-    fun drawBell(canvas: Canvas, z:Float, w:Float){
-        // --- ベル本体 ---
-
+    fun drawBell(canvas: Canvas, xx:Float, yy:Float){
+        val b = 0.21f
 
         val pathBell = android.graphics.Path().apply {
-            moveTo(300f, 200f)
-
-            // 左側カーブ
-            cubicTo(200f, 220f, 180f, 350f, 200f, 400f)
-
-            // 下部アーチ（底部分）
-            quadTo(300f, 450f, 400f, 400f)
-
-            // 右側カーブ
-            cubicTo(420f, 350f, 400f, 220f, 300f, 200f)
-
+            moveTo(xx, yy)
+            moveTo(xx, yy)
+            cubicTo(xx-100f*b, yy+20f*b, xx-120f*b, yy+150f*b, xx-100f*b, yy+200f*b)
+            quadTo(xx, yy+250f*b, xx+100f*b, yy+200f*b)
+            cubicTo(xx+120f*b, yy+150f*b, xx+100f*b, yy+20f*b, xx, yy)
             close()
         }
 
-        // --- 空洞（黒い部分） ---
         val pathHole = android.graphics.Path().apply {
-            // 下部の内側だけの弧を描く
-            moveTo(220f, 400f)
-            quadTo(300f, 430f, 380f, 400f)
-            quadTo(300f, 420f, 220f, 400f) // 下側の弧
-
+            moveTo(xx-80f*b, yy+200f*b)
+            quadTo(xx, yy+230f*b, xx+80f*b, yy+200f*b)
+            quadTo(xx, yy+220f*b, xx-80f*b, yy+200f*b) // 下側の弧
             close()
         }
 
-        // --- 鈴の玉（下の丸） ---
-        val ballX = 300f
-        val ballY = 440f
-        val ballRadius = 10f
+        val ballX = xx
+        val ballY = yy+240f*b
+        val ballRadius = 10f*b
 
-        // --- Paint定義 ---
         val paintBell = Paint().apply {
             color = Color.YELLOW
             style = Paint.Style.FILL
@@ -125,24 +113,16 @@ class HPCounter {
             isAntiAlias = true
         }
 
-        val paintBall = Paint().apply {
-            color = Color.DKGRAY
-            style = Paint.Style.FILL
-            isAntiAlias = true
-        }
-
-        // --- 描画 ---
         canvas.drawPath(pathBell, paintBell)  // ベル本体（黄色）
         canvas.drawPath(pathHole, paintHole)  // 空洞部分（黒）
-        canvas.drawCircle(ballX, ballY, ballRadius, paintBall) // 鈴の玉
-
+        canvas.drawCircle(ballX, ballY, ballRadius, paintBell) // 鈴の玉
 
     }
     fun draw(canvas: Canvas,jiki:Jiki){
         canvas.drawRect(shikakuRect(), iro)
         //canvas.drawText("♡",(435).toFloat(),(50).toFloat(),iroHeart)
         drawHaert(canvas,465f,50f)
-        drawBell(canvas,10f,20f)
+        drawBell(canvas,500f,150f)
 
         for(a in 0..<jiki.hp) {
             canvas.drawRect(hpShikakuRect(a+1), irosub)
