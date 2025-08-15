@@ -177,9 +177,49 @@ class Item {
         return m
     }
 
+    fun drawBell(canvas: Canvas, xx:Float, yy:Float,iro:Paint){
+        val b = 0.235f
+
+        val pathBell = android.graphics.Path().apply {
+            moveTo(xx, yy)
+            moveTo(xx, yy)
+            cubicTo(xx-100f*b, yy+20f*b, xx-120f*b, yy+150f*b, xx-100f*b, yy+200f*b)
+            quadTo(xx, yy+250f*b, xx+100f*b, yy+200f*b)
+            cubicTo(xx+120f*b, yy+150f*b, xx+100f*b, yy+20f*b, xx, yy)
+            close()
+        }
+
+        val pathHole = android.graphics.Path().apply {
+            moveTo(xx-80f*b, yy+200f*b)
+            quadTo(xx, yy+230f*b, xx+80f*b, yy+200f*b)
+            quadTo(xx, yy+220f*b, xx-80f*b, yy+200f*b) // 下側の弧
+            close()
+        }
+
+        val ballX = xx
+        val ballY = yy+240f*b
+        val ballRadius = 10f*b
+
+        val paintHole = Paint().apply {
+            color = Color.BLACK
+            style = Paint.Style.FILL
+            isAntiAlias = true
+        }
+
+        canvas.drawPath(pathBell, iro)  // ベル本体（黄色）
+        canvas.drawPath(pathHole, paintHole)  // 空洞部分（黒）
+        canvas.drawCircle(ballX, ballY, ballRadius, iro) // 鈴の玉
+
+    }
+
     fun draw(canvas: Canvas){
         canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa/2).toFloat(),iro)
-        //canvas.drawRect(shikakuRectXY(), iro)
+        if(status == ITEM_GET_STATE || status == ITEM_OWARI_STATE || status ==ITEM_NASI_STATE){
+
+        }else{
+            drawBell(canvas,x.toFloat(),y-29.toFloat(),iro)
+        }
+
         if (status == ITEM_GET_STATE){drawyosumi(canvas)} //エフェクトの表示　statusが３以上だったら、という条件をつかっているので、sutatusが増えたらここも変えなければいけない
     }
 

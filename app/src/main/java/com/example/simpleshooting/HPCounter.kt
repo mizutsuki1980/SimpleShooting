@@ -78,51 +78,11 @@ class HPCounter {
         canvas.drawPath(pathHaert,paintHaert)
     }
 
-    fun drawBell(canvas: Canvas, xx:Float, yy:Float){
-        val b = 0.21f
-
-        val pathBell = android.graphics.Path().apply {
-            moveTo(xx, yy)
-            moveTo(xx, yy)
-            cubicTo(xx-100f*b, yy+20f*b, xx-120f*b, yy+150f*b, xx-100f*b, yy+200f*b)
-            quadTo(xx, yy+250f*b, xx+100f*b, yy+200f*b)
-            cubicTo(xx+120f*b, yy+150f*b, xx+100f*b, yy+20f*b, xx, yy)
-            close()
-        }
-
-        val pathHole = android.graphics.Path().apply {
-            moveTo(xx-80f*b, yy+200f*b)
-            quadTo(xx, yy+230f*b, xx+80f*b, yy+200f*b)
-            quadTo(xx, yy+220f*b, xx-80f*b, yy+200f*b) // 下側の弧
-            close()
-        }
-
-        val ballX = xx
-        val ballY = yy+240f*b
-        val ballRadius = 10f*b
-
-        val paintBell = Paint().apply {
-            color = Color.YELLOW
-            style = Paint.Style.FILL
-            isAntiAlias = true
-        }
-
-        val paintHole = Paint().apply {
-            color = Color.BLACK
-            style = Paint.Style.FILL
-            isAntiAlias = true
-        }
-
-        canvas.drawPath(pathBell, paintBell)  // ベル本体（黄色）
-        canvas.drawPath(pathHole, paintHole)  // 空洞部分（黒）
-        canvas.drawCircle(ballX, ballY, ballRadius, paintBell) // 鈴の玉
-
-    }
     fun draw(canvas: Canvas,jiki:Jiki){
         canvas.drawRect(shikakuRect(), iro)
         //canvas.drawText("♡",(435).toFloat(),(50).toFloat(),iroHeart)
         drawHaert(canvas,465f,50f)
-        drawBell(canvas,500f,150f)
+        //drawBell(canvas,500f,150f)
 
         for(a in 0..<jiki.hp) {
             canvas.drawRect(hpShikakuRect(a+1), irosub)
