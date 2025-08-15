@@ -64,7 +64,7 @@ class HPCounter {
         paintHaert.color = Color.RED
         paintHaert.style = Paint.Style.FILL
 
-        val b = 0.1f
+        val b = 0.2f
         val pathHaert = android.graphics.Path()
         //        val z = 850f //ハートの最下部
         //        val w = 300f //ハートのｘ軸
@@ -75,16 +75,57 @@ class HPCounter {
         pathHaert.cubicTo(w+150f*b, z-250f*b, w+150f*b, z-100f*b, w, z)
         pathHaert.close()
         canvas.drawPath(pathHaert,paintHaert)
-
     }
 
+    fun drawBell(canvas: Canvas, z:Float, w:Float){
+
+        val pathBell = android.graphics.Path()
+            // スタート地点：上部の中央（ベルのてっぺん）
+        pathBell.moveTo(300f, 200f)
+
+            // 左側のカーブ（上から下に広がる）
+        pathBell.cubicTo(200f, 220f, 180f, 350f, 200f, 400f)
+
+            // 下部（底）のアーチ
+        pathBell.quadTo(300f, 450f, 400f, 400f)
+
+            // 右側のカーブ（下から上に狭まる）
+        pathBell.cubicTo(420f, 350f, 400f, 220f, 300f, 200f)
+
+        pathBell.close()
+
+
+        val paint = Paint().apply {
+            color = Color.YELLOW
+            style = Paint.Style.FILL
+            isAntiAlias = true
+        }
+
+        canvas.drawPath(pathBell, paint)
+
+// 鈴の玉（オプション）
+        val ballPaint = Paint().apply {
+            color = Color.DKGRAY
+            style = Paint.Style.FILL
+        }
+
+        canvas.drawCircle(300f, 450f, 10f, ballPaint)
+
+
+        val ballX = 300f
+        val ballY = 450f
+        val ballRadius = 10f
+
+        canvas.drawCircle(ballX, ballY, ballRadius, paint)
+
+    }
     fun draw(canvas: Canvas,jiki:Jiki){
         canvas.drawRect(shikakuRect(), iro)
-        canvas.drawText("♡",(435).toFloat(),(50).toFloat(),iroHeart)
-        drawHaert(canvas,850f,300f)
+        //canvas.drawText("♡",(435).toFloat(),(50).toFloat(),iroHeart)
+        drawHaert(canvas,50f,465f)
+        drawBell(canvas,10f,20f)
 
         for(a in 0..<jiki.hp) {
-            //なんかマイナスになっても動き続けるんだな。へー
             canvas.drawRect(hpShikakuRect(a+1), irosub)
         }
     }
