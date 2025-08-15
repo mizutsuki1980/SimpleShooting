@@ -58,31 +58,21 @@ class HPCounter {
     }
 
 
-
-    //ChatGPTに作ってもらった
-    //val paintHaert = Paint().apply {
-    //    color = Color.RED
-    //    style = Paint.Style.FILL
-    //}
-
-
     fun drawHaert(canvas: Canvas, z:Float, w:Float){
         val paintHaert = Paint()
 
         paintHaert.color = Color.RED
         paintHaert.style = Paint.Style.FILL
 
-
+        val b = 0.1f
         val pathHaert = android.graphics.Path()
-
         //        val z = 850f //ハートの最下部
         //        val w = 300f //ハートのｘ軸
-
-        pathHaert.moveTo(300f, z) // 下のとがった部分
+        pathHaert.moveTo(w, z) // 下のとがった部分
         // 左側のカーブ
-        pathHaert.cubicTo(w-150f, z-100f, w-150f, z-250f, w, z-200f)
+        pathHaert.cubicTo(w-150f*b, z-100f*b, w-150f*b, z-250f*b, w, z-200f*b)
         // 右側のカーブ
-        pathHaert.cubicTo(w+150f, z-250f, w+150f, z-100f, w, z)
+        pathHaert.cubicTo(w+150f*b, z-250f*b, w+150f*b, z-100f*b, w, z)
         pathHaert.close()
         canvas.drawPath(pathHaert,paintHaert)
 
@@ -91,7 +81,7 @@ class HPCounter {
     fun draw(canvas: Canvas,jiki:Jiki){
         canvas.drawRect(shikakuRect(), iro)
         canvas.drawText("♡",(435).toFloat(),(50).toFloat(),iroHeart)
-        drawHaert(canvas,850f,300f,0.5)
+        drawHaert(canvas,850f,300f)
 
         for(a in 0..<jiki.hp) {
             //なんかマイナスになっても動き続けるんだな。へー
