@@ -79,8 +79,6 @@ class Item {
             Color.CYAN -> {tokuten = 300 }
             Color.MAGENTA -> {tokuten = 400 }
         }
-
-
     }
 
     //①なし　②出現　③落下 　④弾に当たり跳ね返り処理、色変え
@@ -137,7 +135,6 @@ class Item {
                     isAppearance = false
                     status = ITEM_GET_STATE
                 }
-
             }
 
             ITEM_GET_STATE -> {
@@ -289,6 +286,4 @@ class Item {
         val m4 = Rect(left4, top4, right4,bottom4)
         canvas.drawRect(m4, iro)  //自機
     }
-
-
 }
