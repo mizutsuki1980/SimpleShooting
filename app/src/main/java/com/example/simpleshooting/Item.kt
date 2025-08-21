@@ -24,6 +24,8 @@ class Item {
     val iro = Paint()
     val irosub = Paint()
 
+    var iroA =  Color.GREEN
+
     val ITEM_NASI_STATE = 1
     val ITEM_SYUTUGEN_STATE = 2
     val ITEM_RAKKA_STATE = 3
@@ -62,10 +64,9 @@ class Item {
 
     fun randomirokae(){
         val irolist = listOf<Int>(Color.WHITE,Color.GREEN,Color.CYAN,Color.MAGENTA)
-        var iroA = irolist.random()
+        iroA = irolist.random()
         iro.color = iroA
     }
-
 
     //①なし　②出現　③落下 　④弾に当たり跳ね返り処理、色変え
     //⑤落下　⑥取得 　⑦終わり
@@ -217,7 +218,18 @@ class Item {
 
     fun draw(canvas: Canvas){
         canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa/2).toFloat(),iro)
+        //なんか隠し〇みたいなのが残っていた。まぁいっか
+
         if(status == ITEM_GET_STATE || status == ITEM_OWARI_STATE || status ==ITEM_NASI_STATE){
+            if(status == ITEM_GET_STATE || status == ITEM_OWARI_STATE){
+                val hyoujiIro =  Paint()
+                hyoujiIro.style = Paint.Style.FILL
+                hyoujiIro.color = iroA
+                hyoujiIro.textSize = 50.toFloat()
+
+                canvas.drawText("1000",(x-50).toFloat(),(y).toFloat(),hyoujiIro)
+
+            }
 
         }else{
             drawBell(canvas,x.toFloat(),y-29.toFloat(),iro)
