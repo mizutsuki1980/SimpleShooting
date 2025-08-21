@@ -25,6 +25,8 @@ class Item {
     val irosub = Paint()
 
     var iroA =  Color.GREEN
+    var tokuten = 100
+    var huyuuY = 0
 
     val ITEM_NASI_STATE = 1
     val ITEM_SYUTUGEN_STATE = 2
@@ -39,6 +41,8 @@ class Item {
         iro.color = Color.GREEN
         irosub.style = Paint.Style.FILL
         irosub.color = Color.LTGRAY
+        //最初に色をランダムにしちゃう
+        randomirokae()
     }
 
     fun syokika(){
@@ -48,8 +52,9 @@ class Item {
         isAppearance = true
         kasoku = 1.01
         ookisa = initialOokisa
-        iro.color = Color.GREEN
-
+        //最初に色をランダムにしちゃう
+        randomirokae()
+        huyuuY = 0
         status = ITEM_SYUTUGEN_STATE
     }
 
@@ -66,6 +71,16 @@ class Item {
         val irolist = listOf<Int>(Color.WHITE,Color.GREEN,Color.CYAN,Color.MAGENTA)
         iroA = irolist.random()
         iro.color = iroA
+
+        //ここで得点もきめてしまう
+        when (iroA) {
+            Color.WHITE -> {tokuten = 200 }
+            Color.GREEN -> {tokuten = 100 }
+            Color.CYAN -> {tokuten = 300 }
+            Color.MAGENTA -> {tokuten = 400 }
+        }
+
+
     }
 
     //①なし　②出現　③落下 　④弾に当たり跳ね返り処理、色変え
@@ -126,6 +141,7 @@ class Item {
             }
 
             ITEM_GET_STATE -> {
+                huyuuY += 10
                 itemGetJiTimeCount -= 1
                 ookisa /=2
                 if(itemGetJiTimeCount==0){status = ITEM_OWARI_STATE }
@@ -227,7 +243,7 @@ class Item {
                 hyoujiIro.color = iroA
                 hyoujiIro.textSize = 50.toFloat()
 
-                canvas.drawText("1000",(x-50).toFloat(),(y).toFloat(),hyoujiIro)
+                canvas.drawText(tokuten.toString(),(x-50).toFloat(),(y-huyuuY).toFloat(),hyoujiIro)
 
             }
 

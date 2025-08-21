@@ -133,12 +133,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         item.nextFrame(jiki,jikiTama) //いったんここで作る、あとでtekiTamaNextFrame() に入れる
 
         if(item.status==6) {
-            when (item.iro.color) {
-                Color.WHITE -> {tokuten += 20 }
-                Color.GREEN -> {tokuten += 10 }
-                Color.CYAN -> {tokuten += 30 }
-                Color.MAGENTA -> {tokuten += 40 }
-            }
+
+            tokuten += item.tokuten
+
         }
 
 
