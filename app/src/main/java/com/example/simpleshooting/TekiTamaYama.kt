@@ -12,8 +12,8 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
     //一定時間で適当にでてくるようにする。
     var isAppearance = true
 
-    var x = 100
-    var y = 100
+    var x = -100
+    var y = -100
     var xfloat = 0f
     var yfloat = 0f
     var ookisa:Int
@@ -37,11 +37,11 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
         hit = false
 
         iro.style = Paint.Style.FILL
-        iro.color = Color.BLUE   //argb(255, 255, 255, 200)
+        iro.color = Color.argb(255, 255, 115, 0)   //argb(255, 255, 255, 200)
 
         //線を設定 //いるかな？
         irosub.style = Paint.Style.STROKE
-        irosub.color = Color.BLUE   //argb(255, 255, 255, 200)
+        irosub.color = Color.argb(255, 255, 115, 0)   //argb(255, 255, 255, 200)
         irosub.strokeWidth = 4.0f
     }
 
@@ -74,14 +74,17 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
         }
     }
 
+    //一瞬だけ左上部に移動して見える
+    //最初は玉なし状態で表示してしまっているのかとおもって除外したが、
+    //どうもそうではないっぽいなぁ
     fun draw(canvas: Canvas){
         canvas.drawCircle(xfloat,yfloat,ookisa.toFloat(),iro)
     }
 
     fun syokika(){
 
-        x = 100
-        y = 100
+        x = -100
+        y = -100
         xfloat = 0f
         yfloat = 0f
         ookisa=10
@@ -89,11 +92,13 @@ class TekiTamaYama(jiki:Jiki, teki:Teki) {
         frame = 0
         status = NORMAL_STATE
         iro.style = Paint.Style.FILL
-        iro.color = Color.BLUE   //argb(255, 255, 255, 200)
+        iro.color = Color.argb(255, 255, 115, 0)   //argb(255, 255, 255, 200)
     }
     fun gamengaiCheck(){
         //画面外なら、最初へ状態遷移
-        if (x > 690 || x < 0 || y > 1050 || y < 0){ status = TAMA_NASI_STATE }
+        if (x > 690 || x < 0 || y > 1050 || y < 0){
+            status = TAMA_NASI_STATE
+        }
     }
 
 

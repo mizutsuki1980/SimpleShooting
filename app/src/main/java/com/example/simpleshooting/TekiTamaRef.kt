@@ -54,14 +54,14 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         spy = y
 
         iro.style = Paint.Style.FILL
-        iro.color = Color.BLUE   //argb(255, 255, 255, 200)
+        iro.color = Color.argb(255, 255, 115, 115)
 
         //線を設定
         irosubMae.style = Paint.Style.STROKE
-        irosubMae.color = Color.BLUE   //argb(255, 255, 255, 200)
+        irosubMae.color = Color.argb(255, 255, 115, 115)   //argb(255, 255, 255, 200)
         irosubMae.strokeWidth = 4.0f
         irosubAto.style = Paint.Style.STROKE
-        irosubAto.color = Color.BLUE   //argb(255, 255, 255, 200)
+        irosubAto.color = Color.argb(255, 255, 115, 115)   //argb(255, 255, 255, 200)
         irosubAto.strokeWidth = 1.5f
     }
 
@@ -165,7 +165,7 @@ class TekiTamaRef(jiki:Jiki, teki:Teki) {
         spy = y
 
         iro.style = Paint.Style.FILL
-        iro.color = Color.BLUE   //argb(255, 255, 255, 200)
+        iro.color = Color.argb(255, 255, 115, 115)   //argb(255, 255, 255, 200)
         status = NORMAL_STATE
     }
 
