@@ -45,12 +45,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     //１個でも複数でも同じように書けるし、０個でも動く
     //まずはもう1個増やして、そこからListで動かすように修正してみようか
 
-    var item = Item()
-    var itemSec = Item()
+    //データクラスだと反映されない　クラスだと反映される、、、　らしい　よくわからないが
+    //あんまりつかわない。変数item　と　list（変数item）を同時には使わないほうが多いし、いい。
 
-
-    var itemList = listOf<Item>(item,itemSec)
-
+    var itemList = listOf<Item>(Item(),Item())
     var houdaiTama = HoudaiTama()
     var hpCounter = HPCounter()
     var scCounter = ScoreCounter()
@@ -139,28 +137,26 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jikiKen.nextFrame(jiki, teki, isFirstMove)
         if (jikiKen.hit) { jikiTamaAtattaSyori() }
         tekiTamaNextFrame() //敵の弾の処理は全部ここにまとめる
-        item.nextFrame(jiki,jikiTama) //いったんここで作る、あとでtekiTamaNextFrame() に入れる
+
+
+   //     item.nextFrame(jiki,jikiTama) //いったんここで作る、あとでtekiTamaNextFrame() に入れる
 
         for(i in itemList) {
              i.nextFrame(jiki,jikiTama)
+            if(i.status==6) { tokuten += i.tokuten }
+            if(i.hit){   //もしアイテムに弾が当たっていたら、弾のリセット処理をする、そしてワンフレーム分だけ動かす
+                jikiTama = jiki.tamaHassha(jikiIchiTyousei)
+                jikiTama.nextFrame(jiki, teki, isFirstMove)
+            }
         }
 
 
-            itemSec.nextFrame(jiki,jikiTama)
-
-        if(item.status==6) { tokuten += item.tokuten }
-        if(itemSec.status==6) { tokuten += itemSec.tokuten }
 
 
-        if(item.hit){   //もしアイテムに弾が当たっていたら、弾のリセット処理をする、そしてワンフレーム分だけ動かす
-            jikiTama = jiki.tamaHassha(jikiIchiTyousei)
-            jikiTama.nextFrame(jiki, teki, isFirstMove)
-        }
 
-        if(itemSec.hit){   //もしアイテムに弾が当たっていたら、弾のリセット処理をする、そしてワンフレーム分だけ動かす
-            jikiTama = jiki.tamaHassha(jikiIchiTyousei)
-            jikiTama.nextFrame(jiki, teki, isFirstMove)
-        }
+
+
+
 
         if(jiki.hp == 0){
         }else{
@@ -175,9 +171,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         jiki.draw(canvas)   //自機の処理
         teki.draw(canvas) //敵jikiTamaの移動　処理
-        item.draw(canvas) //アイテムの処理
-        itemSec.draw(canvas)
 
+        for(i in itemList) {
+            i.draw(canvas)
+        }
 
         if(tekiTama.isAppearance){ tekiTama.draw(canvas)} //敵の追尾弾の移動　処理
         if(tekiTamaRef.isAppearance){ tekiTamaRef.draw(canvas)} //敵の反射弾の移動　処理
