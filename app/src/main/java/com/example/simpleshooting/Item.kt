@@ -212,6 +212,9 @@ class Item {
 
     }
 
+    //得点したら表示したい
+    //アイテムを色ごとに形も変えたい（できたら）
+
     fun draw(canvas: Canvas){
         canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa/2).toFloat(),iro)
         if(status == ITEM_GET_STATE || status == ITEM_OWARI_STATE || status ==ITEM_NASI_STATE){
