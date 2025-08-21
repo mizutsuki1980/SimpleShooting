@@ -48,7 +48,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     //データクラスだと反映されない　クラスだと反映される、、、　らしい　よくわからないが
     //あんまりつかわない。変数item　と　list（変数item）を同時には使わないほうが多いし、いい。
 
-    var itemList = listOf<Item>(Item(),Item())
+    var itemList = mutableListOf<Item>(Item(),Item())
     var houdaiTama = HoudaiTama()
     var hpCounter = HPCounter()
     var scCounter = ScoreCounter()
@@ -127,6 +127,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //なんかもうちょっとだけちゃんとした作りにしたい。おもに見た目。
 
         frame += 1  //繰り返し処理はここでやってる
+
+        if(frame==50){itemList.add(1,Item())}
+        if(frame==100){itemList.add(1,Item())}
+        if(frame==150){itemList.add(1,Item())}
+        if(frame==200){itemList.add(1,Item())}
+
         tekiKougekiHueru()
         invalidate()
         jiki.move(clickX, clickY - jikiIchiTyousei) //クリックした場所から上に170の場所に移動する。指にかかって見えない為。
