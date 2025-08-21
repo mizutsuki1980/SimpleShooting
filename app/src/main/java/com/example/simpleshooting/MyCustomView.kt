@@ -47,6 +47,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     var item = Item()
     var itemSec = Item()
+    var itemList = listOf<Item>(item,itemSec)
 
     var houdaiTama = HoudaiTama()
     var hpCounter = HPCounter()
