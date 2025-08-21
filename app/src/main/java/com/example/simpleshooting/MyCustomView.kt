@@ -47,6 +47,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     var item = Item()
     var itemSec = Item()
+
+
     var itemList = listOf<Item>(item,itemSec)
 
     var houdaiTama = HoudaiTama()
@@ -138,7 +140,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if (jikiKen.hit) { jikiTamaAtattaSyori() }
         tekiTamaNextFrame() //敵の弾の処理は全部ここにまとめる
         item.nextFrame(jiki,jikiTama) //いったんここで作る、あとでtekiTamaNextFrame() に入れる
-        itemSec.nextFrame(jiki,jikiTama)
+
+        for(i in itemList) {
+             i.nextFrame(jiki,jikiTama)
+        }
+
+
+            itemSec.nextFrame(jiki,jikiTama)
 
         if(item.status==6) { tokuten += item.tokuten }
         if(itemSec.status==6) { tokuten += itemSec.tokuten }
