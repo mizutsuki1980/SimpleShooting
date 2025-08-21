@@ -127,12 +127,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //なんかもうちょっとだけちゃんとした作りにしたい。おもに見た目。
 
         frame += 1  //繰り返し処理はここでやってる
-
-        if(frame==50){itemList.add(1,Item())}
-        if(frame==100){itemList.add(1,Item())}
-        if(frame==150){itemList.add(1,Item())}
-        if(frame==200){itemList.add(1,Item())}
-
+//    if (a % 3 == 0)
+        if(itemList.size <= 30 ) {
+            if (frame % 50 == 0) {
+                itemList.add(1, Item())
+            }
+        }
         tekiKougekiHueru()
         invalidate()
         jiki.move(clickX, clickY - jikiIchiTyousei) //クリックした場所から上に170の場所に移動する。指にかかって見えない為。
@@ -231,6 +231,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         houdaiTama = HoudaiTama()
         hpCounter = HPCounter()
         scCounter = ScoreCounter()
+
+        itemList = mutableListOf<Item>(Item(),Item())
 
         tsugiNoSyori()
 
