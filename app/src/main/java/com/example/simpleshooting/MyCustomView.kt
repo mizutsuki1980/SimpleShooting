@@ -57,7 +57,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     }
 
-
+//コメント修正
     fun jikiTamaAtattaSyori(){
        //攻撃方法が増えるたびに、ここにつかしなきゃなんないのかなー
         if (jikiTama.hit) {
