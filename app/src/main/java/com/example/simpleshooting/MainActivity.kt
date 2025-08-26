@@ -8,7 +8,7 @@ import android.view.Display
 import android.widget.Button
 import android.widget.TextView
 
-class gamMainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     val handler = android.os.Handler()
     lateinit var custom : MyCustomView
 
