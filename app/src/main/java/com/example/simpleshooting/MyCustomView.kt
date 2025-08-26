@@ -234,9 +234,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
             // 文字を描画
             canvas.drawText(titleOne, x, y-50, textPaint)
-            canvas.drawText(titleTwo, x-50, y+50, textPaint)
+            canvas.drawText(titleTwo, x-40, y+50, textPaint)
             textPaint.textSize = 60f
-            canvas.drawText(titlePushStart, x+20, y+250, textPaint)
+            val textWidthPS = textPaint.measureText(titlePushStart)
+            val xPS = (width - textWidthPS) / 2
+            canvas.drawText(titlePushStart, xPS, y+250, textPaint)
 
 
 

@@ -34,7 +34,7 @@ class Teki {
         iro.color = argb(255, 0, 255, 255)
         //alphaってのは明度？
         irosub.style = Paint.Style.FILL
-        irosub.color = argb(170, 0, 0, 255)
+        irosub.color = argb(255, 255, 0, 0)
 
         irokao.style = Paint.Style.STROKE
         irokao.color = Color.GRAY   //argb(255, 255, 255, 200)
@@ -53,27 +53,30 @@ class Teki {
         when(status) {
             TEKI_YOWAYOWA_STATE -> {
                 tekiSpeed = 15
-                iro.color = argb(255, 0, 255, 255)
+                iro.color = argb(255, 255, 150, 150)
                 irokao.style = Paint.Style.STROKE
                 irokao.color = Color.GRAY   //argb(255, 255, 255, 200)
                 irokao.strokeWidth = 5.0f
             }
             TEKI_NORMAL_STATE -> {
-                iro.color = argb(255, 0, 220, 220)
+                iro.color = argb(255, 255, 110, 110)
             }
 
             TEKI_TSUYO_STATE -> {
                 tekiSpeed = 20
-                iro.color = argb(255, 0, 180, 180)
+                iro.color = argb(255, 255, 70, 70)
 
                 irokao.color = Color.RED   //argb(255, 255, 255, 200)
             }
             TEKI_ONITSUYO_STATE -> {
                 tekiSpeed = 40
-                iro.color = argb(255, 0, 150, 150)
+                iro.color = argb(255, 255, 50, 50)
 
-                irokao.color = Color.RED   //argb(255, 255, 255, 200)
+                irokao.color = Color.BLACK   //argb(255, 255, 255, 200)
                 irokao.strokeWidth = 7.0f
+
+                irosub.style = Paint.Style.FILL
+                irosub.color = Color.DKGRAY
             }
         }
     }

@@ -68,7 +68,7 @@ class Item {
     }
 
     fun randomirokae(){
-        val irolist = listOf<Int>(Color.WHITE,Color.GREEN,Color.CYAN,Color.MAGENTA)
+        val irolist = listOf<Int>(Color.WHITE,Color.GREEN,Color.CYAN,Color.YELLOW)
         iroA = irolist.random()
         iro.color = iroA
 
@@ -77,7 +77,7 @@ class Item {
             Color.WHITE -> {tokuten = 200 }
             Color.GREEN -> {tokuten = 100 }
             Color.CYAN -> {tokuten = 300 }
-            Color.MAGENTA -> {tokuten = 400 }
+            Color.YELLOW -> {tokuten = 400 }
         }
     }
 
