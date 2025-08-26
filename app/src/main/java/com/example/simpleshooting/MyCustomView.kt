@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Color.argb
 import android.graphics.Paint
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -15,6 +16,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var scoreCount = 0
     var tokuten = 0
     var isFirstMove = false //動きだしたら弾も出るようにする
+    var isGameStart = false
     val jikiIchiTyousei = 120 //クリックした位置よりちょっと上にくる。そうしないと指に隠れて見えない。
 
     val initialJikiX = 300 //初期位置
@@ -57,9 +59,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     }
 
-//コメント修正
+
     fun jikiTamaAtattaSyori(){
-       //攻撃方法が増えるたびに、ここにつかしなきゃなんないのかなー
+        //攻撃方法が増えるたびに、ここにつかしなきゃなんないのかなー
         if (jikiTama.hit) {
             teki.hp -= 1
             if(teki.hp==0){
@@ -102,7 +104,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if (tekiTama.isAppearance) {
             tekiTama.nextFrame(jiki, teki)
             if (tekiTama.hit) { tekiTamaAtattaSyori() }
-         }
+        }
 
         if(tekiTamaRef.isAppearance){
             tekiTamaRef.nextFrame(jiki, teki)
@@ -123,77 +125,121 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun tsugiNoSyori() {
-// ポーズとかつけたい
-        //なんかもうちょっとだけちゃんとした作りにしたい。おもに見た目。
+        // ポーズ とかつけたい
+        if(isGameStart) {
 
-        frame += 1  //繰り返し処理はここでやってる
-//    if (a % 3 == 0)
-        if(itemList.size <= 30 ) {
-            if (frame % 50 == 0) {
-                itemList.add(1, Item())
+            frame += 1  //繰り返し処理はここでやってる
+            if (itemList.size <= 30) {
+                if (frame % 50 == 0) {
+                    itemList.add(1, Item())
+                }
             }
-        }
-        tekiKougekiHueru()
-        invalidate()
-        jiki.move(clickX, clickY - jikiIchiTyousei) //クリックした場所から上に170の場所に移動する。指にかかって見えない為。
-        teki.yokoIdo()  //敵の移動　処理。
-        teki.nextFrame(scoreCount)
-        jikiTama.nextFrame(jiki, teki, isFirstMove)
-        if (jikiTama.hit) { jikiTamaAtattaSyori() }
-        jikiKen.nextFrame(jiki, teki, isFirstMove)
-        if (jikiKen.hit) { jikiTamaAtattaSyori() }
-        tekiTamaNextFrame() //敵の弾の処理は全部ここにまとめる
-
-
-   //     item.nextFrame(jiki,jikiTama) //いったんここで作る、あとでtekiTamaNextFrame() に入れる
-
-        for(i in itemList) {
-             i.nextFrame(jiki,jikiTama)
-            if(i.status==6) { tokuten += i.tokuten }
-            if(i.hit){   //もしアイテムに弾が当たっていたら、弾のリセット処理をする、そしてワンフレーム分だけ動かす
-                jikiTama = jiki.tamaHassha(jikiIchiTyousei)
-                jikiTama.nextFrame(jiki, teki, isFirstMove)
+            tekiKougekiHueru()
+            invalidate()
+            jiki.move(clickX, clickY - jikiIchiTyousei) //クリックした場所から上に170の場所に移動する。指にかかって見えない為。
+            teki.yokoIdo()  //敵の移動　処理。
+            teki.nextFrame(scoreCount)
+            jikiTama.nextFrame(jiki, teki, isFirstMove)
+            if (jikiTama.hit) {
+                jikiTamaAtattaSyori()
             }
-        }
+            jikiKen.nextFrame(jiki, teki, isFirstMove)
+            if (jikiKen.hit) {
+                jikiTamaAtattaSyori()
+            }
+            tekiTamaNextFrame() //敵の弾の処理は全部ここにまとめる
 
+            for (i in itemList) {
+                i.nextFrame(jiki, jikiTama)
+                if (i.status == 6) {
+                    tokuten += i.tokuten
+                }
+                if (i.hit) {   //もしアイテムに弾が当たっていたら、弾のリセット処理をする、そしてワンフレーム分だけ動かす
+                    jikiTama = jiki.tamaHassha(jikiIchiTyousei)
+                    jikiTama.nextFrame(jiki, teki, isFirstMove)
+                }
+            }
+            if (jiki.hp == 0) {
+            } else {
+                handler.postDelayed({ tsugiNoSyori() }, 100)
+            }
 
-
-
-
-
-
-
-
-        if(jiki.hp == 0){
         }else{
+
+
             handler.postDelayed({ tsugiNoSyori() }, 100)
+
         }
+
     }
 
 
 
 
     override fun onDraw(canvas: Canvas) {
+        if (isGameStart) {
+            jiki.draw(canvas)   //自機の処理
+            teki.draw(canvas) //敵jikiTamaの移動　処理
 
-        jiki.draw(canvas)   //自機の処理
-        teki.draw(canvas) //敵jikiTamaの移動　処理
+            for (i in itemList) {
+                i.draw(canvas)
+            }
 
-        for(i in itemList) {
-            i.draw(canvas)
-        }
+            if (tekiTama.isAppearance) {
+                tekiTama.draw(canvas)
+            } //敵の追尾弾の移動　処理
+            if (tekiTamaRef.isAppearance) {
+                tekiTamaRef.draw(canvas)
+            } //敵の反射弾の移動　処理
+            if (houdaiTama.isAppearance) {
+                houdaiTama.draw(canvas)
+            } //砲台の弾
+            tekiTamaYama.draw(canvas) //山なりの弾
+            if (isFirstMove) {
+                jikiTama.draw(canvas)
+            }     //自機の弾の処理
+            //if(isFirstMove){ jikiKen.draw(canvas,jiki)}     //自機の剣の処理 　//剣は見ずらいからいらない、せっかく作ったけど。
+            hpCounter.draw(canvas, jiki)
 
-        if(tekiTama.isAppearance){ tekiTama.draw(canvas)} //敵の追尾弾の移動　処理
-        if(tekiTamaRef.isAppearance){ tekiTamaRef.draw(canvas)} //敵の反射弾の移動　処理
-        if(houdaiTama.isAppearance){houdaiTama.draw(canvas)} //砲台の弾
-        tekiTamaYama.draw(canvas) //山なりの弾
-        if(isFirstMove){ jikiTama.draw(canvas)}     //自機の弾の処理
-        //if(isFirstMove){ jikiKen.draw(canvas,jiki)}     //自機の剣の処理 　//剣は見ずらいからいらない、せっかく作ったけど。
-        hpCounter.draw(canvas,jiki)
+            scCounter.draw(canvas, tokuten, frame)
+            hantoumeinotamaDraw(canvas)
+            if (jiki.hp == 0) {
+                gameover(canvas)
+            }
+        } else {
+            val bgPaint = Paint()
+            bgPaint.color = Color.BLUE   // 背景色
+            bgPaint.style = Paint.Style.FILL
 
-        scCounter.draw(canvas,tokuten,frame)
-        hantoumeinotamaDraw(canvas)
-        if(jiki.hp == 0){
-            gameover(canvas)
+
+            val textPaint = Paint()
+            textPaint.color = Color.WHITE
+            textPaint.textSize = 120f
+            textPaint.typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD_ITALIC) // 太字＋斜体
+            textPaint.isAntiAlias = true
+            textPaint.setShadowLayer(10f, 8f, 8f, Color.BLACK) // 影を付けて立体感
+
+
+            // 画面全体を青で塗る
+            canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bgPaint)
+
+            // タイトル文字列
+            val titleOne = "Simple"
+            val titleTwo = "Shooting"
+            val titlePushStart = "Push Start"
+            // 中央に描画するための座標計算
+            val textWidth = textPaint.measureText(titleOne)
+            val x = (width - textWidth) / 2
+            val y = (height / 2).toFloat()
+
+            // 文字を描画
+            canvas.drawText(titleOne, x, y-50, textPaint)
+            canvas.drawText(titleTwo, x-50, y+50, textPaint)
+            textPaint.textSize = 60f
+            canvas.drawText(titlePushStart, x+20, y+250, textPaint)
+
+
+
         }
     }
 
@@ -252,6 +298,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             isFirstMove = true
+            isGameStart = true
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
@@ -261,6 +308,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         if (event.action == MotionEvent.ACTION_UP) {
             isFirstMove = true
+            isGameStart = true
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
@@ -268,6 +316,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         if (event.action == MotionEvent.ACTION_MOVE) {
             isFirstMove = true
+            isGameStart = true
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
