@@ -241,12 +241,34 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     }
     fun gameover(canvas:Canvas){
+        val bgPaint = Paint()
+        bgPaint.color = Color.argb(75, 255, 255, 255)   // 背景色
+        bgPaint.style = Paint.Style.FILL
+        canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bgPaint)
+
         val hyoujiIro =  Paint()
-        hyoujiIro.style = Paint.Style.FILL
         hyoujiIro.color = Color.BLUE
-        hyoujiIro.textSize = 100.toFloat()
+        hyoujiIro.textSize = 100f
+        hyoujiIro.typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD_ITALIC) // 太字＋斜体
+        hyoujiIro.isAntiAlias = true
+        hyoujiIro.setShadowLayer(10f, 8f, 8f, Color.BLACK) // 影を付けて立体感
 
         canvas.drawText("Game Over",(120).toFloat(),(400).toFloat(),hyoujiIro)
+
+        hyoujiIro.textSize = 40f
+        hyoujiIro.color = Color.WHITE
+
+        //canvas.drawTextは一行ごとのテキストしかできないんだって！
+
+        val text = "あなたの得点：$tokuten\nあなたの生存時間：$frame\n取れなかった\nアイテムの数：$mudanisitaItemCount"
+        val lines = text.split("\n")
+
+        var yy = 500f
+        for (line in lines) {
+            canvas.drawText(line, 120f, yy, hyoujiIro)
+            yy += hyoujiIro.textSize + 10f // 行間を適当に足す
+        }
+
 
     }
     fun hantoumeinotamaDraw(canvas:Canvas){
@@ -262,6 +284,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         dgCount = 0
         scoreCount = 0
         tokuten = 0
+        mudanisitaItemCount = 0
 
         isFirstMove = false //動きだしたら弾も出るようにする
 
