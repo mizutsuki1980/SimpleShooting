@@ -201,44 +201,45 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 gameover(canvas)
             }
         } else {
-            val bgPaint = Paint()
-            bgPaint.color = Color.BLUE   // 背景色
-            bgPaint.style = Paint.Style.FILL
-
-
-            val textPaint = Paint()
-            textPaint.color = Color.WHITE
-            textPaint.textSize = 120f
-            textPaint.typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD_ITALIC) // 太字＋斜体
-            textPaint.isAntiAlias = true
-            textPaint.setShadowLayer(10f, 8f, 8f, Color.BLACK) // 影を付けて立体感
-
-
-            // 画面全体を青で塗る
-            canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bgPaint)
-
-            // タイトル文字列
-            val titleOne = "Simple"
-            val titleTwo = "Shooting"
-            val titlePushStart = "Push Start"
-            // 中央に描画するための座標計算
-            val textWidth = textPaint.measureText(titleOne)
-            val x = (width - textWidth) / 2
-            val y = (height / 2).toFloat()
-
-            // 文字を描画
-            canvas.drawText(titleOne, x, y-50, textPaint)
-            canvas.drawText(titleTwo, x-40, y+50, textPaint)
-            textPaint.textSize = 60f
-            val textWidthPS = textPaint.measureText(titlePushStart)
-            val xPS = (width - textWidthPS) / 2
-            canvas.drawText(titlePushStart, xPS, y+250, textPaint)
-
-
-
+            gamestart(canvas)
         }
     }
 
+    fun gamestart(canvas:Canvas){
+        val bgPaint = Paint()
+        bgPaint.color = Color.BLUE   // 背景色
+        bgPaint.style = Paint.Style.FILL
+
+
+        val textPaint = Paint()
+        textPaint.color = Color.WHITE
+        textPaint.textSize = 120f
+        textPaint.typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD_ITALIC) // 太字＋斜体
+        textPaint.isAntiAlias = true
+        textPaint.setShadowLayer(10f, 8f, 8f, Color.BLACK) // 影を付けて立体感
+
+
+        // 画面全体を青で塗る
+        canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bgPaint)
+
+        // タイトル文字列
+        val titleOne = "Simple"
+        val titleTwo = "Shooting"
+        val titlePushStart = "Push Start"
+        // 中央に描画するための座標計算
+        val textWidth = textPaint.measureText(titleOne)
+        val x = (width - textWidth) / 2
+        val y = (height / 2).toFloat()
+
+        // 文字を描画
+        canvas.drawText(titleOne, x, y-50, textPaint)
+        canvas.drawText(titleTwo, x-40, y+50, textPaint)
+        textPaint.textSize = 60f
+        val textWidthPS = textPaint.measureText(titlePushStart)
+        val xPS = (width - textWidthPS) / 2
+        canvas.drawText(titlePushStart, xPS, y+250, textPaint)
+
+    }
     fun gameover(canvas:Canvas){
         val hyoujiIro =  Paint()
         hyoujiIro.style = Paint.Style.FILL
