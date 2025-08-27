@@ -36,6 +36,8 @@ class Item {
     val ITEM_OWARI_STATE = 6
 
     var status = ITEM_NASI_STATE // 最初は玉が画面内に無い状態
+    var mudanisitayo = false
+
     init {
         iro.style = Paint.Style.FILL
         iro.color = Color.GREEN
@@ -55,6 +57,7 @@ class Item {
         //最初に色をランダムにしちゃう
         randomirokae()
         huyuuY = 0
+        mudanisitayo = false
         status = ITEM_SYUTUGEN_STATE
     }
 
@@ -100,7 +103,10 @@ class Item {
                     randomirokae()}
                 }
                 moveOne()
-                if (y>=1500) { status = ITEM_NASI_STATE }
+                if (y>=1500) {
+                    status = ITEM_NASI_STATE
+                    mudanisitayo = true
+                }
 
 
                 if (tamaAtariCheck(jikiTama)){

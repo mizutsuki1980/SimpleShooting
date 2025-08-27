@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.textLabelY).text=custom.clickY.toString()
 
         findViewById<TextView>(R.id.scoreTextLabel).text=custom.scoreCount.toString()
-        findViewById<TextView>(R.id.damageTextLabel).text=custom.dgCount.toString()
+        findViewById<TextView>(R.id.mudanisitaItemTextLabel).text=custom.mudanisitaItemCount.toString()
         findViewById<TextView>(R.id.timeTextLabel).text=custom.frame.toString()
 
         if(custom.jiki.hp==0){

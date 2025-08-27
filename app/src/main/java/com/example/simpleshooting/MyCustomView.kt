@@ -14,6 +14,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var frame = 0
     var dgCount = 0
     var scoreCount = 0
+    var mudanisitaItemCount = 0
+
+
     var tokuten = 0
     var isFirstMove = false //動きだしたら弾も出るようにする
     var isGameStart = false
@@ -29,11 +32,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jikiTama = jiki.tamaHassha(jikiIchiTyousei)    //弾の発射位置もjikiIchiTyouseiの影響を受ける。
     var jikiKen = JikiKen(jiki)
 
-
-    //こいつはだす、こいつはださない、的なオンオフスイッチをつくりたい。
-    //当たり判定とかもオンオフする
-    //isAppearance　だろうか？　出現を英訳　こいつをtrueとかfalseとかしてみるか
-
     var teki = Teki()
 
     var tekiTama = teki.tamaHassha()    //TekiTamaのオブジェクトを作るのは、TekiTama内でなくてもよい。へー
@@ -42,18 +40,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     var tekiTamaYama = TekiTamaYama(jiki,teki)
 
-    //〇アイテムを複数にしてみる
-    //普通、作るときにはアイテムのListを作るらしい
-    //１個でも複数でも同じように書けるし、０個でも動く
-    //まずはもう1個増やして、そこからListで動かすように修正してみようか
-
-    //データクラスだと反映されない　クラスだと反映される、、、　らしい　よくわからないが
-    //あんまりつかわない。変数item　と　list（変数item）を同時には使わないほうが多いし、いい。
-
     var itemList = mutableListOf<Item>(Item(),Item())
     var houdaiTama = HoudaiTama()
     var hpCounter = HPCounter()
     var scCounter = ScoreCounter()
+
 
     init{
 
@@ -151,7 +142,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
             for (i in itemList) {
                 i.nextFrame(jiki, jikiTama)
-                if (i.status == 6) {
+                if (i.mudanisitayo) {
+                    mudanisitaItemCount++
+                }
+                    if (i.status == 6) {
                     tokuten += i.tokuten
                 }
                 if (i.hit) {   //もしアイテムに弾が当たっていたら、弾のリセット処理をする、そしてワンフレーム分だけ動かす
